@@ -16,7 +16,8 @@
     "test:e2e": "playwright test",
     "data:validate": "tsx scripts/validate-catalog.ts",
     "data:refresh": "tsx scripts/refresh-catalog.ts",
-    "opennext:build": "opennextjs-cloudflare build"
+    "opennext:build": "opennextjs-cloudflare build",
+    "sites:build": "node scripts/build-sites.mjs"
   },
   "dependencies": {
     "dexie": "^4.4.4",

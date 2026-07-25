@@ -8,6 +8,7 @@ export default defineConfig([
   globalIgnores([
     ".next/**",
     ".open-next/**",
+    ".sites-build/**",
     "node_modules/**",
     "public/flags/**",
     "coverage/**",

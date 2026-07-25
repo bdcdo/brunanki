@@ -1,6 +1,8 @@
 node_modules/
 .next/
 .open-next/
+.sites-build/
+.wrangler/
 coverage/
 playwright-report/
 test-results/

@@ -28,6 +28,15 @@ pnpm build
 pnpm test:e2e
 ```
 
+Para gerar o artefato destinado ao OpenAI Sites:
+
+```bash
+pnpm sites:build
+tar -C .sites-build -czf ptanki-sites.tar.gz .
+```
+
+O passo adicional do Wrangler é necessário porque o Sites executa o módulo ESM entregue no arquivo, enquanto a saída intermediária do OpenNext ainda contém módulos CommonJS que normalmente seriam compilados durante `wrangler deploy`.
+
 ## Catálogo e licenças
 
 ONU e FIFA definem a elegibilidade. Wikidata é usado para localizar os arquivos e o Wikimedia Commons fornece as imagens e metadados de licença. Os arquivos são fixados em `public/flags`; o app não faz hotlink em runtime. `src/data/catalog.json` e `src/data/credits.json` são artefatos versionados gerados pelo pipeline.
