@@ -6,6 +6,7 @@ import { promisify } from "node:util";
 
 import { normalizeCountryName as normalizeAlias } from "../src/domain/text";
 import { projectRuntimeCatalog } from "../src/data/project-runtime-catalog";
+import { readPalettes } from "./extract-palette";
 import type {
   Catalog,
   FlagRevision,
@@ -696,9 +697,13 @@ async function main(): Promise<void> {
   );
   // O catálogo de runtime é derivado do completo por projectRuntimeCatalog;
   // regerar aqui evita que os dois artefatos saiam de sincronia.
+  const palettes = await readPalettes(
+    process.cwd(),
+    new Map(flagRevisions.map((flag) => [flag.entityId, flag.filePath]))
+  );
   await writeFile(
     join(dataDirectory, "runtime-catalog.json"),
-    `${JSON.stringify(projectRuntimeCatalog(catalog), null, 2)}\n`
+    `${JSON.stringify(projectRuntimeCatalog(catalog, palettes), null, 2)}\n`
   );
   console.log(
     `Catalog refreshed: ${entities.length} entities, ${flagRevisions.length} local flags.`

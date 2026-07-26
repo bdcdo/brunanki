@@ -9,6 +9,7 @@ import { join } from "node:path";
 
 import type { Catalog } from "../src/types/catalog";
 import { projectRuntimeCatalog } from "../src/data/project-runtime-catalog";
+import { readPalettes } from "./extract-palette";
 
 const dataDir = join(import.meta.dirname, "..", "src", "data");
 
@@ -17,7 +18,11 @@ async function main(): Promise<void> {
     await readFile(join(dataDir, "catalog.json"), "utf8")
   ) as Catalog;
 
-  const runtime = projectRuntimeCatalog(catalog);
+  const palettes = await readPalettes(
+    join(import.meta.dirname, ".."),
+    new Map(catalog.flagRevisions.map((f) => [f.entityId, f.filePath]))
+  );
+  const runtime = projectRuntimeCatalog(catalog, palettes);
   await writeFile(
     join(dataDir, "runtime-catalog.json"),
     `${JSON.stringify(runtime, null, 2)}\n`,

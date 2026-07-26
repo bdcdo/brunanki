@@ -13,7 +13,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/afg.svg"
+      "flagPath": "/flags/afg.svg",
+      "palette": ["preto", "branco"]
     },
     {
       "id": "zaf",
@@ -28,7 +29,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/zaf.svg"
+      "flagPath": "/flags/zaf.svg",
+      "palette": ["vermelho", "laranja", "verde", "azul", "preto", "branco"]
     },
     {
       "id": "alb",
@@ -43,7 +45,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/alb.svg"
+      "flagPath": "/flags/alb.svg",
+      "palette": ["vermelho", "preto"]
     },
     {
       "id": "deu",
@@ -57,7 +60,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/deu.svg"
+      "flagPath": "/flags/deu.svg",
+      "palette": ["vermelho", "amarelo", "preto"]
     },
     {
       "id": "and",
@@ -70,7 +74,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/and.svg"
+      "flagPath": "/flags/and.svg",
+      "palette": ["vermelho", "laranja", "amarelo", "azul", "marrom", "branco"]
     },
     {
       "id": "ago",
@@ -83,7 +88,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/ago.svg"
+      "flagPath": "/flags/ago.svg",
+      "palette": ["vermelho", "amarelo"]
     },
     {
       "id": "aia",
@@ -91,7 +97,8 @@
       "aliasesPtBr": ["AI"],
       "region": "Americas",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/aia.svg"
+      "flagPath": "/flags/aia.svg",
+      "palette": ["vermelho", "laranja", "azul", "branco"]
     },
     {
       "id": "atg",
@@ -99,7 +106,8 @@
       "aliasesPtBr": ["Antigua and Barbuda", "AG"],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/atg.svg"
+      "flagPath": "/flags/atg.svg",
+      "palette": ["vermelho", "amarelo", "azul", "branco"]
     },
     {
       "id": "sau",
@@ -114,7 +122,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/sau.svg"
+      "flagPath": "/flags/sau.svg",
+      "palette": ["verde", "branco"]
     },
     {
       "id": "dza",
@@ -129,7 +138,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/dza.svg"
+      "flagPath": "/flags/dza.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "arg",
@@ -137,7 +147,8 @@
       "aliasesPtBr": ["Argentine Republic", "República Argentina", "AR"],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/arg.svg"
+      "flagPath": "/flags/arg.svg",
+      "palette": ["laranja", "azul", "marrom", "branco"]
     },
     {
       "id": "arm",
@@ -151,7 +162,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/arm.svg"
+      "flagPath": "/flags/arm.svg",
+      "palette": ["vermelho", "laranja", "azul"]
     },
     {
       "id": "abw",
@@ -159,7 +171,8 @@
       "aliasesPtBr": ["AW"],
       "region": "Americas",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/abw.svg"
+      "flagPath": "/flags/abw.svg",
+      "palette": ["vermelho", "amarelo", "azul", "branco"]
     },
     {
       "id": "aus",
@@ -171,7 +184,8 @@
       ],
       "region": "Oceania",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/aus.svg"
+      "flagPath": "/flags/aus.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "aut",
@@ -185,7 +199,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/aut.svg"
+      "flagPath": "/flags/aut.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "aze",
@@ -199,7 +214,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/aze.svg"
+      "flagPath": "/flags/aze.svg",
+      "palette": ["vermelho", "verde", "azul", "branco"]
     },
     {
       "id": "bhs",
@@ -211,7 +227,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/bhs.svg"
+      "flagPath": "/flags/bhs.svg",
+      "palette": ["laranja", "azul"]
     },
     {
       "id": "bhr",
@@ -225,7 +242,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/bhr.svg"
+      "flagPath": "/flags/bhr.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "bgd",
@@ -238,7 +256,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/bgd.svg"
+      "flagPath": "/flags/bgd.svg",
+      "palette": ["vermelho", "verde"]
     },
     {
       "id": "brb",
@@ -246,7 +265,8 @@
       "aliasesPtBr": ["BB"],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/brb.svg"
+      "flagPath": "/flags/brb.svg",
+      "palette": ["laranja", "azul", "preto"]
     },
     {
       "id": "bel",
@@ -265,7 +285,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/bel.svg"
+      "flagPath": "/flags/bel.svg",
+      "palette": ["vermelho", "amarelo"]
     },
     {
       "id": "blz",
@@ -273,7 +294,18 @@
       "aliasesPtBr": ["BZ"],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/blz.svg"
+      "flagPath": "/flags/blz.svg",
+      "palette": [
+        "vermelho",
+        "laranja",
+        "amarelo",
+        "verde",
+        "azul",
+        "rosa",
+        "preto",
+        "branco",
+        "cinza"
+      ]
     },
     {
       "id": "ben",
@@ -286,7 +318,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/ben.svg"
+      "flagPath": "/flags/ben.svg",
+      "palette": ["vermelho", "amarelo", "verde"]
     },
     {
       "id": "bmu",
@@ -300,7 +333,16 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/bmu.svg"
+      "flagPath": "/flags/bmu.svg",
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "azul",
+        "marrom",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "blr",
@@ -316,7 +358,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/blr.svg"
+      "flagPath": "/flags/blr.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "bol",
@@ -335,7 +378,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/bol.svg"
+      "flagPath": "/flags/bol.svg",
+      "palette": ["vermelho", "amarelo", "verde"]
     },
     {
       "id": "bih",
@@ -348,7 +392,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/bih.svg"
+      "flagPath": "/flags/bih.svg",
+      "palette": ["amarelo", "azul", "branco"]
     },
     {
       "id": "bwa",
@@ -362,7 +407,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/bwa.svg"
+      "flagPath": "/flags/bwa.svg",
+      "palette": ["azul", "branco"]
     },
     {
       "id": "bra",
@@ -375,7 +421,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/bra.svg"
+      "flagPath": "/flags/bra.svg",
+      "palette": ["amarelo", "verde", "azul", "branco"]
     },
     {
       "id": "brn",
@@ -390,7 +437,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/brn.svg"
+      "flagPath": "/flags/brn.svg",
+      "palette": ["vermelho", "amarelo", "branco"]
     },
     {
       "id": "bgr",
@@ -403,7 +451,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/bgr.svg"
+      "flagPath": "/flags/bgr.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "bfa",
@@ -411,7 +460,8 @@
       "aliasesPtBr": ["BF"],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/bfa.svg"
+      "flagPath": "/flags/bfa.svg",
+      "palette": ["vermelho", "amarelo", "verde"]
     },
     {
       "id": "bdi",
@@ -425,7 +475,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/bdi.svg"
+      "flagPath": "/flags/bdi.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "btn",
@@ -433,7 +484,8 @@
       "aliasesPtBr": ["Bhutan", "Kingdom of Bhutan", "Reino do Butão", "BT"],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/btn.svg"
+      "flagPath": "/flags/btn.svg",
+      "palette": ["laranja", "amarelo", "preto", "branco"]
     },
     {
       "id": "cpv",
@@ -446,7 +498,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/cpv.svg"
+      "flagPath": "/flags/cpv.svg",
+      "palette": ["vermelho", "amarelo", "azul", "branco"]
     },
     {
       "id": "cmr",
@@ -460,7 +513,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/cmr.svg"
+      "flagPath": "/flags/cmr.svg",
+      "palette": ["vermelho", "amarelo", "verde"]
     },
     {
       "id": "khm",
@@ -473,7 +527,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/khm.svg"
+      "flagPath": "/flags/khm.svg",
+      "palette": ["vermelho", "azul", "preto", "branco"]
     },
     {
       "id": "can",
@@ -481,7 +536,8 @@
       "aliasesPtBr": ["CA"],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/can.svg"
+      "flagPath": "/flags/can.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "qat",
@@ -495,7 +551,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/qat.svg"
+      "flagPath": "/flags/qat.svg",
+      "palette": ["roxo", "branco"]
     },
     {
       "id": "kaz",
@@ -514,7 +571,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/kaz.svg"
+      "flagPath": "/flags/kaz.svg",
+      "palette": ["amarelo", "azul"]
     },
     {
       "id": "tcd",
@@ -529,7 +587,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/tcd.svg"
+      "flagPath": "/flags/tcd.svg",
+      "palette": ["vermelho", "amarelo", "azul"]
     },
     {
       "id": "cze",
@@ -544,7 +603,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/cze.svg"
+      "flagPath": "/flags/cze.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "chl",
@@ -557,7 +617,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/chl.svg"
+      "flagPath": "/flags/chl.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "chn",
@@ -573,7 +634,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/chn.svg"
+      "flagPath": "/flags/chn.svg",
+      "palette": ["vermelho", "amarelo"]
     },
     {
       "id": "cyp",
@@ -590,7 +652,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/cyp.svg"
+      "flagPath": "/flags/cyp.svg",
+      "palette": ["laranja", "verde", "branco"]
     },
     {
       "id": "col",
@@ -603,7 +666,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/col.svg"
+      "flagPath": "/flags/col.svg",
+      "palette": ["vermelho", "amarelo", "azul"]
     },
     {
       "id": "com",
@@ -619,7 +683,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/com.svg"
+      "flagPath": "/flags/com.svg",
+      "palette": ["vermelho", "amarelo", "verde", "azul", "branco"]
     },
     {
       "id": "prk",
@@ -638,7 +703,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/prk.svg"
+      "flagPath": "/flags/prk.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "kor",
@@ -654,7 +720,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/kor.svg"
+      "flagPath": "/flags/kor.svg",
+      "palette": ["vermelho", "azul", "preto", "branco"]
     },
     {
       "id": "civ",
@@ -669,7 +736,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/civ.svg"
+      "flagPath": "/flags/civ.svg",
+      "palette": ["laranja", "verde", "branco"]
     },
     {
       "id": "cri",
@@ -682,7 +750,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/cri.svg"
+      "flagPath": "/flags/cri.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "hrv",
@@ -697,7 +766,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/hrv.svg"
+      "flagPath": "/flags/hrv.svg",
+      "palette": ["vermelho", "amarelo", "azul", "preto", "branco"]
     },
     {
       "id": "cub",
@@ -705,7 +775,8 @@
       "aliasesPtBr": ["Republic of Cuba", "República de Cuba", "CU"],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/cub.svg"
+      "flagPath": "/flags/cub.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "cuw",
@@ -720,7 +791,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/cuw.svg"
+      "flagPath": "/flags/cuw.svg",
+      "palette": ["amarelo", "azul", "branco"]
     },
     {
       "id": "dnk",
@@ -735,7 +807,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/dnk.svg"
+      "flagPath": "/flags/dnk.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "dji",
@@ -753,7 +826,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/dji.svg"
+      "flagPath": "/flags/dji.svg",
+      "palette": ["vermelho", "verde", "azul", "branco"]
     },
     {
       "id": "dma",
@@ -767,7 +841,16 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/dma.svg"
+      "flagPath": "/flags/dma.svg",
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "roxo",
+        "marrom",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "egy",
@@ -780,7 +863,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/egy.svg"
+      "flagPath": "/flags/egy.svg",
+      "palette": ["vermelho", "amarelo", "branco"]
     },
     {
       "id": "slv",
@@ -792,7 +876,16 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/slv.svg"
+      "flagPath": "/flags/slv.svg",
+      "palette": [
+        "vermelho",
+        "laranja",
+        "amarelo",
+        "verde",
+        "azul",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "are",
@@ -800,7 +893,8 @@
       "aliasesPtBr": ["United Arab Emirates", "AE", "UAE", "Emirates"],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/are.svg"
+      "flagPath": "/flags/are.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "ecu",
@@ -814,7 +908,18 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/ecu.svg"
+      "flagPath": "/flags/ecu.svg",
+      "palette": [
+        "vermelho",
+        "laranja",
+        "amarelo",
+        "verde",
+        "azul",
+        "marrom",
+        "preto",
+        "branco",
+        "cinza"
+      ]
     },
     {
       "id": "eri",
@@ -831,7 +936,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/eri.svg"
+      "flagPath": "/flags/eri.svg",
+      "palette": ["vermelho", "laranja", "verde", "azul"]
     },
     {
       "id": "scotland",
@@ -839,7 +945,8 @@
       "aliasesPtBr": ["Scotland"],
       "region": "Europe",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/scotland.svg"
+      "flagPath": "/flags/scotland.svg",
+      "palette": ["azul", "branco"]
     },
     {
       "id": "svk",
@@ -853,7 +960,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/svk.svg"
+      "flagPath": "/flags/svk.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "svn",
@@ -867,7 +975,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/svn.svg"
+      "flagPath": "/flags/svn.svg",
+      "palette": ["vermelho", "amarelo", "azul", "branco"]
     },
     {
       "id": "esp",
@@ -881,7 +990,18 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/esp.svg"
+      "flagPath": "/flags/esp.svg",
+      "palette": [
+        "vermelho",
+        "laranja",
+        "amarelo",
+        "verde",
+        "azul",
+        "rosa",
+        "preto",
+        "branco",
+        "cinza"
+      ]
     },
     {
       "id": "swz",
@@ -899,7 +1019,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/swz.svg"
+      "flagPath": "/flags/swz.svg",
+      "palette": ["vermelho", "amarelo", "azul", "preto", "branco"]
     },
     {
       "id": "usa",
@@ -913,7 +1034,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/usa.svg"
+      "flagPath": "/flags/usa.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "est",
@@ -927,7 +1049,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/est.svg"
+      "flagPath": "/flags/est.svg",
+      "palette": ["azul", "branco"]
     },
     {
       "id": "eth",
@@ -942,7 +1065,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/eth.svg"
+      "flagPath": "/flags/eth.svg",
+      "palette": ["vermelho", "amarelo", "verde", "azul"]
     },
     {
       "id": "fji",
@@ -957,7 +1081,8 @@
       ],
       "region": "Oceania",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/fji.svg"
+      "flagPath": "/flags/fji.svg",
+      "palette": ["vermelho", "amarelo", "verde", "azul", "preto", "branco"]
     },
     {
       "id": "phl",
@@ -971,7 +1096,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/phl.svg"
+      "flagPath": "/flags/phl.svg",
+      "palette": ["vermelho", "amarelo", "azul", "branco"]
     },
     {
       "id": "fin",
@@ -987,7 +1113,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/fin.svg"
+      "flagPath": "/flags/fin.svg",
+      "palette": ["azul", "branco"]
     },
     {
       "id": "fra",
@@ -1001,7 +1128,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/fra.svg"
+      "flagPath": "/flags/fra.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "gab",
@@ -1015,7 +1143,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/gab.svg"
+      "flagPath": "/flags/gab.svg",
+      "palette": ["amarelo", "verde", "azul"]
     },
     {
       "id": "gmb",
@@ -1023,7 +1152,8 @@
       "aliasesPtBr": ["Republic of the Gambia", "República da Gâmbia", "GM"],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/gmb.svg"
+      "flagPath": "/flags/gmb.svg",
+      "palette": ["vermelho", "verde", "azul", "branco"]
     },
     {
       "id": "gha",
@@ -1031,7 +1161,8 @@
       "aliasesPtBr": ["Ghana", "Republic of Ghana", "República do Gana", "GH"],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/gha.svg"
+      "flagPath": "/flags/gha.svg",
+      "palette": ["vermelho", "amarelo", "verde"]
     },
     {
       "id": "geo",
@@ -1039,7 +1170,8 @@
       "aliasesPtBr": ["GE", "Sakartvelo"],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/geo.svg"
+      "flagPath": "/flags/geo.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "gib",
@@ -1047,7 +1179,8 @@
       "aliasesPtBr": ["GI"],
       "region": "Europe",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/gib.svg"
+      "flagPath": "/flags/gib.svg",
+      "palette": ["vermelho", "amarelo", "preto", "branco"]
     },
     {
       "id": "grd",
@@ -1055,7 +1188,8 @@
       "aliasesPtBr": ["Grenada", "GD"],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/grd.svg"
+      "flagPath": "/flags/grd.svg",
+      "palette": ["vermelho", "amarelo", "verde"]
     },
     {
       "id": "grc",
@@ -1070,7 +1204,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/grc.svg"
+      "flagPath": "/flags/grc.svg",
+      "palette": ["azul", "branco"]
     },
     {
       "id": "gum",
@@ -1078,7 +1213,17 @@
       "aliasesPtBr": ["GU", "Guåhån"],
       "region": "Oceania",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/gum.svg"
+      "flagPath": "/flags/gum.svg",
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "azul",
+        "marrom",
+        "preto",
+        "branco",
+        "cinza"
+      ]
     },
     {
       "id": "gtm",
@@ -1086,7 +1231,18 @@
       "aliasesPtBr": ["Republic of Guatemala", "República da Guatemala", "GT"],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/gtm.svg"
+      "flagPath": "/flags/gtm.svg",
+      "palette": [
+        "vermelho",
+        "laranja",
+        "amarelo",
+        "verde",
+        "azul",
+        "roxo",
+        "preto",
+        "branco",
+        "cinza"
+      ]
     },
     {
       "id": "guy",
@@ -1099,7 +1255,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/guy.svg"
+      "flagPath": "/flags/guy.svg",
+      "palette": ["vermelho", "laranja", "verde", "preto", "branco"]
     },
     {
       "id": "gin",
@@ -1113,7 +1270,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/gin.svg"
+      "flagPath": "/flags/gin.svg",
+      "palette": ["vermelho", "amarelo", "verde"]
     },
     {
       "id": "gnq",
@@ -1128,7 +1286,17 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/gnq.svg"
+      "flagPath": "/flags/gnq.svg",
+      "palette": [
+        "vermelho",
+        "laranja",
+        "amarelo",
+        "verde",
+        "azul",
+        "marrom",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "gnb",
@@ -1141,7 +1309,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/gnb.svg"
+      "flagPath": "/flags/gnb.svg",
+      "palette": ["vermelho", "amarelo", "verde", "preto"]
     },
     {
       "id": "hti",
@@ -1155,7 +1324,16 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/hti.svg"
+      "flagPath": "/flags/hti.svg",
+      "palette": [
+        "vermelho",
+        "laranja",
+        "amarelo",
+        "verde",
+        "azul",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "hnd",
@@ -1163,7 +1341,8 @@
       "aliasesPtBr": ["Republic of Honduras", "República de Honduras", "HN"],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/hnd.svg"
+      "flagPath": "/flags/hnd.svg",
+      "palette": ["azul", "branco"]
     },
     {
       "id": "hkg",
@@ -1175,7 +1354,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/hkg.svg"
+      "flagPath": "/flags/hkg.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "hun",
@@ -1183,7 +1363,8 @@
       "aliasesPtBr": ["Hungary", "HU"],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/hun.svg"
+      "flagPath": "/flags/hun.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "yem",
@@ -1198,7 +1379,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/yem.svg"
+      "flagPath": "/flags/yem.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "cym",
@@ -1206,7 +1388,8 @@
       "aliasesPtBr": ["Cayman Islands", "KY"],
       "region": "Americas",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/cym.svg"
+      "flagPath": "/flags/cym.svg",
+      "palette": ["vermelho", "amarelo", "verde", "azul", "preto", "branco"]
     },
     {
       "id": "cok",
@@ -1214,7 +1397,8 @@
       "aliasesPtBr": ["Cook Islands", "CK", "Kūki 'Āirani"],
       "region": "Oceania",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/cok.svg"
+      "flagPath": "/flags/cok.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "fro",
@@ -1222,7 +1406,8 @@
       "aliasesPtBr": ["Faroe Islands", "FO", "Føroyar", "Færøerne"],
       "region": "Europe",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/fro.svg"
+      "flagPath": "/flags/fro.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "mhl",
@@ -1236,7 +1421,8 @@
       ],
       "region": "Oceania",
       "organizations": ["UN"],
-      "flagPath": "/flags/mhl.svg"
+      "flagPath": "/flags/mhl.svg",
+      "palette": ["laranja", "azul", "branco"]
     },
     {
       "id": "slb",
@@ -1244,7 +1430,8 @@
       "aliasesPtBr": ["Solomon Islands", "SB"],
       "region": "Oceania",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/slb.svg"
+      "flagPath": "/flags/slb.svg",
+      "palette": ["amarelo", "verde", "azul", "branco"]
     },
     {
       "id": "tca",
@@ -1252,7 +1439,18 @@
       "aliasesPtBr": ["Turks and Caicos Islands", "Ilhas Turks e Caicos", "TC"],
       "region": "Americas",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/tca.svg"
+      "flagPath": "/flags/tca.svg",
+      "palette": [
+        "vermelho",
+        "laranja",
+        "amarelo",
+        "verde",
+        "azul",
+        "rosa",
+        "marrom",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "vgb",
@@ -1266,7 +1464,17 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/vgb.svg"
+      "flagPath": "/flags/vgb.svg",
+      "palette": [
+        "vermelho",
+        "laranja",
+        "amarelo",
+        "verde",
+        "azul",
+        "marrom",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "vir",
@@ -1280,7 +1488,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/vir.svg"
+      "flagPath": "/flags/vir.svg",
+      "palette": ["laranja", "verde", "azul", "roxo", "preto", "branco"]
     },
     {
       "id": "ind",
@@ -1295,7 +1504,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/ind.svg"
+      "flagPath": "/flags/ind.svg",
+      "palette": ["laranja", "verde", "azul", "branco"]
     },
     {
       "id": "idn",
@@ -1308,7 +1518,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/idn.svg"
+      "flagPath": "/flags/idn.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "england",
@@ -1316,7 +1527,8 @@
       "aliasesPtBr": ["England"],
       "region": "Europe",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/england.svg"
+      "flagPath": "/flags/england.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "irn",
@@ -1331,7 +1543,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/irn.svg"
+      "flagPath": "/flags/irn.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "irq",
@@ -1345,7 +1558,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/irq.svg"
+      "flagPath": "/flags/irq.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "irl",
@@ -1360,7 +1574,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/irl.svg"
+      "flagPath": "/flags/irl.svg",
+      "palette": ["laranja", "verde", "branco"]
     },
     {
       "id": "northern-ireland",
@@ -1369,6 +1584,17 @@
       "region": "Europe",
       "organizations": ["FIFA"],
       "flagPath": "/flags/northern-ireland.svg",
+      "palette": [
+        "vermelho",
+        "laranja",
+        "amarelo",
+        "verde",
+        "azul",
+        "marrom",
+        "preto",
+        "branco",
+        "cinza"
+      ],
       "editorialNote": "A FIFA representa a Irlanda do Norte separadamente. O Ulster Banner é ensinado por ser a bandeira mais reconhecida no contexto esportivo, embora não seja uma bandeira oficial vigente."
     },
     {
@@ -1383,7 +1609,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/isl.svg"
+      "flagPath": "/flags/isl.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "isr",
@@ -1396,7 +1623,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/isr.svg"
+      "flagPath": "/flags/isr.svg",
+      "palette": ["azul", "branco"]
     },
     {
       "id": "ita",
@@ -1410,7 +1638,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/ita.svg"
+      "flagPath": "/flags/ita.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "jam",
@@ -1418,7 +1647,8 @@
       "aliasesPtBr": ["JM"],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/jam.svg"
+      "flagPath": "/flags/jam.svg",
+      "palette": ["laranja", "verde", "preto"]
     },
     {
       "id": "jpn",
@@ -1426,7 +1656,8 @@
       "aliasesPtBr": ["Japan", "JP", "Nippon", "Nihon"],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/jpn.svg"
+      "flagPath": "/flags/jpn.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "jor",
@@ -1440,7 +1671,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/jor.svg"
+      "flagPath": "/flags/jor.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "kir",
@@ -1454,7 +1686,8 @@
       ],
       "region": "Oceania",
       "organizations": ["UN"],
-      "flagPath": "/flags/kir.svg"
+      "flagPath": "/flags/kir.svg",
+      "palette": ["vermelho", "amarelo", "azul", "preto", "branco"]
     },
     {
       "id": "unk",
@@ -1467,7 +1700,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/unk.svg"
+      "flagPath": "/flags/unk.svg",
+      "palette": ["laranja", "azul", "branco"]
     },
     {
       "id": "kwt",
@@ -1480,7 +1714,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/kwt.svg"
+      "flagPath": "/flags/kwt.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "lao",
@@ -1494,7 +1729,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/lao.svg"
+      "flagPath": "/flags/lao.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "lso",
@@ -1508,7 +1744,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/lso.svg"
+      "flagPath": "/flags/lso.svg",
+      "palette": ["verde", "azul", "branco"]
     },
     {
       "id": "lva",
@@ -1522,7 +1759,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/lva.svg"
+      "flagPath": "/flags/lva.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "lbn",
@@ -1536,7 +1774,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/lbn.svg"
+      "flagPath": "/flags/lbn.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "lbr",
@@ -1544,7 +1783,8 @@
       "aliasesPtBr": ["Republic of Liberia", "República da Libéria", "LR"],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/lbr.svg"
+      "flagPath": "/flags/lbr.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "lby",
@@ -1558,7 +1798,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/lby.svg"
+      "flagPath": "/flags/lby.svg",
+      "palette": ["vermelho", "verde", "preto", "branco"]
     },
     {
       "id": "lie",
@@ -1571,7 +1812,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/lie.svg"
+      "flagPath": "/flags/lie.svg",
+      "palette": ["vermelho", "amarelo", "azul", "preto"]
     },
     {
       "id": "ltu",
@@ -1585,7 +1827,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/ltu.svg"
+      "flagPath": "/flags/ltu.svg",
+      "palette": ["vermelho", "laranja", "verde"]
     },
     {
       "id": "lux",
@@ -1601,7 +1844,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/lux.svg"
+      "flagPath": "/flags/lux.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "mac",
@@ -1617,7 +1861,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/mac.svg"
+      "flagPath": "/flags/mac.svg",
+      "palette": ["amarelo", "verde", "branco"]
     },
     {
       "id": "mkd",
@@ -1633,7 +1878,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/mkd.svg"
+      "flagPath": "/flags/mkd.svg",
+      "palette": ["vermelho", "amarelo"]
     },
     {
       "id": "mdg",
@@ -1647,7 +1893,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/mdg.svg"
+      "flagPath": "/flags/mdg.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "mys",
@@ -1655,7 +1902,8 @@
       "aliasesPtBr": ["Malaysia", "MY"],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/mys.svg"
+      "flagPath": "/flags/mys.svg",
+      "palette": ["vermelho", "amarelo", "azul", "branco"]
     },
     {
       "id": "mwi",
@@ -1663,7 +1911,8 @@
       "aliasesPtBr": ["Republic of Malawi", "República do Malawi", "MW"],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/mwi.svg"
+      "flagPath": "/flags/mwi.svg",
+      "palette": ["vermelho", "verde"]
     },
     {
       "id": "mdv",
@@ -1678,7 +1927,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/mdv.svg"
+      "flagPath": "/flags/mdv.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "mli",
@@ -1691,7 +1941,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/mli.svg"
+      "flagPath": "/flags/mli.svg",
+      "palette": ["vermelho", "amarelo", "verde"]
     },
     {
       "id": "mlt",
@@ -1704,7 +1955,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/mlt.svg"
+      "flagPath": "/flags/mlt.svg",
+      "palette": ["vermelho", "preto", "branco"]
     },
     {
       "id": "mar",
@@ -1718,7 +1970,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/mar.svg"
+      "flagPath": "/flags/mar.svg",
+      "palette": ["vermelho", "verde"]
     },
     {
       "id": "mus",
@@ -1732,7 +1985,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/mus.svg"
+      "flagPath": "/flags/mus.svg",
+      "palette": ["vermelho", "laranja", "verde", "azul"]
     },
     {
       "id": "mrt",
@@ -1745,7 +1999,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/mrt.svg"
+      "flagPath": "/flags/mrt.svg",
+      "palette": ["vermelho", "amarelo", "verde"]
     },
     {
       "id": "mex",
@@ -1758,7 +2013,18 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/mex.svg"
+      "flagPath": "/flags/mex.svg",
+      "palette": [
+        "vermelho",
+        "laranja",
+        "amarelo",
+        "verde",
+        "azul",
+        "marrom",
+        "preto",
+        "branco",
+        "cinza"
+      ]
     },
     {
       "id": "fsm",
@@ -1771,7 +2037,8 @@
       ],
       "region": "Oceania",
       "organizations": ["UN"],
-      "flagPath": "/flags/fsm.svg"
+      "flagPath": "/flags/fsm.svg",
+      "palette": ["azul", "branco"]
     },
     {
       "id": "moz",
@@ -1784,7 +2051,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/moz.svg"
+      "flagPath": "/flags/moz.svg",
+      "palette": ["vermelho", "laranja", "amarelo", "verde", "azul", "branco"]
     },
     {
       "id": "mda",
@@ -1799,7 +2067,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/mda.svg"
+      "flagPath": "/flags/mda.svg",
+      "palette": ["vermelho", "laranja", "amarelo", "verde", "azul"]
     },
     {
       "id": "mco",
@@ -1812,7 +2081,8 @@
       ],
       "region": "Europe",
       "organizations": ["UN"],
-      "flagPath": "/flags/mco.svg"
+      "flagPath": "/flags/mco.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "mng",
@@ -1820,7 +2090,8 @@
       "aliasesPtBr": ["MN"],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/mng.svg"
+      "flagPath": "/flags/mng.svg",
+      "palette": ["vermelho", "amarelo", "azul"]
     },
     {
       "id": "mne",
@@ -1828,7 +2099,8 @@
       "aliasesPtBr": ["ME", "Crna Gora"],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/mne.svg"
+      "flagPath": "/flags/mne.svg",
+      "palette": ["vermelho", "laranja", "amarelo", "verde", "azul"]
     },
     {
       "id": "msr",
@@ -1836,7 +2108,17 @@
       "aliasesPtBr": ["MS"],
       "region": "Americas",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/msr.svg"
+      "flagPath": "/flags/msr.svg",
+      "palette": [
+        "vermelho",
+        "laranja",
+        "amarelo",
+        "verde",
+        "azul",
+        "marrom",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "mmr",
@@ -1850,7 +2132,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/mmr.svg"
+      "flagPath": "/flags/mmr.svg",
+      "palette": ["vermelho", "amarelo", "verde", "branco"]
     },
     {
       "id": "nam",
@@ -1863,7 +2146,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/nam.svg"
+      "flagPath": "/flags/nam.svg",
+      "palette": ["vermelho", "amarelo", "verde", "azul", "branco"]
     },
     {
       "id": "nru",
@@ -1878,7 +2162,8 @@
       ],
       "region": "Oceania",
       "organizations": ["UN"],
-      "flagPath": "/flags/nru.svg"
+      "flagPath": "/flags/nru.svg",
+      "palette": ["laranja", "azul", "branco"]
     },
     {
       "id": "npl",
@@ -1891,7 +2176,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/npl.svg"
+      "flagPath": "/flags/npl.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "nic",
@@ -1904,7 +2190,16 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/nic.svg"
+      "flagPath": "/flags/nic.svg",
+      "palette": [
+        "vermelho",
+        "laranja",
+        "amarelo",
+        "verde",
+        "azul",
+        "roxo",
+        "branco"
+      ]
     },
     {
       "id": "ner",
@@ -1912,7 +2207,8 @@
       "aliasesPtBr": ["Republic of Niger", "República do Níger", "NE", "Nijar"],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/ner.svg"
+      "flagPath": "/flags/ner.svg",
+      "palette": ["laranja", "verde", "branco"]
     },
     {
       "id": "nga",
@@ -1926,7 +2222,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/nga.svg"
+      "flagPath": "/flags/nga.svg",
+      "palette": ["verde", "branco"]
     },
     {
       "id": "nor",
@@ -1943,7 +2240,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/nor.svg"
+      "flagPath": "/flags/nor.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "ncl",
@@ -1951,7 +2249,8 @@
       "aliasesPtBr": ["New Caledonia", "NC"],
       "region": "Oceania",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/ncl.svg"
+      "flagPath": "/flags/ncl.svg",
+      "palette": ["vermelho", "amarelo", "verde", "azul", "preto"]
     },
     {
       "id": "nzl",
@@ -1959,7 +2258,8 @@
       "aliasesPtBr": ["New Zealand", "NZ", "Aotearoa"],
       "region": "Oceania",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/nzl.svg"
+      "flagPath": "/flags/nzl.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "omn",
@@ -1973,7 +2273,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/omn.svg"
+      "flagPath": "/flags/omn.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "wales",
@@ -1981,7 +2282,8 @@
       "aliasesPtBr": ["Wales", "Gales"],
       "region": "Europe",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/wales.svg"
+      "flagPath": "/flags/wales.svg",
+      "palette": ["vermelho", "verde", "preto", "branco"]
     },
     {
       "id": "nld",
@@ -1997,7 +2299,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/nld.svg"
+      "flagPath": "/flags/nld.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "plw",
@@ -2010,7 +2313,8 @@
       ],
       "region": "Oceania",
       "organizations": ["UN"],
-      "flagPath": "/flags/plw.svg"
+      "flagPath": "/flags/plw.svg",
+      "palette": ["amarelo", "azul"]
     },
     {
       "id": "pse",
@@ -2025,7 +2329,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/pse.svg"
+      "flagPath": "/flags/pse.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "pan",
@@ -2038,7 +2343,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/pan.svg"
+      "flagPath": "/flags/pan.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "png",
@@ -2052,7 +2358,8 @@
       ],
       "region": "Oceania",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/png.svg"
+      "flagPath": "/flags/png.svg",
+      "palette": ["vermelho", "amarelo", "branco"]
     },
     {
       "id": "pak",
@@ -2066,7 +2373,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/pak.svg"
+      "flagPath": "/flags/pak.svg",
+      "palette": ["verde", "branco"]
     },
     {
       "id": "pry",
@@ -2082,6 +2390,7 @@
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
       "flagPath": "/flags/pry.svg",
+      "palette": ["vermelho", "amarelo", "verde", "azul", "preto", "branco"],
       "editorialNote": "O exercício usa o anverso da bandeira do Paraguai."
     },
     {
@@ -2095,7 +2404,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/per.svg"
+      "flagPath": "/flags/per.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "pyf",
@@ -2109,7 +2419,8 @@
       ],
       "region": "Oceania",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/pyf.svg"
+      "flagPath": "/flags/pyf.svg",
+      "palette": ["vermelho", "laranja", "azul", "branco"]
     },
     {
       "id": "pol",
@@ -2123,7 +2434,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/pol.svg"
+      "flagPath": "/flags/pol.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "pri",
@@ -2136,7 +2448,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/pri.svg"
+      "flagPath": "/flags/pri.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "prt",
@@ -2150,7 +2463,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/prt.svg"
+      "flagPath": "/flags/prt.svg",
+      "palette": ["vermelho", "amarelo", "verde", "azul", "preto", "branco"]
     },
     {
       "id": "ken",
@@ -2164,7 +2478,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/ken.svg"
+      "flagPath": "/flags/ken.svg",
+      "palette": ["vermelho", "verde", "preto", "branco"]
     },
     {
       "id": "kgz",
@@ -2180,7 +2495,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/kgz.svg"
+      "flagPath": "/flags/kgz.svg",
+      "palette": ["vermelho", "amarelo"]
     },
     {
       "id": "gbr",
@@ -2195,7 +2511,8 @@
       ],
       "region": "Europe",
       "organizations": ["UN"],
-      "flagPath": "/flags/gbr.svg"
+      "flagPath": "/flags/gbr.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "caf",
@@ -2208,7 +2525,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/caf.svg"
+      "flagPath": "/flags/caf.svg",
+      "palette": ["vermelho", "amarelo", "verde", "azul", "branco"]
     },
     {
       "id": "cod",
@@ -2223,7 +2541,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/cod.svg"
+      "flagPath": "/flags/cod.svg",
+      "palette": ["vermelho", "amarelo", "azul"]
     },
     {
       "id": "cog",
@@ -2236,7 +2555,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/cog.svg"
+      "flagPath": "/flags/cog.svg",
+      "palette": ["vermelho", "amarelo", "verde"]
     },
     {
       "id": "dom",
@@ -2244,7 +2564,8 @@
       "aliasesPtBr": ["Dominican Republic", "DO"],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/dom.svg"
+      "flagPath": "/flags/dom.svg",
+      "palette": ["vermelho", "amarelo", "verde", "azul", "preto", "branco"]
     },
     {
       "id": "rou",
@@ -2252,7 +2573,8 @@
       "aliasesPtBr": ["Romania", "RO", "Rumania", "Roumania"],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/rou.svg"
+      "flagPath": "/flags/rou.svg",
+      "palette": ["vermelho", "amarelo", "azul"]
     },
     {
       "id": "rwa",
@@ -2267,7 +2589,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/rwa.svg"
+      "flagPath": "/flags/rwa.svg",
+      "palette": ["amarelo", "verde", "azul"]
     },
     {
       "id": "rus",
@@ -2280,7 +2603,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/rus.svg"
+      "flagPath": "/flags/rus.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "wsm",
@@ -2293,7 +2617,8 @@
       ],
       "region": "Oceania",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/wsm.svg"
+      "flagPath": "/flags/wsm.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "asm",
@@ -2307,7 +2632,8 @@
       ],
       "region": "Oceania",
       "organizations": ["FIFA"],
-      "flagPath": "/flags/asm.svg"
+      "flagPath": "/flags/asm.svg",
+      "palette": ["vermelho", "laranja", "azul", "marrom", "branco", "cinza"]
     },
     {
       "id": "smr",
@@ -2320,7 +2646,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/smr.svg"
+      "flagPath": "/flags/smr.svg",
+      "palette": ["laranja", "verde", "azul", "preto", "branco", "cinza"]
     },
     {
       "id": "lca",
@@ -2328,7 +2655,8 @@
       "aliasesPtBr": ["Saint Lucia", "LC"],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/lca.svg"
+      "flagPath": "/flags/lca.svg",
+      "palette": ["amarelo", "azul", "branco"]
     },
     {
       "id": "kna",
@@ -2341,7 +2669,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/kna.svg"
+      "flagPath": "/flags/kna.svg",
+      "palette": ["vermelho", "amarelo", "verde", "preto", "branco"]
     },
     {
       "id": "stp",
@@ -2354,7 +2683,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/stp.svg"
+      "flagPath": "/flags/stp.svg",
+      "palette": ["vermelho", "amarelo", "verde"]
     },
     {
       "id": "vct",
@@ -2362,7 +2692,8 @@
       "aliasesPtBr": ["Saint Vincent and the Grenadines", "VC"],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/vct.svg"
+      "flagPath": "/flags/vct.svg",
+      "palette": ["amarelo", "verde", "azul"]
     },
     {
       "id": "syc",
@@ -2377,7 +2708,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/syc.svg"
+      "flagPath": "/flags/syc.svg",
+      "palette": ["vermelho", "amarelo", "verde", "azul", "branco"]
     },
     {
       "id": "sen",
@@ -2390,7 +2722,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/sen.svg"
+      "flagPath": "/flags/sen.svg",
+      "palette": ["vermelho", "amarelo", "verde"]
     },
     {
       "id": "sle",
@@ -2403,7 +2736,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/sle.svg"
+      "flagPath": "/flags/sle.svg",
+      "palette": ["verde", "azul", "branco"]
     },
     {
       "id": "srb",
@@ -2419,7 +2753,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/srb.svg"
+      "flagPath": "/flags/srb.svg",
+      "palette": ["vermelho", "laranja", "azul", "preto", "branco"]
     },
     {
       "id": "sgp",
@@ -2434,7 +2769,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/sgp.svg"
+      "flagPath": "/flags/sgp.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "syr",
@@ -2448,7 +2784,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/syr.svg"
+      "flagPath": "/flags/syr.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "som",
@@ -2463,7 +2800,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/som.svg"
+      "flagPath": "/flags/som.svg",
+      "palette": ["azul", "branco"]
     },
     {
       "id": "lka",
@@ -2476,7 +2814,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/lka.svg"
+      "flagPath": "/flags/lka.svg",
+      "palette": ["laranja", "azul", "roxo", "preto"]
     },
     {
       "id": "sdn",
@@ -2490,7 +2829,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/sdn.svg"
+      "flagPath": "/flags/sdn.svg",
+      "palette": ["vermelho", "verde", "branco"]
     },
     {
       "id": "ssd",
@@ -2503,7 +2843,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/ssd.svg"
+      "flagPath": "/flags/ssd.svg",
+      "palette": ["vermelho", "amarelo", "verde", "azul", "branco"]
     },
     {
       "id": "swe",
@@ -2517,7 +2858,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/swe.svg"
+      "flagPath": "/flags/swe.svg",
+      "palette": ["amarelo", "azul"]
     },
     {
       "id": "che",
@@ -2534,7 +2876,8 @@
       ],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/che.svg"
+      "flagPath": "/flags/che.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "sur",
@@ -2549,7 +2892,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/sur.svg"
+      "flagPath": "/flags/sur.svg",
+      "palette": ["vermelho", "amarelo", "verde", "branco"]
     },
     {
       "id": "tha",
@@ -2566,7 +2910,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/tha.svg"
+      "flagPath": "/flags/tha.svg",
+      "palette": ["vermelho", "azul", "branco"]
     },
     {
       "id": "twn",
@@ -2583,6 +2928,7 @@
       "region": "Asia",
       "organizations": ["FIFA"],
       "flagPath": "/flags/twn.svg",
+      "palette": ["vermelho", "azul", "branco"],
       "editorialNote": "A entidade aparece como Taiwan; Chinese Taipei é preservado como nome institucional da FIFA e alias aceito."
     },
     {
@@ -2599,7 +2945,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/tjk.svg"
+      "flagPath": "/flags/tjk.svg",
+      "palette": ["vermelho", "amarelo", "verde", "branco", "cinza"]
     },
     {
       "id": "tza",
@@ -2613,7 +2960,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/tza.svg"
+      "flagPath": "/flags/tza.svg",
+      "palette": ["amarelo", "verde", "azul", "preto"]
     },
     {
       "id": "tls",
@@ -2629,7 +2977,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/tls.svg"
+      "flagPath": "/flags/tls.svg",
+      "palette": ["vermelho", "laranja", "branco"]
     },
     {
       "id": "tgo",
@@ -2643,7 +2992,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/tgo.svg"
+      "flagPath": "/flags/tgo.svg",
+      "palette": ["vermelho", "amarelo", "verde", "branco"]
     },
     {
       "id": "ton",
@@ -2651,7 +3001,8 @@
       "aliasesPtBr": ["Kingdom of Tonga", "Reino de Tonga", "TO"],
       "region": "Oceania",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/ton.svg"
+      "flagPath": "/flags/ton.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "tto",
@@ -2664,7 +3015,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/tto.svg"
+      "flagPath": "/flags/tto.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "tun",
@@ -2678,7 +3030,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/tun.svg"
+      "flagPath": "/flags/tun.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "tkm",
@@ -2686,7 +3039,8 @@
       "aliasesPtBr": ["Turkmenistan", "Turcomenistão", "TM"],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/tkm.svg"
+      "flagPath": "/flags/tkm.svg",
+      "palette": ["vermelho", "laranja", "verde", "branco", "cinza"]
     },
     {
       "id": "tur",
@@ -2701,7 +3055,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/tur.svg"
+      "flagPath": "/flags/tur.svg",
+      "palette": ["vermelho", "branco"]
     },
     {
       "id": "tuv",
@@ -2709,7 +3064,8 @@
       "aliasesPtBr": ["TV"],
       "region": "Oceania",
       "organizations": ["UN"],
-      "flagPath": "/flags/tuv.svg"
+      "flagPath": "/flags/tuv.svg",
+      "palette": ["vermelho", "amarelo", "azul", "branco"]
     },
     {
       "id": "ukr",
@@ -2717,7 +3073,8 @@
       "aliasesPtBr": ["Ukraine", "UA", "Ukrayina"],
       "region": "Europe",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/ukr.svg"
+      "flagPath": "/flags/ukr.svg",
+      "palette": ["amarelo", "azul"]
     },
     {
       "id": "uga",
@@ -2730,7 +3087,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/uga.svg"
+      "flagPath": "/flags/uga.svg",
+      "palette": ["vermelho", "amarelo", "preto", "branco", "cinza"]
     },
     {
       "id": "ury",
@@ -2744,7 +3102,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/ury.svg"
+      "flagPath": "/flags/ury.svg",
+      "palette": ["amarelo", "azul", "marrom", "branco"]
     },
     {
       "id": "uzb",
@@ -2759,7 +3118,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/uzb.svg"
+      "flagPath": "/flags/uzb.svg",
+      "palette": ["vermelho", "verde", "azul", "branco"]
     },
     {
       "id": "vut",
@@ -2773,7 +3133,8 @@
       ],
       "region": "Oceania",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/vut.svg"
+      "flagPath": "/flags/vut.svg",
+      "palette": ["vermelho", "amarelo", "verde", "preto"]
     },
     {
       "id": "vat",
@@ -2790,6 +3151,7 @@
       "region": "Europe",
       "organizations": ["UN"],
       "flagPath": "/flags/vat.png",
+      "palette": ["amarelo", "branco"],
       "editorialNote": "A Santa Sé é Estado observador permanente da ONU; a bandeira exibida é a do Estado da Cidade do Vaticano."
     },
     {
@@ -2804,7 +3166,8 @@
       ],
       "region": "Americas",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/ven.svg"
+      "flagPath": "/flags/ven.svg",
+      "palette": ["vermelho", "amarelo", "azul", "branco"]
     },
     {
       "id": "vnm",
@@ -2819,7 +3182,8 @@
       ],
       "region": "Asia",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/vnm.svg"
+      "flagPath": "/flags/vnm.svg",
+      "palette": ["vermelho", "amarelo"]
     },
     {
       "id": "zmb",
@@ -2827,7 +3191,8 @@
       "aliasesPtBr": ["Republic of Zambia", "República da Zâmbia", "ZM"],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/zmb.svg"
+      "flagPath": "/flags/zmb.svg",
+      "palette": ["vermelho", "laranja", "verde", "preto"]
     },
     {
       "id": "zwe",
@@ -2840,7 +3205,8 @@
       ],
       "region": "Africa",
       "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/zwe.svg"
+      "flagPath": "/flags/zwe.svg",
+      "palette": ["vermelho", "amarelo", "verde", "preto", "branco"]
     }
   ]
 }

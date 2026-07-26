@@ -1,3 +1,5 @@
+import type { ColorNamePtBr } from "@/domain/palette";
+
 import type { Organization } from "./catalog";
 
 /**
@@ -17,6 +19,11 @@ export interface RuntimeEntity {
   readonly organizations: readonly Organization[];
   /** Obrigatório: uma entidade sem bandeira não é construível. */
   readonly flagPath: string;
+  /**
+   * Cores da bandeira, quantizadas. Alimenta a escolha de distratores
+   * confundíveis e a descrição para leitor de tela. Nunca vazia.
+   */
+  readonly palette: readonly ColorNamePtBr[];
   readonly editorialNote?: string;
 }
 

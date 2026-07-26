@@ -1,3 +1,4 @@
+import type { ColorNamePtBr } from "@/domain/palette";
 import type { Catalog } from "@/types/catalog";
 import type { RuntimeCatalog, RuntimeEntity } from "@/types/runtime-catalog";
 
@@ -9,7 +10,10 @@ import type { RuntimeCatalog, RuntimeEntity } from "@/types/runtime-catalog";
  * que uma edição em `catalog.json` sem regeneração falhe em `pnpm test`, sem
  * depender de rede nem do pipeline de refresh.
  */
-export function projectRuntimeCatalog(catalog: Catalog): RuntimeCatalog {
+export function projectRuntimeCatalog(
+  catalog: Catalog,
+  paletteByEntityId: ReadonlyMap<string, readonly ColorNamePtBr[]>
+): RuntimeCatalog {
   const flagByEntityId = new Map(
     catalog.flagRevisions.map((flag) => [flag.entityId, flag])
   );
@@ -18,6 +22,10 @@ export function projectRuntimeCatalog(catalog: Catalog): RuntimeCatalog {
     const flag = flagByEntityId.get(entity.id);
     if (!flag) {
       throw new Error(`Entidade sem bandeira no catálogo: ${entity.id}`);
+    }
+    const palette = paletteByEntityId.get(entity.id);
+    if (!palette || palette.length === 0) {
+      throw new Error(`Entidade sem paleta: ${entity.id}`);
     }
     return {
       id: entity.id,
@@ -30,6 +38,7 @@ export function projectRuntimeCatalog(catalog: Catalog): RuntimeCatalog {
         ...new Set(entity.memberships.map(({ organization }) => organization))
       ].sort(),
       flagPath: flag.filePath,
+      palette,
       ...(entity.editorialNote ? { editorialNote: entity.editorialNote } : {})
     };
   });
