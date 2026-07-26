@@ -64,7 +64,12 @@ test("navegação principal funciona em desktop e mobile", async ({
     ).toBeVisible();
   }
 
-  await page.getByRole("link", { name: "Bandeiras" }).click();
+  // Escopo no menu: "Bandeiras" também casa com "Explorar bandeiras", do hero
+  // da home, e o seletor solto viola o modo estrito do Playwright.
+  await page
+    .getByRole("navigation", { name: "Navegação principal" })
+    .getByRole("link", { name: "Bandeiras" })
+    .click();
   await expect(page).toHaveURL(/\/catalogo$/);
   await expect(page.getByRole("heading", { name: "Bandeiras" })).toBeVisible();
   await expectNoHorizontalOverflow(page);

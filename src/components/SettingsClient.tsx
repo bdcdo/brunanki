@@ -93,6 +93,10 @@ export function SettingsClient() {
               ref={inputRef}
               className="sr-only"
               type="file"
+              // O input fica fora da tela e é acionado pelo botão ao lado, mas
+              // continua no formulário: sem rótulo próprio, o leitor de tela o
+              // anuncia como campo sem nome.
+              aria-label="Arquivo de backup em JSON"
               accept="application/json,.json"
               onChange={(event) => {
                 const file = event.target.files?.[0];

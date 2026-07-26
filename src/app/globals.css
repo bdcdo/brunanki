@@ -560,6 +560,7 @@ a {
 }
 
 .flag-frame {
+  position: relative;
   display: grid;
   overflow: hidden;
   border: 1px solid #a8ada8;
@@ -574,7 +575,20 @@ a {
   background-size: 12px 12px;
 }
 
+/* Posicionamento absoluto preso ao frame, e não dimensões percentuais num
+   item de grid: como a faixa do grid cresce até caber o conteúdo, a altura da
+   imagem se resolvia pela proporção intrínseca do arquivo e ultrapassava o
+   frame — que tem proporção 3/2 e recorta o excedente. A bandeira do Brasil,
+   de proporção 10/7, aparecia cortada no catálogo. Com `inset: 0`, o limite é
+   o próprio frame, e `object-fit: contain` preserva a proporção do arquivo
+   dentro dele.
+
+   Todos os usos de .flag-frame definem altura (aspect-ratio em .flag-card,
+   .choice-flag e .detail-flag; height em .quiz-flag), então o frame nunca
+   colapsa ao tirar a imagem do fluxo. */
 .flag-frame img {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
