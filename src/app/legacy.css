@@ -371,12 +371,6 @@ a {
   font-weight: 700;
 }
 
-.two-column {
-  display: grid;
-  grid-template-columns: 1.35fr 0.65fr;
-  gap: 18px;
-}
-
 .progress-block {
   display: grid;
   gap: 8px;
@@ -775,7 +769,6 @@ a {
 
   .stats-grid,
   .catalog-grid,
-  .two-column,
   .detail-grid {
     grid-template-columns: 1fr;
   }

@@ -78,7 +78,7 @@ function ProgressPageReady({ snapshot }: { snapshot: LearningSnapshot }) {
         />
       </section>
 
-      <section className="two-column" style={{ marginTop: 18 }}>
+      <section className="mt-[18px] grid grid-cols-[1.35fr_0.65fr] gap-[18px] max-md:grid-cols-1">
         <article className="card">
           <span className="eyebrow">Como ler</span>
           <h2>Uma bandeira passa por três estados</h2>
