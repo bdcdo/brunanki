@@ -7,13 +7,20 @@ import { ProgressBar } from "@/components/ProgressBar";
 import { entities } from "@/data/catalog";
 
 export default function HomePage() {
-  const {diagnostic, skills, attempts, loading} = useApp();
+  const { diagnostic, skills, attempts, loading } = useApp();
   const completedDiagnostic = Boolean(diagnostic?.completedAt);
   const diagnosed = diagnostic?.currentIndex ?? 0;
-  const scheduled = skills.filter((skill) => skill.phase === "scheduled").length;
-  const acquiring = skills.filter((skill) => skill.phase === "acquiring").length;
-  const correct = attempts.filter((attempt) => attempt.outcome === "correct").length;
-  const accuracy = attempts.length === 0 ? 0 : Math.round((correct / attempts.length) * 100);
+  const scheduled = skills.filter(
+    (skill) => skill.phase === "scheduled"
+  ).length;
+  const acquiring = skills.filter(
+    (skill) => skill.phase === "acquiring"
+  ).length;
+  const correct = attempts.filter(
+    (attempt) => attempt.outcome === "correct"
+  ).length;
+  const accuracy =
+    attempts.length === 0 ? 0 : Math.round((correct / attempts.length) * 100);
 
   return (
     <div className="page">
@@ -29,7 +36,9 @@ export default function HomePage() {
               </p>
               <div className="hero-actions">
                 <Link href="/diagnostico" className="button button-coral">
-                  {diagnosed > 0 ? "Continuar diagnóstico" : "Começar diagnóstico"}
+                  {diagnosed > 0
+                    ? "Continuar diagnóstico"
+                    : "Começar diagnóstico"}
                   <ArrowRight size={19} aria-hidden="true" />
                 </Link>
                 <Link href="/catalogo" className="button button-secondary">
@@ -70,7 +79,10 @@ export default function HomePage() {
           </div>
 
           {diagnostic && diagnosed > 0 && (
-            <section className="card" aria-labelledby="diagnostic-progress-title">
+            <section
+              className="card"
+              aria-labelledby="diagnostic-progress-title"
+            >
               <div className="section-heading">
                 <h2 id="diagnostic-progress-title">Seu diagnóstico</h2>
                 <Link href="/diagnostico">Retomar</Link>
@@ -89,7 +101,10 @@ export default function HomePage() {
             <div>
               <span className="eyebrow">Sua sessão</span>
               <h1>Hoje</h1>
-              <p>Revisões vencidas primeiro. Novas bandeiras entram quando há espaço.</p>
+              <p>
+                Revisões vencidas primeiro. Novas bandeiras entram quando há
+                espaço.
+              </p>
             </div>
           </header>
 
@@ -105,7 +120,10 @@ export default function HomePage() {
                 Começar sessão <ArrowRight size={19} aria-hidden="true" />
               </Link>
             </div>
-            <div className="daily-number" aria-label={`${Math.max(5, acquiring)} exercícios previstos`}>
+            <div
+              className="daily-number"
+              aria-label={`${Math.max(5, acquiring)} exercícios previstos`}
+            >
               <div>
                 <strong>{Math.max(5, acquiring)}</strong>
                 <span>exercícios</span>
@@ -113,7 +131,7 @@ export default function HomePage() {
             </div>
           </section>
 
-          <div className="stats-grid" style={{marginTop: 24}}>
+          <div className="stats-grid" style={{ marginTop: 24 }}>
             <article className="stat-card">
               <span>Em revisão</span>
               <strong>{scheduled}</strong>
@@ -134,29 +152,29 @@ export default function HomePage() {
         </>
       )}
 
-      <section style={{marginTop: 34}} aria-labelledby="method-title">
+      <section style={{ marginTop: 34 }} aria-labelledby="method-title">
         <div className="section-heading">
           <h2 id="method-title">Como o Ptanki ensina</h2>
         </div>
         <div className="stats-grid">
           <article className="stat-card">
             <Brain size={24} aria-hidden="true" />
-            <strong style={{fontSize: 22}}>Tente antes de ver</strong>
+            <strong style={{ fontSize: 22 }}>Tente antes de ver</strong>
             <span>Recuperar a resposta fortalece mais do que reler.</span>
           </article>
           <article className="stat-card">
             <CalendarClock size={24} aria-hidden="true" />
-            <strong style={{fontSize: 22}}>Reveja na hora certa</strong>
+            <strong style={{ fontSize: 22 }}>Reveja na hora certa</strong>
             <span>O intervalo cresce conforme a lembrança se estabiliza.</span>
           </article>
           <article className="stat-card">
             <CheckCircle2 size={24} aria-hidden="true" />
-            <strong style={{fontSize: 22}}>Avance com evidência</strong>
+            <strong style={{ fontSize: 22 }}>Avance com evidência</strong>
             <span>Digitar o nome faz parte do domínio, sem atalhos.</span>
           </article>
           <article className="stat-card">
             <ArrowRight size={24} aria-hidden="true" />
-            <strong style={{fontSize: 22}}>Compare parecidas</strong>
+            <strong style={{ fontSize: 22 }}>Compare parecidas</strong>
             <span>Contrastes entram depois do primeiro contato.</span>
           </article>
         </div>

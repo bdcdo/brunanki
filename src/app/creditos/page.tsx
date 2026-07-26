@@ -15,19 +15,20 @@ export default function CreditsPage() {
           <h1>Fontes e créditos</h1>
           <p>
             ONU e FIFA definem quem entra no atlas. Wikidata ajuda a localizar
-            os arquivos, e cada imagem preserva a referência ao Wikimedia Commons.
+            os arquivos, e cada imagem preserva a referência ao Wikimedia
+            Commons.
           </p>
         </div>
       </header>
 
-      <section className="card" style={{marginBottom: 20}}>
+      <section className="card" style={{ marginBottom: 20 }}>
         <h2>Fontes institucionais</h2>
         <p>
           O catálogo combina os 193 Estados-membros da ONU, as 211 associações
           da FIFA e a Santa Sé como Estado observador não membro. A Palestina já
           integra a união pela FIFA.
         </p>
-        <div style={{display: "flex", flexWrap: "wrap", gap: 10}}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
           <a
             className="button button-secondary"
             href="https://www.un.org/en/about-us/member-states"
@@ -55,16 +56,16 @@ export default function CreditsPage() {
         </div>
       </section>
 
-      <section className="card" style={{marginBottom: 20}}>
+      <section className="card" style={{ marginBottom: 20 }}>
         <h2>Método de aprendizagem</h2>
         <p>
           A progressão adapta ao domínio de fatos os princípios de recuperação
           ativa, feedback imediato, prática intercalada e revisão espaçada
           apresentados pelo Math Academy. Bandeiras são itens em grande parte
-          independentes; por isso o Ptanki não presume um grafo de pré-requisitos
-          geográficos.
+          independentes; por isso o Ptanki não presume um grafo de
+          pré-requisitos geográficos.
         </p>
-        <div style={{display: "flex", flexWrap: "wrap", gap: 10}}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
           <a
             className="button button-secondary"
             href="https://www.justinmath.com/files/the-math-academy-way.pdf"
@@ -79,7 +80,8 @@ export default function CreditsPage() {
             target="_blank"
             rel="noreferrer"
           >
-            Pedagogia do Math Academy <ExternalLink size={16} aria-hidden="true" />
+            Pedagogia do Math Academy{" "}
+            <ExternalLink size={16} aria-hidden="true" />
           </a>
         </div>
       </section>

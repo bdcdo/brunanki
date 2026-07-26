@@ -4,14 +4,14 @@ import {
   createEmptyCard,
   fsrs,
   type Card,
-  type Grade,
+  type Grade
 } from "ts-fsrs";
 
 import type {
   AttemptOutcome,
   ReviewAttempt,
   SkillKind,
-  SkillState,
+  SkillState
 } from "@/types/learning";
 
 export const DEFAULT_DESIRED_RETENTION = 0.9;
@@ -30,7 +30,7 @@ export function skillStateId(entityId: string, skill: SkillKind): string {
 export function createSkillState(
   entityId: string,
   skill: SkillKind,
-  now: Date = new Date(),
+  now: Date = new Date()
 ): SkillState {
   return {
     id: skillStateId(entityId, skill),
@@ -38,7 +38,7 @@ export function createSkillState(
     skill,
     phase: "unseen",
     distinctSuccessDays: [],
-    updatedAt: now.toISOString(),
+    updatedAt: now.toISOString()
   };
 }
 
@@ -56,13 +56,13 @@ export function ratingForOutcome(outcome: AttemptOutcome): Grade {
 
 export function calendarDay(
   date: Date,
-  timeZone: string = DEFAULT_TIME_ZONE,
+  timeZone: string = DEFAULT_TIME_ZONE
 ): string {
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone,
     year: "numeric",
     month: "2-digit",
-    day: "2-digit",
+    day: "2-digit"
   }).formatToParts(date);
   const get = (type: Intl.DateTimeFormatPartTypes) =>
     parts.find((part) => part.type === type)?.value;
@@ -82,13 +82,15 @@ function phaseForCard(card: Card): SkillState["phase"] {
 export function scheduleAttempt(
   currentState: SkillState,
   attempt: ReviewAttempt,
-  options: ScheduleAttemptOptions = {},
+  options: ScheduleAttemptOptions = {}
 ): SkillState {
   if (
     currentState.entityId !== attempt.entityId ||
     currentState.skill !== attempt.skill
   ) {
-    throw new Error("A tentativa não pertence ao estado de habilidade informado");
+    throw new Error(
+      "A tentativa não pertence ao estado de habilidade informado"
+    );
   }
 
   const now = new Date(attempt.createdAt);
@@ -101,14 +103,13 @@ export function scheduleAttempt(
   validateDesiredRetention(desiredRetention);
   const scheduler = fsrs({
     request_retention: desiredRetention,
-    enable_fuzz: false,
+    enable_fuzz: false
   });
-  const currentCard: Card =
-    currentState.card ?? createEmptyCard<Card>(now);
+  const currentCard: Card = currentState.card ?? createEmptyCard<Card>(now);
   const { card } = scheduler.next(
     currentCard,
     now,
-    ratingForOutcome(attempt.outcome),
+    ratingForOutcome(attempt.outcome)
   );
 
   const successDays = new Set(currentState.distinctSuccessDays);
@@ -122,6 +123,6 @@ export function scheduleAttempt(
     card,
     distinctSuccessDays: [...successDays].sort(),
     lastOutcome: attempt.outcome,
-    updatedAt: now.toISOString(),
+    updatedAt: now.toISOString()
   };
 }

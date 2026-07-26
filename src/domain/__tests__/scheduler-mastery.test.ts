@@ -7,12 +7,12 @@ import { getMasteryStatus } from "../mastery";
 import {
   createSkillState,
   ratingForOutcome,
-  scheduleAttempt,
+  scheduleAttempt
 } from "../scheduler";
 
 function attempt(
   outcome: ReviewAttempt["outcome"],
-  createdAt: string,
+  createdAt: string
 ): ReviewAttempt {
   return {
     id: `${outcome}-${createdAt}`,
@@ -21,7 +21,7 @@ function attempt(
     exercise: "flagToNameInput",
     outcome,
     responseMs: 800,
-    createdAt,
+    createdAt
   };
 }
 
@@ -37,11 +37,11 @@ describe("scheduleAttempt", () => {
     const initial = createSkillState(
       "brasil",
       "flagToNameRecall",
-      new Date("2026-07-25T12:00:00Z"),
+      new Date("2026-07-25T12:00:00Z")
     );
     const updated = scheduleAttempt(
       initial,
-      attempt("correct", "2026-07-25T12:01:00.000Z"),
+      attempt("correct", "2026-07-25T12:01:00.000Z")
     );
 
     expect(updated.id).toBe("brasil::flagToNameRecall");
@@ -56,7 +56,7 @@ describe("scheduleAttempt", () => {
     const updated = scheduleAttempt(
       initial,
       attempt("correct", "2026-07-25T12:01:00.000Z"),
-      { isImmediateCorrection: true },
+      { isImmediateCorrection: true }
     );
     expect(updated.distinctSuccessDays).toEqual([]);
   });
@@ -65,22 +65,19 @@ describe("scheduleAttempt", () => {
     const initial = createSkillState("brasil", "flagToNameRecall");
     const first = scheduleAttempt(
       initial,
-      attempt("correct", "2026-07-25T02:30:00.000Z"),
+      attempt("correct", "2026-07-25T02:30:00.000Z")
     );
     const second = scheduleAttempt(
       first,
-      attempt("correct", "2026-07-25T03:30:00.000Z"),
+      attempt("correct", "2026-07-25T03:30:00.000Z")
     );
-    expect(second.distinctSuccessDays).toEqual([
-      "2026-07-24",
-      "2026-07-25",
-    ]);
+    expect(second.distinctSuccessDays).toEqual(["2026-07-24", "2026-07-25"]);
   });
 });
 
 function masteredState(
   skill: SkillState["skill"],
-  lastOutcome: SkillState["lastOutcome"] = "correct",
+  lastOutcome: SkillState["lastOutcome"] = "correct"
 ): SkillState {
   const card = createEmptyCard(new Date("2026-07-25T12:00:00Z"));
   card.stability = 30;
@@ -93,7 +90,7 @@ function masteredState(
     card,
     distinctSuccessDays: ["2026-07-24", "2026-07-25"],
     lastOutcome,
-    updatedAt: "2026-07-25T12:00:00.000Z",
+    updatedAt: "2026-07-25T12:00:00.000Z"
   };
 }
 
@@ -102,12 +99,12 @@ describe("getMasteryStatus", () => {
     expect(
       getMasteryStatus("brasil", [
         masteredState("flagToNameRecall"),
-        masteredState("nameToFlagRecognition"),
-      ]),
+        masteredState("nameToFlagRecognition")
+      ])
     ).toEqual({
       mastered: true,
       missingSkills: [],
-      reason: "mastered",
+      reason: "mastered"
     });
   });
 
@@ -115,8 +112,8 @@ describe("getMasteryStatus", () => {
     expect(
       getMasteryStatus("brasil", [
         masteredState("flagToNameRecall", "incorrect"),
-        masteredState("nameToFlagRecognition"),
-      ]).reason,
+        masteredState("nameToFlagRecognition")
+      ]).reason
     ).toBe("latest-attempt-not-correct");
   });
 });

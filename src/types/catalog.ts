@@ -1,12 +1,7 @@
 export type Organization = "UN" | "FIFA";
 export type MembershipStatus = "member" | "observer";
 export type Confederation =
-  | "AFC"
-  | "CAF"
-  | "CONCACAF"
-  | "CONMEBOL"
-  | "OFC"
-  | "UEFA";
+  "AFC" | "CAF" | "CONCACAF" | "CONMEBOL" | "OFC" | "UEFA";
 
 export interface Membership {
   organization: Organization;

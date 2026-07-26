@@ -5,13 +5,13 @@ import type { LearningEntity } from "@/types/catalog";
 import {
   CountryNameResolver,
   damerauLevenshteinDistance,
-  normalizeCountryName,
+  normalizeCountryName
 } from "../name-resolution";
 
 function entity(
   id: string,
   displayNamePtBr: string,
-  aliasesPtBr: string[] = [],
+  aliasesPtBr: string[] = []
 ): LearningEntity {
   return {
     id,
@@ -21,14 +21,14 @@ function entity(
     identifiers: { wikidataQid: "Q1" },
     region: "Test",
     memberships: [],
-    primaryFlagRevisionId: `flag-${id}`,
+    primaryFlagRevisionId: `flag-${id}`
   };
 }
 
 describe("normalizeCountryName", () => {
   it("normaliza caixa, diacríticos, pontuação e espaços", () => {
     expect(normalizeCountryName("  São-Tomé   e PRÍNCIPE! ")).toBe(
-      "sao tome e principe",
+      "sao tome e principe"
     );
   });
 });
@@ -47,17 +47,17 @@ describe("CountryNameResolver", () => {
     entity("china", "China"),
     entity("coreia-sul", "Coreia do Sul", ["Coreia do Sul"]),
     entity("coreia-norte", "Coreia do Norte"),
-    entity("vaticano", "Vaticano", ["Santa Sé"]),
+    entity("vaticano", "Vaticano", ["Santa Sé"])
   ]);
 
   it("aceita nome e alias exatos após normalização", () => {
     expect(resolver.classify("BRÁSIL", "brasil")).toEqual({
       kind: "exact",
-      entityId: "brasil",
+      entityId: "brasil"
     });
     expect(resolver.classify("Santa Se", "vaticano")).toEqual({
       kind: "exact",
-      entityId: "vaticano",
+      entityId: "vaticano"
     });
   });
 
@@ -65,30 +65,30 @@ describe("CountryNameResolver", () => {
     expect(resolver.classify("Barsil", "brasil")).toEqual({
       kind: "partial",
       entityId: "brasil",
-      distance: 1,
+      distance: 1
     });
   });
 
   it("não tolera typo em nomes com até quatro caracteres", () => {
     const shortResolver = new CountryNameResolver([
       entity("laos", "Laos"),
-      entity("mali", "Mali"),
+      entity("mali", "Mali")
     ]);
     expect(shortResolver.classify("Laod", "laos")).toEqual({
-      kind: "incorrect",
+      kind: "incorrect"
     });
   });
 
   it("trata o nome exato de outra entidade como erro, nunca typo", () => {
     expect(resolver.classify("Coreia do Norte", "coreia-sul")).toEqual({
       kind: "incorrect",
-      matchedEntityId: "coreia-norte",
+      matchedEntityId: "coreia-norte"
     });
   });
 
   it("não aceita como typo uma entrada empatada entre entidades", () => {
     expect(resolver.classify("Chila", "china")).toEqual({
-      kind: "incorrect",
+      kind: "incorrect"
     });
   });
 
@@ -97,8 +97,8 @@ describe("CountryNameResolver", () => {
       () =>
         new CountryNameResolver([
           entity("congo-1", "Congo A", ["Congo"]),
-          entity("congo-2", "Congo B", ["Côngo"]),
-        ]),
+          entity("congo-2", "Congo B", ["Côngo"])
+        ])
     ).toThrow(/colide/);
   });
 });

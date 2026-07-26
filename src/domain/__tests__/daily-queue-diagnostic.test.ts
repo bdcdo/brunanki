@@ -1,25 +1,21 @@
 import { createEmptyCard } from "ts-fsrs";
 import { describe, expect, it } from "vitest";
 
-import type {
-  ReviewAttempt,
-  SkillKind,
-  SkillState,
-} from "@/types/learning";
+import type { ReviewAttempt, SkillKind, SkillState } from "@/types/learning";
 
 import { buildDailyQueue } from "../daily-queue";
 import {
   advanceDiagnostic,
   currentDiagnosticEntity,
   diagnosticProgress,
-  startDiagnostic,
+  startDiagnostic
 } from "../diagnostic";
 
 function state(
   entityId: string,
   skill: SkillKind,
   due: string,
-  lastOutcome: SkillState["lastOutcome"] = "correct",
+  lastOutcome: SkillState["lastOutcome"] = "correct"
 ): SkillState {
   const card = createEmptyCard(new Date(due));
   return {
@@ -30,7 +26,7 @@ function state(
     card,
     distinctSuccessDays: [],
     lastOutcome,
-    updatedAt: "2026-07-24T12:00:00.000Z",
+    updatedAt: "2026-07-24T12:00:00.000Z"
   };
 }
 
@@ -39,43 +35,39 @@ describe("buildDailyQueue", () => {
     const queue = buildDailyQueue({
       entityOrder: ["brasil", "chile", "peru"],
       states: [
-        state(
-          "brasil",
-          "flagToNameRecall",
-          "2026-07-24T10:00:00.000Z",
-        ),
+        state("brasil", "flagToNameRecall", "2026-07-24T10:00:00.000Z"),
         state(
           "chile",
           "flagToNameRecall",
           "2026-07-27T10:00:00.000Z",
-          "incorrect",
-        ),
+          "incorrect"
+        )
       ],
       now: new Date("2026-07-25T12:00:00.000Z"),
-      baseNewLimit: 2,
+      baseNewLimit: 2
     });
 
     expect(queue.items).toEqual([
       {
         entityId: "brasil",
         skill: "flagToNameRecall",
-        reason: "due",
+        reason: "due"
       },
       {
         entityId: "chile",
         skill: "flagToNameRecall",
-        reason: "correction",
+        reason: "correction"
       },
       {
         entityId: "brasil",
         skill: "nameToFlagRecognition",
-        reason: "new",
+        reason: "new"
       },
       {
         entityId: "chile",
         skill: "nameToFlagRecognition",
-        reason: "new",
-      },
+        reason: "new"
+      }
     ]);
   });
 
@@ -89,14 +81,14 @@ describe("buildDailyQueue", () => {
         exercise: "flagToNameInput",
         outcome: index < 5 ? "correct" : "incorrect",
         responseMs: 500,
-        createdAt: `2026-07-${String(index + 1).padStart(2, "0")}T12:00:00.000Z`,
-      }),
+        createdAt: `2026-07-${String(index + 1).padStart(2, "0")}T12:00:00.000Z`
+      })
     );
     const queue = buildDailyQueue({
       entityOrder: ["brasil"],
       states: [],
       recentAttempts: attempts,
-      baseNewLimit: 10,
+      baseNewLimit: 10
     });
     expect(queue.recentAccuracy).toBe(0.5);
     expect(queue.newLimit).toBe(0);
@@ -109,7 +101,7 @@ describe("diagnóstico", () => {
     const diagnostic = startDiagnostic(
       ["brasil", "chile"],
       new Date("2026-07-25T10:00:00Z"),
-      () => 0,
+      () => 0
     );
     expect(diagnostic.entityOrder).toEqual(["chile", "brasil"]);
     expect(currentDiagnosticEntity(diagnostic)).toBe("chile");
@@ -117,12 +109,12 @@ describe("diagnóstico", () => {
     const second = advanceDiagnostic(diagnostic);
     const completed = advanceDiagnostic(
       second,
-      new Date("2026-07-25T11:00:00Z"),
+      new Date("2026-07-25T11:00:00Z")
     );
     expect(diagnosticProgress(completed)).toEqual({
       answered: 2,
       total: 2,
-      completed: true,
+      completed: true
     });
     expect(completed.completedAt).toBe("2026-07-25T11:00:00.000Z");
   });

@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   EXPORT_FORMAT,
   EXPORT_SCHEMA_VERSION,
-  parseExportJson,
+  parseExportJson
 } from "../export";
 
 function validExport() {
@@ -20,10 +20,10 @@ function validExport() {
         skill: "flagToNameRecall",
         phase: "unseen",
         distinctSuccessDays: [],
-        updatedAt: "2026-07-25T12:00:00.000Z",
-      },
+        updatedAt: "2026-07-25T12:00:00.000Z"
+      }
     ],
-    attempts: [],
+    attempts: []
   };
 }
 
@@ -32,7 +32,7 @@ describe("parseExportJson", () => {
     expect(parseExportJson(JSON.stringify(validExport()))).toMatchObject({
       format: "ptanki-export",
       schemaVersion: 1,
-      catalogVersion: "2026-07-25",
+      catalogVersion: "2026-07-25"
     });
   });
 
@@ -49,15 +49,15 @@ describe("parseExportJson", () => {
         entityOrder: ["brasil", "chile"],
         currentIndex: 1,
         startedAt: "2026-07-25T10:00:00.000Z",
-        completedAt: "2026-07-25T11:00:00.000Z",
-      },
+        completedAt: "2026-07-25T11:00:00.000Z"
+      }
     };
     expect(() => parseExportJson(JSON.stringify(data))).toThrow();
   });
 
   it("explica JSON sintaticamente inválido", () => {
     expect(() => parseExportJson("{")).toThrow(
-      "O arquivo não contém JSON válido",
+      "O arquivo não contém JSON válido"
     );
   });
 });

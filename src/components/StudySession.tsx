@@ -9,7 +9,11 @@ import { ProgressBar } from "@/components/ProgressBar";
 import { entities, entityById } from "@/data/catalog";
 import { buildDailyQueue, type DailyQueueItem } from "@/domain/daily-queue";
 import { CountryNameResolver } from "@/domain/name-resolution";
-import { createSkillState, scheduleAttempt, skillStateId } from "@/domain/scheduler";
+import {
+  createSkillState,
+  scheduleAttempt,
+  skillStateId
+} from "@/domain/scheduler";
 import type {
   AttemptOutcome,
   ReviewAttempt,
@@ -66,7 +70,7 @@ function newAttempt(
     exercise,
     outcome,
     responseMs,
-    ...(answer ? {answer} : {}),
+    ...(answer ? { answer } : {}),
     createdAt: new Date().toISOString()
   };
 }
@@ -85,7 +89,7 @@ function initialStep(item: SessionItem, state?: SkillState): StudyStep {
 }
 
 export function StudySession() {
-  const {diagnostic, skills, attempts, refresh, loading} = useApp();
+  const { diagnostic, skills, attempts, refresh, loading } = useApp();
   const [queue, setQueue] = useState<SessionItem[]>([]);
   const [index, setIndex] = useState(0);
   const [step, setStep] = useState<StudyStep>("teach");
@@ -104,7 +108,7 @@ export function StudySession() {
   function beginSession() {
     if (loading || initialized || !diagnostic?.completedAt) return;
     const plan = buildDailyQueue({
-      entityOrder: entities.map(({id}) => id),
+      entityOrder: entities.map(({ id }) => id),
       states: skills,
       recentAttempts: attempts,
       baseNewLimit: 5
@@ -113,7 +117,12 @@ export function StudySession() {
     setQueue(items);
     const first = items[0];
     if (first) {
-      setStep(initialStep(first, stateById.get(skillStateId(first.entityId, first.skill))));
+      setStep(
+        initialStep(
+          first,
+          stateById.get(skillStateId(first.entityId, first.skill))
+        )
+      );
     }
     setInitialized(true);
     startedAt.current = performance.now();
@@ -216,16 +225,34 @@ export function StudySession() {
 
   async function answerForwardChoice(selectedId: string) {
     if (!entity) return;
-    const outcome: AttemptOutcome = selectedId === entity.id ? "correct" : "incorrect";
-    await persistAttempt(outcome, "flagToNameChoice", entityById.get(selectedId)?.displayNamePtBr, false);
-    setFeedback({outcome, answer: entityById.get(selectedId)?.displayNamePtBr, nextStep: "forwardInput"});
+    const outcome: AttemptOutcome =
+      selectedId === entity.id ? "correct" : "incorrect";
+    await persistAttempt(
+      outcome,
+      "flagToNameChoice",
+      entityById.get(selectedId)?.displayNamePtBr,
+      false
+    );
+    setFeedback({
+      outcome,
+      answer: entityById.get(selectedId)?.displayNamePtBr,
+      nextStep: "forwardInput"
+    });
   }
 
   async function answerReverseChoice(selectedId: string) {
     if (!entity) return;
-    const outcome: AttemptOutcome = selectedId === entity.id ? "correct" : "incorrect";
-    await persistAttempt(outcome, "nameToFlagChoice", entityById.get(selectedId)?.displayNamePtBr);
-    setFeedback({outcome, answer: entityById.get(selectedId)?.displayNamePtBr});
+    const outcome: AttemptOutcome =
+      selectedId === entity.id ? "correct" : "incorrect";
+    await persistAttempt(
+      outcome,
+      "nameToFlagChoice",
+      entityById.get(selectedId)?.displayNamePtBr
+    );
+    setFeedback({
+      outcome,
+      answer: entityById.get(selectedId)?.displayNamePtBr
+    });
   }
 
   async function submitForward(event: FormEvent) {
@@ -239,23 +266,31 @@ export function StudySession() {
           ? "partial"
           : "incorrect";
     await persistAttempt(outcome, "flagToNameInput", answer.trim());
-    setFeedback({outcome, answer: answer.trim()});
+    setFeedback({ outcome, answer: answer.trim() });
   }
 
   if (loading) {
-    return <div className="page page-narrow"><div className="empty-state">Preparando sua sessão…</div></div>;
+    return (
+      <div className="page page-narrow">
+        <div className="empty-state">Preparando sua sessão…</div>
+      </div>
+    );
   }
 
   if (!diagnostic?.completedAt) {
     return (
       <div className="page page-narrow">
-        <section className="study-card" style={{textAlign: "center"}}>
+        <section className="study-card" style={{ textAlign: "center" }}>
           <span className="eyebrow">Primeiro passo</span>
           <h1 className="study-title">Faça o diagnóstico antes de estudar.</h1>
           <p className="muted">
             Assim a primeira sessão começa no que você ainda não reconhece.
           </p>
-          <Link href="/diagnostico" className="button" style={{marginTop: 18}}>
+          <Link
+            href="/diagnostico"
+            className="button"
+            style={{ marginTop: 18 }}
+          >
             Ir ao diagnóstico <ArrowRight size={18} aria-hidden="true" />
           </Link>
         </section>
@@ -265,7 +300,7 @@ export function StudySession() {
 
   if (!initialized) {
     const preview = buildDailyQueue({
-      entityOrder: entities.map(({id}) => id),
+      entityOrder: entities.map(({ id }) => id),
       states: skills,
       recentAttempts: attempts,
       baseNewLimit: 5
@@ -276,11 +311,17 @@ export function StudySession() {
           <span className="eyebrow">Meta adaptativa</span>
           <h1 className="study-title">Sua sessão está pronta.</h1>
           <p className="muted">
-            Hoje há {preview.dueCount} revisões vencidas, {preview.correctionCount} correções
-            e espaço para até {preview.newLimit} novas associações. Esta rodada terá no
-            máximo {SESSION_LIMIT} itens.
+            Hoje há {preview.dueCount} revisões vencidas,{" "}
+            {preview.correctionCount} correções e espaço para até{" "}
+            {preview.newLimit} novas associações. Esta rodada terá no máximo{" "}
+            {SESSION_LIMIT} itens.
           </p>
-          <button className="button" type="button" onClick={beginSession} style={{marginTop: 18}}>
+          <button
+            className="button"
+            type="button"
+            onClick={beginSession}
+            style={{ marginTop: 18 }}
+          >
             Começar sessão <ArrowRight size={18} aria-hidden="true" />
           </button>
         </section>
@@ -291,11 +332,21 @@ export function StudySession() {
   if (initialized && queue.length === 0) {
     return (
       <div className="page page-narrow">
-        <section className="study-card" style={{textAlign: "center"}}>
-          <Check size={54} aria-hidden="true" style={{margin: "30px auto 14px"}} />
+        <section className="study-card" style={{ textAlign: "center" }}>
+          <Check
+            size={54}
+            aria-hidden="true"
+            style={{ margin: "30px auto 14px" }}
+          />
           <h1 className="study-title">Tudo em dia por enquanto.</h1>
-          <p className="muted">As próximas revisões aparecerão quando estiverem vencidas.</p>
-          <Link href="/catalogo" className="button button-secondary" style={{marginTop: 18}}>
+          <p className="muted">
+            As próximas revisões aparecerão quando estiverem vencidas.
+          </p>
+          <Link
+            href="/catalogo"
+            className="button button-secondary"
+            style={{ marginTop: 18 }}
+          >
             Explorar o atlas
           </Link>
         </section>
@@ -306,14 +357,19 @@ export function StudySession() {
   if (initialized && (!item || !entity)) {
     return (
       <div className="page page-narrow">
-        <section className="study-card" style={{textAlign: "center"}}>
-          <Check size={54} aria-hidden="true" style={{margin: "30px auto 14px"}} />
+        <section className="study-card" style={{ textAlign: "center" }}>
+          <Check
+            size={54}
+            aria-hidden="true"
+            style={{ margin: "30px auto 14px" }}
+          />
           <span className="eyebrow">Sessão concluída</span>
           <h1 className="study-title">Bom trabalho de recuperação.</h1>
           <p className="muted">
-            Acertos imediatos corrigem o erro; as revisões futuras confirmarão a retenção.
+            Acertos imediatos corrigem o erro; as revisões futuras confirmarão a
+            retenção.
           </p>
-          <Link href="/" className="button" style={{marginTop: 18}}>
+          <Link href="/" className="button" style={{ marginTop: 18 }}>
             Voltar ao painel
           </Link>
         </section>
@@ -327,8 +383,12 @@ export function StudySession() {
     <div className="page page-narrow">
       <div className="study-shell">
         <div className="study-topbar">
-          <div style={{flex: 1}}>
-            <ProgressBar value={index} max={queue.length} label="Sessão de hoje" />
+          <div style={{ flex: 1 }}>
+            <ProgressBar
+              value={index}
+              max={queue.length}
+              label="Sessão de hoje"
+            />
           </div>
           <Link href="/" className="button button-secondary">
             <Pause size={17} aria-hidden="true" /> Encerrar
@@ -345,7 +405,12 @@ export function StudySession() {
                     ? "Acerto parcial"
                     : "Vamos corrigir"}
               </span>
-              <FlagImage entity={entity} revealName eager className="quiz-flag" />
+              <FlagImage
+                entity={entity}
+                revealName
+                eager
+                className="quiz-flag"
+              />
               <div
                 className={`feedback ${
                   feedback.outcome === "correct"
@@ -367,9 +432,15 @@ export function StudySession() {
                       : "O item reaparecerá depois de outras bandeiras; a correção imediata não contará como retenção."}
                 </span>
               </div>
-              <div className="answer-actions" style={{marginTop: 18}}>
-                <button className="button" type="button" onClick={continueAfterFeedback}>
-                  {feedback.nextStep ? "Agora, lembre sem alternativas" : "Continuar"}
+              <div className="answer-actions" style={{ marginTop: 18 }}>
+                <button
+                  className="button"
+                  type="button"
+                  onClick={continueAfterFeedback}
+                >
+                  {feedback.nextStep
+                    ? "Agora, lembre sem alternativas"
+                    : "Continuar"}
                   <ArrowRight size={18} aria-hidden="true" />
                 </button>
               </div>
@@ -377,9 +448,16 @@ export function StudySession() {
           ) : step === "teach" ? (
             <>
               <span className="eyebrow">Primeiro contato</span>
-              <h1 className="study-prompt">Esta é a bandeira de {entity.displayNamePtBr}.</h1>
-              <FlagImage entity={entity} revealName eager className="quiz-flag" />
-              <p className="muted" style={{textAlign: "center"}}>
+              <h1 className="study-prompt">
+                Esta é a bandeira de {entity.displayNamePtBr}.
+              </h1>
+              <FlagImage
+                entity={entity}
+                revealName
+                eager
+                className="quiz-flag"
+              />
+              <p className="muted" style={{ textAlign: "center" }}>
                 Observe a composição antes de tentar recuperar o nome.
               </p>
               <div className="answer-actions">
@@ -417,7 +495,9 @@ export function StudySession() {
           ) : step === "reverseChoice" ? (
             <>
               <span className="eyebrow">Associação inversa</span>
-              <h1 className="study-prompt">Qual é a bandeira de {entity.displayNamePtBr}?</h1>
+              <h1 className="study-prompt">
+                Qual é a bandeira de {entity.displayNamePtBr}?
+              </h1>
               <div className="choice-grid">
                 {choices.map((choice, choiceIndex) => (
                   <button
@@ -456,7 +536,11 @@ export function StudySession() {
                   Acentos são opcionais; nomes ambíguos não são aceitos.
                 </span>
                 <div className="answer-actions">
-                  <button className="button" type="submit" disabled={!answer.trim() || busy}>
+                  <button
+                    className="button"
+                    type="submit"
+                    disabled={!answer.trim() || busy}
+                  >
                     Responder <CornerDownLeft size={18} aria-hidden="true" />
                   </button>
                 </div>

@@ -6,21 +6,23 @@ import { FlagImage } from "@/components/FlagImage";
 import { entities, entityById, flagByEntityId } from "@/data/catalog";
 
 interface DetailPageProps {
-  params: Promise<{id: string}>;
+  params: Promise<{ id: string }>;
 }
 
 export function generateStaticParams() {
-  return entities.map(({id}) => ({id}));
+  return entities.map(({ id }) => ({ id }));
 }
 
-export async function generateMetadata({params}: DetailPageProps): Promise<Metadata> {
-  const {id} = await params;
+export async function generateMetadata({
+  params
+}: DetailPageProps): Promise<Metadata> {
+  const { id } = await params;
   const entity = entityById.get(id);
-  return {title: entity?.displayNamePtBr ?? "Bandeira"};
+  return { title: entity?.displayNamePtBr ?? "Bandeira" };
 }
 
-export default async function DetailPage({params}: DetailPageProps) {
-  const {id} = await params;
+export default async function DetailPage({ params }: DetailPageProps) {
+  const { id } = await params;
   const entity = entityById.get(id);
   const flag = flagByEntityId.get(id);
 
@@ -33,7 +35,7 @@ export default async function DetailPage({params}: DetailPageProps) {
       <Link href="/catalogo" className="button button-ghost">
         <ArrowLeft size={18} aria-hidden="true" /> Voltar ao atlas
       </Link>
-      <header className="page-header" style={{marginTop: 20}}>
+      <header className="page-header" style={{ marginTop: 20 }}>
         <div>
           <span className="eyebrow">{entity.region}</span>
           <h1>{entity.displayNamePtBr}</h1>
@@ -44,9 +46,12 @@ export default async function DetailPage({params}: DetailPageProps) {
       <div className="detail-grid">
         <FlagImage entity={entity} revealName eager className="detail-flag" />
         <div>
-          <div style={{display: "flex", gap: 8, flexWrap: "wrap"}}>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             {entity.memberships.map((membership) => (
-              <span className="pill" key={`${membership.organization}-${membership.status}`}>
+              <span
+                className="pill"
+                key={`${membership.organization}-${membership.status}`}
+              >
                 {membership.organization === "UN" ? "ONU" : "FIFA"}
                 {membership.status === "observer" ? " · observador" : ""}
               </span>

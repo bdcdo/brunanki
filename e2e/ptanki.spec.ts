@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import {expect, test, type Page} from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
 async function openFreshApp(page: Page) {
   await page.goto("/");
@@ -15,23 +15,23 @@ async function expectNoHorizontalOverflow(page: Page) {
 }
 
 async function expectNoSeriousAccessibilityViolations(page: Page) {
-  const results = await new AxeBuilder({page}).analyze();
-  const seriousViolations = results.violations.filter(({impact}) =>
-    impact === "serious" || impact === "critical"
+  const results = await new AxeBuilder({ page }).analyze();
+  const seriousViolations = results.violations.filter(
+    ({ impact }) => impact === "serious" || impact === "critical"
   );
 
   expect(
     seriousViolations,
     seriousViolations
       .map(
-        ({id, help, nodes}) =>
+        ({ id, help, nodes }) =>
           `${id}: ${help} (${nodes.length} ocorrência(s))`
       )
       .join("\n")
   ).toEqual([]);
 }
 
-test.beforeEach(async ({page}) => {
+test.beforeEach(async ({ page }) => {
   await openFreshApp(page);
 });
 
@@ -39,11 +39,11 @@ test("home apresenta a proposta e a entrada do diagnóstico sem overflow", async
   page
 }) => {
   await expect(
-    page.getByRole("heading", {name: "Reconheça o mundo inteiro."})
+    page.getByRole("heading", { name: "Reconheça o mundo inteiro." })
   ).toBeVisible();
   await expect(page.getByText("220 bandeiras · um plano só seu")).toBeVisible();
   await expect(
-    page.getByRole("link", {name: /Começar diagnóstico/})
+    page.getByRole("link", { name: /Começar diagnóstico/ })
   ).toBeVisible();
   await expect(page.getByText("Conta necessária").locator("..")).toContainText(
     "Não"
@@ -58,15 +58,15 @@ test("navegação principal funciona em desktop e mobile", async ({
   isMobile
 }) => {
   if (isMobile) {
-    await page.getByRole("button", {name: "Abrir menu"}).click();
+    await page.getByRole("button", { name: "Abrir menu" }).click();
     await expect(
-      page.getByRole("navigation", {name: "Navegação principal"})
+      page.getByRole("navigation", { name: "Navegação principal" })
     ).toBeVisible();
   }
 
-  await page.getByRole("link", {name: "Bandeiras"}).click();
+  await page.getByRole("link", { name: "Bandeiras" }).click();
   await expect(page).toHaveURL(/\/catalogo$/);
-  await expect(page.getByRole("heading", {name: "Bandeiras"})).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Bandeiras" })).toBeVisible();
   await expectNoHorizontalOverflow(page);
 });
 
@@ -76,13 +76,13 @@ test("catálogo filtra nomes, abre detalhes e mantém bandeiras inteiras", async
   await page.goto("/catalogo");
 
   await expect(page.getByText("220 resultados")).toBeVisible();
-  await page.getByRole("searchbox", {name: "Buscar por nome"}).fill("Brasil");
+  await page.getByRole("searchbox", { name: "Buscar por nome" }).fill("Brasil");
   await expect(page.getByText("1 resultado")).toBeVisible();
 
-  const brazilCard = page.getByRole("link", {name: /Bandeira de Brasil/});
+  const brazilCard = page.getByRole("link", { name: /Bandeira de Brasil/ });
   await expect(brazilCard).toBeVisible();
 
-  const image = brazilCard.getByRole("img", {name: "Bandeira de Brasil"});
+  const image = brazilCard.getByRole("img", { name: "Bandeira de Brasil" });
   await expect(image).toHaveJSProperty("complete", true);
   const imageGeometry = await image.evaluate((element) => {
     const imageElement = element as HTMLImageElement;
@@ -108,7 +108,7 @@ test("catálogo filtra nomes, abre detalhes e mantém bandeiras inteiras", async
 
   await brazilCard.click();
   await expect(page).toHaveURL(/\/catalogo\/bra$/);
-  await expect(page.getByRole("heading", {name: "Brasil"})).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Brasil" })).toBeVisible();
 
   await expectNoHorizontalOverflow(page);
   await expectNoSeriousAccessibilityViolations(page);
@@ -118,34 +118,34 @@ test("diagnóstico registra feedback e persiste o avanço após reload", async (
   page
 }) => {
   await page.goto("/diagnostico");
-  await page.getByRole("button", {name: /Começar diagnóstico/}).click();
+  await page.getByRole("button", { name: /Começar diagnóstico/ }).click();
 
   await expect(
-    page.getByRole("heading", {name: "De onde é esta bandeira?"})
+    page.getByRole("heading", { name: "De onde é esta bandeira?" })
   ).toBeVisible();
   await expect(page.getByText("Bandeira 1 de 220")).toBeVisible();
   await expect(
-    page.getByRole("img", {name: "Bandeira a identificar"})
+    page.getByRole("img", { name: "Bandeira a identificar" })
   ).toBeVisible();
 
   await page
-    .getByRole("textbox", {name: "Nome da entidade"})
+    .getByRole("textbox", { name: "Nome da entidade" })
     .fill("resposta deliberadamente incorreta");
-  await page.getByRole("button", {name: /Responder/}).click();
+  await page.getByRole("button", { name: /Responder/ }).click();
 
-  await expect(page.getByText("Resposta", {exact: true})).toBeVisible();
+  await expect(page.getByText("Resposta", { exact: true })).toBeVisible();
   await expect(
     page.getByText("Você escreveu: resposta deliberadamente incorreta")
   ).toBeVisible();
   await expect(
     page.getByText("Esta bandeira entrará na etapa de aprendizagem.")
   ).toBeVisible();
-  await expect(page.getByRole("img", {name: /^Bandeira de /})).toBeVisible();
+  await expect(page.getByRole("img", { name: /^Bandeira de / })).toBeVisible();
 
   await page.reload();
   await expect(page.getByText("Bandeira 2 de 220")).toBeVisible();
   await expect(
-    page.getByRole("heading", {name: "De onde é esta bandeira?"})
+    page.getByRole("heading", { name: "De onde é esta bandeira?" })
   ).toBeVisible();
 
   await expectNoHorizontalOverflow(page);
@@ -163,7 +163,7 @@ test("sessão de estudo permanece bloqueada antes do diagnóstico completo", asy
     })
   ).toBeVisible();
   await expect(
-    page.getByRole("link", {name: /Ir ao diagnóstico/})
+    page.getByRole("link", { name: /Ir ao diagnóstico/ })
   ).toBeVisible();
 
   await expectNoHorizontalOverflow(page);
@@ -175,22 +175,24 @@ test("ajustes expõem backup, restauração e reset com status acessível", asyn
 }) => {
   await page.goto("/configuracoes");
 
-  await expect(page.getByRole("heading", {name: "Ajustes"})).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Ajustes" })).toBeVisible();
   await expect(
-    page.getByRole("button", {name: /Baixar backup/})
+    page.getByRole("button", { name: /Baixar backup/ })
   ).toBeVisible();
   await expect(
-    page.getByRole("button", {name: /Escolher arquivo/})
+    page.getByRole("button", { name: /Escolher arquivo/ })
   ).toBeVisible();
   await expect(
-    page.getByRole("button", {name: /Apagar progresso/})
+    page.getByRole("button", { name: /Apagar progresso/ })
   ).toBeVisible();
   await expect(page.getByRole("status")).toBeAttached();
 
   const downloadPromise = page.waitForEvent("download");
-  await page.getByRole("button", {name: /Baixar backup/}).click();
+  await page.getByRole("button", { name: /Baixar backup/ }).click();
   const download = await downloadPromise;
-  expect(download.suggestedFilename()).toMatch(/^ptanki-backup-\d{4}-\d{2}-\d{2}\.json$/);
+  expect(download.suggestedFilename()).toMatch(
+    /^ptanki-backup-\d{4}-\d{2}-\d{2}\.json$/
+  );
   await expect(page.getByRole("status")).toHaveText("Backup baixado.");
 
   await expectNoHorizontalOverflow(page);
@@ -203,7 +205,7 @@ test("cancelar restauração não informa que o backup foi aplicado", async ({
   await page.goto("/configuracoes");
 
   const exportPromise = page.waitForEvent("download");
-  await page.getByRole("button", {name: /Baixar backup/}).click();
+  await page.getByRole("button", { name: /Baixar backup/ }).click();
   const exportedBackup = await exportPromise;
   const backupPath = await exportedBackup.path();
   expect(backupPath).not.toBeNull();
@@ -215,9 +217,7 @@ test("cancelar restauração não informa que o backup foi aplicado", async ({
     await dialog.dismiss();
   });
   const safetyBackupPromise = page.waitForEvent("download");
-  await page
-    .locator('input[type="file"]')
-    .setInputFiles(backupPath!);
+  await page.locator('input[type="file"]').setInputFiles(backupPath!);
   await safetyBackupPromise;
 
   await expect(page.getByRole("status")).toHaveText(
@@ -225,28 +225,27 @@ test("cancelar restauração não informa que o backup foi aplicado", async ({
   );
 });
 
-test("créditos informam fontes, método e as 220 imagens", async ({page}) => {
+test("créditos informam fontes, método e as 220 imagens", async ({ page }) => {
   await page.goto("/creditos");
 
   await expect(
-    page.getByRole("heading", {name: "Fontes e créditos"})
+    page.getByRole("heading", { name: "Fontes e créditos" })
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", {name: "Fontes institucionais"})
+    page.getByRole("heading", { name: "Fontes institucionais" })
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", {name: "Método de aprendizagem"})
+    page.getByRole("heading", { name: "Método de aprendizagem" })
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", {name: "Arquivos de bandeira"})
+    page.getByRole("heading", { name: "Arquivos de bandeira" })
   ).toBeVisible();
   await expect(page.getByText("220 imagens")).toBeVisible();
-  await expect(page.getByRole("link", {name: /Membros da ONU/})).toHaveAttribute(
-    "href",
-    "https://www.un.org/en/about-us/member-states"
-  );
   await expect(
-    page.getByRole("link", {name: /The Math Academy Way/})
+    page.getByRole("link", { name: /Membros da ONU/ })
+  ).toHaveAttribute("href", "https://www.un.org/en/about-us/member-states");
+  await expect(
+    page.getByRole("link", { name: /The Math Academy Way/ })
   ).toHaveAttribute(
     "href",
     "https://www.justinmath.com/files/the-math-academy-way.pdf"

@@ -21,7 +21,11 @@ export function FlagImage({
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={flag?.filePath ?? `/flags/${entity.id}.svg`}
-        alt={revealName ? `Bandeira de ${entity.displayNamePtBr}` : "Bandeira a identificar"}
+        alt={
+          revealName
+            ? `Bandeira de ${entity.displayNamePtBr}`
+            : "Bandeira a identificar"
+        }
         loading={eager ? "eager" : "lazy"}
         decoding="async"
       />

@@ -24,7 +24,9 @@ export function CatalogClient() {
         .toLocaleLowerCase("pt-BR");
       const organizationMatch =
         membership === "all" ||
-        entity.memberships.some(({organization}) => organization === membership);
+        entity.memberships.some(
+          ({ organization }) => organization === membership
+        );
       return names.includes(normalized) && organizationMatch;
     });
   }, [membership, query]);

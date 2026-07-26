@@ -14,11 +14,11 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const navigation = [
-  {href: "/", label: "Hoje", icon: Compass},
-  {href: "/estudar", label: "Estudar", icon: BookOpen},
-  {href: "/catalogo", label: "Bandeiras", icon: Flag},
-  {href: "/progresso", label: "Progresso", icon: BarChart3},
-  {href: "/configuracoes", label: "Ajustes", icon: Settings}
+  { href: "/", label: "Hoje", icon: Compass },
+  { href: "/estudar", label: "Estudar", icon: BookOpen },
+  { href: "/catalogo", label: "Bandeiras", icon: Flag },
+  { href: "/progresso", label: "Progresso", icon: BarChart3 },
+  { href: "/configuracoes", label: "Ajustes", icon: Settings }
 ];
 
 function Mark() {
@@ -31,7 +31,7 @@ function Mark() {
   );
 }
 
-export function AppShell({children}: {children: React.ReactNode}) {
+export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -58,13 +58,17 @@ export function AppShell({children}: {children: React.ReactNode}) {
       </header>
 
       <aside className={open ? "sidebar sidebar-open" : "sidebar"}>
-        <Link href="/" className="brand desktop-brand" aria-label="Ptanki — início">
+        <Link
+          href="/"
+          className="brand desktop-brand"
+          aria-label="Ptanki — início"
+        >
           <Mark />
           <strong>ptanki</strong>
         </Link>
         <p className="sidebar-kicker">Atlas de memória</p>
         <nav id="primary-navigation" aria-label="Navegação principal">
-          {navigation.map(({href, label, icon: Icon}) => {
+          {navigation.map(({ href, label, icon: Icon }) => {
             const active =
               href === "/" ? pathname === href : pathname.startsWith(href);
             return (

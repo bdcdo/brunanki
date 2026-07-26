@@ -5,36 +5,28 @@ import type {
   AppSettings,
   DiagnosticState,
   ReviewAttempt,
-  SkillState,
+  SkillState
 } from "@/types/learning";
 
 import {
   DEFAULT_APP_SETTINGS,
   SINGLETON_KEY,
-  type PtankiDatabase,
+  type PtankiDatabase
 } from "./database";
 
 export const EXPORT_FORMAT = "ptanki-export" as const;
 export const EXPORT_SCHEMA_VERSION = 1 as const;
 
 const isoDateTimeSchema = z.string().datetime({ offset: true });
-const skillSchema = z.enum([
-  "flagToNameRecall",
-  "nameToFlagRecognition",
-]);
-const outcomeSchema = z.enum([
-  "correct",
-  "partial",
-  "incorrect",
-  "skipped",
-]);
+const skillSchema = z.enum(["flagToNameRecall", "nameToFlagRecognition"]);
+const outcomeSchema = z.enum(["correct", "partial", "incorrect", "skipped"]);
 const exerciseSchema = z.enum([
   "diagnostic",
   "flagToNameChoice",
   "nameToFlagChoice",
   "flagToNameInput",
   "confusablePair",
-  "fluency",
+  "fluency"
 ]);
 
 const serializedCardSchema = z.object({
@@ -47,7 +39,7 @@ const serializedCardSchema = z.object({
   reps: z.number().int().nonnegative(),
   lapses: z.number().int().nonnegative(),
   state: z.number().int().min(0).max(3),
-  last_review: isoDateTimeSchema.optional(),
+  last_review: isoDateTimeSchema.optional()
 });
 
 const serializedSkillStateSchema = z
@@ -59,28 +51,31 @@ const serializedSkillStateSchema = z
     card: serializedCardSchema.optional(),
     distinctSuccessDays: z.array(z.string().date()),
     lastOutcome: outcomeSchema.optional(),
-    updatedAt: isoDateTimeSchema,
+    updatedAt: isoDateTimeSchema
   })
   .superRefine((state, context) => {
     if (state.id !== `${state.entityId}::${state.skill}`) {
       context.addIssue({
         code: "custom",
         path: ["id"],
-        message: "ID do estado não corresponde à entidade e habilidade",
+        message: "ID do estado não corresponde à entidade e habilidade"
       });
     }
-    if (new Set(state.distinctSuccessDays).size !== state.distinctSuccessDays.length) {
+    if (
+      new Set(state.distinctSuccessDays).size !==
+      state.distinctSuccessDays.length
+    ) {
       context.addIssue({
         code: "custom",
         path: ["distinctSuccessDays"],
-        message: "Dias de sucesso duplicados",
+        message: "Dias de sucesso duplicados"
       });
     }
     if (state.phase === "unseen" && state.card !== undefined) {
       context.addIssue({
         code: "custom",
         path: ["card"],
-        message: "Uma habilidade não vista não pode possuir cartão FSRS",
+        message: "Uma habilidade não vista não pode possuir cartão FSRS"
       });
     }
   });
@@ -93,7 +88,7 @@ const reviewAttemptSchema = z.object({
   outcome: outcomeSchema,
   responseMs: z.number().int().nonnegative(),
   answer: z.string().optional(),
-  createdAt: isoDateTimeSchema,
+  createdAt: isoDateTimeSchema
 });
 
 const diagnosticStateSchema = z
@@ -101,21 +96,21 @@ const diagnosticStateSchema = z
     entityOrder: z.array(z.string().min(1)).min(1),
     currentIndex: z.number().int().nonnegative(),
     startedAt: isoDateTimeSchema,
-    completedAt: isoDateTimeSchema.optional(),
+    completedAt: isoDateTimeSchema.optional()
   })
   .superRefine((state, context) => {
     if (new Set(state.entityOrder).size !== state.entityOrder.length) {
       context.addIssue({
         code: "custom",
         path: ["entityOrder"],
-        message: "O diagnóstico contém entidades duplicadas",
+        message: "O diagnóstico contém entidades duplicadas"
       });
     }
     if (state.currentIndex > state.entityOrder.length) {
       context.addIssue({
         code: "custom",
         path: ["currentIndex"],
-        message: "O índice do diagnóstico excede o total de entidades",
+        message: "O índice do diagnóstico excede o total de entidades"
       });
     }
     if (
@@ -125,26 +120,26 @@ const diagnosticStateSchema = z
       context.addIssue({
         code: "custom",
         path: ["completedAt"],
-        message: "Um diagnóstico incompleto não pode ter data de conclusão",
+        message: "Um diagnóstico incompleto não pode ter data de conclusão"
       });
     }
   });
 
 const settingsSchema = z.object({
   desiredRetention: z.number().positive().max(1),
-  reduceMotion: z.boolean(),
+  reduceMotion: z.boolean()
 });
 
 function uniqueIds<T extends { id: string }>(
   values: readonly T[],
   path: string,
-  context: z.RefinementCtx,
+  context: z.RefinementCtx
 ): void {
   if (new Set(values.map(({ id }) => id)).size !== values.length) {
     context.addIssue({
       code: "custom",
       path: [path],
-      message: "Há IDs duplicados",
+      message: "Há IDs duplicados"
     });
   }
 }
@@ -158,7 +153,7 @@ export const ptankiExportSchema = z
     settings: settingsSchema,
     skillStates: z.array(serializedSkillStateSchema),
     attempts: z.array(reviewAttemptSchema),
-    diagnosticState: diagnosticStateSchema.optional(),
+    diagnosticState: diagnosticStateSchema.optional()
   })
   .superRefine((data, context) => {
     uniqueIds(data.skillStates, "skillStates", context);
@@ -186,11 +181,13 @@ function serializeCard(card: Card): SerializedCard {
     state: card.state,
     ...(card.last_review
       ? { last_review: new Date(card.last_review).toISOString() }
-      : {}),
+      : {})
   };
 }
 
-function serializeSkillState(state: SkillState): PtankiExport["skillStates"][number] {
+function serializeSkillState(
+  state: SkillState
+): PtankiExport["skillStates"][number] {
   return {
     id: state.id,
     entityId: state.entityId,
@@ -199,21 +196,21 @@ function serializeSkillState(state: SkillState): PtankiExport["skillStates"][num
     distinctSuccessDays: state.distinctSuccessDays,
     updatedAt: state.updatedAt,
     ...(state.lastOutcome ? { lastOutcome: state.lastOutcome } : {}),
-    ...(state.card ? { card: serializeCard(state.card) } : {}),
+    ...(state.card ? { card: serializeCard(state.card) } : {})
   };
 }
 
 function deserializeSkillState(
-  state: PtankiExport["skillStates"][number],
+  state: PtankiExport["skillStates"][number]
 ): SkillState {
   const card: Card | undefined = state.card
-    ? {
+    ? ({
         ...state.card,
         due: new Date(state.card.due),
         ...(state.card.last_review
           ? { last_review: new Date(state.card.last_review) }
-          : {}),
-      } as Card
+          : {})
+      } as Card)
     : undefined;
   return {
     id: state.id,
@@ -223,21 +220,21 @@ function deserializeSkillState(
     distinctSuccessDays: state.distinctSuccessDays,
     updatedAt: state.updatedAt,
     ...(state.lastOutcome ? { lastOutcome: state.lastOutcome } : {}),
-    ...(card ? { card } : {}),
+    ...(card ? { card } : {})
   };
 }
 
 export async function createExport(
   db: PtankiDatabase,
   catalogVersion: string,
-  now: Date = new Date(),
+  now: Date = new Date()
 ): Promise<PtankiExport> {
   const [skillStates, attempts, diagnosticRecord, settingsRecord] =
     await Promise.all([
       db.skillStates.toArray(),
       db.attempts.toArray(),
       db.diagnostics.get(SINGLETON_KEY),
-      db.appSettings.get(SINGLETON_KEY),
+      db.appSettings.get(SINGLETON_KEY)
     ]);
   const settings: AppSettings =
     settingsRecord?.settings ?? DEFAULT_APP_SETTINGS;
@@ -250,14 +247,14 @@ export async function createExport(
     settings,
     skillStates: skillStates.map(serializeSkillState),
     attempts,
-    diagnosticState: diagnosticRecord?.state,
+    diagnosticState: diagnosticRecord?.state
   });
 }
 
 export async function serializeDatabaseExport(
   db: PtankiDatabase,
   catalogVersion: string,
-  now: Date = new Date(),
+  now: Date = new Date()
 ): Promise<string> {
   return JSON.stringify(await createExport(db, catalogVersion, now), null, 2);
 }
@@ -276,27 +273,23 @@ export async function prepareImport(
   db: PtankiDatabase,
   json: string,
   currentCatalogVersion: string,
-  now: Date = new Date(),
+  now: Date = new Date()
 ): Promise<PreparedImport> {
   const data = parseExportJson(json);
   if (data.catalogVersion !== currentCatalogVersion) {
     throw new Error(
-      `Versão de catálogo incompatível: arquivo ${data.catalogVersion}, aplicativo ${currentCatalogVersion}`,
+      `Versão de catálogo incompatível: arquivo ${data.catalogVersion}, aplicativo ${currentCatalogVersion}`
     );
   }
   return {
     data,
-    backupJson: await serializeDatabaseExport(
-      db,
-      currentCatalogVersion,
-      now,
-    ),
+    backupJson: await serializeDatabaseExport(db, currentCatalogVersion, now)
   };
 }
 
 export async function applyPreparedImport(
   db: PtankiDatabase,
-  prepared: PreparedImport,
+  prepared: PreparedImport
 ): Promise<void> {
   const data = ptankiExportSchema.parse(prepared.data);
   const states = data.skillStates.map(deserializeSkillState);
@@ -312,20 +305,20 @@ export async function applyPreparedImport(
         db.skillStates.clear(),
         db.attempts.clear(),
         db.diagnostics.clear(),
-        db.appSettings.clear(),
+        db.appSettings.clear()
       ]);
       await db.skillStates.bulkAdd(states);
       await db.attempts.bulkAdd(data.attempts as ReviewAttempt[]);
       if (data.diagnosticState) {
         await db.diagnostics.add({
           id: SINGLETON_KEY,
-          state: data.diagnosticState as DiagnosticState,
+          state: data.diagnosticState as DiagnosticState
         });
       }
       await db.appSettings.add({
         id: SINGLETON_KEY,
-        settings: data.settings,
+        settings: data.settings
       });
-    },
+    }
   );
 }

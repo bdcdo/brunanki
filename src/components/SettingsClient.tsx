@@ -6,7 +6,7 @@ import { useApp } from "@/components/AppProvider";
 import { catalog } from "@/data/catalog";
 
 function downloadJson(contents: string) {
-  const blob = new Blob([contents], {type: "application/json"});
+  const blob = new Blob([contents], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;
@@ -17,7 +17,7 @@ function downloadJson(contents: string) {
 
 export function SettingsClient() {
   const inputRef = useRef<HTMLInputElement>(null);
-  const {refresh} = useApp();
+  const { refresh } = useApp();
   const [status, setStatus] = useState("");
 
   async function handleExport() {
@@ -29,7 +29,10 @@ export function SettingsClient() {
   async function handleImport(file?: File) {
     if (!file) return;
     const storage = await import("@/storage");
-    const restored = await storage.importProgress(await file.text(), catalog.version);
+    const restored = await storage.importProgress(
+      await file.text(),
+      catalog.version
+    );
     if (!restored) {
       setStatus("Restauração cancelada. O progresso atual foi mantido.");
       return;
@@ -78,8 +81,8 @@ export function SettingsClient() {
           <div>
             <h2>Restaurar backup</h2>
             <p>
-              O arquivo será validado antes de substituir o progresso atual.
-              Um backup do estado presente será baixado automaticamente.
+              O arquivo será validado antes de substituir o progresso atual. Um
+              backup do estado presente será baixado automaticamente.
             </p>
           </div>
           <div>
@@ -104,10 +107,15 @@ export function SettingsClient() {
           <div>
             <h2>Recomeçar</h2>
             <p>
-              Apaga todos os dados locais depois de baixar uma cópia de segurança.
+              Apaga todos os dados locais depois de baixar uma cópia de
+              segurança.
             </p>
           </div>
-          <button className="button button-coral" type="button" onClick={handleReset}>
+          <button
+            className="button button-coral"
+            type="button"
+            onClick={handleReset}
+          >
             <RotateCcw size={18} aria-hidden="true" /> Apagar progresso
           </button>
         </section>

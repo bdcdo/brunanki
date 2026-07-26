@@ -6,7 +6,7 @@ import type {
   AppSettings,
   DiagnosticState,
   ReviewAttempt,
-  SkillState,
+  SkillState
 } from "@/types/learning";
 
 import { DEFAULT_DESIRED_RETENTION } from "@/domain/scheduler";
@@ -26,7 +26,7 @@ export interface SettingsRecord {
 
 export const DEFAULT_APP_SETTINGS: AppSettings = {
   desiredRetention: DEFAULT_DESIRED_RETENTION,
-  reduceMotion: false,
+  reduceMotion: false
 };
 
 export class PtankiDatabase extends Dexie {
@@ -42,7 +42,7 @@ export class PtankiDatabase extends Dexie {
       attempts:
         "id, entityId, skill, exercise, outcome, createdAt, [entityId+skill]",
       diagnostics: "id",
-      appSettings: "id",
+      appSettings: "id"
     });
   }
 }
@@ -55,36 +55,35 @@ export function getDatabase(): PtankiDatabase {
 }
 
 export async function getDiagnosticState(
-  db: PtankiDatabase = getDatabase(),
+  db: PtankiDatabase = getDatabase()
 ): Promise<DiagnosticState | undefined> {
   return (await db.diagnostics.get(SINGLETON_KEY))?.state;
 }
 
 export async function saveDiagnosticState(
   state: DiagnosticState,
-  db: PtankiDatabase = getDatabase(),
+  db: PtankiDatabase = getDatabase()
 ): Promise<void> {
   await db.diagnostics.put({ id: SINGLETON_KEY, state });
 }
 
 export async function clearDiagnosticState(
-  db: PtankiDatabase = getDatabase(),
+  db: PtankiDatabase = getDatabase()
 ): Promise<void> {
   await db.diagnostics.delete(SINGLETON_KEY);
 }
 
 export async function getAppSettings(
-  db: PtankiDatabase = getDatabase(),
+  db: PtankiDatabase = getDatabase()
 ): Promise<AppSettings> {
   return (
-    (await db.appSettings.get(SINGLETON_KEY))?.settings ??
-    DEFAULT_APP_SETTINGS
+    (await db.appSettings.get(SINGLETON_KEY))?.settings ?? DEFAULT_APP_SETTINGS
   );
 }
 
 export async function saveAppSettings(
   settings: AppSettings,
-  db: PtankiDatabase = getDatabase(),
+  db: PtankiDatabase = getDatabase()
 ): Promise<void> {
   if (
     !Number.isFinite(settings.desiredRetention) ||
@@ -99,7 +98,7 @@ export async function saveAppSettings(
 export async function saveReview(
   state: SkillState,
   attempt: ReviewAttempt,
-  db: PtankiDatabase = getDatabase(),
+  db: PtankiDatabase = getDatabase()
 ): Promise<void> {
   if (state.entityId !== attempt.entityId || state.skill !== attempt.skill) {
     throw new Error("Tentativa e estado de habilidade não correspondem");

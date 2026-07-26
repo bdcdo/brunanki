@@ -1,6 +1,12 @@
 "use client";
 
-import { ArrowRight, Check, CornerDownLeft, Pause, SkipForward } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  CornerDownLeft,
+  Pause,
+  SkipForward
+} from "lucide-react";
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useApp } from "@/components/AppProvider";
@@ -19,7 +25,7 @@ interface Feedback {
 const resolver = new CountryNameResolver(entities);
 
 export function DiagnosticSession() {
-  const {diagnostic: savedDiagnostic, refresh} = useApp();
+  const { diagnostic: savedDiagnostic, refresh } = useApp();
   const [diagnostic, setDiagnostic] = useState<DiagnosticState | undefined>(
     savedDiagnostic
   );
@@ -39,7 +45,8 @@ export function DiagnosticSession() {
 
   const measured = state?.currentIndex ?? 0;
   const introExamples = useMemo(
-    () => entities.filter((entity) => ["bra", "jpn", "zaf"].includes(entity.id)),
+    () =>
+      entities.filter((entity) => ["bra", "jpn", "zaf"].includes(entity.id)),
     []
   );
 
@@ -48,7 +55,7 @@ export function DiagnosticSession() {
     try {
       const storage = await import("@/storage");
       const next = await storage.startOrResumeDiagnostic(
-        entities.map(({id}) => id)
+        entities.map(({ id }) => id)
       );
       setDiagnostic(next);
       startedAt.current = performance.now();
@@ -66,10 +73,13 @@ export function DiagnosticSession() {
       const result = await storage.saveDiagnosticAnswer({
         entityId: current.id,
         outcome,
-        responseMs: Math.max(0, Math.round(performance.now() - startedAt.current)),
-        ...(typedAnswer ? {answer: typedAnswer} : {})
+        responseMs: Math.max(
+          0,
+          Math.round(performance.now() - startedAt.current)
+        ),
+        ...(typedAnswer ? { answer: typedAnswer } : {})
       });
-      setFeedback({outcome, entityId: current.id, answer: typedAnswer});
+      setFeedback({ outcome, entityId: current.id, answer: typedAnswer });
       setDiagnostic(result.diagnosticState);
       setAnswer("");
       await refresh();
@@ -104,13 +114,17 @@ export function DiagnosticSession() {
             <span className="eyebrow">Antes de ensinar, medir</span>
             <h1>O que você já reconhece?</h1>
             <p>
-              Você verá as 220 bandeiras uma vez. Digite o nome quando souber
-              ou pule sem chutar. O teste pode ser pausado a qualquer momento.
+              Você verá as 220 bandeiras uma vez. Digite o nome quando souber ou
+              pule sem chutar. O teste pode ser pausado a qualquer momento.
             </p>
           </div>
         </header>
         <section className="card">
-          <div className="catalog-grid" aria-hidden="true" style={{marginBottom: 24}}>
+          <div
+            className="catalog-grid"
+            aria-hidden="true"
+            style={{ marginBottom: 24 }}
+          >
             {introExamples.map((entity) => (
               <FlagImage entity={entity} revealName key={entity.id} />
             ))}
@@ -119,10 +133,17 @@ export function DiagnosticSession() {
           <ol>
             <li>Não há alternativas nem autocomplete.</li>
             <li>Acentos, caixa e pontuação não fazem diferença.</li>
-            <li>Um typo pequeno vira acerto parcial e será revisto mais cedo.</li>
+            <li>
+              Um typo pequeno vira acerto parcial e será revisto mais cedo.
+            </li>
             <li>Pular é melhor do que tentar adivinhar.</li>
           </ol>
-          <button className="button button-coral" type="button" onClick={begin} disabled={busy}>
+          <button
+            className="button button-coral"
+            type="button"
+            onClick={begin}
+            disabled={busy}
+          >
             Começar diagnóstico <ArrowRight size={18} aria-hidden="true" />
           </button>
         </section>
@@ -133,15 +154,19 @@ export function DiagnosticSession() {
   if (complete && !feedback) {
     return (
       <div className="page page-narrow">
-        <section className="study-card" style={{textAlign: "center"}}>
+        <section className="study-card" style={{ textAlign: "center" }}>
           <span className="eyebrow">Diagnóstico concluído</span>
-          <Check size={54} aria-hidden="true" style={{margin: "30px auto 14px"}} />
+          <Check
+            size={54}
+            aria-hidden="true"
+            style={{ margin: "30px auto 14px" }}
+          />
           <h1 className="study-title">Seu ponto de partida está pronto.</h1>
           <p className="muted">
             Agora o Ptanki vai revisar os acertos e ensinar o que foi pulado ou
             confundido. Reconhecer a bandeira pelo nome será medido nas sessões.
           </p>
-          <Link href="/estudar" className="button" style={{marginTop: 18}}>
+          <Link href="/estudar" className="button" style={{ marginTop: 18 }}>
             Começar a aprender <ArrowRight size={18} aria-hidden="true" />
           </Link>
         </section>
@@ -149,13 +174,15 @@ export function DiagnosticSession() {
     );
   }
 
-  const feedbackEntity = feedback ? entityById.get(feedback.entityId) : undefined;
+  const feedbackEntity = feedback
+    ? entityById.get(feedback.entityId)
+    : undefined;
 
   return (
     <div className="page page-narrow">
       <div className="study-shell">
         <div className="study-topbar">
-          <div style={{flex: 1}}>
+          <div style={{ flex: 1 }}>
             <ProgressBar
               value={measured}
               max={entities.length}
@@ -204,7 +231,7 @@ export function DiagnosticSession() {
                       : "Esta bandeira entrará na etapa de aprendizagem."}
                 </span>
               </div>
-              <div className="answer-actions" style={{marginTop: 18}}>
+              <div className="answer-actions" style={{ marginTop: 18 }}>
                 <button className="button" type="button" onClick={next}>
                   {complete ? "Ver resultado" : "Próxima bandeira"}
                   <ArrowRight size={18} aria-hidden="true" />
@@ -213,7 +240,9 @@ export function DiagnosticSession() {
             </>
           ) : current ? (
             <>
-              <span className="eyebrow">Bandeira {measured + 1} de {entities.length}</span>
+              <span className="eyebrow">
+                Bandeira {measured + 1} de {entities.length}
+              </span>
               <h1 className="study-prompt">De onde é esta bandeira?</h1>
               <FlagImage entity={current} eager className="quiz-flag" />
               <form className="answer-form" onSubmit={submit}>
@@ -242,7 +271,11 @@ export function DiagnosticSession() {
                   >
                     <SkipForward size={18} aria-hidden="true" /> Pular
                   </button>
-                  <button className="button" type="submit" disabled={!answer.trim() || busy}>
+                  <button
+                    className="button"
+                    type="submit"
+                    disabled={!answer.trim() || busy}
+                  >
                     Responder <CornerDownLeft size={18} aria-hidden="true" />
                   </button>
                 </div>

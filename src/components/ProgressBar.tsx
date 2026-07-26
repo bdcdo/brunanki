@@ -7,7 +7,8 @@ export function ProgressBar({
   max: number;
   label: string;
 }) {
-  const percentage = max === 0 ? 0 : Math.min(100, Math.round((value / max) * 100));
+  const percentage =
+    max === 0 ? 0 : Math.min(100, Math.round((value / max) * 100));
 
   return (
     <div className="progress-block">
@@ -25,7 +26,7 @@ export function ProgressBar({
         aria-valuemax={max}
         aria-valuenow={value}
       >
-        <span style={{width: `${percentage}%`}} />
+        <span style={{ width: `${percentage}%` }} />
       </div>
     </div>
   );

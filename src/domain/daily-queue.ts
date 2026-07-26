@@ -1,8 +1,4 @@
-import type {
-  ReviewAttempt,
-  SkillKind,
-  SkillState,
-} from "@/types/learning";
+import type { ReviewAttempt, SkillKind, SkillState } from "@/types/learning";
 
 import { skillStateId } from "./scheduler";
 
@@ -33,12 +29,12 @@ export interface DailyQueue {
 
 const SKILL_ORDER: readonly SkillKind[] = [
   "flagToNameRecall",
-  "nameToFlagRecognition",
+  "nameToFlagRecognition"
 ];
 
 function recentAccuracy(
   attempts: readonly ReviewAttempt[],
-  window: number,
+  window: number
 ): number | null {
   const relevant = attempts
     .filter((attempt) => attempt.exercise !== "diagnostic")
@@ -55,15 +51,12 @@ function recentAccuracy(
 function calculateNewLimit(
   baseNewLimit: number,
   dueCount: number,
-  accuracy: number | null,
+  accuracy: number | null
 ): number {
   if (dueCount >= baseNewLimit * 2 || (accuracy !== null && accuracy < 0.6)) {
     return 0;
   }
-  if (
-    dueCount >= baseNewLimit ||
-    (accuracy !== null && accuracy < 0.8)
-  ) {
+  if (dueCount >= baseNewLimit || (accuracy !== null && accuracy < 0.8)) {
     return Math.ceil(baseNewLimit / 2);
   }
   return baseNewLimit;
@@ -84,13 +77,13 @@ export function buildDailyQueue(options: DailyQueueOptions): DailyQueue {
   const dueStates = options.states
     .filter(
       (state) =>
-        state.card !== undefined && new Date(state.card.due).getTime() <= now.getTime(),
+        state.card !== undefined &&
+        new Date(state.card.due).getTime() <= now.getTime()
     )
     .sort(
       (left, right) =>
         new Date(left.card!.due).getTime() -
-          new Date(right.card!.due).getTime() ||
-        left.id.localeCompare(right.id),
+          new Date(right.card!.due).getTime() || left.id.localeCompare(right.id)
     );
   const queuedIds = new Set(dueStates.map(({ id }) => id));
   const corrections = options.states
@@ -99,7 +92,7 @@ export function buildDailyQueue(options: DailyQueueOptions): DailyQueue {
         !queuedIds.has(state.id) &&
         state.phase !== "unseen" &&
         state.lastOutcome !== undefined &&
-        state.lastOutcome !== "correct",
+        state.lastOutcome !== "correct"
     )
     .sort((left, right) => left.updatedAt.localeCompare(right.updatedAt));
 
@@ -107,7 +100,7 @@ export function buildDailyQueue(options: DailyQueueOptions): DailyQueue {
 
   const accuracy = recentAccuracy(
     options.recentAttempts ?? [],
-    recentAttemptWindow,
+    recentAttemptWindow
   );
   const newLimit = calculateNewLimit(baseNewLimit, dueStates.length, accuracy);
   const newItems: DailyQueueItem[] = [];
@@ -116,7 +109,7 @@ export function buildDailyQueue(options: DailyQueueOptions): DailyQueue {
     if (newItems.length >= newLimit) break;
     const recall = stateById.get(skillStateId(entityId, "flagToNameRecall"));
     const recognition = stateById.get(
-      skillStateId(entityId, "nameToFlagRecognition"),
+      skillStateId(entityId, "nameToFlagRecognition")
     );
 
     let skill: SkillKind | undefined;
@@ -140,19 +133,19 @@ export function buildDailyQueue(options: DailyQueueOptions): DailyQueue {
       ...dueStates.map(({ entityId, skill }) => ({
         entityId,
         skill,
-        reason: "due" as const,
+        reason: "due" as const
       })),
       ...corrections.map(({ entityId, skill }) => ({
         entityId,
         skill,
-        reason: "correction" as const,
+        reason: "correction" as const
       })),
-      ...newItems,
+      ...newItems
     ],
     dueCount: dueStates.length,
     correctionCount: corrections.length,
     newLimit,
-    recentAccuracy: accuracy,
+    recentAccuracy: accuracy
   };
 }
 

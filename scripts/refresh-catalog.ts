@@ -1,12 +1,12 @@
-import {createHash} from "node:crypto";
-import {execFile} from "node:child_process";
-import {readFile, mkdir, writeFile} from "node:fs/promises";
-import {basename, join} from "node:path";
-import {promisify} from "node:util";
+import { createHash } from "node:crypto";
+import { execFile } from "node:child_process";
+import { readFile, mkdir, writeFile } from "node:fs/promises";
+import { basename, join } from "node:path";
+import { promisify } from "node:util";
 import type {
   Catalog,
   FlagRevision,
-  LearningEntity,
+  LearningEntity
 } from "../src/types/catalog";
 
 const VERIFIED_AT = "2026-07-25";
@@ -22,13 +22,13 @@ const REST_COUNTRIES_DATA_URL =
   "https://gitlab.com/restcountries/restcountries/-/raw/master/src/main/resources/countriesV3.1.json";
 
 interface RestCountry {
-  name: {common: string; official: string};
+  name: { common: string; official: string };
   cca2?: string;
   cca3: string;
   ccn3?: string;
   fifa?: string;
   region?: string;
-  translations?: {por?: {common: string; official: string}};
+  translations?: { por?: { common: string; official: string } };
   altSpellings?: string[];
   unMember?: boolean;
 }
@@ -80,7 +80,7 @@ const SPECIAL_FIFA_ENTITIES: Record<string, SpecialEntity> = {
     fifaName: "England",
     region: "Europe",
     flagTitle: "File:Flag of England.svg",
-    representationKind: "territorial",
+    representationKind: "territorial"
   },
   NIR: {
     id: "northern-ireland",
@@ -94,7 +94,7 @@ const SPECIAL_FIFA_ENTITIES: Record<string, SpecialEntity> = {
     editorialNote:
       "A FIFA representa a Irlanda do Norte separadamente. O Ulster Banner é ensinado por ser a bandeira mais reconhecida no contexto esportivo, embora não seja uma bandeira oficial vigente.",
     representationKind: "commonly-used",
-    officialStatus: "commonly-used",
+    officialStatus: "commonly-used"
   },
   SCO: {
     id: "scotland",
@@ -105,7 +105,7 @@ const SPECIAL_FIFA_ENTITIES: Record<string, SpecialEntity> = {
     fifaName: "Scotland",
     region: "Europe",
     flagTitle: "File:Flag of Scotland.svg",
-    representationKind: "territorial",
+    representationKind: "territorial"
   },
   WAL: {
     id: "wales",
@@ -116,26 +116,26 @@ const SPECIAL_FIFA_ENTITIES: Record<string, SpecialEntity> = {
     fifaName: "Wales",
     region: "Europe",
     flagTitle: "File:Flag of Wales.svg",
-    representationKind: "territorial",
-  },
+    representationKind: "territorial"
+  }
 };
 
 const REST_COUNTRY_BY_FIFA_OVERRIDE: Record<string, string> = {
   KOS: "UNK",
   SGP: "SGP",
-  TAH: "PYF",
+  TAH: "PYF"
 };
 
 const QID_OVERRIDE_BY_ISO3: Record<string, `Q${number}`> = {
   PSE: "Q219060",
   UNK: "Q1246",
-  VAT: "Q237",
+  VAT: "Q237"
 };
 
 const FLAG_OVERRIDE_BY_ISO3: Record<string, `File:${string}`> = {
   UNK: "File:Flag of Kosovo.svg",
   PRY: "File:Flag of Paraguay.svg",
-  TWN: "File:Flag of the Republic of China.svg",
+  TWN: "File:Flag of the Republic of China.svg"
 };
 
 const DISPLAY_NAME_OVERRIDE_BY_ISO3: Record<string, string> = {
@@ -177,13 +177,13 @@ const DISPLAY_NAME_OVERRIDE_BY_ISO3: Record<string, string> = {
   VGB: "Ilhas Virgens Britânicas",
   VNM: "Vietnã",
   YEM: "Iêmen",
-  ZWE: "Zimbábue",
+  ZWE: "Zimbábue"
 };
 
 const EDITORIAL_NOTE_BY_ISO3: Record<string, string> = {
   PRY: "O exercício usa o anverso da bandeira do Paraguai.",
   TWN: "A entidade aparece como Taiwan; Chinese Taipei é preservado como nome institucional da FIFA e alias aceito.",
-  VAT: "A Santa Sé é Estado observador permanente da ONU; a bandeira exibida é a do Estado da Cidade do Vaticano.",
+  VAT: "A Santa Sé é Estado observador permanente da ONU; a bandeira exibida é a do Estado da Cidade do Vaticano."
 };
 
 function assert(condition: unknown, message: string): asserts condition {
@@ -197,11 +197,13 @@ async function fetchWithRetry(url: string, attempts = 4): Promise<Response> {
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
     try {
       const response = await fetch(url, {
-        headers: {"User-Agent": USER_AGENT},
-        signal: AbortSignal.timeout(45_000),
+        headers: { "User-Agent": USER_AGENT },
+        signal: AbortSignal.timeout(45_000)
       });
       if (response.ok) return response;
-      lastError = new Error(`${response.status} ${response.statusText}: ${url}`);
+      lastError = new Error(
+        `${response.status} ${response.statusText}: ${url}`
+      );
       if (response.status === 429) {
         const retryAfterSeconds = Number(response.headers.get("retry-after"));
         await new Promise((resolve) =>
@@ -209,8 +211,8 @@ async function fetchWithRetry(url: string, attempts = 4): Promise<Response> {
             resolve,
             Number.isFinite(retryAfterSeconds)
               ? retryAfterSeconds * 1_000
-              : attempt * 1_500,
-          ),
+              : attempt * 1_500
+          )
         );
       }
     } catch (error) {
@@ -229,10 +231,10 @@ function decodeHtml(value: string): string {
   return value
     .replace(/<[^>]*>/g, "")
     .replace(/&#(\d+);/g, (_, code: string) =>
-      String.fromCodePoint(Number(code)),
+      String.fromCodePoint(Number(code))
     )
     .replace(/&#x([0-9a-f]+);/gi, (_, code: string) =>
-      String.fromCodePoint(Number.parseInt(code, 16)),
+      String.fromCodePoint(Number.parseInt(code, 16))
     )
     .replaceAll("&amp;", "&")
     .replaceAll("&quot;", '"')
@@ -246,24 +248,27 @@ async function fetchFifaAssociations(): Promise<FifaAssociation[]> {
   const url =
     "https://en.wikipedia.org/w/api.php?action=parse&prop=text&format=json&formatversion=2&page=" +
     FIFA_CODES_PAGE;
-  const result = await fetchJson<{parse: {text: string}}>(url);
+  const result = await fetchJson<{ parse: { text: string } }>(url);
   const tables = [
-    ...result.parse.text.matchAll(/<table[^>]*wikitable[\s\S]*?<\/table>/g),
+    ...result.parse.text.matchAll(/<table[^>]*wikitable[\s\S]*?<\/table>/g)
   ].slice(0, 4);
   const associations = tables.flatMap(([table]) =>
     [...table.matchAll(/<tr>([\s\S]*?)<\/tr>/g)].flatMap(([, row]) => {
       const cells = [...row.matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/g)].map(
-        ([, cell]) => decodeHtml(cell),
+        ([, cell]) => decodeHtml(cell)
       );
       return cells.length === 2 && /^[A-Z]{3}$/.test(cells[1])
-        ? [{name: cells[0], code: cells[1]}]
+        ? [{ name: cells[0], code: cells[1] }]
         : [];
-    }),
+    })
   );
-  assert(associations.length === 211, `Expected 211 FIFA members, found ${associations.length}`);
   assert(
-    new Set(associations.map(({code}) => code)).size === 211,
-    "FIFA codes are not unique",
+    associations.length === 211,
+    `Expected 211 FIFA members, found ${associations.length}`
+  );
+  assert(
+    new Set(associations.map(({ code }) => code)).size === 211,
+    "FIFA codes are not unique"
   );
   return associations;
 }
@@ -279,9 +284,9 @@ async function fetchWikidataCountries(): Promise<Map<string, WikidataCountry>> {
   const result = await fetchJson<{
     results: {
       bindings: Array<{
-        item: {value: string};
-        iso3: {value: string};
-        flag: {value: string};
+        item: { value: string };
+        iso3: { value: string };
+        flag: { value: string };
       }>;
     };
   }>(url);
@@ -291,7 +296,7 @@ async function fetchWikidataCountries(): Promise<Map<string, WikidataCountry>> {
     const qid = basename(binding.item.value) as `Q${number}`;
     if (iso3 === "PSE" && qid !== "Q219060") continue;
     const fileName = decodeURIComponent(basename(binding.flag.value));
-    byIso3.set(iso3, {qid, flagTitle: `File:${fileName}`});
+    byIso3.set(iso3, { qid, flagTitle: `File:${fileName}` });
   }
   return byIso3;
 }
@@ -307,7 +312,7 @@ function normalizeAlias(value: string): string {
 
 function uniqueAliases(
   values: Array<string | undefined>,
-  displayName: string,
+  displayName: string
 ): string[] {
   const displayKey = normalizeAlias(displayName);
   const seen = new Set<string>();
@@ -327,7 +332,7 @@ function stripMarkup(value: unknown): string | undefined {
 }
 
 async function fetchCommonsMetadata(
-  titles: Array<`File:${string}`>,
+  titles: Array<`File:${string}`>
 ): Promise<Map<string, CommonsMetadata>> {
   const metadata = new Map<string, CommonsMetadata>();
   for (let index = 0; index < titles.length; index += 40) {
@@ -338,7 +343,7 @@ async function fetchCommonsMetadata(
       iiprop: "url|sha1|mime|size|extmetadata",
       format: "json",
       formatversion: "2",
-      titles: batch.join("|"),
+      titles: batch.join("|")
     });
     const result = await fetchJson<{
       query: {
@@ -352,17 +357,20 @@ async function fetchCommonsMetadata(
             mime: string;
             width: number;
             height: number;
-            extmetadata?: Record<string, {value?: unknown}>;
+            extmetadata?: Record<string, { value?: unknown }>;
           }>;
         }>;
       };
     }>(`https://commons.wikimedia.org/w/api.php?${params}`);
     for (const page of result.query.pages) {
-      assert(!page.missing && page.imageinfo?.[0], `Commons file not found: ${page.title}`);
+      assert(
+        !page.missing && page.imageinfo?.[0],
+        `Commons file not found: ${page.title}`
+      );
       const info = page.imageinfo[0];
       assert(
         info.mime === "image/svg+xml" || info.mime === "image/png",
-        `Unsupported flag MIME ${info.mime}: ${page.title}`,
+        `Unsupported flag MIME ${info.mime}: ${page.title}`
       );
       const ext = info.extmetadata ?? {};
       const shortName =
@@ -382,8 +390,8 @@ async function fetchCommonsMetadata(
           url: stripMarkup(ext.LicenseUrl?.value),
           artist: stripMarkup(ext.Artist?.value),
           credit: stripMarkup(ext.Credit?.value),
-          attributionRequired: !/public domain|cc0/i.test(shortName),
-        },
+          attributionRequired: !/public domain|cc0/i.test(shortName)
+        }
       });
     }
   }
@@ -393,7 +401,7 @@ async function fetchCommonsMetadata(
 async function downloadCommonsOriginal(
   metadata: CommonsMetadata,
   destination: string,
-  derivedAsset = false,
+  derivedAsset = false
 ): Promise<void> {
   try {
     const existing = await readFile(destination);
@@ -421,16 +429,16 @@ async function downloadCommonsOriginal(
       USER_AGENT,
       "-o",
       destination,
-      metadata.originalUrl,
+      metadata.originalUrl
     ],
-    {maxBuffer: 1024 * 1024},
+    { maxBuffer: 1024 * 1024 }
   );
   const bytes = await readFile(destination);
   const sha1 = createHash("sha1").update(bytes).digest("hex");
   if (derivedAsset) metadata.sha1 = sha1;
   assert(
     sha1 === metadata.sha1,
-    `SHA-1 mismatch for ${metadata.title}: ${sha1} != ${metadata.sha1}`,
+    `SHA-1 mismatch for ${metadata.title}: ${sha1} != ${metadata.sha1}`
   );
 }
 
@@ -440,14 +448,14 @@ function entityIdForCountry(country: RestCountry): string {
 
 function findCountryForAssociation(
   association: FifaAssociation,
-  countries: RestCountry[],
+  countries: RestCountry[]
 ): RestCountry | undefined {
   const overrideIso3 = REST_COUNTRY_BY_FIFA_OVERRIDE[association.code];
-  if (overrideIso3) return countries.find(({cca3}) => cca3 === overrideIso3);
+  if (overrideIso3) return countries.find(({ cca3 }) => cca3 === overrideIso3);
   return (
-    countries.find(({fifa}) => fifa === association.code) ??
-    countries.find(({cca3}) => cca3 === association.code) ??
-    countries.find(({name}) => name.common === association.name)
+    countries.find(({ fifa }) => fifa === association.code) ??
+    countries.find(({ cca3 }) => cca3 === association.code) ??
+    countries.find(({ name }) => name.common === association.name)
   );
 }
 
@@ -455,18 +463,21 @@ async function main(): Promise<void> {
   const [countries, fifaAssociations, wikidataByIso3] = await Promise.all([
     fetchJson<RestCountry[]>(REST_COUNTRIES_DATA_URL),
     fetchFifaAssociations(),
-    fetchWikidataCountries(),
+    fetchWikidataCountries()
   ]);
-  assert(countries.length >= 249, `Country reference data is incomplete (${countries.length})`);
+  assert(
+    countries.length >= 249,
+    `Country reference data is incomplete (${countries.length})`
+  );
 
   // The upstream snapshot currently marks Guinea-Bissau incorrectly. Keeping the
   // correction explicit makes the 193-member invariant reviewable instead of
   // silently accepting a malformed source record.
   const unIso3 = new Set(
     countries
-      .filter(({unMember}) => unMember)
-      .map(({cca3}) => cca3)
-      .concat("GNB"),
+      .filter(({ unMember }) => unMember)
+      .map(({ cca3 }) => cca3)
+      .concat("GNB")
   );
   assert(unIso3.size === 193, `Expected 193 UN members, found ${unIso3.size}`);
 
@@ -479,10 +490,13 @@ async function main(): Promise<void> {
       continue;
     }
     const country = findCountryForAssociation(association, countries);
-    assert(country, `Could not map FIFA association ${association.name} (${association.code})`);
+    assert(
+      country,
+      `Could not map FIFA association ${association.name} (${association.code})`
+    );
     assert(
       !fifaByIso3.has(country.cca3),
-      `Two FIFA associations map to ${country.cca3}`,
+      `Two FIFA associations map to ${country.cca3}`
     );
     fifaByIso3.set(country.cca3, association);
   }
@@ -492,11 +506,10 @@ async function main(): Promise<void> {
   const requestedFlagTitles = new Map<string, `File:${string}`>();
 
   for (const iso3 of [...includedIso3].sort()) {
-    const country = countries.find(({cca3}) => cca3 === iso3);
+    const country = countries.find(({ cca3 }) => cca3 === iso3);
     assert(country, `Country reference missing for ${iso3}`);
     const fifa = fifaByIso3.get(iso3);
-    const qid =
-      QID_OVERRIDE_BY_ISO3[iso3] ?? wikidataByIso3.get(iso3)?.qid;
+    const qid = QID_OVERRIDE_BY_ISO3[iso3] ?? wikidataByIso3.get(iso3)?.qid;
     const flagTitle =
       FLAG_OVERRIDE_BY_ISO3[iso3] ?? wikidataByIso3.get(iso3)?.flagTitle;
     assert(qid, `Wikidata QID missing for ${iso3}`);
@@ -513,15 +526,14 @@ async function main(): Promise<void> {
         organization: "UN",
         status: "member",
         sourceUrl: UN_SOURCE_URL,
-        verifiedAt: VERIFIED_AT,
+        verifiedAt: VERIFIED_AT
       });
     } else if (isUnObserver) {
       memberships.push({
         organization: "UN",
         status: "observer",
-        sourceUrl:
-          "https://www.un.org/en/about-us/non-member-states",
-        verifiedAt: VERIFIED_AT,
+        sourceUrl: "https://www.un.org/en/about-us/non-member-states",
+        verifiedAt: VERIFIED_AT
       });
     }
     if (fifa) {
@@ -529,7 +541,7 @@ async function main(): Promise<void> {
         organization: "FIFA",
         status: "member",
         sourceUrl: FIFA_SOURCE_URL,
-        verifiedAt: VERIFIED_AT,
+        verifiedAt: VERIFIED_AT
       });
     }
     entities.push({
@@ -543,9 +555,9 @@ async function main(): Promise<void> {
           ...(country.altSpellings ?? []),
           fifa?.name,
           iso3 === "TWN" ? "Chinese Taipei" : undefined,
-          iso3 === "VAT" ? "Santa Sé" : undefined,
+          iso3 === "VAT" ? "Santa Sé" : undefined
         ],
-        displayName,
+        displayName
       ),
       sourceNames: {
         ...(unIso3.has(iso3) || isUnObserver
@@ -555,24 +567,24 @@ async function main(): Promise<void> {
                   ? "Holy See"
                   : iso3 === "PSE"
                     ? "State of Palestine"
-                    : country.name.common,
+                    : country.name.common
             }
           : {}),
-        ...(fifa ? {fifa: fifa.name} : {}),
+        ...(fifa ? { fifa: fifa.name } : {})
       },
       identifiers: {
         wikidataQid: qid,
-        ...(fifa ? {fifaCode: fifa.code} : {}),
-        ...(country.cca2 ? {isoAlpha2: country.cca2} : {}),
+        ...(fifa ? { fifaCode: fifa.code } : {}),
+        ...(country.cca2 ? { isoAlpha2: country.cca2 } : {}),
         isoAlpha3: country.cca3,
-        ...(country.ccn3 ? {unM49: country.ccn3} : {}),
+        ...(country.ccn3 ? { unM49: country.ccn3 } : {})
       },
       region: country.region ?? "Other",
       memberships,
       primaryFlagRevisionId: `${id}-flag-2026`,
       ...(EDITORIAL_NOTE_BY_ISO3[iso3]
-        ? {editorialNote: EDITORIAL_NOTE_BY_ISO3[iso3]}
-        : {}),
+        ? { editorialNote: EDITORIAL_NOTE_BY_ISO3[iso3] }
+        : {})
     });
     requestedFlagTitles.set(id, flagTitle);
   }
@@ -582,12 +594,12 @@ async function main(): Promise<void> {
       id: special.id,
       displayNamePtBr: special.displayNamePtBr,
       aliasesPtBr: special.aliasesPtBr,
-      sourceNames: {fifa: special.fifaName},
+      sourceNames: { fifa: special.fifaName },
       identifiers: {
         wikidataQid: special.qid,
         fifaCode: special.fifaCode,
-        ...(special.isoAlpha2 ? {isoAlpha2: special.isoAlpha2} : {}),
-        ...(special.isoAlpha3 ? {isoAlpha3: special.isoAlpha3} : {}),
+        ...(special.isoAlpha2 ? { isoAlpha2: special.isoAlpha2 } : {}),
+        ...(special.isoAlpha3 ? { isoAlpha3: special.isoAlpha3 } : {})
       },
       region: special.region,
       memberships: [
@@ -595,27 +607,28 @@ async function main(): Promise<void> {
           organization: "FIFA",
           status: "member",
           sourceUrl: FIFA_SOURCE_URL,
-          verifiedAt: VERIFIED_AT,
-        },
+          verifiedAt: VERIFIED_AT
+        }
       ],
       primaryFlagRevisionId: `${special.id}-flag-2026`,
-      ...(special.editorialNote
-        ? {editorialNote: special.editorialNote}
-        : {}),
+      ...(special.editorialNote ? { editorialNote: special.editorialNote } : {})
     });
     requestedFlagTitles.set(special.id, special.flagTitle);
   }
 
   entities.sort((left, right) =>
-    left.displayNamePtBr.localeCompare(right.displayNamePtBr, "pt-BR"),
+    left.displayNamePtBr.localeCompare(right.displayNamePtBr, "pt-BR")
   );
-  assert(entities.length === 220, `Expected 220 entities, found ${entities.length}`);
+  assert(
+    entities.length === 220,
+    `Expected 220 entities, found ${entities.length}`
+  );
 
   const commonsMetadata = await fetchCommonsMetadata([
-    ...new Set(requestedFlagTitles.values()),
+    ...new Set(requestedFlagTitles.values())
   ]);
   const vaticanMetadata = commonsMetadata.get(
-    "File:Flag of Vatican City (2023–present).svg",
+    "File:Flag of Vatican City (2023–present).svg"
   );
   assert(vaticanMetadata, "Vatican Commons metadata is missing");
   const vaticanOriginalName = basename(vaticanMetadata.originalUrl);
@@ -626,7 +639,7 @@ async function main(): Promise<void> {
   vaticanMetadata.width = 500;
   vaticanMetadata.height = 500;
   const flagsDirectory = join(process.cwd(), "public", "flags");
-  await mkdir(flagsDirectory, {recursive: true});
+  await mkdir(flagsDirectory, { recursive: true });
   const flagRevisions: FlagRevision[] = [];
 
   for (let index = 0; index < entities.length; index += 8) {
@@ -638,11 +651,9 @@ async function main(): Promise<void> {
         const metadata =
           commonsMetadata.get(requestedTitle.replaceAll("_", " ")) ??
           [...commonsMetadata.values()].find(
-            ({title}) =>
+            ({ title }) =>
               title.toLocaleLowerCase("en-US") ===
-              requestedTitle
-                .replaceAll("_", " ")
-                .toLocaleLowerCase("en-US"),
+              requestedTitle.replaceAll("_", " ").toLocaleLowerCase("en-US")
           );
         assert(metadata, `Commons metadata missing for ${requestedTitle}`);
         const extension = metadata.mime === "image/svg+xml" ? ".svg" : ".png";
@@ -650,9 +661,9 @@ async function main(): Promise<void> {
         await downloadCommonsOriginal(
           metadata,
           join(flagsDirectory, fileName),
-          entity.id === "vat",
+          entity.id === "vat"
         );
-        const special = specialEntities.find(({id}) => id === entity.id);
+        const special = specialEntities.find(({ id }) => id === entity.id);
         return {
           id: entity.primaryFlagRevisionId,
           entityId: entity.id,
@@ -667,12 +678,12 @@ async function main(): Promise<void> {
             sha1: metadata.sha1,
             mime: metadata.mime,
             width: metadata.width,
-            height: metadata.height,
+            height: metadata.height
           },
           license: metadata.license,
-          reviewedAt: VERIFIED_AT,
+          reviewedAt: VERIFIED_AT
         };
-      }),
+      })
     );
     flagRevisions.push(...revisions);
   }
@@ -681,31 +692,31 @@ async function main(): Promise<void> {
     version: CATALOG_VERSION,
     verifiedAt: VERIFIED_AT,
     entities,
-    flagRevisions,
+    flagRevisions
   };
   const dataDirectory = join(process.cwd(), "src", "data");
-  await mkdir(dataDirectory, {recursive: true});
+  await mkdir(dataDirectory, { recursive: true });
   await writeFile(
     join(dataDirectory, "catalog.json"),
-    `${JSON.stringify(catalog, null, 2)}\n`,
+    `${JSON.stringify(catalog, null, 2)}\n`
   );
   await writeFile(
     join(dataDirectory, "credits.json"),
     `${JSON.stringify(
       flagRevisions.map((revision) => ({
         entityId: revision.entityId,
-        displayNamePtBr:
-          entities.find(({id}) => id === revision.entityId)?.displayNamePtBr,
+        displayNamePtBr: entities.find(({ id }) => id === revision.entityId)
+          ?.displayNamePtBr,
         fileTitle: revision.commons.fileTitle,
         descriptionUrl: revision.commons.descriptionUrl,
-        license: revision.license,
+        license: revision.license
       })),
       null,
-      2,
-    )}\n`,
+      2
+    )}\n`
   );
   console.log(
-    `Catalog refreshed: ${entities.length} entities, ${flagRevisions.length} local flags.`,
+    `Catalog refreshed: ${entities.length} entities, ${flagRevisions.length} local flags.`
   );
 }
 

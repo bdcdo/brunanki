@@ -4,32 +4,32 @@ import type {
   AttemptOutcome,
   DiagnosticState,
   ReviewAttempt,
-  SkillState,
+  SkillState
 } from "@/types/learning";
 import { catalog } from "@/data/catalog";
 
 import {
   advanceDiagnostic,
   currentDiagnosticEntity,
-  startDiagnostic,
+  startDiagnostic
 } from "@/domain/diagnostic";
 import {
   createSkillState,
   scheduleAttempt,
-  skillStateId,
+  skillStateId
 } from "@/domain/scheduler";
 
 import {
   DEFAULT_APP_SETTINGS,
   SINGLETON_KEY,
   getDatabase,
-  type PtankiDatabase,
+  type PtankiDatabase
 } from "./database";
 import {
   applyPreparedImport,
   prepareImport,
   serializeDatabaseExport,
-  type PtankiExport,
+  type PtankiExport
 } from "./export";
 
 export interface LearningSnapshot {
@@ -40,26 +40,26 @@ export interface LearningSnapshot {
 }
 
 export async function readLearningSnapshot(
-  db: PtankiDatabase = getDatabase(),
+  db: PtankiDatabase = getDatabase()
 ): Promise<LearningSnapshot> {
   const [skillStates, attempts, diagnosticRecord, settingsRecord] =
     await Promise.all([
       db.skillStates.toArray(),
       db.attempts.orderBy("createdAt").toArray(),
       db.diagnostics.get(SINGLETON_KEY),
-      db.appSettings.get(SINGLETON_KEY),
+      db.appSettings.get(SINGLETON_KEY)
     ]);
   return {
     skills: skillStates,
     attempts,
     ...(diagnosticRecord ? { diagnostic: diagnosticRecord.state } : {}),
-    settings: settingsRecord?.settings ?? DEFAULT_APP_SETTINGS,
+    settings: settingsRecord?.settings ?? DEFAULT_APP_SETTINGS
   };
 }
 
 function sameEntitySet(
   existingOrder: readonly string[],
-  requestedIds: readonly string[],
+  requestedIds: readonly string[]
 ): boolean {
   return (
     existingOrder.length === requestedIds.length &&
@@ -71,13 +71,13 @@ function sameEntitySet(
 export async function startOrResumeDiagnostic(
   entityIds: readonly string[],
   db: PtankiDatabase = getDatabase(),
-  now: Date = new Date(),
+  now: Date = new Date()
 ): Promise<DiagnosticState> {
   const existing = (await db.diagnostics.get(SINGLETON_KEY))?.state;
   if (existing) {
     if (!sameEntitySet(existing.entityOrder, entityIds)) {
       throw new Error(
-        "O diagnóstico salvo pertence a outra versão do catálogo; redefina-o antes de iniciar",
+        "O diagnóstico salvo pertence a outra versão do catálogo; redefina-o antes de iniciar"
       );
     }
     return existing;
@@ -112,7 +112,7 @@ function newAttemptId(): string {
 
 export async function saveDiagnosticAnswer(
   input: SaveDiagnosticAnswerInput,
-  db: PtankiDatabase = getDatabase(),
+  db: PtankiDatabase = getDatabase()
 ): Promise<SavedDiagnosticAnswer> {
   if (!Number.isInteger(input.responseMs) || input.responseMs < 0) {
     throw new RangeError("responseMs deve ser um inteiro não negativo");
@@ -127,7 +127,7 @@ export async function saveDiagnosticAnswer(
   }
   if (expectedEntityId !== input.entityId) {
     throw new Error(
-      `A resposta é de ${input.entityId}, mas o item atual é ${expectedEntityId}`,
+      `A resposta é de ${input.entityId}, mas o item atual é ${expectedEntityId}`
     );
   }
 
@@ -140,17 +140,14 @@ export async function saveDiagnosticAnswer(
     outcome: input.outcome,
     responseMs: input.responseMs,
     ...(input.answer !== undefined ? { answer: input.answer } : {}),
-    createdAt: createdAt.toISOString(),
+    createdAt: createdAt.toISOString()
   };
   const id = skillStateId(input.entityId, "flagToNameRecall");
   const currentState =
     (await db.skillStates.get(id)) ??
     createSkillState(input.entityId, "flagToNameRecall", createdAt);
   const skillState = scheduleAttempt(currentState, attempt);
-  const diagnosticState = advanceDiagnostic(
-    diagnosticRecord.state,
-    createdAt,
-  );
+  const diagnosticState = advanceDiagnostic(diagnosticRecord.state, createdAt);
 
   await db.transaction(
     "rw",
@@ -162,16 +159,16 @@ export async function saveDiagnosticAnswer(
       await db.attempts.add(attempt);
       await db.diagnostics.put({
         id: SINGLETON_KEY,
-        state: diagnosticState,
+        state: diagnosticState
       });
-    },
+    }
   );
 
   return { skillState, attempt, diagnosticState };
 }
 
 export async function resetAllData(
-  db: PtankiDatabase = getDatabase(),
+  db: PtankiDatabase = getDatabase()
 ): Promise<void> {
   await db.transaction(
     "rw",
@@ -184,15 +181,15 @@ export async function resetAllData(
         db.skillStates.clear(),
         db.attempts.clear(),
         db.diagnostics.clear(),
-        db.appSettings.clear(),
+        db.appSettings.clear()
       ]);
-    },
+    }
   );
 }
 
 export async function exportProgress(
   catalogVersion: string = catalog.version,
-  db: PtankiDatabase = getDatabase(),
+  db: PtankiDatabase = getDatabase()
 ): Promise<string> {
   return serializeDatabaseExport(db, catalogVersion);
 }
@@ -206,7 +203,7 @@ export async function importProgress(
   json: string,
   currentCatalogVersion: string = catalog.version,
   options?: ImportProgressOptions,
-  db: PtankiDatabase = getDatabase(),
+  db: PtankiDatabase = getDatabase()
 ): Promise<boolean> {
   const prepared = await prepareImport(db, json, currentCatalogVersion);
   const handlers = options ?? browserImportHandlers();
@@ -223,7 +220,7 @@ function browserImportHandlers(): ImportProgressOptions {
     typeof window.confirm !== "function"
   ) {
     throw new Error(
-      "A importação exige callbacks saveBackup e confirmReplace fora do navegador",
+      "A importação exige callbacks saveBackup e confirmReplace fora do navegador"
     );
   }
   return {
@@ -240,8 +237,8 @@ function browserImportHandlers(): ImportProgressOptions {
     },
     confirmReplace() {
       return window.confirm(
-        "Substituir todo o progresso atual pelos dados deste backup?",
+        "Substituir todo o progresso atual pelos dados deste backup?"
       );
-    },
+    }
   };
 }

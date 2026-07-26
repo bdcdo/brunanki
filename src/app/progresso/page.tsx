@@ -11,10 +11,13 @@ function stability(card?: Card) {
 }
 
 export default function ProgressPage() {
-  const {skills, attempts} = useApp();
+  const { skills, attempts } = useApp();
   const perEntity = new Map<string, typeof skills>();
   for (const skill of skills) {
-    perEntity.set(skill.entityId, [...(perEntity.get(skill.entityId) ?? []), skill]);
+    perEntity.set(skill.entityId, [
+      ...(perEntity.get(skill.entityId) ?? []),
+      skill
+    ]);
   }
 
   const mastered = [...perEntity.values()].filter(
@@ -33,7 +36,9 @@ export default function ProgressPage() {
   const reviewing = [...perEntity.values()].filter((entitySkills) =>
     entitySkills.some((skill) => skill.phase === "scheduled")
   ).length;
-  const firstTry = attempts.filter((attempt) => attempt.outcome === "correct").length;
+  const firstTry = attempts.filter(
+    (attempt) => attempt.outcome === "correct"
+  ).length;
 
   return (
     <div className="page">
@@ -74,19 +79,26 @@ export default function ProgressPage() {
       <section className="card">
         <div className="section-heading">
           <h2>Atlas dominado</h2>
-          <span className="pill">{Math.round((mastered / entities.length) * 100)}%</span>
+          <span className="pill">
+            {Math.round((mastered / entities.length) * 100)}%
+          </span>
         </div>
-        <ProgressBar value={mastered} max={entities.length} label="Entidades dominadas" />
+        <ProgressBar
+          value={mastered}
+          max={entities.length}
+          label="Entidades dominadas"
+        />
       </section>
 
-      <section className="two-column" style={{marginTop: 18}}>
+      <section className="two-column" style={{ marginTop: 18 }}>
         <article className="card">
           <span className="eyebrow">Como ler</span>
           <h2>Uma bandeira passa por três estados</h2>
           <p className="muted">
             Nova quando ainda não foi apresentada; em aprendizagem enquanto
-            precisa de apoio; em revisão quando já pode ser recuperada sem pista.
-            “Dominada” é um marco dentro da revisão, nunca o fim das práticas.
+            precisa de apoio; em revisão quando já pode ser recuperada sem
+            pista. “Dominada” é um marco dentro da revisão, nunca o fim das
+            práticas.
           </p>
         </article>
         <article className="card">

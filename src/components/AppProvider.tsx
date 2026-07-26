@@ -34,14 +34,14 @@ async function loadSnapshot(): Promise<Omit<LearningSnapshot, "loading">> {
     return {
       skills: snapshot.skills,
       attempts: snapshot.attempts,
-      ...(snapshot.diagnostic ? {diagnostic: snapshot.diagnostic} : {})
+      ...(snapshot.diagnostic ? { diagnostic: snapshot.diagnostic } : {})
     };
   } catch {
-    return {skills: [], attempts: []};
+    return { skills: [], attempts: [] };
   }
 }
 
-export function AppProvider({children}: {children: React.ReactNode}) {
+export function AppProvider({ children }: { children: React.ReactNode }) {
   const [snapshot, setSnapshot] = useState<LearningSnapshot>({
     skills: [],
     attempts: [],
@@ -50,23 +50,20 @@ export function AppProvider({children}: {children: React.ReactNode}) {
 
   const refresh = useCallback(async () => {
     const next = await loadSnapshot();
-    setSnapshot({...next, loading: false});
+    setSnapshot({ ...next, loading: false });
   }, []);
 
   useEffect(() => {
     let active = true;
     void loadSnapshot().then((next) => {
-      if (active) setSnapshot({...next, loading: false});
+      if (active) setSnapshot({ ...next, loading: false });
     });
     return () => {
       active = false;
     };
   }, []);
 
-  const value = useMemo(
-    () => ({...snapshot, refresh}),
-    [snapshot, refresh]
-  );
+  const value = useMemo(() => ({ ...snapshot, refresh }), [snapshot, refresh]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
