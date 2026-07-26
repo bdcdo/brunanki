@@ -13,6 +13,8 @@ import { ProgressBar } from "@/components/ProgressBar";
 import { entities, entityById } from "@/data/runtime-catalog";
 import { getNameResolver } from "@/data/name-index";
 import { newAttemptId } from "@/domain/ids";
+import { buildChoiceRound } from "@/domain/distractors";
+import { mulberry32 } from "@/domain/shuffle";
 import { buildDailyQueue, type DailyQueueItem } from "@/domain/daily-queue";
 import {
   createSkillState,
@@ -39,27 +41,7 @@ interface StudyFeedback {
 }
 
 const SESSION_LIMIT = 20;
-
-function distractors(entityId: string, count = 3) {
-  const target = entityById.get(entityId)!;
-  const sameRegion = entities.filter(
-    (entity) => entity.id !== entityId && entity.region === target.region
-  );
-  const rest = entities.filter(
-    (entity) => entity.id !== entityId && entity.region !== target.region
-  );
-  return [...sameRegion, ...rest]
-    .sort((left, right) => left.id.localeCompare(right.id))
-    .slice(0, count);
-}
-
-function shuffled<T>(items: readonly T[], seed: string): T[] {
-  return [...items].sort((left, right) => {
-    const leftKey = `${seed}:${JSON.stringify(left)}`;
-    const rightKey = `${seed}:${JSON.stringify(right)}`;
-    return leftKey.localeCompare(rightKey) * (seed.charCodeAt(0) % 2 ? 1 : -1);
-  });
-}
+const CHOICE_COUNT = 4;
 
 function newAttempt(
   item: SessionItem,
@@ -132,6 +114,10 @@ function StudySessionReady({
   const [initialized, setInitialized] = useState(false);
   const [retryCounts, setRetryCounts] = useState<Record<string, number>>({});
   const startedAt = useRef(0);
+  // Semente sorteada uma vez por sessão. Combinada com a posição na fila, dá
+  // alternativas estáveis enquanto a questão está na tela — nada de
+  // reembaralhar a cada re-render — e diferentes a cada nova sessão.
+  const [sessionSeed] = useState(() => Math.floor(Math.random() * 2 ** 32));
 
   const stateById = useMemo(
     () => new Map(skills.map((state) => [state.id, state])),
@@ -165,11 +151,13 @@ function StudySessionReady({
   const entity = item ? entityById.get(item.entityId) : undefined;
   const choices = useMemo(() => {
     if (!entity) return [];
-    return shuffled(
-      [entity, ...distractors(entity.id)],
-      `${entity.id}:${item?.skill ?? ""}`
+    return buildChoiceRound(
+      entity,
+      entities,
+      CHOICE_COUNT,
+      mulberry32(sessionSeed + index * 2654435761)
     );
-  }, [entity, item?.skill]);
+  }, [entity, index, sessionSeed]);
 
   function moveToNext() {
     setFeedback(undefined);

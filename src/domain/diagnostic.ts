@@ -1,6 +1,8 @@
 import type { DiagnosticState } from "@/types/learning";
 
-export type RandomSource = () => number;
+import { shuffle, type RandomSource } from "./shuffle";
+
+export type { RandomSource };
 
 export function shuffledEntityOrder(
   entityIds: readonly string[],
@@ -9,16 +11,7 @@ export function shuffledEntityOrder(
   if (new Set(entityIds).size !== entityIds.length) {
     throw new Error("O diagnóstico não aceita IDs de entidade duplicados");
   }
-  const order = [...entityIds];
-  for (let index = order.length - 1; index > 0; index -= 1) {
-    const randomValue = random();
-    if (randomValue < 0 || randomValue >= 1) {
-      throw new RangeError("A fonte aleatória deve retornar valores em [0, 1)");
-    }
-    const otherIndex = Math.floor(randomValue * (index + 1));
-    [order[index], order[otherIndex]] = [order[otherIndex], order[index]];
-  }
-  return order;
+  return shuffle(entityIds, random);
 }
 
 export function startDiagnostic(
