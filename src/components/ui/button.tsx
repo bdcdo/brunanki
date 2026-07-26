@@ -46,8 +46,10 @@ const buttonVariants = cva(
         sm: "min-h-10 px-3.5 py-2 text-sm",
         // O quadrado do menu: alvo de toque de 44px, borda de 1px e raio
         // menor. É a única variante que abre mão da moldura de 2px, porque
-        // não alterna entre ter e não ter borda visível.
-        icon: "size-11 min-h-0 gap-0 border border-line bg-surface p-0 text-ink"
+        // não alterna entre ter e não ter borda visível. O `rounded-[10px]`
+        // estava descrito no comentário e faltava na receita — escrita antes
+        // de existir chamador que a exercitasse.
+        icon: "size-11 min-h-0 gap-0 rounded-[10px] border border-line bg-surface p-0 text-ink"
       }
     },
     defaultVariants: { variant: "default", size: "default" }

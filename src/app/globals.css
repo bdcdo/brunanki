@@ -3,21 +3,10 @@
    tailwind.config.ts, e tudo o que o compilador precisa saber está neste
    arquivo.
 
-   ORDEM DE CAMADAS. Declarada antes de qualquer @import porque a primeira
-   declaração @layer é a que fixa a ordem: o `@layer theme, base, components,
-   utilities` que vive na linha 1 de node_modules/tailwindcss/index.css só
-   reencontra nomes já posicionados e não os reordena. `legacy` entra entre
-   `components` e `utilities`, e é isso que permite migrar um elemento por vez
-   sem !important — as 74 classes antigas continuam vencendo o preflight e as
-   classes-assinatura, mas perdem de qualquer utilitário, propriedade por
-   propriedade.
-
    O preflight entra pelo `@import "tailwindcss"` completo. Ele zera
    list-style de ol/ul, font-size e font-weight de h1..h6 e text-decoration de
-   a (preflight.css:84-85, 94-95, 205), e a camada legacy só o vence nas
-   propriedades que ela mesma declara — há elementos no app sem regra legada
-   nenhuma. O bloco @layer base adiante devolve, um a um, o que o preflight
-   tira e o legado não repõe.
+   a (preflight.css:84-85, 94-95, 205). O bloco @layer base adiante devolve,
+   um a um, o que ele tira e o app tomava emprestado do agente do usuário.
 
    Duas mudanças visuais ele traz de propósito, e ambas são melhorias que
    valem registrar porque aparecem em qualquer comparação de tela:
@@ -30,12 +19,15 @@
       derivados da fonte, em lugar do padrão do navegador, que corta as
       descendentes da Atkinson Hyperlegible.
 
-   A camada legacy é temporária e morre junto com src/app/legacy.css.
+   Existiu aqui uma quinta camada, `legacy`, entre `components` e `utilities`.
+   Era ela que permitia migrar um elemento por vez sem !important: as 74
+   classes da folha antiga venciam o preflight e as classes-assinatura, mas
+   perdiam de qualquer utilitário, propriedade por propriedade. As 74 saíram,
+   `src/app/legacy.css` foi apagado, e a camada com ele.
 --------------------------------------------------------------------------- */
-@layer theme, base, components, legacy, utilities;
+@layer theme, base, components, utilities;
 
 @import "tailwindcss";
-@import "./legacy.css" layer(legacy);
 
 /* O detector de classes do Tailwind varre todo arquivo versionado do projeto,
    e os artefatos do catálogo somam meio megabyte de JSON. Qualquer número
@@ -128,16 +120,16 @@
   --muted: var(--paper-deep);
   --muted-foreground: var(--ink-soft);
   /* ATENÇÃO: em shadcn, --accent é a superfície de HOVER de ghost/outline, e
-     não o acento da marca — é literalmente o que .button-ghost:hover faz em
-     legacy.css:308-310. Pôr o teal aqui pintaria todo hover fantasma de teal
-     sólido. A marca vive só nos --brand*. */
+     não o acento da marca — é o que o `.button-ghost:hover` legado fazia. Pôr
+     o teal aqui pintaria todo hover fantasma de teal sólido. A marca vive só
+     nos --brand*. */
   --accent: var(--paper-deep);
   --accent-foreground: var(--ink);
   --destructive: var(--alert);
   --destructive-foreground: var(--alert-on);
   --border: var(--line);
   /* Delimita controle, então o piso é 3:1 e não 1,46:1. O #a7aaa4 que os
-     campos usam hoje (legacy.css:630) mede 2,31:1. */
+     campos usavam media 2,31:1. */
   --input: #7c8a88; /* 3,53:1 sobre --surface; 3,24:1 sobre --paper */
   --ring: var(--alert);
 
@@ -227,31 +219,15 @@
   --measure-narrow: 820px;
   --measure-copy: 620px; /* colapsa 580/600/620/640 de largura de texto */
   --gutter: clamp(28px, 5vw, 80px);
-
-  /* — ponte para os nomes antigos ----------------------------------------
-     TEMPORÁRIO, some com legacy.css. As 74 classes legadas continuam falando
-     em --teal e --coral; redefinir esses nomes aqui faz o CSS antigo consumir
-     os tokens novos, de modo que exista um só lugar onde cada cor é escolhida
-     enquanto os dois sistemas convivem.
-
-     Funciona porque este :root está fora de qualquer camada, e CSS sem camada
-     vence CSS em camada — inclusive o :root que legacy.css declara na sua. */
-  --teal: var(--brand);
-  --teal-dark: var(--brand-deep);
-  --coral: var(--alert);
-  --yellow: var(--highlight);
-  --green-soft: var(--outcome-correct);
-  --coral-soft: var(--outcome-incorrect);
-  --yellow-soft: var(--outcome-partial);
-  --shadow: var(--shadow-panel);
-  --radius-md: var(--radius-card);
-  --radius-lg: var(--radius-panel);
 }
 
-/* O corpo cai um degrau no layout de coluna única, como já acontecia
-   (legacy.css:956-958). Como o @theme inline abaixo mapeia --text-base para
-   var(--type-body), esta única linha desloca junto o utilitário text-base e o
-   corpo do documento. */
+/* O corpo cai um degrau no layout de coluna única. Como o @theme inline
+   abaixo mapeia --text-base para var(--type-body), esta única linha desloca
+   junto o utilitário text-base e o corpo do documento.
+
+   O 761px repete o `--breakpoint-md` declarado adiante, e a repetição é
+   forçada: um @media precisa do número em tempo de build, e uma var() aqui
+   não resolveria. Mudar um exige mudar o outro. */
 @media (width < 761px) {
   :root {
     --type-body: 16px;
@@ -391,27 +367,31 @@
    precisa do número, não de uma referência a resolver no browser.
 --------------------------------------------------------------------------- */
 @theme {
-  /* Complemento exato dos @media do CSS legado (legacy.css:940 e 955), para
-     que não exista faixa de viewport em que o utilitário se diga desktop e a
-     classe legada se diga mobile — os padrões do Tailwind são 768 e 1024, e
-     deixariam as faixas de 761-767px e 1025-1040px em desacordo.
+  /* Estes dois nasceram como complemento exato dos @media do CSS legado, para
+     que não existisse faixa de viewport em que o utilitário se dissesse
+     desktop e a classe legada se dissesse mobile. O legado morreu, e o TODO
+     registrado no commit 1 dizia devolvê-los a 48rem/64rem.
 
-     TODO: voltar a 48rem/64rem quando legacy.css for apagado. */
+     Ficam, e o motivo mudou de lugar: os dois números deixaram de descrever
+     uma folha que não existe mais e passaram a ser as quebras do desenho —
+     todas as telas convertidas os consomem por `max-md:` e `max-lg:`, e o
+     `DESKTOP` de AppShell.tsx repete o 761 em matchMedia. Voltar aos padrões
+     moveria dezenas de quebras de layout de uma vez, sem que teste nenhum
+     visse: o e2e mede 412px e 1280px, e as fronteiras estão em 760 e 1040.
+     Isso é decisão de design, e não higiene de fim de migração. */
   --breakpoint-md: 761px;
   --breakpoint-lg: 1041px;
 
-  /* Transição curta e uniforme. 160ms/ease é o que .button (legacy.css:268) e
-     .flag-card (665) já usavam; virando padrão, todo utilitário `transition`
-     sai com o tempo do app, sem repetir duration-* em cada call site. */
+  /* Transição curta e uniforme. 160ms/ease é o que `.button` e o cartão do
+     catálogo já usavam; virando padrão, todo utilitário `transition` sai com
+     o tempo do app, sem repetir duration-* em cada call site. */
   --default-transition-duration: 160ms;
   --default-transition-timing-function: ease;
 }
 
 /* ---------------------------------------------------------------------------
-   BASE. Só o que é do elemento, e sobretudo o que o preflight tira e o CSS
-   legado não repõe. Enquanto a coexistência durar, a camada legacy vence nas
-   propriedades que ela repete (html e body, legacy.css:25-41); estas
-   declarações assumem sozinhas quando legacy.css for apagado.
+   BASE. Só o que é do elemento, e sobretudo o que o preflight tira e nada
+   repõe.
 --------------------------------------------------------------------------- */
 @layer base {
   html {
@@ -471,14 +451,13 @@
      regras, seis títulos ficam em peso normal e dois deles caem para o tamanho
      do corpo.
 
-     Devolver aqui, e não espalhar utilitários pelos sete arquivos que os
-     contêm, tem duas razões: o dano é do elemento, não do componente; e cada
-     uma dessas telas será migrada para utilitários mais adiante, o que jogaria
-     fora o trabalho. Como a camada legacy está acima desta, todo título que já
-     tem tamanho próprio continua com ele — o que estas regras fazem é apenas
-     preencher o que ninguém declarava.
-
-     Saem quando legacy.css morrer e as telas estiverem todas em utilitários. */
+     Ficam mesmo com as telas todas em utilitários, e é deliberado: o dano é do
+     elemento, não do componente, e há títulos no app que não têm — nem devem
+     ter — tamanho próprio. Os dois <h2> da tela de progresso e o "Como
+     funciona" da abertura do diagnóstico dependem destas regras, e o
+     `<h1>` de EmptyState e da abertura de sessão herda daqui o seu 2em.
+     Espalhar `text-[2em]` por eles seria trocar uma regra de elemento por
+     cinco cópias de um número. */
   h1,
   h2,
   h3,
@@ -518,9 +497,6 @@
     outline-offset: 3px;
   }
 
-  /* Duplica legacy.css:1070-1078 de propósito: quando aquele arquivo for
-     apagado, esta guarda precisa continuar existindo. Declarações idênticas,
-     portanto sem efeito algum enquanto as duas convivem. */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
