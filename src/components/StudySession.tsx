@@ -69,6 +69,10 @@ function newAttempt(
     skill: item.skill,
     exercise,
     outcome,
+    // A repetição imediata que se segue a um erro fica registrada na própria
+    // tentativa, e não só no argumento do agendador: assim o histórico
+    // distingue uma recuperação genuína de uma segunda chance.
+    isImmediateCorrection: item.immediate ?? false,
     responseMs,
     ...(answer ? { answer } : {}),
     createdAt: new Date().toISOString()
@@ -89,7 +93,7 @@ function initialStep(item: SessionItem, state?: SkillState): StudyStep {
 }
 
 export function StudySession() {
-  const { diagnostic, skills, attempts, refresh, loading } = useApp();
+  const { diagnostic, skills, attempts, settings, refresh, loading } = useApp();
   const [queue, setQueue] = useState<SessionItem[]>([]);
   const [index, setIndex] = useState(0);
   const [step, setStep] = useState<StudyStep>("teach");
@@ -187,9 +191,7 @@ export function StudySession() {
         typedAnswer
       );
       const nextState = schedule
-        ? scheduleAttempt(current, attempt, {
-            isImmediateCorrection: item.immediate
-          })
+        ? scheduleAttempt(current, attempt, settings)
         : current;
       await storage.saveReview(nextState, attempt);
 

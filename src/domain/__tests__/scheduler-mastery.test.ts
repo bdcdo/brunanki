@@ -1,7 +1,11 @@
 import { State, createEmptyCard } from "ts-fsrs";
 import { describe, expect, it } from "vitest";
 
-import type { ReviewAttempt, SkillState } from "@/types/learning";
+import type {
+  ReviewAttempt,
+  SchedulingPreferences,
+  SkillState
+} from "@/types/learning";
 
 import { getMasteryStatus } from "../mastery";
 import {
@@ -12,7 +16,8 @@ import {
 
 function attempt(
   outcome: ReviewAttempt["outcome"],
-  createdAt: string
+  createdAt: string,
+  isImmediateCorrection = false
 ): ReviewAttempt {
   return {
     id: `${outcome}-${createdAt}`,
@@ -20,10 +25,16 @@ function attempt(
     skill: "flagToNameRecall",
     exercise: "flagToNameInput",
     outcome,
+    isImmediateCorrection,
     responseMs: 800,
     createdAt
   };
 }
+
+const saoPaulo: SchedulingPreferences = {
+  desiredRetention: 0.9,
+  timeZone: "America/Sao_Paulo"
+};
 
 describe("scheduleAttempt", () => {
   it("mapeia resultados para Again, Hard e Good", () => {
@@ -41,7 +52,8 @@ describe("scheduleAttempt", () => {
     );
     const updated = scheduleAttempt(
       initial,
-      attempt("correct", "2026-07-25T12:01:00.000Z")
+      attempt("correct", "2026-07-25T12:01:00.000Z"),
+      saoPaulo
     );
 
     expect(updated.id).toBe("brasil::flagToNameRecall");
@@ -55,23 +67,72 @@ describe("scheduleAttempt", () => {
     const initial = createSkillState("brasil", "flagToNameRecall");
     const updated = scheduleAttempt(
       initial,
-      attempt("correct", "2026-07-25T12:01:00.000Z"),
-      { isImmediateCorrection: true }
+      attempt("correct", "2026-07-25T12:01:00.000Z", true),
+      saoPaulo
     );
     expect(updated.distinctSuccessDays).toEqual([]);
   });
 
-  it("registra sucessos apenas uma vez por dia no fuso do produto", () => {
+  it("registra sucessos apenas uma vez por dia no fuso informado", () => {
     const initial = createSkillState("brasil", "flagToNameRecall");
     const first = scheduleAttempt(
       initial,
-      attempt("correct", "2026-07-25T02:30:00.000Z")
+      attempt("correct", "2026-07-25T02:30:00.000Z"),
+      saoPaulo
     );
     const second = scheduleAttempt(
       first,
-      attempt("correct", "2026-07-25T03:30:00.000Z")
+      attempt("correct", "2026-07-25T03:30:00.000Z"),
+      saoPaulo
     );
     expect(second.distinctSuccessDays).toEqual(["2026-07-24", "2026-07-25"]);
+  });
+
+  it("conta o dia de calendário no fuso de quem estuda", () => {
+    // 02:30Z é 23:30 do dia anterior em São Paulo e 11:30 do mesmo dia em
+    // Tóquio: sem o fuso certo, os dias distintos de sucesso saem errados.
+    const initial = createSkillState("brasil", "flagToNameRecall");
+    const inSaoPaulo = scheduleAttempt(
+      initial,
+      attempt("correct", "2026-07-25T02:30:00.000Z"),
+      saoPaulo
+    );
+    const inTokyo = scheduleAttempt(
+      initial,
+      attempt("correct", "2026-07-25T02:30:00.000Z"),
+      { desiredRetention: 0.9, timeZone: "Asia/Tokyo" }
+    );
+
+    expect(inSaoPaulo.distinctSuccessDays).toEqual(["2026-07-24"]);
+    expect(inTokyo.distinctSuccessDays).toEqual(["2026-07-25"]);
+  });
+
+  it("aplica a retenção desejada ao intervalo agendado", () => {
+    // Prova que a preferência chega ao FSRS: antes ela existia no tipo, na
+    // tabela e no schema, mas nunca era passada ao agendador.
+    //
+    // Precisa de um cartão já em revisão: enquanto o cartão está em
+    // aprendizado, o intervalo vem dos learning steps fixos do FSRS e não
+    // responde à retenção desejada.
+    const mature = masteredState("flagToNameRecall");
+    // createEmptyCard deixa difficulty em 0, que o FSRS recusa num cartão já
+    // em revisão; o valor abaixo é uma dificuldade média plausível.
+    mature.card!.difficulty = 5;
+    const conservative = scheduleAttempt(
+      mature,
+      attempt("correct", "2026-08-25T12:00:00.000Z"),
+      { desiredRetention: 0.97, timeZone: "America/Sao_Paulo" }
+    );
+    const relaxed = scheduleAttempt(
+      mature,
+      attempt("correct", "2026-08-25T12:00:00.000Z"),
+      { desiredRetention: 0.8, timeZone: "America/Sao_Paulo" }
+    );
+
+    // Reter mais exige revisar antes.
+    expect(conservative.card?.due.getTime()).toBeLessThan(
+      relaxed.card?.due.getTime() ?? 0
+    );
   });
 });
 

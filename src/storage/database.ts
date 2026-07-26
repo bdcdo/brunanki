@@ -9,7 +9,7 @@ import type {
   SkillState
 } from "@/types/learning";
 
-import { DEFAULT_DESIRED_RETENTION } from "@/domain/scheduler";
+import { defaultSchedulingPreferences } from "@/domain/scheduler";
 
 export const DATABASE_NAME = "ptanki";
 export const SINGLETON_KEY = "current";
@@ -24,10 +24,14 @@ export interface SettingsRecord {
   settings: AppSettings;
 }
 
-export const DEFAULT_APP_SETTINGS: AppSettings = {
-  desiredRetention: DEFAULT_DESIRED_RETENTION,
-  reduceMotion: false
-};
+/**
+ * O fuso é lido do dispositivo na primeira vez que as preferências são
+ * necessárias, e não fixado no módulo, para que o valor gravado seja o de
+ * quem está estudando.
+ */
+export function defaultAppSettings(): AppSettings {
+  return defaultSchedulingPreferences();
+}
 
 export class PtankiDatabase extends Dexie {
   skillStates!: EntityTable<SkillState, "id">;
@@ -77,7 +81,7 @@ export async function getAppSettings(
   db: PtankiDatabase = getDatabase()
 ): Promise<AppSettings> {
   return (
-    (await db.appSettings.get(SINGLETON_KEY))?.settings ?? DEFAULT_APP_SETTINGS
+    (await db.appSettings.get(SINGLETON_KEY))?.settings ?? defaultAppSettings()
   );
 }
 

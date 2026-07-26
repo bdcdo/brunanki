@@ -9,15 +9,18 @@ import {
   useState
 } from "react";
 import type {
+  AppSettings,
   DiagnosticState,
   ReviewAttempt,
   SkillState
 } from "@/types/learning";
+import { defaultSchedulingPreferences } from "@/domain/scheduler";
 
 export interface LearningSnapshot {
   diagnostic?: DiagnosticState;
   skills: SkillState[];
   attempts: ReviewAttempt[];
+  settings: AppSettings;
   loading: boolean;
 }
 
@@ -34,10 +37,15 @@ async function loadSnapshot(): Promise<Omit<LearningSnapshot, "loading">> {
     return {
       skills: snapshot.skills,
       attempts: snapshot.attempts,
+      settings: snapshot.settings,
       ...(snapshot.diagnostic ? { diagnostic: snapshot.diagnostic } : {})
     };
   } catch {
-    return { skills: [], attempts: [] };
+    return {
+      skills: [],
+      attempts: [],
+      settings: defaultSchedulingPreferences()
+    };
   }
 }
 
@@ -45,6 +53,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [snapshot, setSnapshot] = useState<LearningSnapshot>({
     skills: [],
     attempts: [],
+    settings: defaultSchedulingPreferences(),
     loading: true
   });
 

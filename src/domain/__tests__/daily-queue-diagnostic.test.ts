@@ -80,6 +80,7 @@ describe("buildDailyQueue", () => {
         skill: "flagToNameRecall",
         exercise: "flagToNameInput",
         outcome: index < 5 ? "correct" : "incorrect",
+        isImmediateCorrection: false,
         responseMs: 500,
         createdAt: `2026-07-${String(index + 1).padStart(2, "0")}T12:00:00.000Z`
       })

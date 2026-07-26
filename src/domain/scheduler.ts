@@ -10,17 +10,36 @@ import {
 import type {
   AttemptOutcome,
   ReviewAttempt,
+  SchedulingPreferences,
   SkillKind,
   SkillState
 } from "@/types/learning";
 
 export const DEFAULT_DESIRED_RETENTION = 0.9;
-export const DEFAULT_TIME_ZONE = "America/Sao_Paulo";
 
-export interface ScheduleAttemptOptions {
-  desiredRetention?: number;
-  isImmediateCorrection?: boolean;
-  timeZone?: string;
+/**
+ * Fuso do dispositivo, validado contra a lista da plataforma.
+ *
+ * Chamado uma única vez, ao criar as preferências; o valor resolvido é
+ * gravado e passa a acompanhar o progresso, inclusive nos backups.
+ */
+export function resolveTimeZone(): string {
+  const resolved = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  if (!resolved) {
+    throw new Error("Este navegador não informa o fuso horário do sistema");
+  }
+  return resolved;
+}
+
+/**
+ * Vive no domínio, e não em storage/, porque é regra de agendamento e não de
+ * persistência — e porque assim a UI pode obtê-lo sem carregar o Dexie.
+ */
+export function defaultSchedulingPreferences(): SchedulingPreferences {
+  return {
+    desiredRetention: DEFAULT_DESIRED_RETENTION,
+    timeZone: resolveTimeZone()
+  };
 }
 
 export function skillStateId(entityId: string, skill: SkillKind): string {
@@ -54,10 +73,7 @@ export function ratingForOutcome(outcome: AttemptOutcome): Grade {
   }
 }
 
-export function calendarDay(
-  date: Date,
-  timeZone: string = DEFAULT_TIME_ZONE
-): string {
+export function calendarDay(date: Date, timeZone: string): string {
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone,
     year: "numeric",
@@ -82,7 +98,7 @@ function phaseForCard(card: Card): SkillState["phase"] {
 export function scheduleAttempt(
   currentState: SkillState,
   attempt: ReviewAttempt,
-  options: ScheduleAttemptOptions = {}
+  preferences: SchedulingPreferences
 ): SkillState {
   if (
     currentState.entityId !== attempt.entityId ||
@@ -98,11 +114,9 @@ export function scheduleAttempt(
     throw new Error(`Data de tentativa inválida: ${attempt.createdAt}`);
   }
 
-  const desiredRetention =
-    options.desiredRetention ?? DEFAULT_DESIRED_RETENTION;
-  validateDesiredRetention(desiredRetention);
+  validateDesiredRetention(preferences.desiredRetention);
   const scheduler = fsrs({
-    request_retention: desiredRetention,
+    request_retention: preferences.desiredRetention,
     enable_fuzz: false
   });
   const currentCard: Card = currentState.card ?? createEmptyCard<Card>(now);
@@ -113,8 +127,8 @@ export function scheduleAttempt(
   );
 
   const successDays = new Set(currentState.distinctSuccessDays);
-  if (attempt.outcome === "correct" && !options.isImmediateCorrection) {
-    successDays.add(calendarDay(now, options.timeZone));
+  if (attempt.outcome === "correct" && !attempt.isImmediateCorrection) {
+    successDays.add(calendarDay(now, preferences.timeZone));
   }
 
   return {

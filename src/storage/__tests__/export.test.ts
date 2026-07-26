@@ -16,7 +16,7 @@ function validExport() {
     schemaVersion: EXPORT_SCHEMA_VERSION,
     catalogVersion: "2026.07.25",
     exportedAt: "2026-07-25T12:00:00.000Z",
-    settings: { desiredRetention: 0.9, reduceMotion: false },
+    settings: { desiredRetention: 0.9, timeZone: "America/Sao_Paulo" },
     skillStates: [
       {
         id: "brasil::flagToNameRecall",
@@ -31,11 +31,34 @@ function validExport() {
   };
 }
 
+/** Backup na forma anterior: com reduceMotion, sem fuso e sem o flag. */
+function legacyExport() {
+  return {
+    format: EXPORT_FORMAT,
+    schemaVersion: 1,
+    catalogVersion: "2026.07.25",
+    exportedAt: "2026-07-25T12:00:00.000Z",
+    settings: { desiredRetention: 0.85, reduceMotion: true },
+    skillStates: [],
+    attempts: [
+      {
+        id: "a1",
+        entityId: "brasil",
+        skill: "flagToNameRecall",
+        exercise: "flagToNameInput",
+        outcome: "correct",
+        responseMs: 900,
+        createdAt: "2026-07-25T12:00:00.000Z"
+      }
+    ]
+  };
+}
+
 describe("parseExportJson", () => {
   it("aceita um backup versionado e bem formado", () => {
     expect(parseExportJson(JSON.stringify(validExport()))).toMatchObject({
       format: "ptanki-export",
-      schemaVersion: 1,
+      schemaVersion: 2,
       catalogVersion: "2026.07.25"
     });
   });
@@ -63,6 +86,33 @@ describe("parseExportJson", () => {
         completedAt: "2026-07-25T11:00:00.000Z"
       }
     };
+    expect(() => parseExportJson(JSON.stringify(data))).toThrow();
+  });
+
+  it("migra um backup v1 para a forma atual", () => {
+    const migrated = parseExportJson(JSON.stringify(legacyExport()));
+
+    expect(migrated.schemaVersion).toBe(2);
+    // A preferência que existia é preservada; reduceMotion desaparece porque
+    // nada o lia e a media query de sistema já cobre o caso.
+    expect(migrated.settings.desiredRetention).toBe(0.85);
+    expect(migrated.settings).not.toHaveProperty("reduceMotion");
+    expect(migrated.settings.timeZone).toBeTruthy();
+    // A v1 não distinguia correção imediata: toda tentativa antiga entra
+    // como tentativa comum, que é o que ela assumia implicitamente.
+    expect(migrated.attempts[0].isImmediateCorrection).toBe(false);
+  });
+
+  it("rejeita backup de versão de esquema desconhecida", () => {
+    const data = { ...validExport(), schemaVersion: 99 };
+    expect(() => parseExportJson(JSON.stringify(data))).toThrow();
+  });
+
+  it("rejeita exercício que nenhum código jamais gerou", () => {
+    // confusablePair e fluency estavam no contrato mas nunca foram
+    // produzidos; um backup que os contenha está corrompido.
+    const data = legacyExport();
+    data.attempts[0].exercise = "fluency";
     expect(() => parseExportJson(JSON.stringify(data))).toThrow();
   });
 

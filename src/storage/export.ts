@@ -8,14 +8,16 @@ import type {
   SkillState
 } from "@/types/learning";
 
+import { resolveTimeZone } from "@/domain/scheduler";
+
 import {
-  DEFAULT_APP_SETTINGS,
+  defaultAppSettings,
   SINGLETON_KEY,
   type PtankiDatabase
 } from "./database";
 
 export const EXPORT_FORMAT = "ptanki-export" as const;
-export const EXPORT_SCHEMA_VERSION = 1 as const;
+export const EXPORT_SCHEMA_VERSION = 2 as const;
 
 const isoDateTimeSchema = z.string().datetime({ offset: true });
 
@@ -36,9 +38,7 @@ const exerciseSchema = z.enum([
   "diagnostic",
   "flagToNameChoice",
   "nameToFlagChoice",
-  "flagToNameInput",
-  "confusablePair",
-  "fluency"
+  "flagToNameInput"
 ]);
 
 const serializedCardSchema = z.object({
@@ -98,6 +98,22 @@ const reviewAttemptSchema = z.object({
   skill: skillSchema,
   exercise: exerciseSchema,
   outcome: outcomeSchema,
+  isImmediateCorrection: z.boolean(),
+  responseMs: z.number().int().nonnegative(),
+  answer: z.string().optional(),
+  createdAt: isoDateTimeSchema
+});
+
+/**
+ * Forma das tentativas na v1: sem `isImmediateCorrection`, e com dois
+ * exercícios que nunca chegaram a ser gerados por nenhum código.
+ */
+const legacyReviewAttemptSchema = z.object({
+  id: z.string().min(1),
+  entityId: z.string().min(1),
+  skill: skillSchema,
+  exercise: exerciseSchema,
+  outcome: outcomeSchema,
   responseMs: z.number().int().nonnegative(),
   answer: z.string().optional(),
   createdAt: isoDateTimeSchema
@@ -139,6 +155,12 @@ const diagnosticStateSchema = z
 
 const settingsSchema = z.object({
   desiredRetention: z.number().positive().max(1),
+  timeZone: z.string().min(1)
+});
+
+/** Na v1 havia `reduceMotion`, que nenhum código lia, e não havia fuso. */
+const legacySettingsSchema = z.object({
+  desiredRetention: z.number().positive().max(1),
   reduceMotion: z.boolean()
 });
 
@@ -156,24 +178,75 @@ function uniqueIds<T extends { id: string }>(
   }
 }
 
+const exportV2Schema = z.object({
+  format: z.literal(EXPORT_FORMAT),
+  schemaVersion: z.literal(2),
+  catalogVersion: catalogVersionSchema,
+  exportedAt: isoDateTimeSchema,
+  settings: settingsSchema,
+  skillStates: z.array(serializedSkillStateSchema),
+  attempts: z.array(reviewAttemptSchema),
+  diagnosticState: diagnosticStateSchema.optional()
+});
+
+const exportV1Schema = z.object({
+  format: z.literal(EXPORT_FORMAT),
+  schemaVersion: z.literal(1),
+  catalogVersion: catalogVersionSchema,
+  exportedAt: isoDateTimeSchema,
+  settings: legacySettingsSchema,
+  skillStates: z.array(serializedSkillStateSchema),
+  attempts: z.array(legacyReviewAttemptSchema),
+  diagnosticState: diagnosticStateSchema.optional()
+});
+
+type ExportV1 = z.infer<typeof exportV1Schema>;
+type ExportV2 = z.infer<typeof exportV2Schema>;
+
+/**
+ * Traz um backup v1 para a forma atual.
+ *
+ * `reduceMotion` é descartado: nada o lia, e a media query de sistema já
+ * cobre o caso. O fuso não existia na v1, então é resolvido do dispositivo
+ * que está importando — é a melhor informação disponível. Tentativas antigas
+ * ganham `isImmediateCorrection: false`, que é o que a v1 assumia
+ * implicitamente ao gravar toda tentativa sem distinção.
+ */
+function migrateToLatest(data: ExportV1 | ExportV2): ExportV2 {
+  if (data.schemaVersion === 2) return data;
+  return {
+    format: data.format,
+    schemaVersion: 2,
+    catalogVersion: data.catalogVersion,
+    exportedAt: data.exportedAt,
+    settings: {
+      desiredRetention: data.settings.desiredRetention,
+      timeZone: resolveTimeZone()
+    },
+    skillStates: data.skillStates,
+    attempts: data.attempts.map((attempt) => ({
+      ...attempt,
+      isImmediateCorrection: false
+    })),
+    ...(data.diagnosticState ? { diagnosticState: data.diagnosticState } : {})
+  };
+}
+
+/**
+ * Um backup de versão desconhecida não pode ser confundido com um atual: o
+ * union é discriminado por `schemaVersion`, e o parse sempre devolve a forma
+ * mais recente, de modo que nenhum chamador precise lidar com a v1.
+ */
 export const ptankiExportSchema = z
-  .object({
-    format: z.literal(EXPORT_FORMAT),
-    schemaVersion: z.literal(EXPORT_SCHEMA_VERSION),
-    catalogVersion: catalogVersionSchema,
-    exportedAt: isoDateTimeSchema,
-    settings: settingsSchema,
-    skillStates: z.array(serializedSkillStateSchema),
-    attempts: z.array(reviewAttemptSchema),
-    diagnosticState: diagnosticStateSchema.optional()
-  })
+  .discriminatedUnion("schemaVersion", [exportV1Schema, exportV2Schema])
+  .transform(migrateToLatest)
   .superRefine((data, context) => {
     uniqueIds(data.skillStates, "skillStates", context);
     uniqueIds(data.attempts, "attempts", context);
   });
 
 export type SerializedCard = z.infer<typeof serializedCardSchema>;
-export type PtankiExport = z.infer<typeof ptankiExportSchema>;
+export type PtankiExport = ExportV2;
 
 export interface PreparedImport {
   data: PtankiExport;
@@ -277,7 +350,7 @@ export async function createExport(
       db.appSettings.get(SINGLETON_KEY)
     ]);
   const settings: AppSettings =
-    settingsRecord?.settings ?? DEFAULT_APP_SETTINGS;
+    settingsRecord?.settings ?? defaultAppSettings();
 
   return ptankiExportSchema.parse({
     format: EXPORT_FORMAT,

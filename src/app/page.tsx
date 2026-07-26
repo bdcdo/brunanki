@@ -174,8 +174,8 @@ export default function HomePage() {
           </article>
           <article className="stat-card">
             <ArrowRight size={24} aria-hidden="true" />
-            <strong style={{ fontSize: 22 }}>Compare parecidas</strong>
-            <span>Contrastes entram depois do primeiro contato.</span>
+            <strong style={{ fontSize: 22 }}>Alternativas parecidas</strong>
+            <span>As opções erradas são bandeiras fáceis de confundir.</span>
           </article>
         </div>
       </section>

@@ -4,7 +4,7 @@ Ptanki é um webapp em pt-BR para aprender e revisar as bandeiras dos membros da
 
 ## Como funciona
 
-O primeiro acesso oferece um diagnóstico completo, retomável e sem alternativas: a pessoa digita o nome da entidade ou pula. Depois, sessões adaptativas combinam recordação digitada, associação inversa, contraste entre bandeiras e revisão espaçada por FSRS. O domínio exige as duas direções, acertos em dias distintos e estabilidade de pelo menos 30 dias.
+O primeiro acesso oferece um diagnóstico completo, retomável e sem alternativas: a pessoa digita o nome da entidade ou pula. Depois, sessões adaptativas combinam recordação digitada, associação inversa e revisão espaçada por FSRS, com alternativas escolhidas entre as bandeiras mais fáceis de confundir com a correta. O domínio exige as duas direções, acertos em dias distintos e estabilidade de pelo menos 30 dias.
 
 O progresso fica no IndexedDB do navegador. Não há conta, backend, tracking ou sincronização automática. A tela de ajustes permite exportar e restaurar um backup JSON versionado.
 

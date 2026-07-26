@@ -1,6 +1,7 @@
 "use client";
 
 import type {
+  AppSettings,
   AttemptOutcome,
   DiagnosticState,
   ReviewAttempt,
@@ -19,7 +20,8 @@ import {
 } from "@/domain/scheduler";
 
 import {
-  DEFAULT_APP_SETTINGS,
+  defaultAppSettings,
+  getAppSettings,
   SINGLETON_KEY,
   getDatabase,
   type PtankiDatabase
@@ -36,7 +38,7 @@ export interface LearningSnapshot {
   skills: SkillState[];
   attempts: ReviewAttempt[];
   diagnostic?: DiagnosticState;
-  settings: typeof DEFAULT_APP_SETTINGS;
+  settings: AppSettings;
 }
 
 export async function readLearningSnapshot(
@@ -53,7 +55,7 @@ export async function readLearningSnapshot(
     skills: skillStates,
     attempts,
     ...(diagnosticRecord ? { diagnostic: diagnosticRecord.state } : {}),
-    settings: settingsRecord?.settings ?? DEFAULT_APP_SETTINGS
+    settings: settingsRecord?.settings ?? defaultAppSettings()
   };
 }
 
@@ -114,6 +116,7 @@ export async function saveDiagnosticAnswer(
   input: SaveDiagnosticAnswerInput,
   db: PtankiDatabase = getDatabase()
 ): Promise<SavedDiagnosticAnswer> {
+  const preferences = await getAppSettings(db);
   if (!Number.isInteger(input.responseMs) || input.responseMs < 0) {
     throw new RangeError("responseMs deve ser um inteiro não negativo");
   }
@@ -138,6 +141,9 @@ export async function saveDiagnosticAnswer(
     skill: "flagToNameRecall",
     exercise: "diagnostic",
     outcome: input.outcome,
+    // O diagnóstico é a primeira passada por cada bandeira: nunca é a
+    // repetição imediata que se segue a um erro.
+    isImmediateCorrection: false,
     responseMs: input.responseMs,
     ...(input.answer !== undefined ? { answer: input.answer } : {}),
     createdAt: createdAt.toISOString()
@@ -146,7 +152,7 @@ export async function saveDiagnosticAnswer(
   const currentState =
     (await db.skillStates.get(id)) ??
     createSkillState(input.entityId, "flagToNameRecall", createdAt);
-  const skillState = scheduleAttempt(currentState, attempt);
+  const skillState = scheduleAttempt(currentState, attempt, preferences);
   const diagnosticState = advanceDiagnostic(diagnosticRecord.state, createdAt);
 
   await db.transaction(
