@@ -7,7 +7,9 @@ import { AppReady } from "@/components/AppReady";
 import { EmptyState } from "@/components/SystemScreens";
 import { FlagImage } from "@/components/FlagImage";
 import { SessionSummary } from "@/components/SessionSummary";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { sessionCard } from "@/components/ui/card";
+import { Eyebrow } from "@/components/ui/eyebrow";
 import { FeedbackPanel, feedbackTone } from "@/components/ui/feedback-panel";
 import { InkBubble } from "@/components/ui/ink-bubble";
 import { OptionButton, type OptionState } from "@/components/ui/option-button";
@@ -342,7 +344,7 @@ function StudySessionReady({
         title="Faça o diagnóstico antes de estudar."
         description="Assim a primeira sessão começa no que você ainda não reconhece."
         action={
-          <Link href="/diagnostico" className="button">
+          <Link href="/diagnostico" className={buttonVariants()}>
             Ir ao diagnóstico <ArrowRight size={18} aria-hidden="true" />
           </Link>
         }
@@ -358,26 +360,21 @@ function StudySessionReady({
       baseNewLimit: 5
     });
     return (
-      <div className="page page-narrow">
+      <div className="mx-auto w-full max-w-narrow">
         <section className={sessionCard}>
-          <span className="eyebrow">Meta adaptativa</span>
+          <Eyebrow>Meta adaptativa</Eyebrow>
           <h1 className="m-0 font-title leading-page font-bold tracking-page">
             Sua sessão está pronta.
           </h1>
-          <p className="muted">
+          <p className="text-ink-soft">
             Hoje há {preview.dueCount} revisões vencidas,{" "}
             {preview.correctionCount} correções e espaço para até{" "}
             {preview.newLimit} novas associações. Esta rodada terá no máximo{" "}
             {SESSION_LIMIT} itens.
           </p>
-          <button
-            className="button"
-            type="button"
-            onClick={beginSession}
-            style={{ marginTop: 18 }}
-          >
+          <Button className="mt-[18px]" type="button" onClick={beginSession}>
             Começar sessão <ArrowRight size={18} aria-hidden="true" />
-          </button>
+          </Button>
         </section>
       </div>
     );
@@ -390,7 +387,10 @@ function StudySessionReady({
         title="Tudo em dia por enquanto."
         description="As próximas revisões aparecerão quando estiverem vencidas."
         action={
-          <Link href="/catalogo" className="button button-secondary">
+          <Link
+            href="/catalogo"
+            className={buttonVariants({ variant: "secondary" })}
+          >
             Explorar o atlas
           </Link>
         }
@@ -413,7 +413,7 @@ function StudySessionReady({
           { label: "Ainda a rever", value: countOf("missed") }
         ]}
         action={
-          <Link href="/" className="button">
+          <Link href="/" className={buttonVariants()}>
             Voltar ao painel <ArrowRight size={18} aria-hidden="true" />
           </Link>
         }
@@ -424,7 +424,7 @@ function StudySessionReady({
   if (!item || !entity) return null;
 
   return (
-    <div className="page page-narrow">
+    <div className="mx-auto w-full max-w-narrow">
       <div className="grid gap-[18px]">
         {/* Em coluna única a barra empilha: lado a lado, os pips e o "Encerrar"
             não cabem numa Pixel 7. */}
@@ -436,7 +436,7 @@ function StudySessionReady({
               label="Sessão de hoje"
             />
           </div>
-          <Link href="/" className="button button-secondary">
+          <Link href="/" className={buttonVariants({ variant: "secondary" })}>
             <Pause size={17} aria-hidden="true" /> Encerrar
           </Link>
         </div>
@@ -448,7 +448,7 @@ function StudySessionReady({
         <section className={sessionCard}>
           {step === "teach" ? (
             <>
-              <span className="eyebrow">Primeiro contato</span>
+              <Eyebrow>Primeiro contato</Eyebrow>
               <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
                 Esta é a bandeira de {entity.displayNamePtBr}.
               </h1>
@@ -463,12 +463,11 @@ function StudySessionReady({
                   pergunta seriam dica ou resposta. Aqui o nome já foi
                   revelado, então ela não vaza nada. */}
               <InkBubble className="mb-5">{entity.editorialNote}</InkBubble>
-              <p className="muted text-center">
+              <p className="text-center text-ink-soft">
                 Observe a composição antes de tentar recuperar o nome.
               </p>
               <div className="flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
-                <button
-                  className="button"
+                <Button
                   type="button"
                   onClick={() => {
                     setStep("forwardChoice");
@@ -476,12 +475,12 @@ function StudySessionReady({
                   }}
                 >
                   Praticar <ArrowRight size={18} aria-hidden="true" />
-                </button>
+                </Button>
               </div>
             </>
           ) : step === "forwardChoice" ? (
             <>
-              <span className="eyebrow">Reconhecimento com apoio</span>
+              <Eyebrow>Reconhecimento com apoio</Eyebrow>
               <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
                 De onde é esta bandeira?
               </h1>
@@ -510,7 +509,7 @@ function StudySessionReady({
             </>
           ) : step === "reverseChoice" ? (
             <>
-              <span className="eyebrow">Associação inversa</span>
+              <Eyebrow>Associação inversa</Eyebrow>
               <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
                 Qual é a bandeira de {entity.displayNamePtBr}?
               </h1>
@@ -543,7 +542,7 @@ function StudySessionReady({
             </>
           ) : (
             <>
-              <span className="eyebrow">Recordação sem pista</span>
+              <Eyebrow>Recordação sem pista</Eyebrow>
               <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
                 Digite o nome desta entidade.
               </h1>
@@ -580,14 +579,10 @@ function StudySessionReady({
                       Acentos são opcionais; nomes ambíguos não são aceitos.
                     </span>
                     <div className="flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
-                      <button
-                        className="button"
-                        type="submit"
-                        disabled={!answer.trim() || busy}
-                      >
+                      <Button type="submit" disabled={!answer.trim() || busy}>
                         Responder{" "}
                         <CornerDownLeft size={18} aria-hidden="true" />
-                      </button>
+                      </Button>
                     </div>
                   </>
                 )}
@@ -620,16 +615,12 @@ function StudySessionReady({
                 }
               />
               <div className="mt-[18px] flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
-                <button
-                  className="button"
-                  type="button"
-                  onClick={continueAfterFeedback}
-                >
+                <Button type="button" onClick={continueAfterFeedback}>
                   {feedback.nextStep
                     ? "Agora, lembre sem alternativas"
                     : "Continuar"}
                   <ArrowRight size={18} aria-hidden="true" />
-                </button>
+                </Button>
               </div>
             </>
           )}

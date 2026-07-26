@@ -3,9 +3,37 @@
 import { ArrowRight, Brain, CalendarClock, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { AppReady } from "@/components/AppReady";
+import { buttonVariants } from "@/components/ui/button";
+import { CardHeader, CardTitle, cardVariants } from "@/components/ui/card";
+import { Eyebrow } from "@/components/ui/eyebrow";
 import { Meter } from "@/components/ui/meter";
+import { PageHeader } from "@/components/ui/page-header";
+import { StatCard } from "@/components/ui/stat-card";
 import { entities } from "@/data/runtime-catalog";
 import type { LearningSnapshot } from "@/types/learning";
+
+const METHOD = [
+  {
+    icon: Brain,
+    claim: "Tente antes de ver",
+    detail: "Recuperar a resposta fortalece mais do que reler."
+  },
+  {
+    icon: CalendarClock,
+    claim: "Reveja na hora certa",
+    detail: "O intervalo cresce conforme a lembrança se estabiliza."
+  },
+  {
+    icon: CheckCircle2,
+    claim: "Avance com evidência",
+    detail: "Digitar o nome faz parte do domínio, sem atalhos."
+  },
+  {
+    icon: ArrowRight,
+    claim: "Alternativas parecidas",
+    detail: "As opções erradas são bandeiras fáceis de confundir."
+  }
+];
 
 export default function HomePage() {
   return (
@@ -32,7 +60,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
     attempts.length === 0 ? 0 : Math.round((correct / attempts.length) * 100);
 
   return (
-    <div className="page">
+    <div className="mx-auto w-full max-w-page">
       {!completedDiagnostic ? (
         <>
           <section className="relative mb-[34px] grid min-h-[430px] items-center overflow-hidden rounded-panel bg-ink p-[clamp(30px,5vw,62px)] text-on-ink shadow-panel max-md:min-h-0 max-md:px-6 max-md:py-[30px] lg:grid-cols-[1.1fr_0.9fr]">
@@ -48,9 +76,9 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
                 bloco a camada própria troca o antialiasing subpixel do título
                 por grayscale. */}
             <div>
-              <span className="eyebrow text-highlight">
+              <Eyebrow className="text-highlight">
                 {entities.length} bandeiras · um plano só seu
-              </span>
+              </Eyebrow>
               <h1 className="mt-3 mb-5 max-w-[700px] font-title text-hero font-bold tracking-[-0.045em] max-md:text-[45px]">
                 Reconheça o mundo inteiro.
               </h1>
@@ -59,13 +87,21 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
                 bandeira antes de esquecer.
               </p>
               <div className="flex flex-wrap gap-3">
-                <Link href="/diagnostico" className="button button-coral">
+                {/* `default`, e não o coral que o CSS legado dava aqui. O
+                    mesmo convite já saiu do coral na abertura do diagnóstico
+                    (DiagnosticSession), e ter a mesma ação em duas cores em
+                    duas telas é incoerência, não ênfase. O coral fica no que
+                    não tem volta — hoje, só "Apagar progresso". */}
+                <Link href="/diagnostico" className={buttonVariants()}>
                   {diagnosed > 0
                     ? "Continuar diagnóstico"
                     : "Começar diagnóstico"}
                   <ArrowRight size={19} aria-hidden="true" />
                 </Link>
-                <Link href="/catalogo" className="button button-secondary">
+                <Link
+                  href="/catalogo"
+                  className={buttonVariants({ variant: "secondary" })}
+                >
                   Explorar bandeiras
                 </Link>
               </div>
@@ -85,38 +121,45 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
             </div>
           </section>
 
-          <div className="stats-grid" aria-label="O que você vai aprender">
-            <article className="stat-card">
-              <span>Entidades</span>
-              <strong>{entities.length}</strong>
-              <small className="muted">reconhecidas pela ONU</small>
-            </article>
-            <article className="stat-card">
-              <span>Diagnóstico</span>
-              <strong>{diagnosed}</strong>
-              <small className="muted">já respondidas</small>
-            </article>
-            <article className="stat-card">
-              <span>Tipos de prática</span>
-              <strong>4</strong>
-              <small className="muted">dificuldade crescente</small>
-            </article>
-            <article className="stat-card">
-              <span>Conta necessária</span>
-              <strong>Não</strong>
-              <small className="muted">progresso local</small>
-            </article>
+          <div
+            className="mb-[34px] grid grid-cols-4 gap-[15px] max-lg:grid-cols-2 max-md:grid-cols-1"
+            aria-label="O que você vai aprender"
+          >
+            <StatCard
+              label="Entidades"
+              value={entities.length}
+              note="reconhecidas pela ONU"
+            />
+            <StatCard
+              label="Diagnóstico"
+              value={diagnosed}
+              note="já respondidas"
+            />
+            <StatCard
+              label="Tipos de prática"
+              value={4}
+              note="dificuldade crescente"
+            />
+            <StatCard
+              label="Conta necessária"
+              value="Não"
+              note="progresso local"
+            />
           </div>
 
           {diagnostic && diagnosed > 0 && (
             <section
-              className="card"
+              className={cardVariants()}
               aria-labelledby="diagnostic-progress-title"
             >
-              <div className="section-heading">
-                <h2 id="diagnostic-progress-title">Seu diagnóstico</h2>
-                <Link href="/diagnostico">Retomar</Link>
-              </div>
+              <CardHeader>
+                <CardTitle id="diagnostic-progress-title">
+                  Seu diagnóstico
+                </CardTitle>
+                <Link href="/diagnostico" className="font-bold text-brand-deep">
+                  Retomar
+                </Link>
+              </CardHeader>
               <Meter
                 value={diagnosed}
                 max={entities.length}
@@ -127,20 +170,15 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
         </>
       ) : (
         <>
-          <header className="page-header">
-            <div>
-              <span className="eyebrow">Sua sessão</span>
-              <h1>Hoje</h1>
-              <p>
-                Revisões vencidas primeiro. Novas bandeiras entram quando há
-                espaço.
-              </p>
-            </div>
-          </header>
+          <PageHeader
+            eyebrow="Sua sessão"
+            title="Hoje"
+            description="Revisões vencidas primeiro. Novas bandeiras entram quando há espaço."
+          />
 
           <section className="grid min-h-[200px] grid-cols-[1fr_auto] items-center gap-6 rounded-panel border border-highlight-edge bg-outcome-partial p-[30px] max-md:grid-cols-1">
             <div>
-              <span className="eyebrow">Meta adaptativa</span>
+              <Eyebrow>Meta adaptativa</Eyebrow>
               <h2 className="mt-[5px] mb-2 font-title text-4xl leading-body tracking-[-0.04em]">
                 Pronto para reforçar a memória?
               </h2>
@@ -148,7 +186,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
                 A sessão mistura recordação digitada e reconhecimento, com
                 alternativas fáceis de confundir com a resposta certa.
               </p>
-              <Link href="/estudar" className="button">
+              <Link href="/estudar" className={buttonVariants()}>
                 Começar sessão <ArrowRight size={19} aria-hidden="true" />
               </Link>
             </div>
@@ -165,58 +203,32 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
             </div>
           </section>
 
-          <div className="stats-grid mt-6">
-            <article className="stat-card">
-              <span>Em revisão</span>
-              <strong>{scheduled}</strong>
-            </article>
-            <article className="stat-card">
-              <span>Em aprendizagem</span>
-              <strong>{acquiring}</strong>
-            </article>
-            <article className="stat-card">
-              <span>Precisão geral</span>
-              <strong>{accuracy}%</strong>
-            </article>
-            <article className="stat-card">
-              <span>Bandeiras no atlas</span>
-              <strong>{entities.length}</strong>
-            </article>
+          <div className="mt-6 mb-[34px] grid grid-cols-4 gap-[15px] max-lg:grid-cols-2 max-md:grid-cols-1">
+            <StatCard label="Em revisão" value={scheduled} />
+            <StatCard label="Em aprendizagem" value={acquiring} />
+            <StatCard label="Precisão geral" value={`${accuracy}%`} />
+            <StatCard label="Bandeiras no atlas" value={entities.length} />
           </div>
         </>
       )}
 
       <section className="mt-[34px]" aria-labelledby="method-title">
-        <div className="section-heading">
-          <h2 id="method-title">Como o Ptanki ensina</h2>
-        </div>
-        <div className="stats-grid">
-          <article className="stat-card">
-            <Brain size={24} aria-hidden="true" />
-            <strong className="text-xl leading-body">Tente antes de ver</strong>
-            <span>Recuperar a resposta fortalece mais do que reler.</span>
-          </article>
-          <article className="stat-card">
-            <CalendarClock size={24} aria-hidden="true" />
-            <strong className="text-xl leading-body">
-              Reveja na hora certa
-            </strong>
-            <span>O intervalo cresce conforme a lembrança se estabiliza.</span>
-          </article>
-          <article className="stat-card">
-            <CheckCircle2 size={24} aria-hidden="true" />
-            <strong className="text-xl leading-body">
-              Avance com evidência
-            </strong>
-            <span>Digitar o nome faz parte do domínio, sem atalhos.</span>
-          </article>
-          <article className="stat-card">
-            <ArrowRight size={24} aria-hidden="true" />
-            <strong className="text-xl leading-body">
-              Alternativas parecidas
-            </strong>
-            <span>As opções erradas são bandeiras fáceis de confundir.</span>
-          </article>
+        <CardHeader>
+          <CardTitle id="method-title">Como o Ptanki ensina</CardTitle>
+        </CardHeader>
+        {/* Não são `StatCard`: aqui o cartão não tem número, e a ordem é
+            ícone → afirmação → explicação, não rótulo → valor → nota. Mesma
+            moldura, papéis diferentes. */}
+        <div className="mb-[34px] grid grid-cols-4 gap-[15px] max-lg:grid-cols-2 max-md:grid-cols-1">
+          {METHOD.map(({ icon: Icon, claim, detail }) => (
+            <article key={claim} className={cardVariants({ padding: "sm" })}>
+              <Icon size={24} aria-hidden="true" />
+              <strong className="mt-1 block font-title text-xl leading-body tracking-title">
+                {claim}
+              </strong>
+              <span className="text-sm text-ink-soft">{detail}</span>
+            </article>
+          ))}
         </div>
       </section>
     </div>

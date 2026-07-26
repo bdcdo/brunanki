@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import { sessionCard } from "@/components/ui/card";
+import { Eyebrow } from "@/components/ui/eyebrow";
 import { SessionPips, type PipState } from "@/components/ui/pips";
 
 interface Tally {
@@ -45,9 +46,9 @@ export function SessionSummary({
   action
 }: SessionSummaryProps) {
   return (
-    <div className="page page-narrow">
+    <div className="mx-auto w-full max-w-narrow">
       <section className={sessionCard}>
-        <span className="eyebrow">{eyebrow}</span>
+        <Eyebrow>{eyebrow}</Eyebrow>
         {/* min-w-0 obrigatório: o tracking negativo da escala de display num
             filho de flex estoura a largura numa Pixel 7 sem ele. */}
         <div className="mt-2 flex min-w-0 flex-wrap items-baseline gap-x-4 gap-y-1">
@@ -71,7 +72,7 @@ export function SessionSummary({
           <dl className="mt-7 flex flex-wrap gap-x-9 gap-y-3">
             {tallies.map(({ label, value }) => (
               <div key={label} className="min-w-0">
-                <dt className="eyebrow">{label}</dt>
+                <Eyebrow as="dt">{label}</Eyebrow>
                 <dd className="text-2xl font-bold">{value}</dd>
               </div>
             ))}

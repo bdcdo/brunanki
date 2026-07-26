@@ -15,6 +15,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { BrandLink } from "@/components/BrandMark";
 import { SkipLink } from "@/components/SkipLink";
+import { Eyebrow } from "@/components/ui/eyebrow";
 import { cn } from "@/lib/utils";
 
 const navigation = [
@@ -123,7 +124,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           })}
         </nav>
         <div className="sidebar-note">
-          <span className="eyebrow">Seu progresso</span>
+          {/* `text-highlight` porque a regra legada tinha um seletor de
+              descendente, `.sidebar .eyebrow`, que trocava o teal por amarelo
+              dentro da coluna escura — o teal não alcança contraste sobre
+              `--ink`. Como prop, a exceção fica onde ela acontece. */}
+          <Eyebrow className="text-highlight">Seu progresso</Eyebrow>
           <strong>Fica neste navegador</strong>
           <p>Sem conta, anúncios ou ranking.</p>
         </div>

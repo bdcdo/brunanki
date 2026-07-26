@@ -7,8 +7,11 @@ import { AppReady } from "@/components/AppReady";
 import { FlagImage } from "@/components/FlagImage";
 import { SessionSummary } from "@/components/SessionSummary";
 import { FeedbackPanel, feedbackTone } from "@/components/ui/feedback-panel";
-import { sessionCard } from "@/components/ui/card";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cardVariants, sessionCard } from "@/components/ui/card";
+import { Eyebrow } from "@/components/ui/eyebrow";
 import { Meter } from "@/components/ui/meter";
+import { PageHeader } from "@/components/ui/page-header";
 import { entities, entityById } from "@/data/runtime-catalog";
 import { getNameResolver } from "@/data/name-index";
 import type {
@@ -126,23 +129,16 @@ function DiagnosticSessionReady({
 
   if (!state) {
     return (
-      <div className="page page-narrow">
-        <header className="page-header">
-          <div>
-            <span className="eyebrow">Antes de ensinar, medir</span>
-            <h1>O que você já reconhece?</h1>
-            <p>
-              Você verá as {entities.length} bandeiras uma vez. Digite o nome
-              quando souber ou pule sem chutar. O teste pode ser pausado a
-              qualquer momento.
-            </p>
-          </div>
-        </header>
-        <section className="card">
+      <div className="mx-auto w-full max-w-narrow">
+        <PageHeader
+          eyebrow="Antes de ensinar, medir"
+          title="O que você já reconhece?"
+          description={`Você verá as ${entities.length} bandeiras uma vez. Digite o nome quando souber ou pule sem chutar. O teste pode ser pausado a qualquer momento.`}
+        />
+        <section className={cardVariants()}>
           <div
-            className="catalog-grid"
+            className="mb-6 grid grid-cols-4 gap-4 max-lg:grid-cols-2 max-md:grid-cols-1"
             aria-hidden="true"
-            style={{ marginBottom: 24 }}
           >
             {introExamples.map((entity) => (
               <FlagImage
@@ -165,14 +161,9 @@ function DiagnosticSessionReady({
           {/* Convite de entrada, não ação destrutiva. O CSS legado dava a
               este botão e ao "Apagar progresso" o mesmo coral; aqui os dois se
               separam, e o coral fica reservado ao que não tem volta. */}
-          <button
-            className="button"
-            type="button"
-            onClick={begin}
-            disabled={busy}
-          >
+          <Button type="button" onClick={begin} disabled={busy}>
             Começar diagnóstico <ArrowRight size={18} aria-hidden="true" />
-          </button>
+          </Button>
         </section>
       </div>
     );
@@ -198,7 +189,7 @@ function DiagnosticSessionReady({
           { label: "A aprender", value: countOf("incorrect") }
         ]}
         action={
-          <Link href="/estudar" className="button">
+          <Link href="/estudar" className={buttonVariants()}>
             Começar a aprender <ArrowRight size={18} aria-hidden="true" />
           </Link>
         }
@@ -211,7 +202,7 @@ function DiagnosticSessionReady({
     : undefined;
 
   return (
-    <div className="page page-narrow">
+    <div className="mx-auto w-full max-w-narrow">
       <div className="grid gap-[18px]">
         {/* Em coluna única a barra empilha: lado a lado, o medidor e o "Pausar"
             não cabem numa Pixel 7. */}
@@ -219,7 +210,7 @@ function DiagnosticSessionReady({
           <div className="min-w-0 flex-1">
             <Meter value={measured} max={entities.length} label="Diagnóstico" />
           </div>
-          <Link href="/" className="button button-secondary">
+          <Link href="/" className={buttonVariants({ variant: "secondary" })}>
             <Pause size={17} aria-hidden="true" /> Pausar
           </Link>
         </div>
@@ -262,17 +253,17 @@ function DiagnosticSessionReady({
                 }
               />
               <div className="mt-[18px] flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
-                <button className="button" type="button" onClick={next}>
+                <Button type="button" onClick={next}>
                   {complete ? "Ver resultado" : "Próxima bandeira"}
                   <ArrowRight size={18} aria-hidden="true" />
-                </button>
+                </Button>
               </div>
             </>
           ) : current ? (
             <>
-              <span className="eyebrow">
+              <Eyebrow>
                 Bandeira {measured + 1} de {entities.length}
-              </span>
+              </Eyebrow>
               <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
                 De onde é esta bandeira?
               </h1>
@@ -301,21 +292,17 @@ function DiagnosticSessionReady({
                   Pressione Enter para responder. Acentos são opcionais.
                 </span>
                 <div className="flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
-                  <button
-                    className="button button-ghost"
+                  <Button
+                    variant="ghost"
                     type="button"
                     onClick={() => void record("skipped")}
                     disabled={busy}
                   >
                     <SkipForward size={18} aria-hidden="true" /> Pular
-                  </button>
-                  <button
-                    className="button"
-                    type="submit"
-                    disabled={!answer.trim() || busy}
-                  >
+                  </Button>
+                  <Button type="submit" disabled={!answer.trim() || busy}>
                     Responder <CornerDownLeft size={18} aria-hidden="true" />
-                  </button>
+                  </Button>
                 </div>
               </form>
             </>

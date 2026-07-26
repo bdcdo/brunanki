@@ -4,6 +4,7 @@ import { Search } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { FlagImage } from "@/components/FlagImage";
+import { PageHeader } from "@/components/ui/page-header";
 import { entities } from "@/data/runtime-catalog";
 import { normalizeCountryName } from "@/domain/text";
 
@@ -21,17 +22,12 @@ export function CatalogClient() {
   }, [query]);
 
   return (
-    <div className="page">
-      <header className="page-header">
-        <div>
-          <span className="eyebrow">Atlas completo</span>
-          <h1>Bandeiras</h1>
-          <p>
-            {entities.length} Estados reconhecidos pela ONU, com nomes comuns em
-            português e a origem de cada imagem.
-          </p>
-        </div>
-      </header>
+    <div className="mx-auto w-full max-w-page">
+      <PageHeader
+        eyebrow="Atlas completo"
+        title="Bandeiras"
+        description={`${entities.length} Estados reconhecidos pela ONU, com nomes comuns em português e a origem de cada imagem.`}
+      />
 
       <div className="mb-5 flex flex-wrap gap-3">
         <label className="relative grid min-w-[min(360px,100%)] flex-1 gap-[7px]">
@@ -54,7 +50,7 @@ export function CatalogClient() {
         </label>
       </div>
 
-      <p className="muted" aria-live="polite">
+      <p className="text-ink-soft" aria-live="polite">
         {filtered.length} {filtered.length === 1 ? "resultado" : "resultados"}
       </p>
 
@@ -63,7 +59,7 @@ export function CatalogClient() {
           Nenhuma bandeira corresponde à busca.
         </div>
       ) : (
-        <div className="catalog-grid">
+        <div className="grid grid-cols-4 gap-4 max-lg:grid-cols-2 max-md:grid-cols-1">
           {filtered.map((entity) => (
             <Link
               href={`/catalogo/${entity.id}`}

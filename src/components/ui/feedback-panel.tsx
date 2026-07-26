@@ -1,6 +1,7 @@
 import { cva } from "class-variance-authority";
 import { Check, CircleAlert, X } from "lucide-react";
 
+import { Eyebrow } from "@/components/ui/eyebrow";
 import { cn } from "@/lib/utils";
 import type { AttemptOutcome } from "@/types/learning";
 
@@ -76,15 +77,15 @@ export function FeedbackPanel({
 
   return (
     <div role="status" className={cn(panelVariants({ tone }), className)}>
-      {/* `text-ink` sobrepõe a cor da classe legada — utilitário vence camada.
-          Sem isso o rótulo sai no teal da marca, e um "Vamos corrigir" em cor
-          de marca dentro de um painel de erro contradiz o próprio veredito. A
-          cor aqui não carrega significado nenhum: quem o carrega são o ícone,
-          o texto e a moldura. */}
-      <span className="eyebrow flex items-center gap-1.5 text-ink">
+      {/* `text-ink` no lugar do `--brand-deep` que o Eyebrow traz. Sem isso o
+          rótulo sai na cor da marca, e um "Vamos corrigir" em cor de marca
+          dentro de um painel de erro contradiz o próprio veredito. A cor aqui
+          não carrega significado nenhum: quem o carrega são o ícone, o texto e
+          a moldura. */}
+      <Eyebrow className="flex items-center gap-1.5 text-ink">
         <Icon size={15} strokeWidth={3.2} aria-hidden="true" />
         {eyebrow}
-      </span>
+      </Eyebrow>
       <strong className="text-xl">{answer}</strong>
       {submitted && (
         <span>

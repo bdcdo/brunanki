@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { FlagImage } from "@/components/FlagImage";
+import { buttonVariants } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/page-header";
 import { entities, entityById, flagByEntityId } from "@/data/catalog";
 // Server Component: consome o catálogo completo para procedência e licença, e
 // o de runtime só para o que o FlagImage precisa.
@@ -34,17 +36,16 @@ export default async function DetailPage({ params }: DetailPageProps) {
   }
 
   return (
-    <div className="page page-narrow">
-      <Link href="/catalogo" className="button button-ghost">
+    <div className="mx-auto w-full max-w-narrow">
+      <Link href="/catalogo" className={buttonVariants({ variant: "ghost" })}>
         <ArrowLeft size={18} aria-hidden="true" /> Voltar ao atlas
       </Link>
-      <header className="page-header mt-5">
-        <div>
-          <span className="eyebrow">{entity.region}</span>
-          <h1>{entity.displayNamePtBr}</h1>
-          {entity.editorialNote && <p>{entity.editorialNote}</p>}
-        </div>
-      </header>
+      <PageHeader
+        className="mt-5"
+        eyebrow={entity.region}
+        title={entity.displayNamePtBr}
+        description={entity.editorialNote}
+      />
 
       <div className="grid grid-cols-[minmax(300px,1fr)_1fr] gap-[34px] max-md:grid-cols-1">
         <FlagImage
@@ -57,7 +58,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
           <div className="flex flex-wrap gap-2">
             {entity.memberships.map((membership) => (
               <span
-                className="pill"
+                className="inline-flex min-h-7 items-center gap-[5px] rounded-full border border-line bg-surface px-2.5 py-1 text-xs leading-body font-bold text-ink-soft"
                 key={`${membership.organization}-${membership.status}`}
               >
                 ONU{membership.status === "observer" ? " · observador" : ""}
@@ -102,7 +103,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
             href={flag.commons.descriptionUrl}
             target="_blank"
             rel="noreferrer"
-            className="button button-secondary"
+            className={buttonVariants({ variant: "secondary" })}
           >
             Ver no Wikimedia Commons
             <ExternalLink size={17} aria-hidden="true" />

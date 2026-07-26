@@ -4,7 +4,15 @@ import { DatabaseBackup } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-import { sessionCard } from "@/components/ui/card";
+import { buttonVariants } from "@/components/ui/button";
+import {
+  CardHeader,
+  CardTitle,
+  cardVariants,
+  sessionCard
+} from "@/components/ui/card";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { PageHeader } from "@/components/ui/page-header";
 import { cn } from "@/lib/utils";
 
 /**
@@ -14,12 +22,12 @@ import { cn } from "@/lib/utils";
  */
 export function LoadingScreen({ label }: { label: string }) {
   return (
-    <div className="page" aria-busy="true">
+    <div className="mx-auto w-full max-w-page" aria-busy="true">
       <p className="sr-only" role="status">
         {label}
       </p>
-      <div className="card">
-        <p className="muted">{label}</p>
+      <div className={cardVariants()}>
+        <p className="text-ink-soft">{label}</p>
       </div>
     </div>
   );
@@ -36,40 +44,36 @@ export function LoadingScreen({ label }: { label: string }) {
  */
 export function StorageUnavailableScreen({ error }: { error: Error }) {
   return (
-    <div className="page page-narrow">
-      <header className="page-header">
-        <div>
-          <span className="eyebrow">Armazenamento local</span>
-          <h1>Seu progresso não pôde ser lido</h1>
-          <p>
-            Não foi possível abrir o banco de dados deste navegador. Seu
-            progresso não foi apagado — ele pode estar apenas inacessível numa
-            janela anônima, com a cota de armazenamento esgotada ou com o
-            armazenamento bloqueado para este site.
-          </p>
-        </div>
-      </header>
+    <div className="mx-auto w-full max-w-narrow">
+      <PageHeader
+        eyebrow="Armazenamento local"
+        title="Seu progresso não pôde ser lido"
+        description="Não foi possível abrir o banco de dados deste navegador. Seu progresso não foi apagado — ele pode estar apenas inacessível numa janela anônima, com a cota de armazenamento esgotada ou com o armazenamento bloqueado para este site."
+      />
 
-      <section className="card">
-        <div className="section-heading">
+      <section className={cardVariants()}>
+        <CardHeader>
           <DatabaseBackup size={22} aria-hidden="true" />
-          <h2>O que dá para fazer agora</h2>
-        </div>
-        <p className="muted">
+          <CardTitle>O que dá para fazer agora</CardTitle>
+        </CardHeader>
+        <p className="text-ink-soft">
           Abra o Ptanki numa janela normal do mesmo navegador, ou libere o
           armazenamento para este site nas configurações. Enquanto isso, o
           catálogo continua disponível: ele não depende de armazenamento.
         </p>
-        <p style={{ marginTop: 16 }}>
-          <Link className="button button-secondary" href="/catalogo">
+        <p className="mt-4">
+          <Link
+            className={buttonVariants({ variant: "secondary" })}
+            href="/catalogo"
+          >
             Ver o catálogo de bandeiras
           </Link>
         </p>
       </section>
 
-      <details style={{ marginTop: 18 }}>
-        <summary className="muted">Detalhe técnico</summary>
-        <p className="muted">{error.message}</p>
+      <details className="mt-[18px]">
+        <summary className="text-ink-soft">Detalhe técnico</summary>
+        <p className="text-ink-soft">{error.message}</p>
       </details>
     </div>
   );
@@ -102,16 +106,16 @@ export function EmptyState({
   action?: ReactNode;
 }) {
   return (
-    <div className="page page-narrow">
+    <div className="mx-auto w-full max-w-narrow">
       <section className={cn(sessionCard, "text-center")}>
         {icon && (
           <div className="mt-[30px] mb-3.5 flex justify-center">{icon}</div>
         )}
-        {eyebrow && <span className="eyebrow">{eyebrow}</span>}
+        {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
         <h1 className="m-0 font-title leading-page font-bold tracking-page">
           {title}
         </h1>
-        <p className="muted">{description}</p>
+        <p className="text-ink-soft">{description}</p>
         {action && <div className="mt-[18px]">{action}</div>}
       </section>
     </div>

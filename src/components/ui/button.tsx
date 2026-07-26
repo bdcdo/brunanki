@@ -17,7 +17,11 @@ const buttonVariants = cva(
   cn(
     "inline-flex min-h-12 items-center justify-center gap-[9px]",
     "rounded-control border-2 border-transparent px-[19px] py-3",
-    "font-bold no-underline transition",
+    // `cursor-pointer` não é enfeite: o preflight da v4 do Tailwind deixou de
+    // aplicar `cursor: pointer` a <button> — foi mudança deliberada de lá —, e
+    // a regra legada declarava o cursor à mão. Sem esta linha todo botão do
+    // app passaria a apontar a seta de texto, o que nenhuma captura pega.
+    "cursor-pointer font-bold no-underline transition",
     "disabled:cursor-not-allowed disabled:opacity-50 disabled:translate-y-0",
     "[&_svg]:shrink-0"
   ),

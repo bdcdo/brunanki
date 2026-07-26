@@ -3,6 +3,8 @@
 import { Download, RotateCcw, Upload } from "lucide-react";
 import { useRef, useState } from "react";
 import { useApp } from "@/components/AppProvider";
+import { Button } from "@/components/ui/button";
+import { PageHeader } from "@/components/ui/page-header";
 import { downloadBackupFile } from "@/storage/backup-file";
 import { runtimeCatalog, entityById } from "@/data/runtime-catalog";
 
@@ -57,14 +59,12 @@ export function SettingsClient() {
   }
 
   return (
-    <div className="page page-narrow">
-      <header className="page-header">
-        <div>
-          <span className="eyebrow">Controle local</span>
-          <h1>Ajustes</h1>
-          <p>Seu histórico não sai deste navegador sem uma ação sua.</p>
-        </div>
-      </header>
+    <div className="mx-auto w-full max-w-narrow">
+      <PageHeader
+        eyebrow="Controle local"
+        title="Ajustes"
+        description="Seu histórico não sai deste navegador sem uma ação sua."
+      />
 
       <div className="grid gap-[18px]">
         <section className="grid grid-cols-[1fr_auto] items-center gap-6 rounded-card border border-line bg-surface p-6 max-md:grid-cols-1 max-md:items-stretch">
@@ -77,9 +77,9 @@ export function SettingsClient() {
               arquivo JSON versionado.
             </p>
           </div>
-          <button className="button" type="button" onClick={handleExport}>
+          <Button type="button" onClick={handleExport}>
             <Download size={18} aria-hidden="true" /> Baixar backup
-          </button>
+          </Button>
         </section>
 
         <section className="grid grid-cols-[1fr_auto] items-center gap-6 rounded-card border border-line bg-surface p-6 max-md:grid-cols-1 max-md:items-stretch">
@@ -111,13 +111,13 @@ export function SettingsClient() {
                 void handleImport(file);
               }}
             />
-            <button
-              className="button button-secondary"
+            <Button
+              variant="secondary"
               type="button"
               onClick={() => inputRef.current?.click()}
             >
               <Upload size={18} aria-hidden="true" /> Escolher arquivo
-            </button>
+            </Button>
           </div>
         </section>
 
@@ -129,16 +129,15 @@ export function SettingsClient() {
               segurança.
             </p>
           </div>
-          <button
-            className="button button-coral"
-            type="button"
-            onClick={handleReset}
-          >
+          {/* O único `destructive` do app. O CSS legado dava este coral também
+              ao convite de entrada do diagnóstico; aqui ele fica no que não
+              tem volta. */}
+          <Button variant="destructive" type="button" onClick={handleReset}>
             <RotateCcw size={18} aria-hidden="true" /> Apagar progresso
-          </button>
+          </Button>
         </section>
       </div>
-      <p role="status" aria-live="polite" className="muted">
+      <p role="status" aria-live="polite" className="text-ink-soft">
         {status}
       </p>
     </div>

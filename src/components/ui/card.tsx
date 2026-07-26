@@ -79,7 +79,13 @@ function CardTitle({
 }: React.HTMLAttributes<HTMLHeadingElement>) {
   return (
     <h2
-      className={cn("font-title text-3xl tracking-heading", className)}
+      className={cn(
+        // `leading-body` porque `text-3xl` traz o 1,25 de `--lead-name` junto
+        // com os 28px, e a regra legada não declarava entrelinha: herdava o
+        // 1,5 do corpo. Num <h2> de bloco isso vale sete pixels de altura.
+        "font-title text-3xl leading-body tracking-heading",
+        className
+      )}
       {...props}
     />
   );
