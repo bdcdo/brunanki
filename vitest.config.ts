@@ -19,7 +19,21 @@ export default defineConfig({
     setupFiles: ["./src/test/setup.ts"],
     exclude: ["e2e/**", "node_modules/**"],
     coverage: {
-      reporter: ["text", "html"]
+      reporter: ["text", "html"],
+      // Sem `include`, o v8 só reporta arquivos que algum teste importou, e a
+      // tabela saía vazia. O alvo é o código de domínio e de armazenamento —
+      // as camadas com regra de negócio.
+      include: ["src/domain/**", "src/storage/**", "src/data/**"],
+      exclude: ["**/__tests__/**", "**/*.json"],
+      // Piso medido em 26/07/2026, arredondado para baixo. É um piso, não uma
+      // meta: sobe conforme a suíte cresce, e não deve descer para acomodar
+      // código novo sem teste.
+      thresholds: {
+        statements: 76,
+        branches: 61,
+        functions: 75,
+        lines: 76
+      }
     }
   }
 });
