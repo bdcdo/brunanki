@@ -14,6 +14,7 @@ import { entities, entityById } from "@/data/runtime-catalog";
 import { getNameResolver } from "@/data/name-index";
 import { newAttemptId } from "@/domain/ids";
 import { buildChoiceRound } from "@/domain/distractors";
+import { describePalette } from "@/domain/palette";
 import { mulberry32 } from "@/domain/shuffle";
 import { buildDailyQueue, type DailyQueueItem } from "@/domain/daily-queue";
 import {
@@ -418,7 +419,7 @@ function StudySessionReady({
               </span>
               <FlagImage
                 entity={entity}
-                revealName
+                alt={{ kind: "named" }}
                 eager
                 className="quiz-flag"
               />
@@ -464,7 +465,7 @@ function StudySessionReady({
               </h1>
               <FlagImage
                 entity={entity}
-                revealName
+                alt={{ kind: "named" }}
                 eager
                 className="quiz-flag"
               />
@@ -488,7 +489,12 @@ function StudySessionReady({
             <>
               <span className="eyebrow">Reconhecimento com apoio</span>
               <h1 className="study-prompt">De onde é esta bandeira?</h1>
-              <FlagImage entity={entity} eager className="quiz-flag" />
+              <FlagImage
+                entity={entity}
+                alt={{ kind: "unnamed" }}
+                eager
+                className="quiz-flag"
+              />
               <div className="choice-grid">
                 {choices.map((choice) => (
                   <button
@@ -516,11 +522,18 @@ function StudySessionReady({
                     className="choice choice-flag"
                     type="button"
                     disabled={busy}
-                    aria-label={`Opção ${choiceIndex + 1}`}
+                    // Sem a descrição das cores, as quatro opções tinham o
+                    // mesmo nome acessível e eram indistinguíveis para quem
+                    // usa leitor de tela. O ordinal continua no rótulo porque
+                    // paletas empatam — Irlanda e Costa do Marfim têm as
+                    // mesmas três cores — e a navegação precisa ser
+                    // inequívoca mesmo assim.
+                    aria-label={`Opção ${choiceIndex + 1}: bandeira com ${describePalette(choice.palette)}`}
                     onClick={() => void answerReverseChoice(choice.id)}
                   >
-                    <FlagImage entity={choice} />
-                    <span>Opção {choiceIndex + 1}</span>
+                    {/* Decorativa: o rótulo do botão já descreve a bandeira. */}
+                    <FlagImage entity={choice} alt={{ kind: "decorative" }} />
+                    <span aria-hidden="true">Opção {choiceIndex + 1}</span>
                   </button>
                 ))}
               </div>
@@ -529,7 +542,12 @@ function StudySessionReady({
             <>
               <span className="eyebrow">Recordação sem pista</span>
               <h1 className="study-prompt">Digite o nome desta entidade.</h1>
-              <FlagImage entity={entity} eager className="quiz-flag" />
+              <FlagImage
+                entity={entity}
+                alt={{ kind: "unnamed" }}
+                eager
+                className="quiz-flag"
+              />
               <form className="answer-form" onSubmit={submitForward}>
                 <label htmlFor="study-answer" className="sr-only">
                   Nome da entidade

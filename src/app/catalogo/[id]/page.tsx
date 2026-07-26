@@ -49,7 +49,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
       <div className="detail-grid">
         <FlagImage
           entity={runtimeEntityById.get(entity.id)!}
-          revealName
+          alt={{ kind: "named" }}
           eager
           className="detail-flag"
         />

@@ -124,9 +124,9 @@ test("diagnóstico registra feedback e persiste o avanço após reload", async (
     page.getByRole("heading", { name: "De onde é esta bandeira?" })
   ).toBeVisible();
   await expect(page.getByText("Bandeira 1 de 220")).toBeVisible();
-  await expect(
-    page.getByRole("img", { name: "Bandeira a identificar" })
-  ).toBeVisible();
+  // A bandeira do diagnóstico é descrita pelas cores, e não com um texto
+  // genérico igual para todas: descreve sem entregar a resposta.
+  await expect(page.getByRole("img", { name: /^Bandeira com / })).toBeVisible();
 
   await page
     .getByRole("textbox", { name: "Nome da entidade" })

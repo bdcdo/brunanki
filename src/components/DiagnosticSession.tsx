@@ -154,7 +154,11 @@ function DiagnosticSessionReady({
             style={{ marginBottom: 24 }}
           >
             {introExamples.map((entity) => (
-              <FlagImage entity={entity} revealName key={entity.id} />
+              <FlagImage
+                entity={entity}
+                alt={{ kind: "named" }}
+                key={entity.id}
+              />
             ))}
           </div>
           <h2>Como funciona</h2>
@@ -234,7 +238,7 @@ function DiagnosticSessionReady({
               </span>
               <FlagImage
                 entity={feedbackEntity}
-                revealName
+                alt={{ kind: "named" }}
                 eager
                 className="quiz-flag"
               />
@@ -272,7 +276,12 @@ function DiagnosticSessionReady({
                 Bandeira {measured + 1} de {entities.length}
               </span>
               <h1 className="study-prompt">De onde é esta bandeira?</h1>
-              <FlagImage entity={current} eager className="quiz-flag" />
+              <FlagImage
+                entity={current}
+                alt={{ kind: "unnamed" }}
+                eager
+                className="quiz-flag"
+              />
               <form className="answer-form" onSubmit={submit}>
                 <label htmlFor="country-answer" className="sr-only">
                   Nome da entidade
