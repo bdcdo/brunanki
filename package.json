@@ -15,9 +15,7 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "data:validate": "tsx scripts/validate-catalog.ts",
-    "data:refresh": "tsx scripts/refresh-catalog.ts",
-    "opennext:build": "opennextjs-cloudflare build",
-    "sites:build": "node scripts/build-sites.mjs"
+    "data:refresh": "tsx scripts/refresh-catalog.ts"
   },
   "dependencies": {
     "dexie": "^4.4.4",
@@ -30,7 +28,6 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.0",
-    "@opennextjs/cloudflare": "^1.20.2",
     "@playwright/test": "^1.58.2",
     "@testing-library/jest-dom": "6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -45,8 +42,7 @@
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vite": "^7.2.6",
-    "vitest": "^4.0.16",
-    "wrangler": "^4.114.0"
+    "vitest": "^4.0.16"
   },
   "packageManager": "pnpm@11.5.3"
 }

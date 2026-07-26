@@ -28,14 +28,19 @@ pnpm build
 pnpm test:e2e
 ```
 
-Para gerar o artefato destinado ao OpenAI Sites:
+## Hospedagem
+
+O app roda no [Fly.io](https://fly.io) na região `gru`, como imagem Docker do build standalone do Next.js. A configuração fica em `fly.toml` e `Dockerfile`.
+
+A máquina opera sob demanda: `min_machines_running = 0` com `auto_stop_machines = "suspend"` faz o Fly suspendê-la quando não há tráfego e retomá-la na requisição seguinte, restaurando um snapshot de memória em vez de dar boot completo. Parada, a máquina custa apenas o armazenamento do sistema de arquivos raiz.
 
 ```bash
-pnpm sites:build
-tar -C .sites-build -czf ptanki-sites.tar.gz .
+fly deploy --ha=false   # --ha=false mantém uma única máquina
+fly status
+fly logs
 ```
 
-O passo adicional do Wrangler é necessário porque o Sites executa o módulo ESM entregue no arquivo, enquanto a saída intermediária do OpenNext ainda contém módulos CommonJS que normalmente seriam compilados durante `wrangler deploy`.
+Os cabeçalhos de cache e de segurança são definidos em `headers()` no `next.config.ts`.
 
 ## Catálogo e licenças
 
