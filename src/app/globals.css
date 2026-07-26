@@ -227,6 +227,25 @@
   --measure-narrow: 820px;
   --measure-copy: 620px; /* colapsa 580/600/620/640 de largura de texto */
   --gutter: clamp(28px, 5vw, 80px);
+
+  /* — ponte para os nomes antigos ----------------------------------------
+     TEMPORÁRIO, some com legacy.css. As 74 classes legadas continuam falando
+     em --teal e --coral; redefinir esses nomes aqui faz o CSS antigo consumir
+     os tokens novos, de modo que exista um só lugar onde cada cor é escolhida
+     enquanto os dois sistemas convivem.
+
+     Funciona porque este :root está fora de qualquer camada, e CSS sem camada
+     vence CSS em camada — inclusive o :root que legacy.css declara na sua. */
+  --teal: var(--brand);
+  --teal-dark: var(--brand-deep);
+  --coral: var(--alert);
+  --yellow: var(--highlight);
+  --green-soft: var(--outcome-correct);
+  --coral-soft: var(--outcome-incorrect);
+  --yellow-soft: var(--outcome-partial);
+  --shadow: var(--shadow-panel);
+  --radius-md: var(--radius-card);
+  --radius-lg: var(--radius-panel);
 }
 
 /* O corpo cai um degrau no layout de coluna única, como já acontecia

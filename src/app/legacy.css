@@ -127,7 +127,7 @@ a {
 
 .sidebar-kicker {
   margin: 8px 0 38px 49px;
-  color: #bed0d0;
+  color: var(--on-ink-soft);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -146,7 +146,7 @@ a {
   align-items: center;
   gap: 12px;
   border-radius: 12px;
-  color: #d7e0df;
+  color: var(--on-ink-soft);
   font-weight: 700;
   text-decoration: none;
 }
@@ -182,13 +182,13 @@ a {
 
 .sidebar-note p {
   margin: 0;
-  color: #c2d0cf;
+  color: var(--on-ink-soft);
   font-size: 13px;
 }
 
 .sidebar-footer {
   margin-top: 18px;
-  color: #c2d0cf;
+  color: var(--on-ink-soft);
   font-size: 14px;
 }
 
@@ -356,7 +356,7 @@ a {
 .hero p {
   max-width: 580px;
   margin: 0 0 28px;
-  color: #d9e4e3;
+  color: var(--on-ink-soft);
   font-size: 19px;
 }
 
@@ -547,7 +547,7 @@ a {
 .progress-track {
   height: 12px;
   overflow: hidden;
-  border: 1px solid #c6c5bc;
+  border: 1px solid var(--input);
   border-radius: 999px;
   background: white;
 }
@@ -563,7 +563,7 @@ a {
   position: relative;
   display: grid;
   overflow: hidden;
-  border: 1px solid #a8ada8;
+  border: 1px solid var(--flag-line);
   border-radius: 9px;
   place-items: center;
   background:
@@ -627,7 +627,7 @@ a {
   width: 100%;
   min-height: 50px;
   padding: 11px 14px;
-  border: 1px solid #a7aaa4;
+  border: 1px solid var(--input);
   border-radius: 12px;
   background: var(--surface);
   color: var(--ink);
@@ -755,7 +755,7 @@ a {
   width: 100%;
   height: 58px;
   padding: 13px 16px;
-  border: 2px solid #899795;
+  border: 2px solid var(--input);
   border-radius: 13px;
   background: white;
   color: var(--ink);
@@ -811,17 +811,17 @@ a {
 }
 
 .feedback-correct {
-  border-color: #58946f;
+  border-color: var(--outcome-correct-line);
   background: var(--green-soft);
 }
 
 .feedback-partial {
-  border-color: #b98e2d;
+  border-color: var(--outcome-partial-line);
   background: var(--yellow-soft);
 }
 
 .feedback-incorrect {
-  border-color: #bf5b48;
+  border-color: var(--outcome-incorrect-line);
   background: var(--coral-soft);
 }
 
@@ -838,7 +838,7 @@ a {
 
 .empty-state {
   padding: 44px;
-  border: 1px dashed #9ba5a2;
+  border: 1px dashed var(--input);
   border-radius: var(--radius-md);
   color: var(--ink-soft);
   text-align: center;

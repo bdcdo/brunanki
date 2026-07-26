@@ -3,10 +3,15 @@
 src/data/catalog.json
 src/data/runtime-catalog.json
 
-# O CSS de antes da migração para o Tailwind, congelado byte a byte enquanto a
-# camada de cascata `legacy` existir. Reformatá-lo destruiria a única prova de
-# que a migração não alterou uma linha de CSS:
-#   git show <sha>:src/app/globals.css | diff - src/app/legacy.css
+# O CSS de antes da migração para o Tailwind, mantido sem reformatação
+# enquanto a camada de cascata `legacy` existir. Ele encolhe a cada tela
+# migrada e some no fim; deixá-lo fora do Prettier faz com que cada diff mostre
+# só o que de fato saiu, em vez de reindentação em volta.
+#
+# Nos dois primeiros commits da migração ele era byte a byte o antigo
+# globals.css, o que permitiu provar que a introdução do Tailwind não alterou
+# uma linha de CSS:
+#   git show aae53a8:src/app/globals.css | diff - src/app/legacy.css
 src/app/legacy.css
 
 # Diretórios de build e relatórios
