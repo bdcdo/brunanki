@@ -8,76 +8,67 @@ import {
   useMemo,
   useState
 } from "react";
-import type {
-  AppSettings,
-  DiagnosticState,
-  ReviewAttempt,
-  SkillState
-} from "@/types/learning";
-import { defaultSchedulingPreferences } from "@/domain/scheduler";
+import type { LearningSnapshot } from "@/types/learning";
 
-export interface LearningSnapshot {
-  diagnostic?: DiagnosticState;
-  skills: SkillState[];
-  attempts: ReviewAttempt[];
-  settings: AppSettings;
-  loading: boolean;
-}
+/**
+ * Os três estados possíveis da leitura do armazenamento local.
+ *
+ * Antes, "carregando", "sem progresso" e "não foi possível ler" colapsavam no
+ * mesmo valor: um `catch` silencioso devolvia listas vazias, e quem estivesse
+ * em janela anônima via a tela de primeiro acesso — com o convite a refazer o
+ * diagnóstico sobre dados que continuavam lá. Como union discriminado, o
+ * compilador exige que cada tela trate os três.
+ */
+export type AppState =
+  | { kind: "loading" }
+  | { kind: "ready"; snapshot: LearningSnapshot }
+  | { kind: "unavailable"; error: Error };
 
-interface AppContextValue extends LearningSnapshot {
+interface AppContextValue {
+  state: AppState;
   refresh(): Promise<void>;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
 
-async function loadSnapshot(): Promise<Omit<LearningSnapshot, "loading">> {
+async function loadState(): Promise<AppState> {
   try {
     const storage = await import("@/storage");
-    const snapshot = await storage.readLearningSnapshot();
+    return { kind: "ready", snapshot: await storage.readLearningSnapshot() };
+  } catch (cause) {
     return {
-      skills: snapshot.skills,
-      attempts: snapshot.attempts,
-      settings: snapshot.settings,
-      ...(snapshot.diagnostic ? { diagnostic: snapshot.diagnostic } : {})
-    };
-  } catch {
-    return {
-      skills: [],
-      attempts: [],
-      settings: defaultSchedulingPreferences()
+      kind: "unavailable",
+      error:
+        cause instanceof Error
+          ? cause
+          : new Error("Falha desconhecida ao abrir o armazenamento local")
     };
   }
 }
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [snapshot, setSnapshot] = useState<LearningSnapshot>({
-    skills: [],
-    attempts: [],
-    settings: defaultSchedulingPreferences(),
-    loading: true
-  });
+  const [state, setState] = useState<AppState>({ kind: "loading" });
 
   const refresh = useCallback(async () => {
-    const next = await loadSnapshot();
-    setSnapshot({ ...next, loading: false });
+    setState(await loadState());
   }, []);
 
   useEffect(() => {
     let active = true;
-    void loadSnapshot().then((next) => {
-      if (active) setSnapshot({ ...next, loading: false });
+    void loadState().then((next) => {
+      if (active) setState(next);
     });
     return () => {
       active = false;
     };
   }, []);
 
-  const value = useMemo(() => ({ ...snapshot, refresh }), [snapshot, refresh]);
+  const value = useMemo(() => ({ state, refresh }), [state, refresh]);
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 
-export function useApp() {
+export function useApp(): AppContextValue {
   const value = useContext(AppContext);
   if (!value) {
     throw new Error("useApp must be used inside AppProvider");

@@ -4,10 +4,22 @@ import { ArrowRight, Brain, CalendarClock, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { useApp } from "@/components/AppProvider";
 import { ProgressBar } from "@/components/ProgressBar";
+import {
+  LoadingScreen,
+  StorageUnavailableScreen
+} from "@/components/SystemScreens";
 import { entities } from "@/data/catalog";
 
 export default function HomePage() {
-  const { diagnostic, skills, attempts, loading } = useApp();
+  const { state } = useApp();
+  if (state.kind === "loading") {
+    return <LoadingScreen label="Carregando seu progresso." />;
+  }
+  if (state.kind === "unavailable") {
+    return <StorageUnavailableScreen error={state.error} />;
+  }
+
+  const { diagnostic, skills, attempts } = state.snapshot;
   const completedDiagnostic = Boolean(diagnostic?.completedAt);
   const diagnosed = diagnostic?.currentIndex ?? 0;
   const scheduled = skills.filter(
@@ -63,12 +75,12 @@ export default function HomePage() {
             </article>
             <article className="stat-card">
               <span>Diagnóstico</span>
-              <strong>{loading ? "—" : diagnosed}</strong>
+              <strong>{diagnosed}</strong>
               <small className="muted">já respondidas</small>
             </article>
             <article className="stat-card">
               <span>Tipos de prática</span>
-              <strong>5</strong>
+              <strong>4</strong>
               <small className="muted">dificuldade crescente</small>
             </article>
             <article className="stat-card">
@@ -113,8 +125,8 @@ export default function HomePage() {
               <span className="eyebrow">Meta adaptativa</span>
               <h2>Pronto para reforçar a memória?</h2>
               <p>
-                A sessão mistura recordação, reconhecimento e contrastes entre
-                bandeiras parecidas.
+                A sessão mistura recordação digitada e reconhecimento, com
+                alternativas fáceis de confundir com a resposta certa.
               </p>
               <Link href="/estudar" className="button">
                 Começar sessão <ArrowRight size={19} aria-hidden="true" />

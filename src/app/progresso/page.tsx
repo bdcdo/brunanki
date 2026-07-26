@@ -3,6 +3,10 @@
 import type { Card } from "ts-fsrs";
 import { CheckCircle2, Clock3, Layers3, Sparkles } from "lucide-react";
 import { useApp } from "@/components/AppProvider";
+import {
+  LoadingScreen,
+  StorageUnavailableScreen
+} from "@/components/SystemScreens";
 import { ProgressBar } from "@/components/ProgressBar";
 import { entities } from "@/data/catalog";
 
@@ -11,7 +15,15 @@ function stability(card?: Card) {
 }
 
 export default function ProgressPage() {
-  const { skills, attempts } = useApp();
+  const { state } = useApp();
+  if (state.kind === "loading") {
+    return <LoadingScreen label="Carregando seu progresso." />;
+  }
+  if (state.kind === "unavailable") {
+    return <StorageUnavailableScreen error={state.error} />;
+  }
+
+  const { skills, attempts } = state.snapshot;
   const perEntity = new Map<string, typeof skills>();
   for (const skill of skills) {
     perEntity.set(skill.entityId, [

@@ -1,9 +1,9 @@
 "use client";
 
 import type {
-  AppSettings,
   AttemptOutcome,
   DiagnosticState,
+  LearningSnapshot,
   ReviewAttempt,
   SkillState
 } from "@/types/learning";
@@ -34,12 +34,7 @@ import {
   type PtankiExport
 } from "./export";
 
-export interface LearningSnapshot {
-  skills: SkillState[];
-  attempts: ReviewAttempt[];
-  diagnostic?: DiagnosticState;
-  settings: AppSettings;
-}
+export type { LearningSnapshot };
 
 export async function readLearningSnapshot(
   db: PtankiDatabase = getDatabase()

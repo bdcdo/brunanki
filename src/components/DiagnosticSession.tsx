@@ -10,6 +10,10 @@ import {
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useApp } from "@/components/AppProvider";
+import {
+  LoadingScreen,
+  StorageUnavailableScreen
+} from "@/components/SystemScreens";
 import { FlagImage } from "@/components/FlagImage";
 import { ProgressBar } from "@/components/ProgressBar";
 import { entities, entityById } from "@/data/catalog";
@@ -24,8 +28,34 @@ interface Feedback {
 
 const resolver = new CountryNameResolver(entities);
 
+/**
+ * Gate dos três estados do armazenamento. Fica separado do corpo porque o
+ * estado inicial do diagnóstico é semeado a partir do snapshot, e um
+ * `useState` não pode ficar atrás de um early return.
+ */
 export function DiagnosticSession() {
-  const { diagnostic: savedDiagnostic, refresh } = useApp();
+  const { state, refresh } = useApp();
+  if (state.kind === "loading") {
+    return <LoadingScreen label="Carregando seu diagnóstico." />;
+  }
+  if (state.kind === "unavailable") {
+    return <StorageUnavailableScreen error={state.error} />;
+  }
+  return (
+    <DiagnosticSessionReady
+      savedDiagnostic={state.snapshot.diagnostic}
+      refresh={refresh}
+    />
+  );
+}
+
+function DiagnosticSessionReady({
+  savedDiagnostic,
+  refresh
+}: {
+  savedDiagnostic?: DiagnosticState;
+  refresh: () => Promise<void>;
+}) {
   const [diagnostic, setDiagnostic] = useState<DiagnosticState | undefined>(
     savedDiagnostic
   );

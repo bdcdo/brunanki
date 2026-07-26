@@ -66,3 +66,18 @@ export interface SchedulingPreferences {
 }
 
 export type AppSettings = SchedulingPreferences;
+
+/**
+ * Tudo o que foi lido do armazenamento local numa leitura.
+ *
+ * Definição única: antes havia duas interfaces com este nome e formas
+ * diferentes — uma em storage/progress.ts, com `settings`, e outra em
+ * components/AppProvider.tsx, com `loading` e sem `settings`, que era o
+ * motivo de as preferências serem descartadas ao montar o estado da UI.
+ */
+export interface LearningSnapshot {
+  skills: SkillState[];
+  attempts: ReviewAttempt[];
+  settings: AppSettings;
+  diagnostic?: DiagnosticState;
+}

@@ -4,6 +4,10 @@ import { ArrowRight, Check, CornerDownLeft, Pause } from "lucide-react";
 import Link from "next/link";
 import { FormEvent, useMemo, useRef, useState } from "react";
 import { useApp } from "@/components/AppProvider";
+import {
+  LoadingScreen,
+  StorageUnavailableScreen
+} from "@/components/SystemScreens";
 import { FlagImage } from "@/components/FlagImage";
 import { ProgressBar } from "@/components/ProgressBar";
 import { entities, entityById } from "@/data/catalog";
@@ -16,6 +20,7 @@ import {
 } from "@/domain/scheduler";
 import type {
   AttemptOutcome,
+  LearningSnapshot,
   ReviewAttempt,
   SkillState
 } from "@/types/learning";
@@ -92,8 +97,32 @@ function initialStep(item: SessionItem, state?: SkillState): StudyStep {
   return "forwardInput";
 }
 
+/**
+ * Faz o gate dos três estados do armazenamento antes de montar a sessão.
+ *
+ * Separado do corpo porque os hooks de sessão não podem ficar atrás de um
+ * early return; assim `StudySessionReady` só existe quando há um snapshot,
+ * e nenhum de seus hooks precisa lidar com dados ausentes.
+ */
 export function StudySession() {
-  const { diagnostic, skills, attempts, settings, refresh, loading } = useApp();
+  const { state, refresh } = useApp();
+  if (state.kind === "loading") {
+    return <LoadingScreen label="Preparando sua sessão." />;
+  }
+  if (state.kind === "unavailable") {
+    return <StorageUnavailableScreen error={state.error} />;
+  }
+  return <StudySessionReady snapshot={state.snapshot} refresh={refresh} />;
+}
+
+function StudySessionReady({
+  snapshot,
+  refresh
+}: {
+  snapshot: LearningSnapshot;
+  refresh: () => Promise<void>;
+}) {
+  const { diagnostic, skills, attempts, settings } = snapshot;
   const [queue, setQueue] = useState<SessionItem[]>([]);
   const [index, setIndex] = useState(0);
   const [step, setStep] = useState<StudyStep>("teach");
@@ -110,7 +139,7 @@ export function StudySession() {
   );
 
   function beginSession() {
-    if (loading || initialized || !diagnostic?.completedAt) return;
+    if (initialized || !diagnostic?.completedAt) return;
     const plan = buildDailyQueue({
       entityOrder: entities.map(({ id }) => id),
       states: skills,
@@ -269,14 +298,6 @@ export function StudySession() {
           : "incorrect";
     await persistAttempt(outcome, "flagToNameInput", answer.trim());
     setFeedback({ outcome, answer: answer.trim() });
-  }
-
-  if (loading) {
-    return (
-      <div className="page page-narrow">
-        <div className="empty-state">Preparando sua sessão…</div>
-      </div>
-    );
   }
 
   if (!diagnostic?.completedAt) {
