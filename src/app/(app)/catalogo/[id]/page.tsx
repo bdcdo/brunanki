@@ -51,7 +51,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
           entity={runtimeEntityById.get(entity.id)!}
           alt={{ kind: "named" }}
           eager
-          className="detail-flag"
+          size="fill"
         />
         <div>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>

@@ -77,7 +77,7 @@ export function CatalogClient() {
               className="flag-card"
               key={entity.id}
             >
-              <FlagImage entity={entity} alt={{ kind: "named" }} />
+              <FlagImage entity={entity} alt={{ kind: "named" }} size="card" />
               <span className="flag-card-body">
                 <strong>{entity.displayNamePtBr}</strong>
                 <span>{entity.region}</span>

@@ -145,6 +145,7 @@ function DiagnosticSessionReady({
               <FlagImage
                 entity={entity}
                 alt={{ kind: "named" }}
+                size="fill"
                 key={entity.id}
               />
             ))}
@@ -224,7 +225,7 @@ function DiagnosticSessionReady({
                 entity={feedbackEntity}
                 alt={{ kind: "named" }}
                 eager
-                className="quiz-flag"
+                size="hero"
               />
               <div
                 className={`feedback ${
@@ -264,7 +265,7 @@ function DiagnosticSessionReady({
                 entity={current}
                 alt={{ kind: "unnamed" }}
                 eager
-                className="quiz-flag"
+                size="hero"
               />
               <form className="answer-form" onSubmit={submit}>
                 <label htmlFor="country-answer" className="sr-only">

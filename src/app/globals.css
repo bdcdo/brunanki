@@ -531,3 +531,66 @@
     }
   }
 }
+
+/* ---------------------------------------------------------------------------
+   CLASSES-ASSINATURA. Só o que utilitário não expressa de forma legível, e
+   nada sem consumidor.
+--------------------------------------------------------------------------- */
+@layer components {
+  /* O xadrez de transparência atrás da bandeira. Bandeira é SVG com fundo
+     transparente, e sem o xadrez não se distingue o branco da bandeira do
+     vazio do cartão — em Japão e Coreia do Sul isso é a diferença entre ver a
+     bandeira e ver nada. Dois gradientes a 45° deslocados de meio passo não
+     têm tradução legível em utilitário.
+
+     `aspect-ratio` é padrão da classe AGORA, e essa é a correção. Antes a
+     altura era herdada de cada uso, com um comentário afirmando que "todos os
+     usos definem altura" — invariante confiada a cada chamador, e falsa: as
+     três bandeiras de exemplo da abertura do diagnóstico não definiam
+     nenhuma, e como a imagem é `position: absolute` o quadro ficava sem filho
+     em fluxo e desabava para os 2px da borda. Com o padrão aqui, o estado
+     ruim deixa de ser construível. */
+  .flag-frame {
+    position: relative;
+    display: grid;
+    overflow: hidden;
+    aspect-ratio: 3 / 2;
+    border: 1px solid var(--flag-line);
+    border-radius: 9px;
+    place-items: center;
+    background:
+      linear-gradient(
+        45deg,
+        var(--flag-checker) 25%,
+        transparent 25% 75%,
+        var(--flag-checker) 75%
+      ),
+      linear-gradient(
+        45deg,
+        var(--flag-checker) 25%,
+        var(--flag-checker-alt) 25% 75%,
+        var(--flag-checker) 75%
+      );
+    background-position:
+      0 0,
+      6px 6px;
+    background-size: 12px 12px;
+  }
+
+  /* Posicionamento absoluto preso ao quadro, e não dimensão percentual num
+     item de grid: como a faixa do grid cresce até caber o conteúdo, a altura
+     da imagem se resolvia pela proporção do arquivo e ultrapassava o quadro,
+     que tem proporção 3/2 e recorta o excedente — a bandeira do Brasil, de
+     10/7, aparecia cortada no catálogo. Com `inset: 0` o limite é o quadro, e
+     `object-fit: contain` preserva a proporção do arquivo dentro dele. É o
+     que permite servir 30 razões distintas, do Nepal a 0,82 ao Catar a 2,545,
+     sem cortar nenhuma. */
+  .flag-frame img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}

@@ -424,7 +424,7 @@ function StudySessionReady({
                 entity={entity}
                 alt={{ kind: "named" }}
                 eager
-                className="quiz-flag"
+                size="hero"
               />
               <div
                 className={`feedback ${
@@ -470,7 +470,7 @@ function StudySessionReady({
                 entity={entity}
                 alt={{ kind: "named" }}
                 eager
-                className="quiz-flag"
+                size="hero"
               />
               <p className="muted" style={{ textAlign: "center" }}>
                 Observe a composição antes de tentar recuperar o nome.
@@ -496,7 +496,7 @@ function StudySessionReady({
                 entity={entity}
                 alt={{ kind: "unnamed" }}
                 eager
-                className="quiz-flag"
+                size="hero"
               />
               <div className="choice-grid">
                 {choices.map((choice) => (
@@ -535,7 +535,11 @@ function StudySessionReady({
                     onClick={() => void answerReverseChoice(choice.id)}
                   >
                     {/* Decorativa: o rótulo do botão já descreve a bandeira. */}
-                    <FlagImage entity={choice} alt={{ kind: "decorative" }} />
+                    <FlagImage
+                      entity={choice}
+                      alt={{ kind: "decorative" }}
+                      size="fill"
+                    />
                     <span aria-hidden="true">Opção {choiceIndex + 1}</span>
                   </button>
                 ))}
@@ -549,7 +553,7 @@ function StudySessionReady({
                 entity={entity}
                 alt={{ kind: "unnamed" }}
                 eager
-                className="quiz-flag"
+                size="hero"
               />
               <form className="answer-form" onSubmit={submitForward}>
                 <label htmlFor="study-answer" className="sr-only">
