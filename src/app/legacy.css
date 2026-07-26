@@ -371,39 +371,6 @@ a {
   font-weight: 700;
 }
 
-.progress-block {
-  display: grid;
-  gap: 8px;
-}
-
-.progress-label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  color: var(--ink-soft);
-  font-size: 14px;
-}
-
-.progress-label strong {
-  color: var(--ink);
-}
-
-.progress-track {
-  height: 12px;
-  overflow: hidden;
-  border: 1px solid var(--input);
-  border-radius: 999px;
-  background: white;
-}
-
-.progress-track span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--teal);
-}
-
 .field-hint {
   margin: 0;
   color: var(--ink-soft);
@@ -503,47 +470,6 @@ a {
 
 .choice:hover {
   border-color: var(--teal);
-}
-
-.choice-flag {
-  display: grid;
-  gap: 10px;
-  text-align: center;
-}
-
-.feedback {
-  display: grid;
-  margin-top: 20px;
-  padding: 18px;
-  border: 2px solid var(--line);
-  border-radius: 14px;
-  gap: 5px;
-}
-
-.feedback-correct {
-  border-color: var(--outcome-correct-line);
-  background: var(--green-soft);
-}
-
-.feedback-partial {
-  border-color: var(--outcome-partial-line);
-  background: var(--yellow-soft);
-}
-
-.feedback-incorrect {
-  border-color: var(--outcome-incorrect-line);
-  background: var(--coral-soft);
-}
-
-.feedback strong {
-  font-size: 20px;
-}
-
-.notice {
-  padding: 14px 16px;
-  border-left: 5px solid var(--yellow);
-  border-radius: 0 10px 10px 0;
-  background: var(--yellow-soft);
 }
 
 .muted {
