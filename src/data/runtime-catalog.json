@@ -1,5 +1,5 @@
 {
-  "version": "2026.07.25",
+  "version": "2026.07.26",
   "entities": [
     {
       "id": "afg",
@@ -12,9 +12,15 @@
         "Afġānistān"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/afg.svg",
-      "palette": ["preto", "branco"]
+      "palette": [
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "zaf",
@@ -28,9 +34,19 @@
         "Suid-Afrika"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/zaf.svg",
-      "palette": ["vermelho", "laranja", "verde", "azul", "preto", "branco"]
+      "palette": [
+        "vermelho",
+        "laranja",
+        "verde",
+        "azul",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "alb",
@@ -44,9 +60,15 @@
         "Shqipnia"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/alb.svg",
-      "palette": ["vermelho", "preto"]
+      "palette": [
+        "vermelho",
+        "preto"
+      ]
     },
     {
       "id": "deu",
@@ -59,9 +81,16 @@
         "Bundesrepublik Deutschland"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/deu.svg",
-      "palette": ["vermelho", "amarelo", "preto"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "preto"
+      ]
     },
     {
       "id": "and",
@@ -73,9 +102,19 @@
         "Principat d'Andorra"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/and.svg",
-      "palette": ["vermelho", "laranja", "amarelo", "azul", "marrom", "branco"]
+      "palette": [
+        "vermelho",
+        "laranja",
+        "amarelo",
+        "azul",
+        "marrom",
+        "branco"
+      ]
     },
     {
       "id": "ago",
@@ -87,27 +126,35 @@
         "ʁɛpublika de an'ɡɔla"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/ago.svg",
-      "palette": ["vermelho", "amarelo"]
-    },
-    {
-      "id": "aia",
-      "displayNamePtBr": "Anguilla",
-      "aliasesPtBr": ["AI"],
-      "region": "Americas",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/aia.svg",
-      "palette": ["vermelho", "laranja", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo"
+      ]
     },
     {
       "id": "atg",
       "displayNamePtBr": "Antígua e Barbuda",
-      "aliasesPtBr": ["Antigua and Barbuda", "AG"],
+      "aliasesPtBr": [
+        "Antigua and Barbuda",
+        "AG"
+      ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/atg.svg",
-      "palette": ["vermelho", "amarelo", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "sau",
@@ -121,9 +168,15 @@
         "Al-Mamlakah al-‘Arabiyyah as-Su‘ūdiyyah"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/sau.svg",
-      "palette": ["verde", "branco"]
+      "palette": [
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "dza",
@@ -137,18 +190,37 @@
         "Algérie"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/dza.svg",
-      "palette": ["vermelho", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "arg",
       "displayNamePtBr": "Argentina",
-      "aliasesPtBr": ["Argentine Republic", "República Argentina", "AR"],
+      "aliasesPtBr": [
+        "Argentine Republic",
+        "República Argentina",
+        "AR"
+      ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/arg.svg",
-      "palette": ["laranja", "azul", "marrom", "branco"]
+      "palette": [
+        "laranja",
+        "azul",
+        "marrom",
+        "branco"
+      ]
     },
     {
       "id": "arm",
@@ -161,18 +233,16 @@
         "Հայաստանի Հանրապետություն"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/arm.svg",
-      "palette": ["vermelho", "laranja", "azul"]
-    },
-    {
-      "id": "abw",
-      "displayNamePtBr": "Aruba",
-      "aliasesPtBr": ["AW"],
-      "region": "Americas",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/abw.svg",
-      "palette": ["vermelho", "amarelo", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "laranja",
+        "azul"
+      ]
     },
     {
       "id": "aus",
@@ -183,9 +253,16 @@
         "AU"
       ],
       "region": "Oceania",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/aus.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "aut",
@@ -198,9 +275,15 @@
         "Oesterreich"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/aut.svg",
-      "palette": ["vermelho", "branco"]
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "aze",
@@ -213,9 +296,17 @@
         "Azərbaycan Respublikası"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/aze.svg",
-      "palette": ["vermelho", "verde", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "bhs",
@@ -226,9 +317,15 @@
         "BS"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/bhs.svg",
-      "palette": ["laranja", "azul"]
+      "palette": [
+        "laranja",
+        "azul"
+      ]
     },
     {
       "id": "bhr",
@@ -241,9 +338,15 @@
         "Mamlakat al-Baḥrayn"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/bhr.svg",
-      "palette": ["vermelho", "branco"]
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "bgd",
@@ -255,18 +358,33 @@
         "Gônôprôjatôntri Bangladesh"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/bgd.svg",
-      "palette": ["vermelho", "verde"]
+      "palette": [
+        "vermelho",
+        "verde"
+      ]
     },
     {
       "id": "brb",
       "displayNamePtBr": "Barbados",
-      "aliasesPtBr": ["BB"],
+      "aliasesPtBr": [
+        "BB"
+      ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/brb.svg",
-      "palette": ["laranja", "azul", "preto"]
+      "palette": [
+        "laranja",
+        "azul",
+        "preto"
+      ]
     },
     {
       "id": "bel",
@@ -284,16 +402,27 @@
         "Königreich Belgien"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/bel.svg",
-      "palette": ["vermelho", "amarelo"]
+      "palette": [
+        "vermelho",
+        "amarelo"
+      ]
     },
     {
       "id": "blz",
       "displayNamePtBr": "Belize",
-      "aliasesPtBr": ["BZ"],
+      "aliasesPtBr": [
+        "BZ"
+      ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/blz.svg",
       "palette": [
         "vermelho",
@@ -317,31 +446,15 @@
         "République du Bénin"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/ben.svg",
-      "palette": ["vermelho", "amarelo", "verde"]
-    },
-    {
-      "id": "bmu",
-      "displayNamePtBr": "Bermudas",
-      "aliasesPtBr": [
-        "Bermuda",
-        "BM",
-        "The Islands of Bermuda",
-        "The Bermudas",
-        "Somers Isles"
+      "organizations": [
+        "FIFA",
+        "UN"
       ],
-      "region": "Americas",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/bmu.svg",
+      "flagPath": "/flags/ben.svg",
       "palette": [
         "vermelho",
         "amarelo",
-        "verde",
-        "azul",
-        "marrom",
-        "preto",
-        "branco"
+        "verde"
       ]
     },
     {
@@ -357,9 +470,16 @@
         "Республика Белоруссия"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/blr.svg",
-      "palette": ["vermelho", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "bol",
@@ -377,9 +497,16 @@
         "Tetã Volívia"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/bol.svg",
-      "palette": ["vermelho", "amarelo", "verde"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde"
+      ]
     },
     {
       "id": "bih",
@@ -391,9 +518,16 @@
         "Босна и Херцеговина"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/bih.svg",
-      "palette": ["amarelo", "azul", "branco"]
+      "palette": [
+        "amarelo",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "bwa",
@@ -406,9 +540,15 @@
         "Lefatshe la Botswana"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/bwa.svg",
-      "palette": ["azul", "branco"]
+      "palette": [
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "bra",
@@ -420,9 +560,17 @@
         "BR"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/bra.svg",
-      "palette": ["amarelo", "verde", "azul", "branco"]
+      "palette": [
+        "amarelo",
+        "verde",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "brn",
@@ -436,9 +584,16 @@
         "the Abode of Peace"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/brn.svg",
-      "palette": ["vermelho", "amarelo", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "branco"
+      ]
     },
     {
       "id": "bgr",
@@ -450,18 +605,34 @@
         "Република България"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/bgr.svg",
-      "palette": ["vermelho", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "bfa",
       "displayNamePtBr": "Burkina Faso",
-      "aliasesPtBr": ["BF"],
+      "aliasesPtBr": [
+        "BF"
+      ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/bfa.svg",
-      "palette": ["vermelho", "amarelo", "verde"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde"
+      ]
     },
     {
       "id": "bdi",
@@ -474,18 +645,38 @@
         "République du Burundi"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/bdi.svg",
-      "palette": ["vermelho", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "btn",
       "displayNamePtBr": "Butão",
-      "aliasesPtBr": ["Bhutan", "Kingdom of Bhutan", "Reino do Butão", "BT"],
+      "aliasesPtBr": [
+        "Bhutan",
+        "Kingdom of Bhutan",
+        "Reino do Butão",
+        "BT"
+      ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/btn.svg",
-      "palette": ["laranja", "amarelo", "preto", "branco"]
+      "palette": [
+        "laranja",
+        "amarelo",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "cpv",
@@ -497,9 +688,17 @@
         "CV"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/cpv.svg",
-      "palette": ["vermelho", "amarelo", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "cmr",
@@ -512,9 +711,16 @@
         "République du Cameroun"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/cmr.svg",
-      "palette": ["vermelho", "amarelo", "verde"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde"
+      ]
     },
     {
       "id": "khm",
@@ -526,18 +732,34 @@
         "KH"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/khm.svg",
-      "palette": ["vermelho", "azul", "preto", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "can",
       "displayNamePtBr": "Canadá",
-      "aliasesPtBr": ["CA"],
+      "aliasesPtBr": [
+        "CA"
+      ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/can.svg",
-      "palette": ["vermelho", "branco"]
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "qat",
@@ -550,9 +772,15 @@
         "Dawlat Qaṭar"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/qat.svg",
-      "palette": ["roxo", "branco"]
+      "palette": [
+        "roxo",
+        "branco"
+      ]
     },
     {
       "id": "kaz",
@@ -570,9 +798,15 @@
         "Respublika Kazakhstan"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/kaz.svg",
-      "palette": ["amarelo", "azul"]
+      "palette": [
+        "amarelo",
+        "azul"
+      ]
     },
     {
       "id": "tcd",
@@ -586,9 +820,16 @@
         "République du Tchad"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/tcd.svg",
-      "palette": ["vermelho", "amarelo", "azul"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "azul"
+      ]
     },
     {
       "id": "cze",
@@ -602,9 +843,16 @@
         "Česko"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/cze.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "chl",
@@ -616,9 +864,16 @@
         "República de Chile"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/chl.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "chn",
@@ -633,9 +888,15 @@
         "Zhōnghuá Rénmín Gònghéguó"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/chn.svg",
-      "palette": ["vermelho", "amarelo"]
+      "palette": [
+        "vermelho",
+        "amarelo"
+      ]
     },
     {
       "id": "cyp",
@@ -651,9 +912,16 @@
         "Kıbrıs Cumhuriyeti"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/cyp.svg",
-      "palette": ["laranja", "verde", "branco"]
+      "palette": [
+        "laranja",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "col",
@@ -665,9 +933,16 @@
         "República de Colombia"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/col.svg",
-      "palette": ["vermelho", "amarelo", "azul"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "azul"
+      ]
     },
     {
       "id": "com",
@@ -682,9 +957,18 @@
         "al-Ittiḥād al-Qumurī"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/com.svg",
-      "palette": ["vermelho", "amarelo", "verde", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "prk",
@@ -702,9 +986,16 @@
         "북조선"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/prk.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "kor",
@@ -719,9 +1010,17 @@
         "남조선"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/kor.svg",
-      "palette": ["vermelho", "azul", "preto", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "civ",
@@ -735,9 +1034,16 @@
         "République de Côte d'Ivoire"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/civ.svg",
-      "palette": ["laranja", "verde", "branco"]
+      "palette": [
+        "laranja",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "cri",
@@ -749,9 +1055,16 @@
         "República de Costa Rica"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/cri.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "hrv",
@@ -765,34 +1078,38 @@
         "Republika Hrvatska"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/hrv.svg",
-      "palette": ["vermelho", "amarelo", "azul", "preto", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "azul",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "cub",
       "displayNamePtBr": "Cuba",
-      "aliasesPtBr": ["Republic of Cuba", "República de Cuba", "CU"],
-      "region": "Americas",
-      "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/cub.svg",
-      "palette": ["vermelho", "azul", "branco"]
-    },
-    {
-      "id": "cuw",
-      "displayNamePtBr": "Curaçao",
       "aliasesPtBr": [
-        "Country of Curaçao",
-        "País de Curaçao",
-        "CW",
-        "Kòrsou",
-        "Land Curaçao",
-        "Pais Kòrsou"
+        "Republic of Cuba",
+        "República de Cuba",
+        "CU"
       ],
       "region": "Americas",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/cuw.svg",
-      "palette": ["amarelo", "azul", "branco"]
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
+      "flagPath": "/flags/cub.svg",
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "dnk",
@@ -806,9 +1123,15 @@
         "Kongeriget Danmark"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/dnk.svg",
-      "palette": ["vermelho", "branco"]
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "dji",
@@ -825,9 +1148,17 @@
         "Jamhuuriyadda Jabuuti"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/dji.svg",
-      "palette": ["vermelho", "verde", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "dma",
@@ -840,7 +1171,10 @@
         "Wai‘tu kubuli"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/dma.svg",
       "palette": [
         "vermelho",
@@ -862,9 +1196,16 @@
         "EG"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/egy.svg",
-      "palette": ["vermelho", "amarelo", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "branco"
+      ]
     },
     {
       "id": "slv",
@@ -875,7 +1216,10 @@
         "SV"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/slv.svg",
       "palette": [
         "vermelho",
@@ -890,11 +1234,23 @@
     {
       "id": "are",
       "displayNamePtBr": "Emirados Árabes Unidos",
-      "aliasesPtBr": ["United Arab Emirates", "AE", "UAE", "Emirates"],
+      "aliasesPtBr": [
+        "United Arab Emirates",
+        "AE",
+        "UAE",
+        "Emirates"
+      ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/are.svg",
-      "palette": ["vermelho", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "ecu",
@@ -907,7 +1263,10 @@
         "República del Ecuador"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/ecu.svg",
       "palette": [
         "vermelho",
@@ -935,18 +1294,17 @@
         "Iritriyā"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/eri.svg",
-      "palette": ["vermelho", "laranja", "verde", "azul"]
-    },
-    {
-      "id": "scotland",
-      "displayNamePtBr": "Escócia",
-      "aliasesPtBr": ["Scotland"],
-      "region": "Europe",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/scotland.svg",
-      "palette": ["azul", "branco"]
+      "palette": [
+        "vermelho",
+        "laranja",
+        "verde",
+        "azul"
+      ]
     },
     {
       "id": "svk",
@@ -959,9 +1317,16 @@
         "Slovenská republika"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/svk.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "svn",
@@ -974,9 +1339,17 @@
         "Republika Slovenija"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/svn.svg",
-      "palette": ["vermelho", "amarelo", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "esp",
@@ -989,7 +1362,10 @@
         "Reino de España"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/esp.svg",
       "palette": [
         "vermelho",
@@ -1018,9 +1394,18 @@
         "Umbuso weSwatini"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/swz.svg",
-      "palette": ["vermelho", "amarelo", "azul", "preto", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "azul",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "usa",
@@ -1033,9 +1418,16 @@
         "USA"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/usa.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "est",
@@ -1048,9 +1440,15 @@
         "Eesti Vabariik"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/est.svg",
-      "palette": ["azul", "branco"]
+      "palette": [
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "eth",
@@ -1064,9 +1462,17 @@
         "የኢትዮጵያ ፌዴራላዊ ዲሞክራሲያዊ ሪፐብሊክ"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/eth.svg",
-      "palette": ["vermelho", "amarelo", "verde", "azul"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "azul"
+      ]
     },
     {
       "id": "fji",
@@ -1080,9 +1486,19 @@
         "Fijī Gaṇarājya"
       ],
       "region": "Oceania",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/fji.svg",
-      "palette": ["vermelho", "amarelo", "verde", "azul", "preto", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "azul",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "phl",
@@ -1095,9 +1511,17 @@
         "Repúblika ng Pilipinas"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/phl.svg",
-      "palette": ["vermelho", "amarelo", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "fin",
@@ -1112,9 +1536,15 @@
         "Republiken Finland"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/fin.svg",
-      "palette": ["azul", "branco"]
+      "palette": [
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "fra",
@@ -1127,9 +1557,16 @@
         "République française"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/fra.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "gab",
@@ -1142,54 +1579,95 @@
         "République Gabonaise"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/gab.svg",
-      "palette": ["amarelo", "verde", "azul"]
+      "palette": [
+        "amarelo",
+        "verde",
+        "azul"
+      ]
     },
     {
       "id": "gmb",
       "displayNamePtBr": "Gâmbia",
-      "aliasesPtBr": ["Republic of the Gambia", "República da Gâmbia", "GM"],
+      "aliasesPtBr": [
+        "Republic of the Gambia",
+        "República da Gâmbia",
+        "GM"
+      ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/gmb.svg",
-      "palette": ["vermelho", "verde", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "gha",
       "displayNamePtBr": "Gana",
-      "aliasesPtBr": ["Ghana", "Republic of Ghana", "República do Gana", "GH"],
+      "aliasesPtBr": [
+        "Ghana",
+        "Republic of Ghana",
+        "República do Gana",
+        "GH"
+      ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/gha.svg",
-      "palette": ["vermelho", "amarelo", "verde"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde"
+      ]
     },
     {
       "id": "geo",
       "displayNamePtBr": "Geórgia",
-      "aliasesPtBr": ["GE", "Sakartvelo"],
+      "aliasesPtBr": [
+        "GE",
+        "Sakartvelo"
+      ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/geo.svg",
-      "palette": ["vermelho", "branco"]
-    },
-    {
-      "id": "gib",
-      "displayNamePtBr": "Gibraltar",
-      "aliasesPtBr": ["GI"],
-      "region": "Europe",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/gib.svg",
-      "palette": ["vermelho", "amarelo", "preto", "branco"]
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "grd",
       "displayNamePtBr": "Granada",
-      "aliasesPtBr": ["Grenada", "GD"],
+      "aliasesPtBr": [
+        "Grenada",
+        "GD"
+      ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/grd.svg",
-      "palette": ["vermelho", "amarelo", "verde"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde"
+      ]
     },
     {
       "id": "grc",
@@ -1203,34 +1681,29 @@
         "Ελληνική Δημοκρατία"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/grc.svg",
-      "palette": ["azul", "branco"]
-    },
-    {
-      "id": "gum",
-      "displayNamePtBr": "Guam",
-      "aliasesPtBr": ["GU", "Guåhån"],
-      "region": "Oceania",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/gum.svg",
       "palette": [
-        "vermelho",
-        "amarelo",
-        "verde",
         "azul",
-        "marrom",
-        "preto",
-        "branco",
-        "cinza"
+        "branco"
       ]
     },
     {
       "id": "gtm",
       "displayNamePtBr": "Guatemala",
-      "aliasesPtBr": ["Republic of Guatemala", "República da Guatemala", "GT"],
+      "aliasesPtBr": [
+        "Republic of Guatemala",
+        "República da Guatemala",
+        "GT"
+      ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/gtm.svg",
       "palette": [
         "vermelho",
@@ -1254,9 +1727,18 @@
         "GY"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/guy.svg",
-      "palette": ["vermelho", "laranja", "verde", "preto", "branco"]
+      "palette": [
+        "vermelho",
+        "laranja",
+        "verde",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "gin",
@@ -1269,9 +1751,16 @@
         "République de Guinée"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/gin.svg",
-      "palette": ["vermelho", "amarelo", "verde"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde"
+      ]
     },
     {
       "id": "gnq",
@@ -1285,7 +1774,10 @@
         "République de Guinée équatoriale"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/gnq.svg",
       "palette": [
         "vermelho",
@@ -1308,9 +1800,17 @@
         "GW"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/gnb.svg",
-      "palette": ["vermelho", "amarelo", "verde", "preto"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "preto"
+      ]
     },
     {
       "id": "hti",
@@ -1323,7 +1823,10 @@
         "Repiblik Ayiti"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/hti.svg",
       "palette": [
         "vermelho",
@@ -1338,33 +1841,40 @@
     {
       "id": "hnd",
       "displayNamePtBr": "Honduras",
-      "aliasesPtBr": ["Republic of Honduras", "República de Honduras", "HN"],
-      "region": "Americas",
-      "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/hnd.svg",
-      "palette": ["azul", "branco"]
-    },
-    {
-      "id": "hkg",
-      "displayNamePtBr": "Hong Kong",
       "aliasesPtBr": [
-        "Hong Kong Special Administrative Region of the People's Republic of China",
-        "Hong Kong Região Administrativa Especial da República Popular da China",
-        "HK"
+        "Republic of Honduras",
+        "República de Honduras",
+        "HN"
       ],
-      "region": "Asia",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/hkg.svg",
-      "palette": ["vermelho", "branco"]
+      "region": "Americas",
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
+      "flagPath": "/flags/hnd.svg",
+      "palette": [
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "hun",
       "displayNamePtBr": "Hungria",
-      "aliasesPtBr": ["Hungary", "HU"],
+      "aliasesPtBr": [
+        "Hungary",
+        "HU"
+      ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/hun.svg",
-      "palette": ["vermelho", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "yem",
@@ -1378,36 +1888,15 @@
         "al-Jumhūriyyah al-Yamaniyyah"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/yem.svg",
-      "palette": ["vermelho", "branco"]
-    },
-    {
-      "id": "cym",
-      "displayNamePtBr": "Ilhas Cayman",
-      "aliasesPtBr": ["Cayman Islands", "KY"],
-      "region": "Americas",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/cym.svg",
-      "palette": ["vermelho", "amarelo", "verde", "azul", "preto", "branco"]
-    },
-    {
-      "id": "cok",
-      "displayNamePtBr": "Ilhas Cook",
-      "aliasesPtBr": ["Cook Islands", "CK", "Kūki 'Āirani"],
-      "region": "Oceania",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/cok.svg",
-      "palette": ["vermelho", "azul", "branco"]
-    },
-    {
-      "id": "fro",
-      "displayNamePtBr": "Ilhas Faroé",
-      "aliasesPtBr": ["Faroe Islands", "FO", "Føroyar", "Færøerne"],
-      "region": "Europe",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/fro.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "mhl",
@@ -1420,76 +1909,35 @@
         "Aolepān Aorōkin M̧ajeļ"
       ],
       "region": "Oceania",
-      "organizations": ["UN"],
+      "organizations": [
+        "UN"
+      ],
       "flagPath": "/flags/mhl.svg",
-      "palette": ["laranja", "azul", "branco"]
+      "palette": [
+        "laranja",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "slb",
       "displayNamePtBr": "Ilhas Salomão",
-      "aliasesPtBr": ["Solomon Islands", "SB"],
+      "aliasesPtBr": [
+        "Solomon Islands",
+        "SB"
+      ],
       "region": "Oceania",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/slb.svg",
-      "palette": ["amarelo", "verde", "azul", "branco"]
-    },
-    {
-      "id": "tca",
-      "displayNamePtBr": "Ilhas Turcas e Caicos",
-      "aliasesPtBr": ["Turks and Caicos Islands", "Ilhas Turks e Caicos", "TC"],
-      "region": "Americas",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/tca.svg",
       "palette": [
-        "vermelho",
-        "laranja",
         "amarelo",
         "verde",
         "azul",
-        "rosa",
-        "marrom",
-        "preto",
         "branco"
       ]
-    },
-    {
-      "id": "vgb",
-      "displayNamePtBr": "Ilhas Virgens Britânicas",
-      "aliasesPtBr": [
-        "British Virgin Islands",
-        "Virgin Islands",
-        "Ilhas Virgens",
-        "VG",
-        "Virgin Islands, British"
-      ],
-      "region": "Americas",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/vgb.svg",
-      "palette": [
-        "vermelho",
-        "laranja",
-        "amarelo",
-        "verde",
-        "azul",
-        "marrom",
-        "preto",
-        "branco"
-      ]
-    },
-    {
-      "id": "vir",
-      "displayNamePtBr": "Ilhas Virgens dos Estados Unidos",
-      "aliasesPtBr": [
-        "United States Virgin Islands",
-        "Virgin Islands of the United States",
-        "VI",
-        "Virgin Islands, U.S.",
-        "U.S. Virgin Islands"
-      ],
-      "region": "Americas",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/vir.svg",
-      "palette": ["laranja", "verde", "azul", "roxo", "preto", "branco"]
     },
     {
       "id": "ind",
@@ -1503,9 +1951,17 @@
         "இந்தியா"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/ind.svg",
-      "palette": ["laranja", "verde", "azul", "branco"]
+      "palette": [
+        "laranja",
+        "verde",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "idn",
@@ -1517,18 +1973,15 @@
         "Republik Indonesia"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/idn.svg",
-      "palette": ["vermelho", "branco"]
-    },
-    {
-      "id": "england",
-      "displayNamePtBr": "Inglaterra",
-      "aliasesPtBr": ["England"],
-      "region": "Europe",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/england.svg",
-      "palette": ["vermelho", "branco"]
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "irn",
@@ -1542,9 +1995,16 @@
         "Jomhuri-ye Eslāmi-ye Irān"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/irn.svg",
-      "palette": ["vermelho", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "irq",
@@ -1557,9 +2017,16 @@
         "Jumhūriyyat al-‘Irāq"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/irq.svg",
-      "palette": ["vermelho", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "irl",
@@ -1573,29 +2040,16 @@
         "Poblacht na hÉireann"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/irl.svg",
-      "palette": ["laranja", "verde", "branco"]
-    },
-    {
-      "id": "northern-ireland",
-      "displayNamePtBr": "Irlanda do Norte",
-      "aliasesPtBr": ["Northern Ireland", "Ulster"],
-      "region": "Europe",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/northern-ireland.svg",
-      "palette": [
-        "vermelho",
-        "laranja",
-        "amarelo",
-        "verde",
-        "azul",
-        "marrom",
-        "preto",
-        "branco",
-        "cinza"
+      "organizations": [
+        "FIFA",
+        "UN"
       ],
-      "editorialNote": "A FIFA representa a Irlanda do Norte separadamente. O Ulster Banner é ensinado por ser a bandeira mais reconhecida no contexto esportivo, embora não seja uma bandeira oficial vigente."
+      "flagPath": "/flags/irl.svg",
+      "palette": [
+        "laranja",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "isl",
@@ -1608,9 +2062,16 @@
         "Lýðveldið Ísland"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/isl.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "isr",
@@ -1622,9 +2083,15 @@
         "Medīnat Yisrā'el"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/isr.svg",
-      "palette": ["azul", "branco"]
+      "palette": [
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "ita",
@@ -1637,27 +2104,54 @@
         "Repubblica italiana"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/ita.svg",
-      "palette": ["vermelho", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "jam",
       "displayNamePtBr": "Jamaica",
-      "aliasesPtBr": ["JM"],
+      "aliasesPtBr": [
+        "JM"
+      ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/jam.svg",
-      "palette": ["laranja", "verde", "preto"]
+      "palette": [
+        "laranja",
+        "verde",
+        "preto"
+      ]
     },
     {
       "id": "jpn",
       "displayNamePtBr": "Japão",
-      "aliasesPtBr": ["Japan", "JP", "Nippon", "Nihon"],
+      "aliasesPtBr": [
+        "Japan",
+        "JP",
+        "Nippon",
+        "Nihon"
+      ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/jpn.svg",
-      "palette": ["vermelho", "branco"]
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "jor",
@@ -1670,9 +2164,16 @@
         "al-Mamlakah al-Urdunīyah al-Hāshimīyah"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/jor.svg",
-      "palette": ["vermelho", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "kir",
@@ -1685,23 +2186,17 @@
         "Ribaberiki Kiribati"
       ],
       "region": "Oceania",
-      "organizations": ["UN"],
-      "flagPath": "/flags/kir.svg",
-      "palette": ["vermelho", "amarelo", "azul", "preto", "branco"]
-    },
-    {
-      "id": "unk",
-      "displayNamePtBr": "Kosovo",
-      "aliasesPtBr": [
-        "Republic of Kosovo",
-        "República do Kosovo",
-        "XK",
-        "Република Косово"
+      "organizations": [
+        "UN"
       ],
-      "region": "Europe",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/unk.svg",
-      "palette": ["laranja", "azul", "branco"]
+      "flagPath": "/flags/kir.svg",
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "azul",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "kwt",
@@ -1713,9 +2208,16 @@
         "Dawlat al-Kuwait"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/kwt.svg",
-      "palette": ["vermelho", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "lao",
@@ -1728,9 +2230,16 @@
         "Sathalanalat Paxathipatai Paxaxon Lao"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/lao.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "lso",
@@ -1743,9 +2252,16 @@
         "Muso oa Lesotho"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/lso.svg",
-      "palette": ["verde", "azul", "branco"]
+      "palette": [
+        "verde",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "lva",
@@ -1758,9 +2274,15 @@
         "Latvijas Republika"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/lva.svg",
-      "palette": ["vermelho", "branco"]
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "lbn",
@@ -1773,18 +2295,36 @@
         "Al-Jumhūrīyah Al-Libnānīyah"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/lbn.svg",
-      "palette": ["vermelho", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "lbr",
       "displayNamePtBr": "Libéria",
-      "aliasesPtBr": ["Republic of Liberia", "República da Libéria", "LR"],
+      "aliasesPtBr": [
+        "Republic of Liberia",
+        "República da Libéria",
+        "LR"
+      ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/lbr.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "lby",
@@ -1797,9 +2337,17 @@
         "Dawlat Libya"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/lby.svg",
-      "palette": ["vermelho", "verde", "preto", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "lie",
@@ -1811,9 +2359,17 @@
         "Fürstentum Liechtenstein"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/lie.svg",
-      "palette": ["vermelho", "amarelo", "azul", "preto"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "azul",
+        "preto"
+      ]
     },
     {
       "id": "ltu",
@@ -1826,9 +2382,16 @@
         "Lietuvos Respublika"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/ltu.svg",
-      "palette": ["vermelho", "laranja", "verde"]
+      "palette": [
+        "vermelho",
+        "laranja",
+        "verde"
+      ]
     },
     {
       "id": "lux",
@@ -1843,26 +2406,16 @@
         "Groussherzogtum Lëtzebuerg"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/lux.svg",
-      "palette": ["vermelho", "azul", "branco"]
-    },
-    {
-      "id": "mac",
-      "displayNamePtBr": "Macau",
-      "aliasesPtBr": [
-        "Macao Special Administrative Region of the People's Republic of China",
-        "Macau Região Administrativa Especial da República Popular da China",
-        "MO",
-        "澳门",
-        "Macao",
-        "中華人民共和國澳門特別行政區",
-        "Região Administrativa Especial de Macau da República Popular da China"
+      "organizations": [
+        "FIFA",
+        "UN"
       ],
-      "region": "Asia",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/mac.svg",
-      "palette": ["amarelo", "verde", "branco"]
+      "flagPath": "/flags/lux.svg",
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "mkd",
@@ -1877,9 +2430,15 @@
         "Република Северна Македонија"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/mkd.svg",
-      "palette": ["vermelho", "amarelo"]
+      "palette": [
+        "vermelho",
+        "amarelo"
+      ]
     },
     {
       "id": "mdg",
@@ -1892,27 +2451,55 @@
         "République de Madagascar"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/mdg.svg",
-      "palette": ["vermelho", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "mys",
       "displayNamePtBr": "Malásia",
-      "aliasesPtBr": ["Malaysia", "MY"],
+      "aliasesPtBr": [
+        "Malaysia",
+        "MY"
+      ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/mys.svg",
-      "palette": ["vermelho", "amarelo", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "mwi",
       "displayNamePtBr": "Malawi",
-      "aliasesPtBr": ["Republic of Malawi", "República do Malawi", "MW"],
+      "aliasesPtBr": [
+        "Republic of Malawi",
+        "República do Malawi",
+        "MW"
+      ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/mwi.svg",
-      "palette": ["vermelho", "verde"]
+      "palette": [
+        "vermelho",
+        "verde"
+      ]
     },
     {
       "id": "mdv",
@@ -1926,9 +2513,16 @@
         "Dhivehi Raajjeyge Jumhooriyya"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/mdv.svg",
-      "palette": ["vermelho", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "mli",
@@ -1940,9 +2534,16 @@
         "République du Mali"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/mli.svg",
-      "palette": ["vermelho", "amarelo", "verde"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde"
+      ]
     },
     {
       "id": "mlt",
@@ -1954,9 +2555,16 @@
         "Repubblika ta' Malta"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/mlt.svg",
-      "palette": ["vermelho", "preto", "branco"]
+      "palette": [
+        "vermelho",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "mar",
@@ -1969,9 +2577,15 @@
         "Al-Mamlakah al-Maġribiyah"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/mar.svg",
-      "palette": ["vermelho", "verde"]
+      "palette": [
+        "vermelho",
+        "verde"
+      ]
     },
     {
       "id": "mus",
@@ -1984,9 +2598,17 @@
         "République de Maurice"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/mus.svg",
-      "palette": ["vermelho", "laranja", "verde", "azul"]
+      "palette": [
+        "vermelho",
+        "laranja",
+        "verde",
+        "azul"
+      ]
     },
     {
       "id": "mrt",
@@ -1998,9 +2620,16 @@
         "al-Jumhūriyyah al-ʾIslāmiyyah al-Mūrītāniyyah"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/mrt.svg",
-      "palette": ["vermelho", "amarelo", "verde"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde"
+      ]
     },
     {
       "id": "mex",
@@ -2012,7 +2641,10 @@
         "Mexicanos"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/mex.svg",
       "palette": [
         "vermelho",
@@ -2036,9 +2668,14 @@
         "Micronesia, Federated States of"
       ],
       "region": "Oceania",
-      "organizations": ["UN"],
+      "organizations": [
+        "UN"
+      ],
       "flagPath": "/flags/fsm.svg",
-      "palette": ["azul", "branco"]
+      "palette": [
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "moz",
@@ -2050,9 +2687,19 @@
         "MZ"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/moz.svg",
-      "palette": ["vermelho", "laranja", "amarelo", "verde", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "laranja",
+        "amarelo",
+        "verde",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "mda",
@@ -2066,9 +2713,18 @@
         "Republica Moldova"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/mda.svg",
-      "palette": ["vermelho", "laranja", "amarelo", "verde", "azul"]
+      "palette": [
+        "vermelho",
+        "laranja",
+        "amarelo",
+        "verde",
+        "azul"
+      ]
     },
     {
       "id": "mco",
@@ -2080,44 +2736,52 @@
         "Principauté de Monaco"
       ],
       "region": "Europe",
-      "organizations": ["UN"],
+      "organizations": [
+        "UN"
+      ],
       "flagPath": "/flags/mco.svg",
-      "palette": ["vermelho", "branco"]
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "mng",
       "displayNamePtBr": "Mongólia",
-      "aliasesPtBr": ["MN"],
+      "aliasesPtBr": [
+        "MN"
+      ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/mng.svg",
-      "palette": ["vermelho", "amarelo", "azul"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "azul"
+      ]
     },
     {
       "id": "mne",
       "displayNamePtBr": "Montenegro",
-      "aliasesPtBr": ["ME", "Crna Gora"],
+      "aliasesPtBr": [
+        "ME",
+        "Crna Gora"
+      ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/mne.svg",
-      "palette": ["vermelho", "laranja", "amarelo", "verde", "azul"]
-    },
-    {
-      "id": "msr",
-      "displayNamePtBr": "Montserrat",
-      "aliasesPtBr": ["MS"],
-      "region": "Americas",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/msr.svg",
       "palette": [
         "vermelho",
         "laranja",
         "amarelo",
         "verde",
-        "azul",
-        "marrom",
-        "preto",
-        "branco"
+        "azul"
       ]
     },
     {
@@ -2131,9 +2795,17 @@
         "Pyidaunzu Thanmăda Myăma Nainngandaw"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/mmr.svg",
-      "palette": ["vermelho", "amarelo", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "nam",
@@ -2145,9 +2817,18 @@
         "Namibië"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/nam.svg",
-      "palette": ["vermelho", "amarelo", "verde", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "nru",
@@ -2161,9 +2842,15 @@
         "Ripublik Naoero"
       ],
       "region": "Oceania",
-      "organizations": ["UN"],
+      "organizations": [
+        "UN"
+      ],
       "flagPath": "/flags/nru.svg",
-      "palette": ["laranja", "azul", "branco"]
+      "palette": [
+        "laranja",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "npl",
@@ -2175,9 +2862,16 @@
         "Loktāntrik Ganatantra Nepāl"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/npl.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "nic",
@@ -2189,7 +2883,10 @@
         "República de Nicaragua"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/nic.svg",
       "palette": [
         "vermelho",
@@ -2204,11 +2901,23 @@
     {
       "id": "ner",
       "displayNamePtBr": "Níger",
-      "aliasesPtBr": ["Republic of Niger", "República do Níger", "NE", "Nijar"],
+      "aliasesPtBr": [
+        "Republic of Niger",
+        "República do Níger",
+        "NE",
+        "Nijar"
+      ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/ner.svg",
-      "palette": ["laranja", "verde", "branco"]
+      "palette": [
+        "laranja",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "nga",
@@ -2221,9 +2930,15 @@
         "Naíjíríà"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/nga.svg",
-      "palette": ["verde", "branco"]
+      "palette": [
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "nor",
@@ -2239,27 +2954,36 @@
         "Kongeriket Noreg"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/nor.svg",
-      "palette": ["vermelho", "azul", "branco"]
-    },
-    {
-      "id": "ncl",
-      "displayNamePtBr": "Nova Caledônia",
-      "aliasesPtBr": ["New Caledonia", "NC"],
-      "region": "Oceania",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/ncl.svg",
-      "palette": ["vermelho", "amarelo", "verde", "azul", "preto"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "nzl",
       "displayNamePtBr": "Nova Zelândia",
-      "aliasesPtBr": ["New Zealand", "NZ", "Aotearoa"],
+      "aliasesPtBr": [
+        "New Zealand",
+        "NZ",
+        "Aotearoa"
+      ],
       "region": "Oceania",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/nzl.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "omn",
@@ -2272,18 +2996,16 @@
         "Salṭanat ʻUmān"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/omn.svg",
-      "palette": ["vermelho", "verde", "branco"]
-    },
-    {
-      "id": "wales",
-      "displayNamePtBr": "País de Gales",
-      "aliasesPtBr": ["Wales", "Gales"],
-      "region": "Europe",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/wales.svg",
-      "palette": ["vermelho", "verde", "preto", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "nld",
@@ -2298,9 +3020,16 @@
         "The Netherlands"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/nld.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "plw",
@@ -2312,9 +3041,14 @@
         "Beluu er a Belau"
       ],
       "region": "Oceania",
-      "organizations": ["UN"],
+      "organizations": [
+        "UN"
+      ],
       "flagPath": "/flags/plw.svg",
-      "palette": ["amarelo", "azul"]
+      "palette": [
+        "amarelo",
+        "azul"
+      ]
     },
     {
       "id": "pse",
@@ -2328,9 +3062,16 @@
         "Dawlat Filasṭin"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/pse.svg",
-      "palette": ["vermelho", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "pan",
@@ -2342,9 +3083,16 @@
         "República de Panamá"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/pan.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "png",
@@ -2357,9 +3105,16 @@
         "Independen Stet bilong Papua Niugini"
       ],
       "region": "Oceania",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/png.svg",
-      "palette": ["vermelho", "amarelo", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "branco"
+      ]
     },
     {
       "id": "pak",
@@ -2372,9 +3127,15 @@
         "Islāmī Jumhūriya'eh Pākistān"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/pak.svg",
-      "palette": ["verde", "branco"]
+      "palette": [
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "pry",
@@ -2388,9 +3149,19 @@
         "Tetã Paraguái"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/pry.svg",
-      "palette": ["vermelho", "amarelo", "verde", "azul", "preto", "branco"],
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "azul",
+        "preto",
+        "branco"
+      ],
       "editorialNote": "O exercício usa o anverso da bandeira do Paraguai."
     },
     {
@@ -2403,24 +3174,15 @@
         "República del Perú"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/per.svg",
-      "palette": ["vermelho", "branco"]
-    },
-    {
-      "id": "pyf",
-      "displayNamePtBr": "Polinésia Francesa",
-      "aliasesPtBr": [
-        "French Polynesia",
-        "PF",
-        "Polynésie française",
-        "Pōrīnetia Farāni",
-        "Tahiti"
+      "organizations": [
+        "FIFA",
+        "UN"
       ],
-      "region": "Oceania",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/pyf.svg",
-      "palette": ["vermelho", "laranja", "azul", "branco"]
+      "flagPath": "/flags/per.svg",
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "pol",
@@ -2433,23 +3195,15 @@
         "Rzeczpospolita Polska"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/pol.svg",
-      "palette": ["vermelho", "branco"]
-    },
-    {
-      "id": "pri",
-      "displayNamePtBr": "Porto Rico",
-      "aliasesPtBr": [
-        "Puerto Rico",
-        "Commonwealth of Puerto Rico",
-        "PR",
-        "Estado Libre Asociado de Puerto Rico"
+      "organizations": [
+        "FIFA",
+        "UN"
       ],
-      "region": "Americas",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/pri.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "flagPath": "/flags/pol.svg",
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "prt",
@@ -2462,9 +3216,19 @@
         "República Portuguesa"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/prt.svg",
-      "palette": ["vermelho", "amarelo", "verde", "azul", "preto", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "azul",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "ken",
@@ -2477,9 +3241,17 @@
         "Jamhuri ya Kenya"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/ken.svg",
-      "palette": ["vermelho", "verde", "preto", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "kgz",
@@ -2494,9 +3266,15 @@
         "Kyrgyz Respublikasy"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/kgz.svg",
-      "palette": ["vermelho", "amarelo"]
+      "palette": [
+        "vermelho",
+        "amarelo"
+      ]
     },
     {
       "id": "gbr",
@@ -2510,9 +3288,15 @@
         "Great Britain"
       ],
       "region": "Europe",
-      "organizations": ["UN"],
+      "organizations": [
+        "UN"
+      ],
       "flagPath": "/flags/gbr.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "caf",
@@ -2524,9 +3308,18 @@
         "République centrafricaine"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/caf.svg",
-      "palette": ["vermelho", "amarelo", "verde", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "cod",
@@ -2540,9 +3333,16 @@
         "DRC"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/cod.svg",
-      "palette": ["vermelho", "amarelo", "azul"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "azul"
+      ]
     },
     {
       "id": "cog",
@@ -2554,27 +3354,59 @@
         "Congo-Brazzaville"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/cog.svg",
-      "palette": ["vermelho", "amarelo", "verde"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde"
+      ]
     },
     {
       "id": "dom",
       "displayNamePtBr": "República Dominicana",
-      "aliasesPtBr": ["Dominican Republic", "DO"],
+      "aliasesPtBr": [
+        "Dominican Republic",
+        "DO"
+      ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/dom.svg",
-      "palette": ["vermelho", "amarelo", "verde", "azul", "preto", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "azul",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "rou",
       "displayNamePtBr": "Romênia",
-      "aliasesPtBr": ["Romania", "RO", "Rumania", "Roumania"],
+      "aliasesPtBr": [
+        "Romania",
+        "RO",
+        "Rumania",
+        "Roumania"
+      ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/rou.svg",
-      "palette": ["vermelho", "amarelo", "azul"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "azul"
+      ]
     },
     {
       "id": "rwa",
@@ -2588,9 +3420,16 @@
         "République du Rwanda"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/rwa.svg",
-      "palette": ["amarelo", "verde", "azul"]
+      "palette": [
+        "amarelo",
+        "verde",
+        "azul"
+      ]
     },
     {
       "id": "rus",
@@ -2602,9 +3441,16 @@
         "Российская Федерация"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/rus.svg",
-      "palette": ["vermelho", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "wsm",
@@ -2616,24 +3462,16 @@
         "Malo Saʻoloto Tutoʻatasi o Sāmoa"
       ],
       "region": "Oceania",
-      "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/wsm.svg",
-      "palette": ["vermelho", "azul", "branco"]
-    },
-    {
-      "id": "asm",
-      "displayNamePtBr": "Samoa Americana",
-      "aliasesPtBr": [
-        "American Samoa",
-        "AS",
-        "Amerika Sāmoa",
-        "Amelika Sāmoa",
-        "Sāmoa Amelika"
+      "organizations": [
+        "FIFA",
+        "UN"
       ],
-      "region": "Oceania",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/asm.svg",
-      "palette": ["vermelho", "laranja", "azul", "marrom", "branco", "cinza"]
+      "flagPath": "/flags/wsm.svg",
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "smr",
@@ -2645,18 +3483,38 @@
         "Repubblica di San Marino"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/smr.svg",
-      "palette": ["laranja", "verde", "azul", "preto", "branco", "cinza"]
+      "palette": [
+        "laranja",
+        "verde",
+        "azul",
+        "preto",
+        "branco",
+        "cinza"
+      ]
     },
     {
       "id": "lca",
       "displayNamePtBr": "Santa Lúcia",
-      "aliasesPtBr": ["Saint Lucia", "LC"],
+      "aliasesPtBr": [
+        "Saint Lucia",
+        "LC"
+      ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/lca.svg",
-      "palette": ["amarelo", "azul", "branco"]
+      "palette": [
+        "amarelo",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "kna",
@@ -2668,9 +3526,18 @@
         "KN"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/kna.svg",
-      "palette": ["vermelho", "amarelo", "verde", "preto", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "stp",
@@ -2682,18 +3549,35 @@
         "ST"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/stp.svg",
-      "palette": ["vermelho", "amarelo", "verde"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde"
+      ]
     },
     {
       "id": "vct",
       "displayNamePtBr": "São Vicente e Granadinas",
-      "aliasesPtBr": ["Saint Vincent and the Grenadines", "VC"],
+      "aliasesPtBr": [
+        "Saint Vincent and the Grenadines",
+        "VC"
+      ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/vct.svg",
-      "palette": ["amarelo", "verde", "azul"]
+      "palette": [
+        "amarelo",
+        "verde",
+        "azul"
+      ]
     },
     {
       "id": "syc",
@@ -2707,9 +3591,18 @@
         "République des Seychelles"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/syc.svg",
-      "palette": ["vermelho", "amarelo", "verde", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "sen",
@@ -2721,9 +3614,16 @@
         "République du Sénégal"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/sen.svg",
-      "palette": ["vermelho", "amarelo", "verde"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde"
+      ]
     },
     {
       "id": "sle",
@@ -2735,9 +3635,16 @@
         "SL"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/sle.svg",
-      "palette": ["verde", "azul", "branco"]
+      "palette": [
+        "verde",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "srb",
@@ -2752,9 +3659,18 @@
         "Republika Srbija"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/srb.svg",
-      "palette": ["vermelho", "laranja", "azul", "preto", "branco"]
+      "palette": [
+        "vermelho",
+        "laranja",
+        "azul",
+        "preto",
+        "branco"
+      ]
     },
     {
       "id": "sgp",
@@ -2768,9 +3684,15 @@
         "新加坡共和国"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/sgp.svg",
-      "palette": ["vermelho", "branco"]
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "syr",
@@ -2783,9 +3705,16 @@
         "Al-Jumhūrīyah Al-ʻArabīyah As-Sūrīyah"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/syr.svg",
-      "palette": ["vermelho", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "som",
@@ -2799,9 +3728,15 @@
         "Jumhūriyyat aṣ-Ṣūmāl al-Fiderāliyya"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/som.svg",
-      "palette": ["azul", "branco"]
+      "palette": [
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "lka",
@@ -2813,9 +3748,17 @@
         "ilaṅkai"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/lka.svg",
-      "palette": ["laranja", "azul", "roxo", "preto"]
+      "palette": [
+        "laranja",
+        "azul",
+        "roxo",
+        "preto"
+      ]
     },
     {
       "id": "sdn",
@@ -2828,9 +3771,16 @@
         "Jumhūrīyat as-Sūdān"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/sdn.svg",
-      "palette": ["vermelho", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "ssd",
@@ -2842,9 +3792,18 @@
         "SS"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/ssd.svg",
-      "palette": ["vermelho", "amarelo", "verde", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "swe",
@@ -2857,9 +3816,15 @@
         "Konungariket Sverige"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/swe.svg",
-      "palette": ["amarelo", "azul"]
+      "palette": [
+        "amarelo",
+        "azul"
+      ]
     },
     {
       "id": "che",
@@ -2875,9 +3840,15 @@
         "Svizra"
       ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/che.svg",
-      "palette": ["vermelho", "branco"]
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "sur",
@@ -2891,9 +3862,17 @@
         "Republiek Suriname"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/sur.svg",
-      "palette": ["vermelho", "amarelo", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "tha",
@@ -2909,27 +3888,16 @@
         "Ratcha Anachak Thai"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
-      "flagPath": "/flags/tha.svg",
-      "palette": ["vermelho", "azul", "branco"]
-    },
-    {
-      "id": "twn",
-      "displayNamePtBr": "Taiwan",
-      "aliasesPtBr": [
-        "Republic of China (Taiwan)",
-        "República da China",
-        "TW",
-        "Republic of China",
-        "中華民國",
-        "Zhōnghuá Mínguó",
-        "Chinese Taipei"
+      "organizations": [
+        "FIFA",
+        "UN"
       ],
-      "region": "Asia",
-      "organizations": ["FIFA"],
-      "flagPath": "/flags/twn.svg",
-      "palette": ["vermelho", "azul", "branco"],
-      "editorialNote": "A entidade aparece como Taiwan; Chinese Taipei é preservado como nome institucional da FIFA e alias aceito."
+      "flagPath": "/flags/tha.svg",
+      "palette": [
+        "vermelho",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "tjk",
@@ -2944,9 +3912,18 @@
         "Çumhuriyi Toçikiston"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/tjk.svg",
-      "palette": ["vermelho", "amarelo", "verde", "branco", "cinza"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "branco",
+        "cinza"
+      ]
     },
     {
       "id": "tza",
@@ -2959,9 +3936,17 @@
         "Jamhuri ya Muungano wa Tanzania"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/tza.svg",
-      "palette": ["amarelo", "verde", "azul", "preto"]
+      "palette": [
+        "amarelo",
+        "verde",
+        "azul",
+        "preto"
+      ]
     },
     {
       "id": "tls",
@@ -2976,9 +3961,16 @@
         "Timor Lorosae"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/tls.svg",
-      "palette": ["vermelho", "laranja", "branco"]
+      "palette": [
+        "vermelho",
+        "laranja",
+        "branco"
+      ]
     },
     {
       "id": "tgo",
@@ -2991,18 +3983,36 @@
         "République Togolaise"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/tgo.svg",
-      "palette": ["vermelho", "amarelo", "verde", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "branco"
+      ]
     },
     {
       "id": "ton",
       "displayNamePtBr": "Tonga",
-      "aliasesPtBr": ["Kingdom of Tonga", "Reino de Tonga", "TO"],
+      "aliasesPtBr": [
+        "Kingdom of Tonga",
+        "Reino de Tonga",
+        "TO"
+      ],
       "region": "Oceania",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/ton.svg",
-      "palette": ["vermelho", "branco"]
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "tto",
@@ -3014,9 +4024,15 @@
         "TT"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/tto.svg",
-      "palette": ["vermelho", "branco"]
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "tun",
@@ -3029,18 +4045,37 @@
         "al-Jumhūriyyah at-Tūnisiyyah"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/tun.svg",
-      "palette": ["vermelho", "branco"]
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "tkm",
       "displayNamePtBr": "Turquemenistão",
-      "aliasesPtBr": ["Turkmenistan", "Turcomenistão", "TM"],
+      "aliasesPtBr": [
+        "Turkmenistan",
+        "Turcomenistão",
+        "TM"
+      ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/tkm.svg",
-      "palette": ["vermelho", "laranja", "verde", "branco", "cinza"]
+      "palette": [
+        "vermelho",
+        "laranja",
+        "verde",
+        "branco",
+        "cinza"
+      ]
     },
     {
       "id": "tur",
@@ -3054,27 +4089,52 @@
         "Türkiye Cumhuriyeti"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/tur.svg",
-      "palette": ["vermelho", "branco"]
+      "palette": [
+        "vermelho",
+        "branco"
+      ]
     },
     {
       "id": "tuv",
       "displayNamePtBr": "Tuvalu",
-      "aliasesPtBr": ["TV"],
+      "aliasesPtBr": [
+        "TV"
+      ],
       "region": "Oceania",
-      "organizations": ["UN"],
+      "organizations": [
+        "UN"
+      ],
       "flagPath": "/flags/tuv.svg",
-      "palette": ["vermelho", "amarelo", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "ukr",
       "displayNamePtBr": "Ucrânia",
-      "aliasesPtBr": ["Ukraine", "UA", "Ukrayina"],
+      "aliasesPtBr": [
+        "Ukraine",
+        "UA",
+        "Ukrayina"
+      ],
       "region": "Europe",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/ukr.svg",
-      "palette": ["amarelo", "azul"]
+      "palette": [
+        "amarelo",
+        "azul"
+      ]
     },
     {
       "id": "uga",
@@ -3086,9 +4146,18 @@
         "Jamhuri ya Uganda"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/uga.svg",
-      "palette": ["vermelho", "amarelo", "preto", "branco", "cinza"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "preto",
+        "branco",
+        "cinza"
+      ]
     },
     {
       "id": "ury",
@@ -3101,9 +4170,17 @@
         "República Oriental del Uruguay"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/ury.svg",
-      "palette": ["amarelo", "azul", "marrom", "branco"]
+      "palette": [
+        "amarelo",
+        "azul",
+        "marrom",
+        "branco"
+      ]
     },
     {
       "id": "uzb",
@@ -3117,9 +4194,17 @@
         "Ўзбекистон Республикаси"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/uzb.svg",
-      "palette": ["vermelho", "verde", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "verde",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "vut",
@@ -3132,9 +4217,17 @@
         "République de Vanuatu"
       ],
       "region": "Oceania",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/vut.svg",
-      "palette": ["vermelho", "amarelo", "verde", "preto"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "preto"
+      ]
     },
     {
       "id": "vat",
@@ -3149,9 +4242,14 @@
         "Santa Sé"
       ],
       "region": "Europe",
-      "organizations": ["UN"],
+      "organizations": [
+        "UN"
+      ],
       "flagPath": "/flags/vat.png",
-      "palette": ["amarelo", "branco"],
+      "palette": [
+        "amarelo",
+        "branco"
+      ],
       "editorialNote": "A Santa Sé é Estado observador permanente da ONU; a bandeira exibida é a do Estado da Cidade do Vaticano."
     },
     {
@@ -3165,9 +4263,17 @@
         "República Bolivariana de Venezuela"
       ],
       "region": "Americas",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/ven.svg",
-      "palette": ["vermelho", "amarelo", "azul", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "azul",
+        "branco"
+      ]
     },
     {
       "id": "vnm",
@@ -3181,18 +4287,36 @@
         "Viet Nam"
       ],
       "region": "Asia",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/vnm.svg",
-      "palette": ["vermelho", "amarelo"]
+      "palette": [
+        "vermelho",
+        "amarelo"
+      ]
     },
     {
       "id": "zmb",
       "displayNamePtBr": "Zâmbia",
-      "aliasesPtBr": ["Republic of Zambia", "República da Zâmbia", "ZM"],
+      "aliasesPtBr": [
+        "Republic of Zambia",
+        "República da Zâmbia",
+        "ZM"
+      ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/zmb.svg",
-      "palette": ["vermelho", "laranja", "verde", "preto"]
+      "palette": [
+        "vermelho",
+        "laranja",
+        "verde",
+        "preto"
+      ]
     },
     {
       "id": "zwe",
@@ -3204,9 +4328,18 @@
         "ZW"
       ],
       "region": "Africa",
-      "organizations": ["FIFA", "UN"],
+      "organizations": [
+        "FIFA",
+        "UN"
+      ],
       "flagPath": "/flags/zwe.svg",
-      "palette": ["vermelho", "amarelo", "verde", "preto", "branco"]
+      "palette": [
+        "vermelho",
+        "amarelo",
+        "verde",
+        "preto",
+        "branco"
+      ]
     }
   ]
 }

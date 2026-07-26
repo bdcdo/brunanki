@@ -1,6 +1,6 @@
 # Ptanki
 
-Ptanki é um webapp em pt-BR para aprender e revisar as bandeiras dos membros da ONU e das associações da FIFA. O catálogo combina 193 Estados-membros da ONU, 211 associações da FIFA e a Santa Sé como Estado observador, totalizando 220 entidades de aprendizagem.
+Ptanki é um webapp em pt-BR para aprender e revisar as bandeiras dos Estados reconhecidos pela ONU. O catálogo reúne os 193 Estados-membros mais os dois observadores permanentes — a Santa Sé e a Palestina —, totalizando 195 entidades de aprendizagem.
 
 ## Como funciona
 
@@ -44,7 +44,7 @@ Os cabeçalhos de cache e de segurança são definidos em `headers()` no `next.c
 
 ## Catálogo e licenças
 
-ONU e FIFA definem a elegibilidade. Wikidata é usado para localizar os arquivos e o Wikimedia Commons fornece as imagens e metadados de licença. Os arquivos são fixados em `public/flags`; o app não faz hotlink em runtime. `src/data/catalog.json` e `src/data/credits.json` são artefatos versionados gerados pelo pipeline.
+A ONU define a elegibilidade, e a regra vive em `scripts/catalog-rules.ts` — o mesmo módulo que o gerador aplica, o validador cobra e os testes exercitam contra o artefato commitado. Wikidata é usado para localizar os arquivos e o Wikimedia Commons fornece as imagens e metadados de licença. Os arquivos são fixados em `public/flags`; o app não faz hotlink em runtime. `src/data/catalog.json` e `src/data/runtime-catalog.json` são artefatos versionados gerados pelo pipeline.
 
 Para conferir mudanças nas fontes e reconstruir os artefatos:
 

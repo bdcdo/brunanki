@@ -3,23 +3,22 @@ import { cn } from "@/lib/utils";
 /**
  * Um bloco de tinta invertido, com rabicho apontando para o que ele comenta.
  *
- * A geometria diz "outra voz" — algo que não é o cromo da interface. No Ptanki
- * quem fala é a nota editorial do catálogo, que poucas entidades têm e hoje só
- * aparece na página de detalhe, portanto nunca é vista por quem está
- * aprendendo. São exatamente os casos em que a pessoa tem direito a saber por
- * que a bandeira é aquela: Taiwan, Santa Sé, Irlanda do Norte e o anverso do
- * Paraguai.
+ * A geometria diz "outra voz" — algo que não é o cromo da interface. Quem fala
+ * é a nota editorial do catálogo, que poucas entidades têm e hoje só aparece
+ * na página de detalhe, portanto nunca é vista por quem está aprendendo. São
+ * os casos em que a pessoa tem direito a saber por que a bandeira é aquela: o
+ * anverso do Paraguai, e a Santa Sé como Estado observador.
  *
  * Fica **no fluxo**, e não posicionado de forma absoluta com `width:
- * max-content` como na referência. O motivo tem número: a nota da Irlanda do
- * Norte tem 183 caracteres, e `max-content` estouraria garantidamente os 412px
- * de uma Pixel 7. Como a nota está em 1,8% das entidades, a chance de um teste
- * cair nela é quase nula — então o defeito precisa ser impossível por
- * construção, não vigiado.
+ * max-content` como na referência. O motivo é de largura: uma nota de mais de
+ * cem caracteres com `max-content` estouraria os 412px de uma Pixel 7, e como
+ * a nota está numa fração mínima das entidades, a chance de um teste cair nela
+ * é quase nula — então o defeito precisa ser impossível por construção, não
+ * vigiado.
  *
- * Sem truncar: truncar a nota que desfaz a ambiguidade institucional do Ulster
- * Banner anularia a razão de ela existir. E `return null` sem reservar espaço,
- * porque reservar altura deixaria 98% das telas com um buraco.
+ * Sem truncar: truncar a nota que desfaz uma ambiguidade institucional
+ * anularia a razão de ela existir. E `return null` sem reservar espaço, porque
+ * reservar altura deixaria quase toda tela com um buraco.
  *
  * Fonte de corpo, não de título: aqui é prosa para ler uma vez, e a Atkinson
  * Hyperlegible foi escolhida por legibilidade.

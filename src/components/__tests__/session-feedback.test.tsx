@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { feedbackTone } from "@/components/ui/feedback-panel";
 import { InkBubble } from "@/components/ui/ink-bubble";
 import { amendedPipState, pipStateFor } from "@/components/ui/pips";
+import { entities } from "@/data/runtime-catalog";
 
 afterEach(cleanup);
 
@@ -54,10 +55,19 @@ describe("InkBubble", () => {
   });
 
   it("mostra a nota inteira, sem truncar", () => {
-    // Truncar a nota que desfaz a ambiguidade institucional de uma entidade
-    // anularia a razão de ela existir. A mais longa tem 183 caracteres.
-    const nota =
-      "A entidade aparece como Taiwan; Chinese Taipei é preservado como nome institucional da FIFA e alias aceito.";
+    // A nota vem do catálogo, e não colada aqui: a versão anterior deste teste
+    // fixava a de Taiwan e um comentário sobre a da Irlanda do Norte, e as
+    // duas entidades saíram do catálogo sem que o teste acusasse — ele
+    // continuou verde asserindo sobre texto que não existe mais. Ler a mais
+    // longa é o pior caso real, seja ela qual for.
+    const nota = entities
+      .map(({ editorialNote }) => editorialNote)
+      .filter((note) => note !== undefined)
+      .reduce((longest, note) =>
+        note.length > longest.length ? note : longest
+      );
+    expect(nota.length).toBeGreaterThan(40);
+
     render(<InkBubble>{nota}</InkBubble>);
     expect(screen.getByText(nota)).toBeVisible();
   });

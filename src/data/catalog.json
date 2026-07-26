@@ -1,5 +1,5 @@
 {
-  "version": "2026.07.25",
+  "version": "2026.07.26",
   "verifiedAt": "2026-07-25",
   "entities": [
     {
@@ -231,33 +231,6 @@
       "primaryFlagRevisionId": "ago-flag-2026"
     },
     {
-      "id": "aia",
-      "displayNamePtBr": "Anguilla",
-      "aliasesPtBr": [
-        "AI"
-      ],
-      "sourceNames": {
-        "fifa": "Anguilla"
-      },
-      "identifiers": {
-        "wikidataQid": "Q25228",
-        "fifaCode": "AIA",
-        "isoAlpha2": "AI",
-        "isoAlpha3": "AIA",
-        "unM49": "660"
-      },
-      "region": "Americas",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "aia-flag-2026"
-    },
-    {
       "id": "atg",
       "displayNamePtBr": "Antígua e Barbuda",
       "aliasesPtBr": [
@@ -443,33 +416,6 @@
         }
       ],
       "primaryFlagRevisionId": "arm-flag-2026"
-    },
-    {
-      "id": "abw",
-      "displayNamePtBr": "Aruba",
-      "aliasesPtBr": [
-        "AW"
-      ],
-      "sourceNames": {
-        "fifa": "Aruba"
-      },
-      "identifiers": {
-        "wikidataQid": "Q21203",
-        "fifaCode": "ARU",
-        "isoAlpha2": "AW",
-        "isoAlpha3": "ABW",
-        "unM49": "533"
-      },
-      "region": "Americas",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "abw-flag-2026"
     },
     {
       "id": "aus",
@@ -841,37 +787,6 @@
         }
       ],
       "primaryFlagRevisionId": "ben-flag-2026"
-    },
-    {
-      "id": "bmu",
-      "displayNamePtBr": "Bermudas",
-      "aliasesPtBr": [
-        "Bermuda",
-        "BM",
-        "The Islands of Bermuda",
-        "The Bermudas",
-        "Somers Isles"
-      ],
-      "sourceNames": {
-        "fifa": "Bermuda"
-      },
-      "identifiers": {
-        "wikidataQid": "Q23635",
-        "fifaCode": "BER",
-        "isoAlpha2": "BM",
-        "isoAlpha3": "BMU",
-        "unM49": "060"
-      },
-      "region": "Americas",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "bmu-flag-2026"
     },
     {
       "id": "blr",
@@ -1988,38 +1903,6 @@
       "primaryFlagRevisionId": "cub-flag-2026"
     },
     {
-      "id": "cuw",
-      "displayNamePtBr": "Curaçao",
-      "aliasesPtBr": [
-        "Country of Curaçao",
-        "País de Curaçao",
-        "CW",
-        "Kòrsou",
-        "Land Curaçao",
-        "Pais Kòrsou"
-      ],
-      "sourceNames": {
-        "fifa": "Curaçao"
-      },
-      "identifiers": {
-        "wikidataQid": "Q25279",
-        "fifaCode": "CUW",
-        "isoAlpha2": "CW",
-        "isoAlpha3": "CUW",
-        "unM49": "531"
-      },
-      "region": "Americas",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "cuw-flag-2026"
-    },
-    {
       "id": "dnk",
       "displayNamePtBr": "Dinamarca",
       "aliasesPtBr": [
@@ -2326,30 +2209,6 @@
         }
       ],
       "primaryFlagRevisionId": "eri-flag-2026"
-    },
-    {
-      "id": "scotland",
-      "displayNamePtBr": "Escócia",
-      "aliasesPtBr": [
-        "Scotland"
-      ],
-      "sourceNames": {
-        "fifa": "Scotland"
-      },
-      "identifiers": {
-        "wikidataQid": "Q22",
-        "fifaCode": "SCO"
-      },
-      "region": "Europe",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "scotland-flag-2026"
     },
     {
       "id": "svk",
@@ -2924,33 +2783,6 @@
       "primaryFlagRevisionId": "geo-flag-2026"
     },
     {
-      "id": "gib",
-      "displayNamePtBr": "Gibraltar",
-      "aliasesPtBr": [
-        "GI"
-      ],
-      "sourceNames": {
-        "fifa": "Gibraltar"
-      },
-      "identifiers": {
-        "wikidataQid": "Q1410",
-        "fifaCode": "GIB",
-        "isoAlpha2": "GI",
-        "isoAlpha3": "GIB",
-        "unM49": "292"
-      },
-      "region": "Europe",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "gib-flag-2026"
-    },
-    {
       "id": "grd",
       "displayNamePtBr": "Granada",
       "aliasesPtBr": [
@@ -3023,34 +2855,6 @@
         }
       ],
       "primaryFlagRevisionId": "grc-flag-2026"
-    },
-    {
-      "id": "gum",
-      "displayNamePtBr": "Guam",
-      "aliasesPtBr": [
-        "GU",
-        "Guåhån"
-      ],
-      "sourceNames": {
-        "fifa": "Guam"
-      },
-      "identifiers": {
-        "wikidataQid": "Q16635",
-        "fifaCode": "GUM",
-        "isoAlpha2": "GU",
-        "isoAlpha3": "GUM",
-        "unM49": "316"
-      },
-      "region": "Oceania",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "gum-flag-2026"
     },
     {
       "id": "gtm",
@@ -3314,35 +3118,6 @@
       "primaryFlagRevisionId": "hnd-flag-2026"
     },
     {
-      "id": "hkg",
-      "displayNamePtBr": "Hong Kong",
-      "aliasesPtBr": [
-        "Hong Kong Special Administrative Region of the People's Republic of China",
-        "Hong Kong Região Administrativa Especial da República Popular da China",
-        "HK"
-      ],
-      "sourceNames": {
-        "fifa": "Hong Kong"
-      },
-      "identifiers": {
-        "wikidataQid": "Q8646",
-        "fifaCode": "HKG",
-        "isoAlpha2": "HK",
-        "isoAlpha3": "HKG",
-        "unM49": "344"
-      },
-      "region": "Asia",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "hkg-flag-2026"
-    },
-    {
       "id": "hun",
       "displayNamePtBr": "Hungria",
       "aliasesPtBr": [
@@ -3417,93 +3192,6 @@
       "primaryFlagRevisionId": "yem-flag-2026"
     },
     {
-      "id": "cym",
-      "displayNamePtBr": "Ilhas Cayman",
-      "aliasesPtBr": [
-        "Cayman Islands",
-        "KY"
-      ],
-      "sourceNames": {
-        "fifa": "Cayman Islands"
-      },
-      "identifiers": {
-        "wikidataQid": "Q5785",
-        "fifaCode": "CAY",
-        "isoAlpha2": "KY",
-        "isoAlpha3": "CYM",
-        "unM49": "136"
-      },
-      "region": "Americas",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "cym-flag-2026"
-    },
-    {
-      "id": "cok",
-      "displayNamePtBr": "Ilhas Cook",
-      "aliasesPtBr": [
-        "Cook Islands",
-        "CK",
-        "Kūki 'Āirani"
-      ],
-      "sourceNames": {
-        "fifa": "Cook Islands"
-      },
-      "identifiers": {
-        "wikidataQid": "Q26988",
-        "fifaCode": "COK",
-        "isoAlpha2": "CK",
-        "isoAlpha3": "COK",
-        "unM49": "184"
-      },
-      "region": "Oceania",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "cok-flag-2026"
-    },
-    {
-      "id": "fro",
-      "displayNamePtBr": "Ilhas Faroé",
-      "aliasesPtBr": [
-        "Faroe Islands",
-        "FO",
-        "Føroyar",
-        "Færøerne"
-      ],
-      "sourceNames": {
-        "fifa": "Faroe Islands"
-      },
-      "identifiers": {
-        "wikidataQid": "Q4628",
-        "fifaCode": "FRO",
-        "isoAlpha2": "FO",
-        "isoAlpha3": "FRO",
-        "unM49": "234"
-      },
-      "region": "Europe",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "fro-flag-2026"
-    },
-    {
       "id": "mhl",
       "displayNamePtBr": "Ilhas Marshall",
       "aliasesPtBr": [
@@ -3567,97 +3255,6 @@
         }
       ],
       "primaryFlagRevisionId": "slb-flag-2026"
-    },
-    {
-      "id": "tca",
-      "displayNamePtBr": "Ilhas Turcas e Caicos",
-      "aliasesPtBr": [
-        "Turks and Caicos Islands",
-        "Ilhas Turks e Caicos",
-        "TC"
-      ],
-      "sourceNames": {
-        "fifa": "Turks and Caicos Islands"
-      },
-      "identifiers": {
-        "wikidataQid": "Q18221",
-        "fifaCode": "TCA",
-        "isoAlpha2": "TC",
-        "isoAlpha3": "TCA",
-        "unM49": "796"
-      },
-      "region": "Americas",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "tca-flag-2026"
-    },
-    {
-      "id": "vgb",
-      "displayNamePtBr": "Ilhas Virgens Britânicas",
-      "aliasesPtBr": [
-        "British Virgin Islands",
-        "Virgin Islands",
-        "Ilhas Virgens",
-        "VG",
-        "Virgin Islands, British"
-      ],
-      "sourceNames": {
-        "fifa": "British Virgin Islands"
-      },
-      "identifiers": {
-        "wikidataQid": "Q25305",
-        "fifaCode": "VGB",
-        "isoAlpha2": "VG",
-        "isoAlpha3": "VGB",
-        "unM49": "092"
-      },
-      "region": "Americas",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "vgb-flag-2026"
-    },
-    {
-      "id": "vir",
-      "displayNamePtBr": "Ilhas Virgens dos Estados Unidos",
-      "aliasesPtBr": [
-        "United States Virgin Islands",
-        "Virgin Islands of the United States",
-        "VI",
-        "Virgin Islands, U.S.",
-        "U.S. Virgin Islands"
-      ],
-      "sourceNames": {
-        "fifa": "U.S. Virgin Islands"
-      },
-      "identifiers": {
-        "wikidataQid": "Q11703",
-        "fifaCode": "VIR",
-        "isoAlpha2": "VI",
-        "isoAlpha3": "VIR",
-        "unM49": "850"
-      },
-      "region": "Americas",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "vir-flag-2026"
     },
     {
       "id": "ind",
@@ -3734,30 +3331,6 @@
         }
       ],
       "primaryFlagRevisionId": "idn-flag-2026"
-    },
-    {
-      "id": "england",
-      "displayNamePtBr": "Inglaterra",
-      "aliasesPtBr": [
-        "England"
-      ],
-      "sourceNames": {
-        "fifa": "England"
-      },
-      "identifiers": {
-        "wikidataQid": "Q21",
-        "fifaCode": "ENG"
-      },
-      "region": "Europe",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "england-flag-2026"
     },
     {
       "id": "irn",
@@ -3874,32 +3447,6 @@
         }
       ],
       "primaryFlagRevisionId": "irl-flag-2026"
-    },
-    {
-      "id": "northern-ireland",
-      "displayNamePtBr": "Irlanda do Norte",
-      "aliasesPtBr": [
-        "Northern Ireland",
-        "Ulster"
-      ],
-      "sourceNames": {
-        "fifa": "Northern Ireland"
-      },
-      "identifiers": {
-        "wikidataQid": "Q26",
-        "fifaCode": "NIR"
-      },
-      "region": "Europe",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "northern-ireland-flag-2026",
-      "editorialNote": "A FIFA representa a Irlanda do Norte separadamente. O Ulster Banner é ensinado por ser a bandeira mais reconhecida no contexto esportivo, embora não seja uma bandeira oficial vigente."
     },
     {
       "id": "isl",
@@ -4152,35 +3699,6 @@
         }
       ],
       "primaryFlagRevisionId": "kir-flag-2026"
-    },
-    {
-      "id": "unk",
-      "displayNamePtBr": "Kosovo",
-      "aliasesPtBr": [
-        "Republic of Kosovo",
-        "República do Kosovo",
-        "XK",
-        "Република Косово"
-      ],
-      "sourceNames": {
-        "fifa": "Kosovo"
-      },
-      "identifiers": {
-        "wikidataQid": "Q1246",
-        "fifaCode": "KOS",
-        "isoAlpha2": "XK",
-        "isoAlpha3": "UNK"
-      },
-      "region": "Europe",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "unk-flag-2026"
     },
     {
       "id": "kwt",
@@ -4559,39 +4077,6 @@
         }
       ],
       "primaryFlagRevisionId": "lux-flag-2026"
-    },
-    {
-      "id": "mac",
-      "displayNamePtBr": "Macau",
-      "aliasesPtBr": [
-        "Macao Special Administrative Region of the People's Republic of China",
-        "Macau Região Administrativa Especial da República Popular da China",
-        "MO",
-        "澳门",
-        "Macao",
-        "中華人民共和國澳門特別行政區",
-        "Região Administrativa Especial de Macau da República Popular da China"
-      ],
-      "sourceNames": {
-        "fifa": "Macau"
-      },
-      "identifiers": {
-        "wikidataQid": "Q14773",
-        "fifaCode": "MAC",
-        "isoAlpha2": "MO",
-        "isoAlpha3": "MAC",
-        "unM49": "446"
-      },
-      "region": "Asia",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "mac-flag-2026"
     },
     {
       "id": "mkd",
@@ -5209,33 +4694,6 @@
       "primaryFlagRevisionId": "mne-flag-2026"
     },
     {
-      "id": "msr",
-      "displayNamePtBr": "Montserrat",
-      "aliasesPtBr": [
-        "MS"
-      ],
-      "sourceNames": {
-        "fifa": "Montserrat"
-      },
-      "identifiers": {
-        "wikidataQid": "Q13353",
-        "fifaCode": "MSR",
-        "isoAlpha2": "MS",
-        "isoAlpha3": "MSR",
-        "unM49": "500"
-      },
-      "region": "Americas",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "msr-flag-2026"
-    },
-    {
       "id": "mmr",
       "displayNamePtBr": "Myanmar",
       "aliasesPtBr": [
@@ -5532,34 +4990,6 @@
       "primaryFlagRevisionId": "nor-flag-2026"
     },
     {
-      "id": "ncl",
-      "displayNamePtBr": "Nova Caledônia",
-      "aliasesPtBr": [
-        "New Caledonia",
-        "NC"
-      ],
-      "sourceNames": {
-        "fifa": "New Caledonia"
-      },
-      "identifiers": {
-        "wikidataQid": "Q33788",
-        "fifaCode": "NCL",
-        "isoAlpha2": "NC",
-        "isoAlpha3": "NCL",
-        "unM49": "540"
-      },
-      "region": "Oceania",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "ncl-flag-2026"
-    },
-    {
       "id": "nzl",
       "displayNamePtBr": "Nova Zelândia",
       "aliasesPtBr": [
@@ -5632,31 +5062,6 @@
         }
       ],
       "primaryFlagRevisionId": "omn-flag-2026"
-    },
-    {
-      "id": "wales",
-      "displayNamePtBr": "País de Gales",
-      "aliasesPtBr": [
-        "Wales",
-        "Gales"
-      ],
-      "sourceNames": {
-        "fifa": "Wales"
-      },
-      "identifiers": {
-        "wikidataQid": "Q25",
-        "fifaCode": "WAL"
-      },
-      "region": "Europe",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "wales-flag-2026"
     },
     {
       "id": "nld",
@@ -5957,37 +5362,6 @@
       "primaryFlagRevisionId": "per-flag-2026"
     },
     {
-      "id": "pyf",
-      "displayNamePtBr": "Polinésia Francesa",
-      "aliasesPtBr": [
-        "French Polynesia",
-        "PF",
-        "Polynésie française",
-        "Pōrīnetia Farāni",
-        "Tahiti"
-      ],
-      "sourceNames": {
-        "fifa": "Tahiti"
-      },
-      "identifiers": {
-        "wikidataQid": "Q30971",
-        "fifaCode": "TAH",
-        "isoAlpha2": "PF",
-        "isoAlpha3": "PYF",
-        "unM49": "258"
-      },
-      "region": "Oceania",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "pyf-flag-2026"
-    },
-    {
       "id": "pol",
       "displayNamePtBr": "Polônia",
       "aliasesPtBr": [
@@ -6024,36 +5398,6 @@
         }
       ],
       "primaryFlagRevisionId": "pol-flag-2026"
-    },
-    {
-      "id": "pri",
-      "displayNamePtBr": "Porto Rico",
-      "aliasesPtBr": [
-        "Puerto Rico",
-        "Commonwealth of Puerto Rico",
-        "PR",
-        "Estado Libre Asociado de Puerto Rico"
-      ],
-      "sourceNames": {
-        "fifa": "Puerto Rico"
-      },
-      "identifiers": {
-        "wikidataQid": "Q1183",
-        "fifaCode": "PUR",
-        "isoAlpha2": "PR",
-        "isoAlpha3": "PRI",
-        "unM49": "630"
-      },
-      "region": "Americas",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "pri-flag-2026"
     },
     {
       "id": "prt",
@@ -6499,37 +5843,6 @@
         }
       ],
       "primaryFlagRevisionId": "wsm-flag-2026"
-    },
-    {
-      "id": "asm",
-      "displayNamePtBr": "Samoa Americana",
-      "aliasesPtBr": [
-        "American Samoa",
-        "AS",
-        "Amerika Sāmoa",
-        "Amelika Sāmoa",
-        "Sāmoa Amelika"
-      ],
-      "sourceNames": {
-        "fifa": "American Samoa"
-      },
-      "identifiers": {
-        "wikidataQid": "Q16641",
-        "fifaCode": "ASA",
-        "isoAlpha2": "AS",
-        "isoAlpha3": "ASM",
-        "unM49": "016"
-      },
-      "region": "Oceania",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "asm-flag-2026"
     },
     {
       "id": "smr",
@@ -7251,40 +6564,6 @@
         }
       ],
       "primaryFlagRevisionId": "tha-flag-2026"
-    },
-    {
-      "id": "twn",
-      "displayNamePtBr": "Taiwan",
-      "aliasesPtBr": [
-        "Republic of China (Taiwan)",
-        "República da China",
-        "TW",
-        "Republic of China",
-        "中華民國",
-        "Zhōnghuá Mínguó",
-        "Chinese Taipei"
-      ],
-      "sourceNames": {
-        "fifa": "Chinese Taipei"
-      },
-      "identifiers": {
-        "wikidataQid": "Q865",
-        "fifaCode": "TPE",
-        "isoAlpha2": "TW",
-        "isoAlpha3": "TWN",
-        "unM49": "158"
-      },
-      "region": "Asia",
-      "memberships": [
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
-          "verifiedAt": "2026-07-25"
-        }
-      ],
-      "primaryFlagRevisionId": "twn-flag-2026",
-      "editorialNote": "A entidade aparece como Taiwan; Chinese Taipei é preservado como nome institucional da FIFA e alias aceito."
     },
     {
       "id": "tjk",
@@ -8172,30 +7451,6 @@
       "reviewedAt": "2026-07-25"
     },
     {
-      "id": "aia-flag-2026",
-      "entityId": "aia",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/aia.svg",
-      "commons": {
-        "fileTitle": "File:Flag of Anguilla.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_Anguilla.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Anguilla.svg",
-        "sha1": "ff8eef980254e3469456bcf774dbf8abd6ee7666",
-        "mime": "image/svg+xml",
-        "width": 1200,
-        "height": 600
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "This work created by the United Kingdom Government is in the public domain. This is because it is one of the following: It is a photograph taken prior to 1 June 1957; or It was published prior to 1976; or It is an artistic work other than a photograph or engraving (e.g. a painting) which was created prior to 1976. HMSO has declared that the expiry of Crown Copyrights applies worldwide (ref: HMSO Email Reply)More information. See also Copyright and Crown copyright artistic works.",
-        "credit": "[1], [2], [3], [4]",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
       "id": "atg-flag-2026",
       "entityId": "atg",
       "representationKind": "national",
@@ -8311,30 +7566,6 @@
         "shortName": "Public domain",
         "artist": "Original: Stepan Malkhasyants Vector: SKopp",
         "credit": "Own work",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
-      "id": "abw-flag-2026",
-      "entityId": "abw",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/abw.svg",
-      "commons": {
-        "fileTitle": "File:Flag of Aruba.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_Aruba.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Flag_of_Aruba.svg",
-        "sha1": "dde393d4f4d6b058cc69319960a4ffabda9f44db",
-        "mime": "image/svg+xml",
-        "width": 900,
-        "height": 600
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "Original: Whitney Smith Vector: Wester",
-        "credit": "http://www.vexilla-mundi.com/aruba.htm",
         "attributionRequired": false
       },
       "reviewedAt": "2026-07-25"
@@ -8574,30 +7805,6 @@
       "license": {
         "shortName": "Public domain",
         "artist": "Drawn by User:SKopp, rewritten by User:Gabbe",
-        "credit": "Own work",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
-      "id": "bmu-flag-2026",
-      "entityId": "bmu",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/bmu.svg",
-      "commons": {
-        "fileTitle": "File:Flag of Bermuda.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_Bermuda.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Flag_of_Bermuda.svg",
-        "sha1": "3762c2b49315296df15dddf16cbedf3b8112da5b",
-        "mime": "image/svg+xml",
-        "width": 1000,
-        "height": 500
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "Version 1: Made by Caleb Moore from the Open Clip Art website and uploaded by Nightstallion Version 2: Made by Nameneko from version 1 of File:Flag of Bermuda.svg and version 2 of File:Coat of arms of Bermuda.svg by Cronholm144.",
         "credit": "Own work",
         "attributionRequired": false
       },
@@ -9300,30 +8507,6 @@
       "reviewedAt": "2026-07-25"
     },
     {
-      "id": "cuw-flag-2026",
-      "entityId": "cuw",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/cuw.svg",
-      "commons": {
-        "fileTitle": "File:Flag of Curaçao.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_Cura%C3%A7ao.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Flag_of_Cura%C3%A7ao.svg",
-        "sha1": "f3d6598410b4e6632a292355926322010a078155",
-        "mime": "image/svg+xml",
-        "width": 900,
-        "height": 600
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "Original: Unknown Vector: David Benbennick",
-        "credit": "Flags of the World.",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
       "id": "dnk-flag-2026",
       "entityId": "dnk",
       "representationKind": "national",
@@ -9511,30 +8694,6 @@
         "shortName": "Public domain",
         "artist": "Unknown authorUnknown author",
         "credit": "Eritrea’s flag is a rectangle divided into three triangles: a red isosceles triangle based on the hoist side, and a green upper and blue lower right triangle. A gold wreath encircling a gold olive branch is centred on the hoist side of the red triangle.— from the Ministry of Information government portal See also File:Flag of Eritrea Requirements.png. The dimensions on this construction sheet match those shown at Flags of the World (FOTW) except that FOTW does not provide dimensions for the width or height of the wreath.",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
-      "id": "scotland-flag-2026",
-      "entityId": "scotland",
-      "representationKind": "territorial",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/scotland.svg",
-      "commons": {
-        "fileTitle": "File:Flag of Scotland.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_Scotland.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/1/10/Flag_of_Scotland.svg",
-        "sha1": "c1cbff0b38aab01c2b93e1f2ccea8e70ed27722b",
-        "mime": "image/svg+xml",
-        "width": 1000,
-        "height": 600
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "none known",
-        "credit": "http://kbolino.freeshell.org/svg/scotland.svg",
         "attributionRequired": false
       },
       "reviewedAt": "2026-07-25"
@@ -9900,30 +9059,6 @@
       "reviewedAt": "2026-07-25"
     },
     {
-      "id": "gib-flag-2026",
-      "entityId": "gib",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/gib.svg",
-      "commons": {
-        "fileTitle": "File:Flag of Gibraltar.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_Gibraltar.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/0/02/Flag_of_Gibraltar.svg",
-        "sha1": "b753d1257698db43f0214a8b9768b17eba8a8453",
-        "mime": "image/svg+xml",
-        "width": 1000,
-        "height": 500
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "Created on behalf of Isabella I of Castile in 1502; this version uploaded by Denelson83 (talk · contribs)",
-        "credit": "based on the original coat of arms of Gibraltar, granted in 1502",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
       "id": "grd-flag-2026",
       "entityId": "grd",
       "representationKind": "national",
@@ -9967,30 +9102,6 @@
         "shortName": "Public domain",
         "artist": "Unknown authorUnknown author",
         "credit": "ΕΘΝΙΚΗ ΣΗΜΑΙΑ ΤΗΣ ΕΛΛΑΔΟΣ",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
-      "id": "gum-flag-2026",
-      "entityId": "gum",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/gum.svg",
-      "commons": {
-        "fileTitle": "File:Flag of Guam.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_Guam.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/0/07/Flag_of_Guam.svg",
-        "sha1": "e39751fd7f3cdb4bfaa2e3fd00b9db6d142b0e6c",
-        "mime": "image/svg+xml",
-        "width": 738,
-        "height": 396
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "Xrmap",
-        "credit": "Own work",
         "attributionRequired": false
       },
       "reviewedAt": "2026-07-25"
@@ -10161,30 +9272,6 @@
       "reviewedAt": "2026-07-25"
     },
     {
-      "id": "hkg-flag-2026",
-      "entityId": "hkg",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/hkg.svg",
-      "commons": {
-        "fileTitle": "File:Flag of Hong Kong.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_Hong_Kong.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Flag_of_Hong_Kong.svg",
-        "sha1": "0bea68652284be2d3c50a35d1fab26c9b85d2070",
-        "mime": "image/svg+xml",
-        "width": 900,
-        "height": 600
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "Designed by Tao Ho SVG code of 24 November 2005 version copied from Open Clip Art SVG code of 20 August 2011 version by Alkari SVG code of 6 September 2021 version by Mike Rohsopht",
-        "credit": "Own work by Mike Rohsopht based on File:GB16689-2004.pdf and Regional Flag and Regional Emblem Ordinance",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
       "id": "hun-flag-2026",
       "entityId": "hun",
       "representationKind": "national",
@@ -10228,76 +9315,6 @@
         "shortName": "Public domain",
         "artist": "Nightstallion et al., see File history below for details.",
         "credit": "Presidency Council Resolution No. (1) of 1990 Regarding the National Flag CONSTRUCTION SHEET:",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
-      "id": "cym-flag-2026",
-      "entityId": "cym",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/cym.svg",
-      "commons": {
-        "fileTitle": "File:Flag of the Cayman Islands.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_the_Cayman_Islands.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_the_Cayman_Islands.svg",
-        "sha1": "3b6ac3f134df955d938b920823b2579a1e192e1c",
-        "mime": "image/svg+xml",
-        "width": 1200,
-        "height": 600
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "Unknown authorUnknown author",
-        "credit": "sodipodi.com",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
-      "id": "cok-flag-2026",
-      "entityId": "cok",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/cok.svg",
-      "commons": {
-        "fileTitle": "File:Flag of the Cook Islands.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_the_Cook_Islands.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/3/35/Flag_of_the_Cook_Islands.svg",
-        "sha1": "9eab3167e26effacf1196a41d95611ec313577dc",
-        "mime": "image/svg+xml",
-        "width": 1200,
-        "height": 600
-      },
-      "license": {
-        "shortName": "Public domain",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
-      "id": "fro-flag-2026",
-      "entityId": "fro",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/fro.svg",
-      "commons": {
-        "fileTitle": "File:Flag of the Faroe Islands.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_the_Faroe_Islands.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Flag_of_the_Faroe_Islands.svg",
-        "sha1": "f6f18df0507289fa03276d4f5b7d4a6934c0bdd4",
-        "mime": "image/svg+xml",
-        "width": 1100,
-        "height": 800
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "It was made by User:IceKarma (Jeffrey Connell), who released it to the public domain.",
-        "credit": "N.a",
         "attributionRequired": false
       },
       "reviewedAt": "2026-07-25"
@@ -10351,78 +9368,6 @@
       "reviewedAt": "2026-07-25"
     },
     {
-      "id": "tca-flag-2026",
-      "entityId": "tca",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/tca.svg",
-      "commons": {
-        "fileTitle": "File:Flag of the Turks and Caicos Islands.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_the_Turks_and_Caicos_Islands.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Flag_of_the_Turks_and_Caicos_Islands.svg",
-        "sha1": "1ed39a5d1f4e2db02fad2366c15a32bcb5bf6313",
-        "mime": "image/svg+xml",
-        "width": 1200,
-        "height": 600
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "Unknown authorUnknown author",
-        "credit": "from the Open Clip Art website",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
-      "id": "vgb-flag-2026",
-      "entityId": "vgb",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/vgb.svg",
-      "commons": {
-        "fileTitle": "File:Flag of the British Virgin Islands.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_the_British_Virgin_Islands.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/4/42/Flag_of_the_British_Virgin_Islands.svg",
-        "sha1": "a21c1f312e08dd6df9cd697288686c9fd71877e7",
-        "mime": "image/svg+xml",
-        "width": 1200,
-        "height": 600
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "No machine-readable author provided. Dbenbenn assumed (based on copyright claims).",
-        "credit": "Own work using: http://openclipart.org/cgi-bin/navigate/signs_and_symbols",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
-      "id": "vir-flag-2026",
-      "entityId": "vir",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/vir.svg",
-      "commons": {
-        "fileTitle": "File:Flag of the United States Virgin Islands.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_the_United_States_Virgin_Islands.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Flag_of_the_United_States_Virgin_Islands.svg",
-        "sha1": "7a84af182f67e117d7f92538b57b82a97572c088",
-        "mime": "image/svg+xml",
-        "width": 1275,
-        "height": 850
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "Percival Wilson Sparks. sparksfamilyassn.org. Retrieved on 2026-05-26.",
-        "credit": "Own work based on: OpenClipArt",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
       "id": "ind-flag-2026",
       "entityId": "ind",
       "representationKind": "national",
@@ -10466,30 +9411,6 @@
         "shortName": "Public domain",
         "artist": "Jayakatwang",
         "credit": "statute: Undang-Undang Republik Indonesia Nomor 24 Tahun 2009 (WikisourcePDF)",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
-      "id": "england-flag-2026",
-      "entityId": "england",
-      "representationKind": "territorial",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/england.svg",
-      "commons": {
-        "fileTitle": "File:Flag of England.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_England.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/b/be/Flag_of_England.svg",
-        "sha1": "e775153a8f921d9c6010a8b4181fa8835e5006f2",
-        "mime": "image/svg+xml",
-        "width": 800,
-        "height": 480
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "Original: traditional Vector: Nicholas Shanks",
-        "credit": "Own work",
         "attributionRequired": false
       },
       "reviewedAt": "2026-07-25"
@@ -10562,30 +9483,6 @@
         "shortName": "Public domain",
         "artist": "Éire",
         "credit": "https://web.archive.org/web/20200213202756/https://assets.gov.ie/2949/151118153516-096a94ba6955435cae965414f7667104.pdf",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
-      "id": "northern-ireland-flag-2026",
-      "entityId": "northern-ireland",
-      "representationKind": "commonly-used",
-      "officialStatus": "commonly-used",
-      "side": "same-both-sides",
-      "filePath": "/flags/northern-ireland.svg",
-      "commons": {
-        "fileTitle": "File:Ulster Banner.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_Northern_Ireland_(1953%E2%80%931972).svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/4/43/Flag_of_Northern_Ireland_%281953%E2%80%931972%29.svg",
-        "sha1": "c6415dc8dc617838df34f8b40080db7c904fc6de",
-        "mime": "image/svg+xml",
-        "width": 600,
-        "height": 300
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "Mamadou",
-        "credit": "My rework of well-known design",
         "attributionRequired": false
       },
       "reviewedAt": "2026-07-25"
@@ -10754,30 +9651,6 @@
         "shortName": "Public domain",
         "artist": "User:Hanzlan",
         "credit": "Drawn by User:SKopp",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
-      "id": "unk-flag-2026",
-      "entityId": "unk",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/unk.svg",
-      "commons": {
-        "fileTitle": "File:Flag of Kosovo.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_Kosovo.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Flag_of_Kosovo.svg",
-        "sha1": "927cecb6dabc86e530d93e740d9bd63b33433da1",
-        "mime": "image/svg+xml",
-        "width": 840,
-        "height": 600
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "Cradel (current version), earlier version by Ningyou",
-        "credit": "Originally from File:Flag of Kosovo.png.",
         "attributionRequired": false
       },
       "reviewedAt": "2026-07-25"
@@ -11017,30 +9890,6 @@
         "shortName": "Public domain",
         "artist": "Drawn by User:SKopp",
         "credit": "Own work http://www.legilux.public.lu/leg/a/archives/1972/0051/a051.pdf#page=2, colors from http://www.legilux.public.lu/leg/a/archives/1993/0731609/0731609.pdf",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
-      "id": "mac-flag-2026",
-      "entityId": "mac",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/mac.svg",
-      "commons": {
-        "fileTitle": "File:Flag of Macau.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_Macau.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/6/63/Flag_of_Macau.svg",
-        "sha1": "68d87c1e777f639118eb7fd255bc8d32725cc155",
-        "mime": "image/svg+xml",
-        "width": 900,
-        "height": 600
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "see File history",
-        "credit": "GB 17654-1999 澳门特别行政区区旗",
         "attributionRequired": false
       },
       "reviewedAt": "2026-07-25"
@@ -11450,28 +10299,6 @@
       "reviewedAt": "2026-07-25"
     },
     {
-      "id": "msr-flag-2026",
-      "entityId": "msr",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/msr.svg",
-      "commons": {
-        "fileTitle": "File:Flag of Montserrat.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_Montserrat.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Flag_of_Montserrat.svg",
-        "sha1": "7f7e4af6124253dcc9934ccf0b15533854cf79b8",
-        "mime": "image/svg+xml",
-        "width": 1200,
-        "height": 600
-      },
-      "license": {
-        "shortName": "Public domain",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
       "id": "mmr-flag-2026",
       "entityId": "mmr",
       "representationKind": "national",
@@ -11664,30 +10491,6 @@
       "reviewedAt": "2026-07-25"
     },
     {
-      "id": "ncl-flag-2026",
-      "entityId": "ncl",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/ncl.svg",
-      "commons": {
-        "fileTitle": "File:Flag of FLNKS.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_FLNKS.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/6/66/Flag_of_FLNKS.svg",
-        "sha1": "525ab9b59ed3309779b3735f9390f1d2ec8f1c54",
-        "mime": "image/svg+xml",
-        "width": 900,
-        "height": 450
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "User:WarX",
-        "credit": "Own work",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
       "id": "nzl-flag-2026",
       "entityId": "nzl",
       "representationKind": "national",
@@ -11733,30 +10536,6 @@
         "artist": "See File history below for details.",
         "credit": "Own work. Vectorized from qanoon.om",
         "attributionRequired": true
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
-      "id": "wales-flag-2026",
-      "entityId": "wales",
-      "representationKind": "territorial",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/wales.svg",
-      "commons": {
-        "fileTitle": "File:Flag of Wales.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_Wales.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Flag_of_Wales.svg",
-        "sha1": "c8eb8725ff8271995beff985be8f6d4c9ba26d78",
-        "mime": "image/svg+xml",
-        "width": 800,
-        "height": 480
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "Unknown Vector graphics by Tobias Jakobs",
-        "credit": "Open Clipart Library",
-        "attributionRequired": false
       },
       "reviewedAt": "2026-07-25"
     },
@@ -11953,31 +10732,6 @@
       "reviewedAt": "2026-07-25"
     },
     {
-      "id": "pyf-flag-2026",
-      "entityId": "pyf",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/pyf.svg",
-      "commons": {
-        "fileTitle": "File:Flag of French Polynesia.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_French_Polynesia.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/d/db/Flag_of_French_Polynesia.svg",
-        "sha1": "f333c47b00ad5db6d5411c856cf0a7c71c281e45",
-        "mime": "image/svg+xml",
-        "width": 600,
-        "height": 400
-      },
-      "license": {
-        "shortName": "CC0",
-        "url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-        "artist": "Nightstallion",
-        "credit": "From the Open Clip Art website",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
       "id": "pol-flag-2026",
       "entityId": "pol",
       "representationKind": "national",
@@ -11996,30 +10750,6 @@
       "license": {
         "shortName": "Public domain",
         "artist": "See below.",
-        "credit": "Own work",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
-      "id": "pri-flag-2026",
-      "entityId": "pri",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/pri.svg",
-      "commons": {
-        "fileTitle": "File:Flag of Puerto Rico.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_Puerto_Rico.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/2/28/Flag_of_Puerto_Rico.svg",
-        "sha1": "593762b7702d923ad2c9f5785a555ad3c7eaad1a",
-        "mime": "image/svg+xml",
-        "width": 900,
-        "height": 600
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "Original: Unknown Vector: Cerejota",
         "credit": "Own work",
         "attributionRequired": false
       },
@@ -12309,30 +11039,6 @@
         "shortName": "Public domain",
         "artist": "Original: Malietoa Tanumafili II and Tupua Tamasese Meaʻole Vector: See the file history below, for details.",
         "credit": "Own work based on: Flag of Samoa (construction sheet).svg, Flag and National Anthem of Samoa Act 1994 Flag of Samoa (construction sheet).svg",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
-      "id": "asm-flag-2026",
-      "entityId": "asm",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/asm.svg",
-      "commons": {
-        "fileTitle": "File:Flag of American Samoa.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_American_Samoa.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/8/87/Flag_of_American_Samoa.svg",
-        "sha1": "662a1abc99d0d3f09818396b93e5c27ea7b76894",
-        "mime": "image/svg+xml",
-        "width": 1000,
-        "height": 500
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "by Tobias Jakobs",
-        "credit": "It is from openclipart.org, specifically american_samoa.svg.",
         "attributionRequired": false
       },
       "reviewedAt": "2026-07-25"
@@ -12789,30 +11495,6 @@
         "shortName": "Public domain",
         "artist": "Zscout370",
         "credit": "Own work based on: https://www.nstda.or.th/th/nstda-knowledge/11557-thaiflag-color Construction sheet of the flag of Thailand",
-        "attributionRequired": false
-      },
-      "reviewedAt": "2026-07-25"
-    },
-    {
-      "id": "twn-flag-2026",
-      "entityId": "twn",
-      "representationKind": "national",
-      "officialStatus": "official",
-      "side": "same-both-sides",
-      "filePath": "/flags/twn.svg",
-      "commons": {
-        "fileTitle": "File:Flag of the Republic of China.svg",
-        "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_the_Republic_of_China.svg",
-        "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/72/Flag_of_the_Republic_of_China.svg",
-        "sha1": "784cf273d4caa8130068c0bdc730a43af7047657",
-        "mime": "image/svg+xml",
-        "width": 900,
-        "height": 600
-      },
-      "license": {
-        "shortName": "Public domain",
-        "artist": "Sun Yat-sen",
-        "credit": "Own work using: http://www.bastisoft.de/misc/flags/flags.html#Taiwan",
         "attributionRequired": false
       },
       "reviewedAt": "2026-07-25"

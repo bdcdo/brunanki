@@ -6,6 +6,7 @@ import { promisify } from "node:util";
 
 import { normalizeCountryName as normalizeAlias } from "../src/domain/text";
 import { projectRuntimeCatalog } from "../src/data/project-runtime-catalog";
+import { belongsToCatalog, UN_OBSERVER_ISO3 } from "./catalog-rules";
 import { readPalettes } from "./extract-palette";
 import type {
   Catalog,
@@ -14,7 +15,11 @@ import type {
 } from "../src/types/catalog";
 
 const VERIFIED_AT = "2026-07-25";
-const CATALOG_VERSION = "2026.07.25";
+// A versão sobe porque o conjunto de entidades mudou, ainda que as fontes não
+// tenham sido reconferidas (daí `VERIFIED_AT` parado). Sem isso, dois
+// catálogos com conteúdos diferentes carregariam o mesmo rótulo, e um backup
+// exportado antes do corte seria indistinguível de um posterior.
+const CATALOG_VERSION = "2026.07.26";
 const USER_AGENT =
   "Ptanki/0.1 (educational flag catalog; contact: local development)";
 const execFileAsync = promisify(execFile);
@@ -58,102 +63,39 @@ interface CommonsMetadata {
   license: FlagRevision["license"];
 }
 
-interface SpecialEntity {
-  id: string;
-  displayNamePtBr: string;
-  aliasesPtBr: string[];
-  qid: `Q${number}`;
-  fifaCode: string;
-  fifaName: string;
-  region: string;
-  flagTitle: `File:${string}`;
-  isoAlpha2?: string;
-  isoAlpha3?: string;
-  editorialNote?: string;
-  representationKind?: FlagRevision["representationKind"];
-  officialStatus?: FlagRevision["officialStatus"];
-}
-
-const SPECIAL_FIFA_ENTITIES: Record<string, SpecialEntity> = {
-  ENG: {
-    id: "england",
-    displayNamePtBr: "Inglaterra",
-    aliasesPtBr: ["England"],
-    qid: "Q21",
-    fifaCode: "ENG",
-    fifaName: "England",
-    region: "Europe",
-    flagTitle: "File:Flag of England.svg",
-    representationKind: "territorial"
-  },
-  NIR: {
-    id: "northern-ireland",
-    displayNamePtBr: "Irlanda do Norte",
-    aliasesPtBr: ["Northern Ireland", "Ulster"],
-    qid: "Q26",
-    fifaCode: "NIR",
-    fifaName: "Northern Ireland",
-    region: "Europe",
-    flagTitle: "File:Ulster Banner.svg",
-    editorialNote:
-      "A FIFA representa a Irlanda do Norte separadamente. O Ulster Banner é ensinado por ser a bandeira mais reconhecida no contexto esportivo, embora não seja uma bandeira oficial vigente.",
-    representationKind: "commonly-used",
-    officialStatus: "commonly-used"
-  },
-  SCO: {
-    id: "scotland",
-    displayNamePtBr: "Escócia",
-    aliasesPtBr: ["Scotland"],
-    qid: "Q22",
-    fifaCode: "SCO",
-    fifaName: "Scotland",
-    region: "Europe",
-    flagTitle: "File:Flag of Scotland.svg",
-    representationKind: "territorial"
-  },
-  WAL: {
-    id: "wales",
-    displayNamePtBr: "País de Gales",
-    aliasesPtBr: ["Wales", "Gales"],
-    qid: "Q25",
-    fifaCode: "WAL",
-    fifaName: "Wales",
-    region: "Europe",
-    flagTitle: "File:Flag of Wales.svg",
-    representationKind: "territorial"
-  }
-};
+/**
+ * Associações da FIFA que não correspondem a um Estado reconhecido pela ONU.
+ *
+ * As quatro nações constituintes do Reino Unido competem separadamente no
+ * futebol e não têm assento próprio na ONU; com o catálogo definido pela ONU,
+ * elas não geram entidade. Continuam nomeadas — em vez de simplesmente
+ * ignoradas por falharem o mapeamento — para que uma associação *nova* sem
+ * contraparte ISO ainda derrube o refresh, em vez de sumir calada.
+ */
+const FIFA_CODES_WITHOUT_UN_STATE = new Set(["ENG", "NIR", "SCO", "WAL"]);
 
 const REST_COUNTRY_BY_FIFA_OVERRIDE: Record<string, string> = {
-  KOS: "UNK",
-  SGP: "SGP",
-  TAH: "PYF"
+  SGP: "SGP"
 };
 
 const QID_OVERRIDE_BY_ISO3: Record<string, `Q${number}`> = {
   PSE: "Q219060",
-  UNK: "Q1246",
   VAT: "Q237"
 };
 
 const FLAG_OVERRIDE_BY_ISO3: Record<string, `File:${string}`> = {
-  UNK: "File:Flag of Kosovo.svg",
-  PRY: "File:Flag of Paraguay.svg",
-  TWN: "File:Flag of the Republic of China.svg"
+  PRY: "File:Flag of Paraguay.svg"
 };
 
 const DISPLAY_NAME_OVERRIDE_BY_ISO3: Record<string, string> = {
   ARM: "Armênia",
   AZE: "Azerbaijão",
   BWA: "Botsuana",
-  CYM: "Ilhas Cayman",
   COD: "República Democrática do Congo",
   COG: "República do Congo",
-  CUW: "Curaçao",
   CZE: "Chéquia",
   DJI: "Djibuti",
   EST: "Estônia",
-  FRO: "Ilhas Faroé",
   GMB: "Gâmbia",
   GBR: "Reino Unido",
   IRN: "Irã",
@@ -163,7 +105,6 @@ const DISPLAY_NAME_OVERRIDE_BY_ISO3: Record<string, string> = {
   LAO: "Laos",
   MCO: "Mônaco",
   MKD: "Macedônia do Norte",
-  NCL: "Nova Caledônia",
   NLD: "Países Baixos",
   PER: "Peru",
   POL: "Polônia",
@@ -172,13 +113,10 @@ const DISPLAY_NAME_OVERRIDE_BY_ISO3: Record<string, string> = {
   ROU: "Romênia",
   SVN: "Eslovênia",
   SWZ: "Essuatíni",
-  TCA: "Ilhas Turcas e Caicos",
   TLS: "Timor-Leste",
-  TWN: "Taiwan",
   USA: "Estados Unidos",
   VAT: "Vaticano",
   VCT: "São Vicente e Granadinas",
-  VGB: "Ilhas Virgens Britânicas",
   VNM: "Vietnã",
   YEM: "Iêmen",
   ZWE: "Zimbábue"
@@ -186,7 +124,6 @@ const DISPLAY_NAME_OVERRIDE_BY_ISO3: Record<string, string> = {
 
 const EDITORIAL_NOTE_BY_ISO3: Record<string, string> = {
   PRY: "O exercício usa o anverso da bandeira do Paraguai.",
-  TWN: "A entidade aparece como Taiwan; Chinese Taipei é preservado como nome institucional da FIFA e alias aceito.",
   VAT: "A Santa Sé é Estado observador permanente da ONU; a bandeira exibida é a do Estado da Cidade do Vaticano."
 };
 
@@ -477,13 +414,8 @@ async function main(): Promise<void> {
   assert(unIso3.size === 193, `Expected 193 UN members, found ${unIso3.size}`);
 
   const fifaByIso3 = new Map<string, FifaAssociation>();
-  const specialEntities: SpecialEntity[] = [];
   for (const association of fifaAssociations) {
-    const special = SPECIAL_FIFA_ENTITIES[association.code];
-    if (special) {
-      specialEntities.push(special);
-      continue;
-    }
+    if (FIFA_CODES_WITHOUT_UN_STATE.has(association.code)) continue;
     const country = findCountryForAssociation(association, countries);
     assert(
       country,
@@ -496,7 +428,11 @@ async function main(): Promise<void> {
     fifaByIso3.set(country.cca3, association);
   }
 
-  const includedIso3 = new Set([...unIso3, ...fifaByIso3.keys(), "VAT"]);
+  // A raiz do conjunto é a ONU, e só ela. A filiação à FIFA ainda é anotada
+  // como procedência em `memberships`, mas deixou de decidir quem entra — era
+  // por ela que a Palestina chegava ao catálogo, para só depois receber o
+  // status de observadora.
+  const includedIso3 = new Set<string>([...unIso3, ...UN_OBSERVER_ISO3]);
   const entities: LearningEntity[] = [];
   const requestedFlagTitles = new Map<string, `File:${string}`>();
 
@@ -514,7 +450,7 @@ async function main(): Promise<void> {
       DISPLAY_NAME_OVERRIDE_BY_ISO3[iso3] ??
       country.translations?.por?.common ??
       country.name.common;
-    const isUnObserver = iso3 === "VAT" || iso3 === "PSE";
+    const isUnObserver = (UN_OBSERVER_ISO3 as readonly string[]).includes(iso3);
     const memberships: LearningEntity["memberships"] = [];
     if (unIso3.has(iso3)) {
       memberships.push({
@@ -549,7 +485,6 @@ async function main(): Promise<void> {
           country.translations?.por?.official,
           ...(country.altSpellings ?? []),
           fifa?.name,
-          iso3 === "TWN" ? "Chinese Taipei" : undefined,
           iso3 === "VAT" ? "Santa Sé" : undefined
         ],
         displayName
@@ -584,39 +519,19 @@ async function main(): Promise<void> {
     requestedFlagTitles.set(id, flagTitle);
   }
 
-  for (const special of specialEntities) {
-    entities.push({
-      id: special.id,
-      displayNamePtBr: special.displayNamePtBr,
-      aliasesPtBr: special.aliasesPtBr,
-      sourceNames: { fifa: special.fifaName },
-      identifiers: {
-        wikidataQid: special.qid,
-        fifaCode: special.fifaCode,
-        ...(special.isoAlpha2 ? { isoAlpha2: special.isoAlpha2 } : {}),
-        ...(special.isoAlpha3 ? { isoAlpha3: special.isoAlpha3 } : {})
-      },
-      region: special.region,
-      memberships: [
-        {
-          organization: "FIFA",
-          status: "member",
-          sourceUrl: FIFA_SOURCE_URL,
-          verifiedAt: VERIFIED_AT
-        }
-      ],
-      primaryFlagRevisionId: `${special.id}-flag-2026`,
-      ...(special.editorialNote ? { editorialNote: special.editorialNote } : {})
-    });
-    requestedFlagTitles.set(special.id, special.flagTitle);
-  }
-
   entities.sort((left, right) =>
     left.displayNamePtBr.localeCompare(right.displayNamePtBr, "pt-BR")
   );
+  // Sem literal: o tamanho esperado é o censo conferido acima mais os
+  // observadores nomeados. `belongsToCatalog` é a mesma regra que
+  // `validate-catalog.ts` aplica ao artefato commitado.
   assert(
-    entities.length === 220,
-    `Expected 220 entities, found ${entities.length}`
+    entities.length === unIso3.size + UN_OBSERVER_ISO3.length,
+    `Expected ${unIso3.size + UN_OBSERVER_ISO3.length} entities, found ${entities.length}`
+  );
+  assert(
+    entities.every(belongsToCatalog),
+    "Every entity must have a UN membership"
   );
 
   const commonsMetadata = await fetchCommonsMetadata([
@@ -658,12 +573,16 @@ async function main(): Promise<void> {
           join(flagsDirectory, fileName),
           entity.id === "vat"
         );
-        const special = specialEntities.find(({ id }) => id === entity.id);
         return {
           id: entity.primaryFlagRevisionId,
           entityId: entity.id,
-          representationKind: special?.representationKind ?? "national",
-          officialStatus: special?.officialStatus ?? "official",
+          // Literais, e não um `?? "national"` sobre uma tabela de exceções:
+          // as únicas revisões territoriais ou de uso corrente eram as das
+          // nações do Reino Unido e a de Taiwan, e nenhuma delas é um Estado
+          // reconhecido pela ONU. Todo Estado-membro ou observador hastea a
+          // própria bandeira oficial.
+          representationKind: "national",
+          officialStatus: "official",
           side: entity.id === "pry" ? "obverse" : "same-both-sides",
           filePath: `/flags/${fileName}`,
           commons: {
