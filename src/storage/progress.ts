@@ -13,6 +13,7 @@ import {
   currentDiagnosticEntity,
   startDiagnostic
 } from "@/domain/diagnostic";
+import { newAttemptId } from "@/domain/ids";
 import {
   createSkillState,
   scheduleAttempt,
@@ -26,6 +27,7 @@ import {
   getDatabase,
   type PtankiDatabase
 } from "./database";
+import { downloadBackupFile } from "./backup-file";
 import {
   applyPreparedImport,
   prepareImport,
@@ -98,13 +100,6 @@ export interface SavedDiagnosticAnswer {
   skillState: SkillState;
   attempt: ReviewAttempt;
   diagnosticState: DiagnosticState;
-}
-
-function newAttemptId(): string {
-  if (typeof globalThis.crypto?.randomUUID !== "function") {
-    throw new Error("Este navegador não oferece crypto.randomUUID()");
-  }
-  return globalThis.crypto.randomUUID();
 }
 
 export async function saveDiagnosticAnswer(
@@ -226,15 +221,7 @@ function browserImportHandlers(): ImportProgressOptions {
   }
   return {
     saveBackup(backupJson) {
-      const blob = new Blob([backupJson], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const anchor = document.createElement("a");
-      anchor.href = url;
-      anchor.download = `ptanki-backup-${new Date()
-        .toISOString()
-        .slice(0, 10)}.json`;
-      anchor.click();
-      URL.revokeObjectURL(url);
+      downloadBackupFile(backupJson);
     },
     confirmReplace() {
       return window.confirm(

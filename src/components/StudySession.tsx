@@ -12,6 +12,7 @@ import { FlagImage } from "@/components/FlagImage";
 import { ProgressBar } from "@/components/ProgressBar";
 import { entities, entityById } from "@/data/catalog";
 import { getNameResolver } from "@/data/name-index";
+import { newAttemptId } from "@/domain/ids";
 import { buildDailyQueue, type DailyQueueItem } from "@/domain/daily-queue";
 import {
   createSkillState,
@@ -68,7 +69,7 @@ function newAttempt(
   answer?: string
 ): ReviewAttempt {
   return {
-    id: crypto.randomUUID(),
+    id: newAttemptId(),
     entityId: item.entityId,
     skill: item.skill,
     exercise,

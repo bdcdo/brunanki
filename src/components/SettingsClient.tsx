@@ -3,22 +3,13 @@
 import { Download, RotateCcw, Upload } from "lucide-react";
 import { useRef, useState } from "react";
 import { useApp } from "@/components/AppProvider";
+import { downloadBackupFile } from "@/storage/backup-file";
 import { catalog, entityById } from "@/data/catalog";
 
 const importTarget = {
   catalogVersion: catalog.version,
   knownEntityIds: new Set(entityById.keys())
 };
-
-function downloadJson(contents: string) {
-  const blob = new Blob([contents], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const anchor = document.createElement("a");
-  anchor.href = url;
-  anchor.download = `ptanki-backup-${new Date().toISOString().slice(0, 10)}.json`;
-  anchor.click();
-  URL.revokeObjectURL(url);
-}
 
 export function SettingsClient() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -27,7 +18,7 @@ export function SettingsClient() {
 
   async function handleExport() {
     const storage = await import("@/storage");
-    downloadJson(await storage.exportProgress(catalog.version));
+    downloadBackupFile(await storage.exportProgress(catalog.version));
     setStatus("Backup baixado.");
   }
 
@@ -59,7 +50,7 @@ export function SettingsClient() {
     );
     if (!confirmed) return;
     const storage = await import("@/storage");
-    downloadJson(await storage.exportProgress(catalog.version));
+    downloadBackupFile(await storage.exportProgress(catalog.version));
     await storage.resetAllData();
     await refresh();
     setStatus("Progresso apagado. O backup foi baixado.");
@@ -103,7 +94,14 @@ export function SettingsClient() {
               className="sr-only"
               type="file"
               accept="application/json,.json"
-              onChange={(event) => void handleImport(event.target.files?.[0])}
+              onChange={(event) => {
+                const file = event.target.files?.[0];
+                // Zerar o valor antes de tratar o arquivo: sem isso, escolher
+                // o mesmo arquivo de novo depois de cancelar a confirmação não
+                // dispara `change`, e o botão parece morto.
+                event.target.value = "";
+                void handleImport(file);
+              }}
             />
             <button
               className="button button-secondary"
