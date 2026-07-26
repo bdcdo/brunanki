@@ -437,12 +437,29 @@ async function main(): Promise<void> {
     entities.push({
       id,
       displayNamePtBr: displayName,
+      // Só português, mais o código ISO de duas letras. O campo se chama
+      // `aliasesPtBr` e continha `country.name.common`, `country.name.official`
+      // e os `altSpellings` inteiros — isto é, "Brazil", "Federative Republic
+      // of Brazil" e "Afġānistān" —, o que fazia duas coisas de uma vez: punha
+      // inglês na tela em 175 das 195 páginas de detalhe, sob o rótulo "Nomes
+      // aceitos", e dava por acerto quem digitasse o nome em inglês num app
+      // cujo objetivo é recordar o nome em português.
+      //
+      // A seleção é por proveniência do campo, e não por filtro sobre o
+      // conteúdo: `translations.por` é português por contrato da fonte, e
+      // `cca2` é um código. Uma heurística que tentasse reconhecer inglês nos
+      // `altSpellings` erraria em transliterações como `Afġānistān`, que não
+      // são nem uma língua nem a outra.
+      //
+      // `por.common` entra porque nem sempre é o nome exibido: 25 entidades têm
+      // `DISPLAY_NAME_OVERRIDE_BY_ISO3`, e nessas o nome da fonte continua
+      // sendo um nome português legítimo. `uniqueAliases` descarta sozinho o
+      // que coincidir com o exibido.
       aliasesPtBr: uniqueAliases(
         [
-          country.name.common,
-          country.name.official,
+          country.translations?.por?.common,
           country.translations?.por?.official,
-          ...(country.altSpellings ?? []),
+          country.cca2,
           iso3 === "VAT" ? "Santa Sé" : undefined
         ],
         displayName

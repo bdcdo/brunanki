@@ -6,11 +6,8 @@
       "id": "afg",
       "displayNamePtBr": "Afeganistão",
       "aliasesPtBr": [
-        "Afghanistan",
-        "Islamic Republic of Afghanistan",
         "República Islâmica do Afeganistão",
-        "AF",
-        "Afġānistān"
+        "AF"
       ],
       "sourceNames": {
         "un": "Afghanistan"
@@ -36,12 +33,8 @@
       "id": "zaf",
       "displayNamePtBr": "África do Sul",
       "aliasesPtBr": [
-        "South Africa",
-        "Republic of South Africa",
         "República da África do Sul",
-        "ZA",
-        "RSA",
-        "Suid-Afrika"
+        "ZA"
       ],
       "sourceNames": {
         "un": "South Africa"
@@ -67,12 +60,8 @@
       "id": "alb",
       "displayNamePtBr": "Albânia",
       "aliasesPtBr": [
-        "Republic of Albania",
         "República da Albânia",
-        "AL",
-        "Shqipëri",
-        "Shqipëria",
-        "Shqipnia"
+        "AL"
       ],
       "sourceNames": {
         "un": "Albania"
@@ -98,11 +87,8 @@
       "id": "deu",
       "displayNamePtBr": "Alemanha",
       "aliasesPtBr": [
-        "Germany",
-        "Federal Republic of Germany",
         "República Federal da Alemanha",
-        "DE",
-        "Bundesrepublik Deutschland"
+        "DE"
       ],
       "sourceNames": {
         "un": "Germany"
@@ -128,10 +114,8 @@
       "id": "and",
       "displayNamePtBr": "Andorra",
       "aliasesPtBr": [
-        "Principality of Andorra",
         "Principado de Andorra",
-        "AD",
-        "Principat d'Andorra"
+        "AD"
       ],
       "sourceNames": {
         "un": "Andorra"
@@ -157,10 +141,8 @@
       "id": "ago",
       "displayNamePtBr": "Angola",
       "aliasesPtBr": [
-        "Republic of Angola",
         "República de Angola",
-        "AO",
-        "ʁɛpublika de an'ɡɔla"
+        "AO"
       ],
       "sourceNames": {
         "un": "Angola"
@@ -186,7 +168,6 @@
       "id": "atg",
       "displayNamePtBr": "Antígua e Barbuda",
       "aliasesPtBr": [
-        "Antigua and Barbuda",
         "AG"
       ],
       "sourceNames": {
@@ -213,12 +194,8 @@
       "id": "sau",
       "displayNamePtBr": "Arábia Saudita",
       "aliasesPtBr": [
-        "Saudi Arabia",
-        "Kingdom of Saudi Arabia",
         "Reino da Arábia Saudita",
-        "Saudi",
-        "SA",
-        "Al-Mamlakah al-‘Arabiyyah as-Su‘ūdiyyah"
+        "SA"
       ],
       "sourceNames": {
         "un": "Saudi Arabia"
@@ -244,12 +221,8 @@
       "id": "dza",
       "displayNamePtBr": "Argélia",
       "aliasesPtBr": [
-        "Algeria",
-        "People's Democratic Republic of Algeria",
         "República Argelina Democrática e Popular",
-        "DZ",
-        "Dzayer",
-        "Algérie"
+        "DZ"
       ],
       "sourceNames": {
         "un": "Algeria"
@@ -275,7 +248,6 @@
       "id": "arg",
       "displayNamePtBr": "Argentina",
       "aliasesPtBr": [
-        "Argentine Republic",
         "República Argentina",
         "AR"
       ],
@@ -303,11 +275,8 @@
       "id": "arm",
       "displayNamePtBr": "Armênia",
       "aliasesPtBr": [
-        "Republic of Armenia",
         "República da Arménia",
-        "AM",
-        "Hayastan",
-        "Հայաստանի Հանրապետություն"
+        "AM"
       ],
       "sourceNames": {
         "un": "Armenia"
@@ -333,7 +302,6 @@
       "id": "aus",
       "displayNamePtBr": "Austrália",
       "aliasesPtBr": [
-        "Commonwealth of Australia",
         "Comunidade da Austrália",
         "AU"
       ],
@@ -361,11 +329,8 @@
       "id": "aut",
       "displayNamePtBr": "Áustria",
       "aliasesPtBr": [
-        "Republic of Austria",
         "República da Áustria",
-        "AT",
-        "Osterreich",
-        "Oesterreich"
+        "AT"
       ],
       "sourceNames": {
         "un": "Austria"
@@ -391,11 +356,9 @@
       "id": "aze",
       "displayNamePtBr": "Azerbaijão",
       "aliasesPtBr": [
-        "Azerbaijan",
-        "Republic of Azerbaijan",
+        "Azerbeijão",
         "República do Azerbaijão",
-        "AZ",
-        "Azərbaycan Respublikası"
+        "AZ"
       ],
       "sourceNames": {
         "un": "Azerbaijan"
@@ -421,7 +384,6 @@
       "id": "bhs",
       "displayNamePtBr": "Bahamas",
       "aliasesPtBr": [
-        "Commonwealth of the Bahamas",
         "Comunidade das Bahamas",
         "BS"
       ],
@@ -449,11 +411,8 @@
       "id": "bhr",
       "displayNamePtBr": "Bahrein",
       "aliasesPtBr": [
-        "Bahrain",
-        "Kingdom of Bahrain",
         "Reino do Bahrein",
-        "BH",
-        "Mamlakat al-Baḥrayn"
+        "BH"
       ],
       "sourceNames": {
         "un": "Bahrain"
@@ -479,10 +438,8 @@
       "id": "bgd",
       "displayNamePtBr": "Bangladesh",
       "aliasesPtBr": [
-        "People's Republic of Bangladesh",
         "República Popular do Bangladesh",
-        "BD",
-        "Gônôprôjatôntri Bangladesh"
+        "BD"
       ],
       "sourceNames": {
         "un": "Bangladesh"
@@ -534,16 +491,8 @@
       "id": "bel",
       "displayNamePtBr": "Bélgica",
       "aliasesPtBr": [
-        "Belgium",
-        "Kingdom of Belgium",
         "Reino da Bélgica",
-        "BE",
-        "België",
-        "Belgien",
-        "Belgique",
-        "Koninkrijk België",
-        "Royaume de Belgique",
-        "Königreich Belgien"
+        "BE"
       ],
       "sourceNames": {
         "un": "Belgium"
@@ -595,10 +544,8 @@
       "id": "ben",
       "displayNamePtBr": "Benin",
       "aliasesPtBr": [
-        "Republic of Benin",
         "República do Benin",
-        "BJ",
-        "République du Bénin"
+        "BJ"
       ],
       "sourceNames": {
         "un": "Benin"
@@ -624,13 +571,8 @@
       "id": "blr",
       "displayNamePtBr": "Bielorússia",
       "aliasesPtBr": [
-        "Belarus",
-        "Republic of Belarus",
         "República da Bielorrússia",
-        "BY",
-        "Bielaruś",
-        "Белоруссия",
-        "Республика Белоруссия"
+        "BY"
       ],
       "sourceNames": {
         "un": "Belarus"
@@ -656,16 +598,8 @@
       "id": "bol",
       "displayNamePtBr": "Bolívia",
       "aliasesPtBr": [
-        "Plurinational State of Bolivia",
         "Estado Plurinacional da Bolívia",
-        "BO",
-        "Buliwya",
-        "Wuliwya",
-        "Bolivia, Plurinational State of",
-        "Estado Plurinacional de Bolivia",
-        "Buliwya Mamallaqta",
-        "Wuliwya Suyu",
-        "Tetã Volívia"
+        "BO"
       ],
       "sourceNames": {
         "un": "Bolivia"
@@ -691,10 +625,7 @@
       "id": "bih",
       "displayNamePtBr": "Bósnia e Herzegovina",
       "aliasesPtBr": [
-        "Bosnia and Herzegovina",
-        "BA",
-        "Bosnia-Herzegovina",
-        "Босна и Херцеговина"
+        "BA"
       ],
       "sourceNames": {
         "un": "Bosnia and Herzegovina"
@@ -721,10 +652,8 @@
       "displayNamePtBr": "Botsuana",
       "aliasesPtBr": [
         "Botswana",
-        "Republic of Botswana",
         "República do Botswana",
-        "BW",
-        "Lefatshe la Botswana"
+        "BW"
       ],
       "sourceNames": {
         "un": "Botswana"
@@ -750,8 +679,6 @@
       "id": "bra",
       "displayNamePtBr": "Brasil",
       "aliasesPtBr": [
-        "Brazil",
-        "Federative Republic of Brazil",
         "República Federativa do Brasil",
         "BR"
       ],
@@ -779,12 +706,8 @@
       "id": "brn",
       "displayNamePtBr": "Brunei",
       "aliasesPtBr": [
-        "Nation of Brunei, Abode of Peace",
         "Nação do Brunei, Morada da Paz",
-        "BN",
-        "Brunei Darussalam",
-        "Nation of Brunei",
-        "the Abode of Peace"
+        "BN"
       ],
       "sourceNames": {
         "un": "Brunei"
@@ -810,10 +733,8 @@
       "id": "bgr",
       "displayNamePtBr": "Bulgária",
       "aliasesPtBr": [
-        "Republic of Bulgaria",
         "República da Bulgária",
-        "BG",
-        "Република България"
+        "BG"
       ],
       "sourceNames": {
         "un": "Bulgaria"
@@ -865,11 +786,8 @@
       "id": "bdi",
       "displayNamePtBr": "Burundi",
       "aliasesPtBr": [
-        "Republic of Burundi",
         "República do Burundi",
-        "BI",
-        "Republika y'Uburundi",
-        "République du Burundi"
+        "BI"
       ],
       "sourceNames": {
         "un": "Burundi"
@@ -895,8 +813,6 @@
       "id": "btn",
       "displayNamePtBr": "Butão",
       "aliasesPtBr": [
-        "Bhutan",
-        "Kingdom of Bhutan",
         "Reino do Butão",
         "BT"
       ],
@@ -924,8 +840,6 @@
       "id": "cpv",
       "displayNamePtBr": "Cabo Verde",
       "aliasesPtBr": [
-        "Cape Verde",
-        "Republic of Cabo Verde",
         "República de Cabo Verde",
         "CV"
       ],
@@ -953,11 +867,8 @@
       "id": "cmr",
       "displayNamePtBr": "Camarões",
       "aliasesPtBr": [
-        "Cameroon",
-        "Republic of Cameroon",
         "República dos Camarões",
-        "CM",
-        "République du Cameroun"
+        "CM"
       ],
       "sourceNames": {
         "un": "Cameroon"
@@ -983,8 +894,6 @@
       "id": "khm",
       "displayNamePtBr": "Camboja",
       "aliasesPtBr": [
-        "Cambodia",
-        "Kingdom of Cambodia",
         "Reino do Camboja",
         "KH"
       ],
@@ -1038,11 +947,8 @@
       "id": "qat",
       "displayNamePtBr": "Catar",
       "aliasesPtBr": [
-        "Qatar",
-        "State of Qatar",
         "Estado do Qatar",
-        "QA",
-        "Dawlat Qaṭar"
+        "QA"
       ],
       "sourceNames": {
         "un": "Qatar"
@@ -1068,16 +974,8 @@
       "id": "kaz",
       "displayNamePtBr": "Cazaquistão",
       "aliasesPtBr": [
-        "Kazakhstan",
-        "Republic of Kazakhstan",
         "República do Cazaquistão",
-        "KZ",
-        "Qazaqstan",
-        "Казахстан",
-        "Қазақстан Республикасы",
-        "Qazaqstan Respublïkası",
-        "Республика Казахстан",
-        "Respublika Kazakhstan"
+        "KZ"
       ],
       "sourceNames": {
         "un": "Kazakhstan"
@@ -1103,12 +1001,8 @@
       "id": "tcd",
       "displayNamePtBr": "Chade",
       "aliasesPtBr": [
-        "Chad",
-        "Republic of Chad",
         "República do Chade",
-        "TD",
-        "Tchad",
-        "République du Tchad"
+        "TD"
       ],
       "sourceNames": {
         "un": "Chad"
@@ -1134,12 +1028,8 @@
       "id": "cze",
       "displayNamePtBr": "Chéquia",
       "aliasesPtBr": [
-        "Czechia",
-        "Czech Republic",
         "República Checa",
-        "CZ",
-        "Česká republika",
-        "Česko"
+        "CZ"
       ],
       "sourceNames": {
         "un": "Czechia"
@@ -1165,10 +1055,8 @@
       "id": "chl",
       "displayNamePtBr": "Chile",
       "aliasesPtBr": [
-        "Republic of Chile",
         "República do Chile",
-        "CL",
-        "República de Chile"
+        "CL"
       ],
       "sourceNames": {
         "un": "Chile"
@@ -1194,13 +1082,8 @@
       "id": "chn",
       "displayNamePtBr": "China",
       "aliasesPtBr": [
-        "People's Republic of China",
         "República Popular da China",
-        "CN",
-        "Zhōngguó",
-        "Zhonghua",
-        "中华人民共和国",
-        "Zhōnghuá Rénmín Gònghéguó"
+        "CN"
       ],
       "sourceNames": {
         "un": "China"
@@ -1226,14 +1109,8 @@
       "id": "cyp",
       "displayNamePtBr": "Chipre",
       "aliasesPtBr": [
-        "Cyprus",
-        "Republic of Cyprus",
         "República de Chipre",
-        "CY",
-        "Kýpros",
-        "Kıbrıs",
-        "Κυπριακή Δημοκρατία",
-        "Kıbrıs Cumhuriyeti"
+        "CY"
       ],
       "sourceNames": {
         "un": "Cyprus"
@@ -1259,10 +1136,8 @@
       "id": "col",
       "displayNamePtBr": "Colômbia",
       "aliasesPtBr": [
-        "Republic of Colombia",
         "República da Colômbia",
-        "CO",
-        "República de Colombia"
+        "CO"
       ],
       "sourceNames": {
         "un": "Colombia"
@@ -1288,13 +1163,8 @@
       "id": "com",
       "displayNamePtBr": "Comores",
       "aliasesPtBr": [
-        "Comoros",
-        "Union of the Comoros",
         "União das Comores",
-        "KM",
-        "Union des Comores",
-        "Udzima wa Komori",
-        "al-Ittiḥād al-Qumurī"
+        "KM"
       ],
       "sourceNames": {
         "un": "Comoros"
@@ -1320,16 +1190,8 @@
       "id": "prk",
       "displayNamePtBr": "Coreia do Norte",
       "aliasesPtBr": [
-        "North Korea",
-        "Democratic People's Republic of Korea",
         "República Popular Democrática da Coreia",
-        "KP",
-        "DPRK",
-        "조선민주주의인민공화국",
-        "Chosŏn Minjujuŭi Inmin Konghwaguk",
-        "Korea, Democratic People's Republic of",
-        "북한",
-        "북조선"
+        "KP"
       ],
       "sourceNames": {
         "un": "North Korea"
@@ -1355,13 +1217,8 @@
       "id": "kor",
       "displayNamePtBr": "Coreia do Sul",
       "aliasesPtBr": [
-        "South Korea",
-        "Republic of Korea",
         "República da Coreia",
-        "KR",
-        "Korea, Republic of",
-        "남한",
-        "남조선"
+        "KR"
       ],
       "sourceNames": {
         "un": "South Korea"
@@ -1387,12 +1244,8 @@
       "id": "civ",
       "displayNamePtBr": "Costa do Marfim",
       "aliasesPtBr": [
-        "Ivory Coast",
-        "Republic of Côte d'Ivoire",
         "República da Côte d'Ivoire",
-        "CI",
-        "Côte d'Ivoire",
-        "République de Côte d'Ivoire"
+        "CI"
       ],
       "sourceNames": {
         "un": "Ivory Coast"
@@ -1418,10 +1271,8 @@
       "id": "cri",
       "displayNamePtBr": "Costa Rica",
       "aliasesPtBr": [
-        "Republic of Costa Rica",
         "República da Costa Rica",
-        "CR",
-        "República de Costa Rica"
+        "CR"
       ],
       "sourceNames": {
         "un": "Costa Rica"
@@ -1447,12 +1298,8 @@
       "id": "hrv",
       "displayNamePtBr": "Croácia",
       "aliasesPtBr": [
-        "Croatia",
-        "Republic of Croatia",
         "República da Croácia",
-        "HR",
-        "Hrvatska",
-        "Republika Hrvatska"
+        "HR"
       ],
       "sourceNames": {
         "un": "Croatia"
@@ -1478,7 +1325,6 @@
       "id": "cub",
       "displayNamePtBr": "Cuba",
       "aliasesPtBr": [
-        "Republic of Cuba",
         "República de Cuba",
         "CU"
       ],
@@ -1506,12 +1352,8 @@
       "id": "dnk",
       "displayNamePtBr": "Dinamarca",
       "aliasesPtBr": [
-        "Denmark",
-        "Kingdom of Denmark",
         "Reino da Dinamarca",
-        "DK",
-        "Danmark",
-        "Kongeriget Danmark"
+        "DK"
       ],
       "sourceNames": {
         "un": "Denmark"
@@ -1538,14 +1380,8 @@
       "displayNamePtBr": "Djibuti",
       "aliasesPtBr": [
         "Djibouti",
-        "Republic of Djibouti",
         "República do Djibouti",
-        "DJ",
-        "Jabuuti",
-        "Gabuuti",
-        "République de Djibouti",
-        "Gabuutih Ummuuno",
-        "Jamhuuriyadda Jabuuti"
+        "DJ"
       ],
       "sourceNames": {
         "un": "Djibouti"
@@ -1571,11 +1407,8 @@
       "id": "dma",
       "displayNamePtBr": "Dominica",
       "aliasesPtBr": [
-        "Commonwealth of Dominica",
         "Comunidade da Dominica",
-        "DM",
-        "Dominique",
-        "Wai‘tu kubuli"
+        "DM"
       ],
       "sourceNames": {
         "un": "Dominica"
@@ -1601,8 +1434,6 @@
       "id": "egy",
       "displayNamePtBr": "Egito",
       "aliasesPtBr": [
-        "Egypt",
-        "Arab Republic of Egypt",
         "República Árabe do Egipto",
         "EG"
       ],
@@ -1630,7 +1461,6 @@
       "id": "slv",
       "displayNamePtBr": "El Salvador",
       "aliasesPtBr": [
-        "Republic of El Salvador",
         "República de El Salvador",
         "SV"
       ],
@@ -1658,10 +1488,7 @@
       "id": "are",
       "displayNamePtBr": "Emirados Árabes Unidos",
       "aliasesPtBr": [
-        "United Arab Emirates",
-        "AE",
-        "UAE",
-        "Emirates"
+        "AE"
       ],
       "sourceNames": {
         "un": "United Arab Emirates"
@@ -1687,11 +1514,8 @@
       "id": "ecu",
       "displayNamePtBr": "Equador",
       "aliasesPtBr": [
-        "Ecuador",
-        "Republic of Ecuador",
         "República do Equador",
-        "EC",
-        "República del Ecuador"
+        "EC"
       ],
       "sourceNames": {
         "un": "Ecuador"
@@ -1717,14 +1541,8 @@
       "id": "eri",
       "displayNamePtBr": "Eritreia",
       "aliasesPtBr": [
-        "Eritrea",
-        "State of Eritrea",
         "Estado da Eritreia",
-        "ER",
-        "ሃገረ ኤርትራ",
-        "Dawlat Iritriyá",
-        "ʾErtrā",
-        "Iritriyā"
+        "ER"
       ],
       "sourceNames": {
         "un": "Eritrea"
@@ -1750,11 +1568,8 @@
       "id": "svk",
       "displayNamePtBr": "Eslováquia",
       "aliasesPtBr": [
-        "Slovakia",
-        "Slovak Republic",
         "República Eslovaca",
-        "SK",
-        "Slovenská republika"
+        "SK"
       ],
       "sourceNames": {
         "un": "Slovakia"
@@ -1780,11 +1595,8 @@
       "id": "svn",
       "displayNamePtBr": "Eslovênia",
       "aliasesPtBr": [
-        "Slovenia",
-        "Republic of Slovenia",
         "República da Eslovénia",
-        "SI",
-        "Republika Slovenija"
+        "SI"
       ],
       "sourceNames": {
         "un": "Slovenia"
@@ -1810,11 +1622,8 @@
       "id": "esp",
       "displayNamePtBr": "Espanha",
       "aliasesPtBr": [
-        "Spain",
-        "Kingdom of Spain",
         "Reino de Espanha",
-        "ES",
-        "Reino de España"
+        "ES"
       ],
       "sourceNames": {
         "un": "Spain"
@@ -1840,15 +1649,9 @@
       "id": "swz",
       "displayNamePtBr": "Essuatíni",
       "aliasesPtBr": [
-        "Eswatini",
-        "Kingdom of Eswatini",
+        "Suazilândia",
         "Reino de eSwatini",
-        "SZ",
-        "Swaziland",
-        "weSwatini",
-        "Swatini",
-        "Ngwane",
-        "Umbuso weSwatini"
+        "SZ"
       ],
       "sourceNames": {
         "un": "Eswatini"
@@ -1874,11 +1677,8 @@
       "id": "usa",
       "displayNamePtBr": "Estados Unidos",
       "aliasesPtBr": [
-        "United States",
-        "United States of America",
         "Estados Unidos da América",
-        "US",
-        "USA"
+        "US"
       ],
       "sourceNames": {
         "un": "United States"
@@ -1904,11 +1704,8 @@
       "id": "est",
       "displayNamePtBr": "Estônia",
       "aliasesPtBr": [
-        "Republic of Estonia",
         "República da Estónia",
-        "EE",
-        "Eesti",
-        "Eesti Vabariik"
+        "EE"
       ],
       "sourceNames": {
         "un": "Estonia"
@@ -1934,12 +1731,8 @@
       "id": "eth",
       "displayNamePtBr": "Etiópia",
       "aliasesPtBr": [
-        "Ethiopia",
-        "Federal Democratic Republic of Ethiopia",
         "República Federal Democrática da Etiópia",
-        "ET",
-        "ʾĪtyōṗṗyā",
-        "የኢትዮጵያ ፌዴራላዊ ዲሞክራሲያዊ ሪፐብሊክ"
+        "ET"
       ],
       "sourceNames": {
         "un": "Ethiopia"
@@ -1965,12 +1758,8 @@
       "id": "fji",
       "displayNamePtBr": "Fiji",
       "aliasesPtBr": [
-        "Republic of Fiji",
         "República de Fiji",
-        "FJ",
-        "Viti",
-        "Matanitu ko Viti",
-        "Fijī Gaṇarājya"
+        "FJ"
       ],
       "sourceNames": {
         "un": "Fiji"
@@ -1996,11 +1785,8 @@
       "id": "phl",
       "displayNamePtBr": "Filipinas",
       "aliasesPtBr": [
-        "Philippines",
-        "Republic of the Philippines",
         "República das Filipinas",
-        "PH",
-        "Repúblika ng Pilipinas"
+        "PH"
       ],
       "sourceNames": {
         "un": "Philippines"
@@ -2026,13 +1812,8 @@
       "id": "fin",
       "displayNamePtBr": "Finlândia",
       "aliasesPtBr": [
-        "Finland",
-        "Republic of Finland",
         "República da Finlândia",
-        "FI",
-        "Suomi",
-        "Suomen tasavalta",
-        "Republiken Finland"
+        "FI"
       ],
       "sourceNames": {
         "un": "Finland"
@@ -2058,11 +1839,8 @@
       "id": "fra",
       "displayNamePtBr": "França",
       "aliasesPtBr": [
-        "France",
-        "French Republic",
         "República Francesa",
-        "FR",
-        "République française"
+        "FR"
       ],
       "sourceNames": {
         "un": "France"
@@ -2088,11 +1866,8 @@
       "id": "gab",
       "displayNamePtBr": "Gabão",
       "aliasesPtBr": [
-        "Gabon",
-        "Gabonese Republic",
         "República do Gabão",
-        "GA",
-        "République Gabonaise"
+        "GA"
       ],
       "sourceNames": {
         "un": "Gabon"
@@ -2118,7 +1893,6 @@
       "id": "gmb",
       "displayNamePtBr": "Gâmbia",
       "aliasesPtBr": [
-        "Republic of the Gambia",
         "República da Gâmbia",
         "GM"
       ],
@@ -2146,8 +1920,6 @@
       "id": "gha",
       "displayNamePtBr": "Gana",
       "aliasesPtBr": [
-        "Ghana",
-        "Republic of Ghana",
         "República do Gana",
         "GH"
       ],
@@ -2175,8 +1947,7 @@
       "id": "geo",
       "displayNamePtBr": "Geórgia",
       "aliasesPtBr": [
-        "GE",
-        "Sakartvelo"
+        "GE"
       ],
       "sourceNames": {
         "un": "Georgia"
@@ -2229,12 +2000,8 @@
       "id": "grc",
       "displayNamePtBr": "Grécia",
       "aliasesPtBr": [
-        "Greece",
-        "Hellenic Republic",
         "República Helénica",
-        "GR",
-        "Elláda",
-        "Ελληνική Δημοκρατία"
+        "GR"
       ],
       "sourceNames": {
         "un": "Greece"
@@ -2260,7 +2027,6 @@
       "id": "gtm",
       "displayNamePtBr": "Guatemala",
       "aliasesPtBr": [
-        "Republic of Guatemala",
         "República da Guatemala",
         "GT"
       ],
@@ -2288,8 +2054,6 @@
       "id": "guy",
       "displayNamePtBr": "Guiana",
       "aliasesPtBr": [
-        "Guyana",
-        "Co-operative Republic of Guyana",
         "Co -operative República da Guiana",
         "GY"
       ],
@@ -2317,11 +2081,8 @@
       "id": "gin",
       "displayNamePtBr": "Guiné",
       "aliasesPtBr": [
-        "Guinea",
-        "Republic of Guinea",
         "República da Guiné",
-        "GN",
-        "République de Guinée"
+        "GN"
       ],
       "sourceNames": {
         "un": "Guinea"
@@ -2347,12 +2108,8 @@
       "id": "gnq",
       "displayNamePtBr": "Guiné Equatorial",
       "aliasesPtBr": [
-        "Equatorial Guinea",
-        "Republic of Equatorial Guinea",
         "República da Guiné Equatorial",
-        "GQ",
-        "República de Guinea Ecuatorial",
-        "République de Guinée équatoriale"
+        "GQ"
       ],
       "sourceNames": {
         "un": "Equatorial Guinea"
@@ -2378,8 +2135,6 @@
       "id": "gnb",
       "displayNamePtBr": "Guiné-Bissau",
       "aliasesPtBr": [
-        "Guinea-Bissau",
-        "Republic of Guinea-Bissau",
         "República da Guiné-Bissau",
         "GW"
       ],
@@ -2407,11 +2162,8 @@
       "id": "hti",
       "displayNamePtBr": "Haiti",
       "aliasesPtBr": [
-        "Republic of Haiti",
         "República do Haiti",
-        "HT",
-        "République d'Haïti",
-        "Repiblik Ayiti"
+        "HT"
       ],
       "sourceNames": {
         "un": "Haiti"
@@ -2437,7 +2189,6 @@
       "id": "hnd",
       "displayNamePtBr": "Honduras",
       "aliasesPtBr": [
-        "Republic of Honduras",
         "República de Honduras",
         "HN"
       ],
@@ -2465,7 +2216,6 @@
       "id": "hun",
       "displayNamePtBr": "Hungria",
       "aliasesPtBr": [
-        "Hungary",
         "HU"
       ],
       "sourceNames": {
@@ -2492,12 +2242,8 @@
       "id": "yem",
       "displayNamePtBr": "Iêmen",
       "aliasesPtBr": [
-        "Yemen",
-        "Republic of Yemen",
         "República do Iêmen",
-        "YE",
-        "Yemeni Republic",
-        "al-Jumhūriyyah al-Yamaniyyah"
+        "YE"
       ],
       "sourceNames": {
         "un": "Yemen"
@@ -2523,11 +2269,8 @@
       "id": "mhl",
       "displayNamePtBr": "Ilhas Marshall",
       "aliasesPtBr": [
-        "Marshall Islands",
-        "Republic of the Marshall Islands",
         "República das Ilhas Marshall",
-        "MH",
-        "Aolepān Aorōkin M̧ajeļ"
+        "MH"
       ],
       "sourceNames": {
         "un": "Marshall Islands"
@@ -2553,7 +2296,6 @@
       "id": "slb",
       "displayNamePtBr": "Ilhas Salomão",
       "aliasesPtBr": [
-        "Solomon Islands",
         "SB"
       ],
       "sourceNames": {
@@ -2580,12 +2322,8 @@
       "id": "ind",
       "displayNamePtBr": "Índia",
       "aliasesPtBr": [
-        "Republic of India",
         "República da Índia",
-        "IN",
-        "Bhārat",
-        "Bharat Ganrajya",
-        "இந்தியா"
+        "IN"
       ],
       "sourceNames": {
         "un": "India"
@@ -2611,10 +2349,8 @@
       "id": "idn",
       "displayNamePtBr": "Indonésia",
       "aliasesPtBr": [
-        "Republic of Indonesia",
         "República da Indonésia",
-        "ID",
-        "Republik Indonesia"
+        "ID"
       ],
       "sourceNames": {
         "un": "Indonesia"
@@ -2640,12 +2376,9 @@
       "id": "irn",
       "displayNamePtBr": "Irã",
       "aliasesPtBr": [
-        "Iran",
-        "Islamic Republic of Iran",
+        "Irão",
         "República Islâmica do Irã",
-        "IR",
-        "Iran, Islamic Republic of",
-        "Jomhuri-ye Eslāmi-ye Irān"
+        "IR"
       ],
       "sourceNames": {
         "un": "Iran"
@@ -2671,11 +2404,8 @@
       "id": "irq",
       "displayNamePtBr": "Iraque",
       "aliasesPtBr": [
-        "Iraq",
-        "Republic of Iraq",
         "República do Iraque",
-        "IQ",
-        "Jumhūriyyat al-‘Irāq"
+        "IQ"
       ],
       "sourceNames": {
         "un": "Iraq"
@@ -2701,12 +2431,8 @@
       "id": "irl",
       "displayNamePtBr": "Irlanda",
       "aliasesPtBr": [
-        "Ireland",
-        "Republic of Ireland",
         "República da Irlanda",
-        "IE",
-        "Éire",
-        "Poblacht na hÉireann"
+        "IE"
       ],
       "sourceNames": {
         "un": "Ireland"
@@ -2732,11 +2458,7 @@
       "id": "isl",
       "displayNamePtBr": "Islândia",
       "aliasesPtBr": [
-        "Iceland",
-        "IS",
-        "Island",
-        "Republic of Iceland",
-        "Lýðveldið Ísland"
+        "IS"
       ],
       "sourceNames": {
         "un": "Iceland"
@@ -2762,10 +2484,8 @@
       "id": "isr",
       "displayNamePtBr": "Israel",
       "aliasesPtBr": [
-        "State of Israel",
         "Estado de Israel",
-        "IL",
-        "Medīnat Yisrā'el"
+        "IL"
       ],
       "sourceNames": {
         "un": "Israel"
@@ -2791,11 +2511,8 @@
       "id": "ita",
       "displayNamePtBr": "Itália",
       "aliasesPtBr": [
-        "Italy",
-        "Italian Republic",
         "República Italiana",
-        "IT",
-        "Repubblica italiana"
+        "IT"
       ],
       "sourceNames": {
         "un": "Italy"
@@ -2847,10 +2564,7 @@
       "id": "jpn",
       "displayNamePtBr": "Japão",
       "aliasesPtBr": [
-        "Japan",
-        "JP",
-        "Nippon",
-        "Nihon"
+        "JP"
       ],
       "sourceNames": {
         "un": "Japan"
@@ -2876,11 +2590,8 @@
       "id": "jor",
       "displayNamePtBr": "Jordânia",
       "aliasesPtBr": [
-        "Jordan",
-        "Hashemite Kingdom of Jordan",
         "Reino Hachemita da Jordânia",
-        "JO",
-        "al-Mamlakah al-Urdunīyah al-Hāshimīyah"
+        "JO"
       ],
       "sourceNames": {
         "un": "Jordan"
@@ -2906,11 +2617,8 @@
       "id": "kir",
       "displayNamePtBr": "Kiribati",
       "aliasesPtBr": [
-        "Independent and Sovereign Republic of Kiribati",
         "Independente e soberano República de Kiribati",
-        "KI",
-        "Republic of Kiribati",
-        "Ribaberiki Kiribati"
+        "KI"
       ],
       "sourceNames": {
         "un": "Kiribati"
@@ -2936,10 +2644,8 @@
       "id": "kwt",
       "displayNamePtBr": "Kuwait",
       "aliasesPtBr": [
-        "State of Kuwait",
         "Estado do Kuwait",
-        "KW",
-        "Dawlat al-Kuwait"
+        "KW"
       ],
       "sourceNames": {
         "un": "Kuwait"
@@ -2965,11 +2671,8 @@
       "id": "lao",
       "displayNamePtBr": "Laos",
       "aliasesPtBr": [
-        "Lao People's Democratic Republic",
         "Laos, República Democrática",
-        "LA",
-        "Lao",
-        "Sathalanalat Paxathipatai Paxaxon Lao"
+        "LA"
       ],
       "sourceNames": {
         "un": "Laos"
@@ -2995,11 +2698,8 @@
       "id": "lso",
       "displayNamePtBr": "Lesoto",
       "aliasesPtBr": [
-        "Lesotho",
-        "Kingdom of Lesotho",
         "Reino do Lesoto",
-        "LS",
-        "Muso oa Lesotho"
+        "LS"
       ],
       "sourceNames": {
         "un": "Lesotho"
@@ -3025,11 +2725,8 @@
       "id": "lva",
       "displayNamePtBr": "Letônia",
       "aliasesPtBr": [
-        "Latvia",
-        "Republic of Latvia",
         "República da Letónia",
-        "LV",
-        "Latvijas Republika"
+        "LV"
       ],
       "sourceNames": {
         "un": "Latvia"
@@ -3055,11 +2752,8 @@
       "id": "lbn",
       "displayNamePtBr": "Líbano",
       "aliasesPtBr": [
-        "Lebanon",
-        "Lebanese Republic",
         "República Libanesa",
-        "LB",
-        "Al-Jumhūrīyah Al-Libnānīyah"
+        "LB"
       ],
       "sourceNames": {
         "un": "Lebanon"
@@ -3085,7 +2779,6 @@
       "id": "lbr",
       "displayNamePtBr": "Libéria",
       "aliasesPtBr": [
-        "Republic of Liberia",
         "República da Libéria",
         "LR"
       ],
@@ -3113,11 +2806,8 @@
       "id": "lby",
       "displayNamePtBr": "Líbia",
       "aliasesPtBr": [
-        "Libya",
-        "State of Libya",
         "Estado da Líbia",
-        "LY",
-        "Dawlat Libya"
+        "LY"
       ],
       "sourceNames": {
         "un": "Libya"
@@ -3143,10 +2833,8 @@
       "id": "lie",
       "displayNamePtBr": "Liechtenstein",
       "aliasesPtBr": [
-        "Principality of Liechtenstein",
         "Principado de Liechtenstein",
-        "LI",
-        "Fürstentum Liechtenstein"
+        "LI"
       ],
       "sourceNames": {
         "un": "Liechtenstein"
@@ -3172,11 +2860,8 @@
       "id": "ltu",
       "displayNamePtBr": "Lituânia",
       "aliasesPtBr": [
-        "Lithuania",
-        "Republic of Lithuania",
         "República da Lituânia",
-        "LT",
-        "Lietuvos Respublika"
+        "LT"
       ],
       "sourceNames": {
         "un": "Lithuania"
@@ -3202,13 +2887,8 @@
       "id": "lux",
       "displayNamePtBr": "Luxemburgo",
       "aliasesPtBr": [
-        "Luxembourg",
-        "Grand Duchy of Luxembourg",
         "Grão-Ducado do Luxemburgo",
-        "LU",
-        "Grand-Duché de Luxembourg",
-        "Großherzogtum Luxemburg",
-        "Groussherzogtum Lëtzebuerg"
+        "LU"
       ],
       "sourceNames": {
         "un": "Luxembourg"
@@ -3234,13 +2914,8 @@
       "id": "mkd",
       "displayNamePtBr": "Macedônia do Norte",
       "aliasesPtBr": [
-        "North Macedonia",
-        "Republic of North Macedonia",
         "República da Macedônia do Norte",
-        "MK",
-        "The former Yugoslav Republic of Macedonia",
-        "Macedonia, The Former Yugoslav Republic of",
-        "Република Северна Македонија"
+        "MK"
       ],
       "sourceNames": {
         "un": "North Macedonia"
@@ -3266,11 +2941,8 @@
       "id": "mdg",
       "displayNamePtBr": "Madagáscar",
       "aliasesPtBr": [
-        "Republic of Madagascar",
         "República de Madagáscar",
-        "MG",
-        "Repoblikan'i Madagasikara",
-        "République de Madagascar"
+        "MG"
       ],
       "sourceNames": {
         "un": "Madagascar"
@@ -3296,7 +2968,6 @@
       "id": "mys",
       "displayNamePtBr": "Malásia",
       "aliasesPtBr": [
-        "Malaysia",
         "MY"
       ],
       "sourceNames": {
@@ -3323,7 +2994,6 @@
       "id": "mwi",
       "displayNamePtBr": "Malawi",
       "aliasesPtBr": [
-        "Republic of Malawi",
         "República do Malawi",
         "MW"
       ],
@@ -3351,12 +3021,8 @@
       "id": "mdv",
       "displayNamePtBr": "Maldivas",
       "aliasesPtBr": [
-        "Maldives",
-        "Republic of the Maldives",
         "República das Maldivas",
-        "MV",
-        "Maldive Islands",
-        "Dhivehi Raajjeyge Jumhooriyya"
+        "MV"
       ],
       "sourceNames": {
         "un": "Maldives"
@@ -3382,10 +3048,8 @@
       "id": "mli",
       "displayNamePtBr": "Mali",
       "aliasesPtBr": [
-        "Republic of Mali",
         "República do Mali",
-        "ML",
-        "République du Mali"
+        "ML"
       ],
       "sourceNames": {
         "un": "Mali"
@@ -3411,10 +3075,8 @@
       "id": "mlt",
       "displayNamePtBr": "Malta",
       "aliasesPtBr": [
-        "Republic of Malta",
         "República de Malta",
-        "MT",
-        "Repubblika ta' Malta"
+        "MT"
       ],
       "sourceNames": {
         "un": "Malta"
@@ -3440,11 +3102,8 @@
       "id": "mar",
       "displayNamePtBr": "Marrocos",
       "aliasesPtBr": [
-        "Morocco",
-        "Kingdom of Morocco",
         "Reino de Marrocos",
-        "MA",
-        "Al-Mamlakah al-Maġribiyah"
+        "MA"
       ],
       "sourceNames": {
         "un": "Morocco"
@@ -3470,11 +3129,8 @@
       "id": "mus",
       "displayNamePtBr": "Maurício",
       "aliasesPtBr": [
-        "Mauritius",
-        "Republic of Mauritius",
         "República das Maurícias",
-        "MU",
-        "République de Maurice"
+        "MU"
       ],
       "sourceNames": {
         "un": "Mauritius"
@@ -3500,10 +3156,8 @@
       "id": "mrt",
       "displayNamePtBr": "Mauritânia",
       "aliasesPtBr": [
-        "Islamic Republic of Mauritania",
         "República Islâmica da Mauritânia",
-        "MR",
-        "al-Jumhūriyyah al-ʾIslāmiyyah al-Mūrītāniyyah"
+        "MR"
       ],
       "sourceNames": {
         "un": "Mauritania"
@@ -3529,10 +3183,8 @@
       "id": "mex",
       "displayNamePtBr": "México",
       "aliasesPtBr": [
-        "United Mexican States",
         "Estados Unidos Mexicanos",
-        "MX",
-        "Mexicanos"
+        "MX"
       ],
       "sourceNames": {
         "un": "Mexico"
@@ -3558,10 +3210,8 @@
       "id": "fsm",
       "displayNamePtBr": "Micronésia",
       "aliasesPtBr": [
-        "Federated States of Micronesia",
         "Estados Federados da Micronésia",
-        "FM",
-        "Micronesia, Federated States of"
+        "FM"
       ],
       "sourceNames": {
         "un": "Micronesia"
@@ -3587,8 +3237,6 @@
       "id": "moz",
       "displayNamePtBr": "Moçambique",
       "aliasesPtBr": [
-        "Mozambique",
-        "Republic of Mozambique",
         "República de Moçambique",
         "MZ"
       ],
@@ -3616,12 +3264,8 @@
       "id": "mda",
       "displayNamePtBr": "Moldávia",
       "aliasesPtBr": [
-        "Moldova",
-        "Republic of Moldova",
         "República da Moldávia",
-        "MD",
-        "Moldova, Republic of",
-        "Republica Moldova"
+        "MD"
       ],
       "sourceNames": {
         "un": "Moldova"
@@ -3647,10 +3291,8 @@
       "id": "mco",
       "displayNamePtBr": "Mônaco",
       "aliasesPtBr": [
-        "Principality of Monaco",
         "Principado do Mónaco",
-        "MC",
-        "Principauté de Monaco"
+        "MC"
       ],
       "sourceNames": {
         "un": "Monaco"
@@ -3702,8 +3344,7 @@
       "id": "mne",
       "displayNamePtBr": "Montenegro",
       "aliasesPtBr": [
-        "ME",
-        "Crna Gora"
+        "ME"
       ],
       "sourceNames": {
         "un": "Montenegro"
@@ -3729,11 +3370,8 @@
       "id": "mmr",
       "displayNamePtBr": "Myanmar",
       "aliasesPtBr": [
-        "Republic of the Union of Myanmar",
         "República da União de Myanmar",
-        "MM",
-        "Burma",
-        "Pyidaunzu Thanmăda Myăma Nainngandaw"
+        "MM"
       ],
       "sourceNames": {
         "un": "Myanmar"
@@ -3759,10 +3397,8 @@
       "id": "nam",
       "displayNamePtBr": "Namíbia",
       "aliasesPtBr": [
-        "Republic of Namibia",
         "República da Namíbia",
-        "NA",
-        "Namibië"
+        "NA"
       ],
       "sourceNames": {
         "un": "Namibia"
@@ -3788,12 +3424,8 @@
       "id": "nru",
       "displayNamePtBr": "Nauru",
       "aliasesPtBr": [
-        "Republic of Nauru",
         "República de Nauru",
-        "NR",
-        "Naoero",
-        "Pleasant Island",
-        "Ripublik Naoero"
+        "NR"
       ],
       "sourceNames": {
         "un": "Nauru"
@@ -3819,10 +3451,8 @@
       "id": "npl",
       "displayNamePtBr": "Nepal",
       "aliasesPtBr": [
-        "Federal Democratic Republic of Nepal",
         "República Democrática Federal do Nepal",
-        "NP",
-        "Loktāntrik Ganatantra Nepāl"
+        "NP"
       ],
       "sourceNames": {
         "un": "Nepal"
@@ -3848,10 +3478,8 @@
       "id": "nic",
       "displayNamePtBr": "Nicarágua",
       "aliasesPtBr": [
-        "Republic of Nicaragua",
         "República da Nicarágua",
-        "NI",
-        "República de Nicaragua"
+        "NI"
       ],
       "sourceNames": {
         "un": "Nicaragua"
@@ -3877,10 +3505,8 @@
       "id": "ner",
       "displayNamePtBr": "Níger",
       "aliasesPtBr": [
-        "Republic of Niger",
         "República do Níger",
-        "NE",
-        "Nijar"
+        "NE"
       ],
       "sourceNames": {
         "un": "Niger"
@@ -3906,11 +3532,8 @@
       "id": "nga",
       "displayNamePtBr": "Nigéria",
       "aliasesPtBr": [
-        "Federal Republic of Nigeria",
         "República Federal da Nigéria",
-        "NG",
-        "Nijeriya",
-        "Naíjíríà"
+        "NG"
       ],
       "sourceNames": {
         "un": "Nigeria"
@@ -3936,14 +3559,8 @@
       "id": "nor",
       "displayNamePtBr": "Noruega",
       "aliasesPtBr": [
-        "Norway",
-        "Kingdom of Norway",
         "Reino da Noruega",
-        "NO",
-        "Norge",
-        "Noreg",
-        "Kongeriket Norge",
-        "Kongeriket Noreg"
+        "NO"
       ],
       "sourceNames": {
         "un": "Norway"
@@ -3969,9 +3586,7 @@
       "id": "nzl",
       "displayNamePtBr": "Nova Zelândia",
       "aliasesPtBr": [
-        "New Zealand",
-        "NZ",
-        "Aotearoa"
+        "NZ"
       ],
       "sourceNames": {
         "un": "New Zealand"
@@ -3997,11 +3612,8 @@
       "id": "omn",
       "displayNamePtBr": "Omã",
       "aliasesPtBr": [
-        "Oman",
-        "Sultanate of Oman",
         "Sultanato de Omã",
-        "OM",
-        "Salṭanat ʻUmān"
+        "OM"
       ],
       "sourceNames": {
         "un": "Oman"
@@ -4027,13 +3639,8 @@
       "id": "nld",
       "displayNamePtBr": "Países Baixos",
       "aliasesPtBr": [
-        "Netherlands",
-        "Kingdom of the Netherlands",
         "Holanda",
-        "NL",
-        "Holland",
-        "Nederland",
-        "The Netherlands"
+        "NL"
       ],
       "sourceNames": {
         "un": "Netherlands"
@@ -4059,10 +3666,8 @@
       "id": "plw",
       "displayNamePtBr": "Palau",
       "aliasesPtBr": [
-        "Republic of Palau",
         "República de Palau",
-        "PW",
-        "Beluu er a Belau"
+        "PW"
       ],
       "sourceNames": {
         "un": "Palau"
@@ -4088,12 +3693,8 @@
       "id": "pse",
       "displayNamePtBr": "Palestina",
       "aliasesPtBr": [
-        "Palestine",
-        "State of Palestine",
         "Estado da Palestina",
-        "PS",
-        "Palestine, State of",
-        "Dawlat Filasṭin"
+        "PS"
       ],
       "sourceNames": {
         "un": "State of Palestine"
@@ -4119,10 +3720,8 @@
       "id": "pan",
       "displayNamePtBr": "Panamá",
       "aliasesPtBr": [
-        "Republic of Panama",
         "República do Panamá",
-        "PA",
-        "República de Panamá"
+        "PA"
       ],
       "sourceNames": {
         "un": "Panama"
@@ -4148,11 +3747,8 @@
       "id": "png",
       "displayNamePtBr": "Papua Nova Guiné",
       "aliasesPtBr": [
-        "Papua New Guinea",
-        "Independent State of Papua New Guinea",
         "Estado Independente da Papua Nova Guiné",
-        "PG",
-        "Independen Stet bilong Papua Niugini"
+        "PG"
       ],
       "sourceNames": {
         "un": "Papua New Guinea"
@@ -4178,11 +3774,8 @@
       "id": "pak",
       "displayNamePtBr": "Paquistão",
       "aliasesPtBr": [
-        "Pakistan",
-        "Islamic Republic of Pakistan",
         "República Islâmica do Paquistão",
-        "PK",
-        "Islāmī Jumhūriya'eh Pākistān"
+        "PK"
       ],
       "sourceNames": {
         "un": "Pakistan"
@@ -4208,12 +3801,8 @@
       "id": "pry",
       "displayNamePtBr": "Paraguai",
       "aliasesPtBr": [
-        "Paraguay",
-        "Republic of Paraguay",
         "República do Paraguai",
-        "PY",
-        "República del Paraguay",
-        "Tetã Paraguái"
+        "PY"
       ],
       "sourceNames": {
         "un": "Paraguay"
@@ -4240,10 +3829,8 @@
       "id": "per",
       "displayNamePtBr": "Peru",
       "aliasesPtBr": [
-        "Republic of Peru",
         "República do Peru",
-        "PE",
-        "República del Perú"
+        "PE"
       ],
       "sourceNames": {
         "un": "Peru"
@@ -4269,11 +3856,8 @@
       "id": "pol",
       "displayNamePtBr": "Polônia",
       "aliasesPtBr": [
-        "Poland",
-        "Republic of Poland",
         "República da Polónia",
-        "PL",
-        "Rzeczpospolita Polska"
+        "PL"
       ],
       "sourceNames": {
         "un": "Poland"
@@ -4299,11 +3883,8 @@
       "id": "prt",
       "displayNamePtBr": "Portugal",
       "aliasesPtBr": [
-        "Portuguese Republic",
         "República português",
-        "PT",
-        "Portuguesa",
-        "República Portuguesa"
+        "PT"
       ],
       "sourceNames": {
         "un": "Portugal"
@@ -4329,11 +3910,8 @@
       "id": "ken",
       "displayNamePtBr": "Quênia",
       "aliasesPtBr": [
-        "Kenya",
-        "Republic of Kenya",
         "República do Quénia",
-        "KE",
-        "Jamhuri ya Kenya"
+        "KE"
       ],
       "sourceNames": {
         "un": "Kenya"
@@ -4359,13 +3937,8 @@
       "id": "kgz",
       "displayNamePtBr": "Quirguistão",
       "aliasesPtBr": [
-        "Kyrgyzstan",
-        "Kyrgyz Republic",
         "República do Quirguistão",
-        "KG",
-        "Киргизия",
-        "Кыргыз Республикасы",
-        "Kyrgyz Respublikasy"
+        "KG"
       ],
       "sourceNames": {
         "un": "Kyrgyzstan"
@@ -4391,12 +3964,8 @@
       "id": "gbr",
       "displayNamePtBr": "Reino Unido",
       "aliasesPtBr": [
-        "United Kingdom",
-        "United Kingdom of Great Britain and Northern Ireland",
         "Reino Unido da Grã-Bretanha e Irlanda do Norte",
-        "GB",
-        "UK",
-        "Great Britain"
+        "GB"
       ],
       "sourceNames": {
         "un": "United Kingdom"
@@ -4422,10 +3991,8 @@
       "id": "caf",
       "displayNamePtBr": "República Centro-Africana",
       "aliasesPtBr": [
-        "Central African Republic",
         "República Centro-Africano",
-        "CF",
-        "République centrafricaine"
+        "CF"
       ],
       "sourceNames": {
         "un": "Central African Republic"
@@ -4451,12 +4018,7 @@
       "id": "cod",
       "displayNamePtBr": "República Democrática do Congo",
       "aliasesPtBr": [
-        "DR Congo",
-        "Democratic Republic of the Congo",
-        "CD",
-        "Congo-Kinshasa",
-        "Congo, the Democratic Republic of the",
-        "DRC"
+        "CD"
       ],
       "sourceNames": {
         "un": "DR Congo"
@@ -4482,10 +4044,8 @@
       "id": "cog",
       "displayNamePtBr": "República do Congo",
       "aliasesPtBr": [
-        "Republic of the Congo",
-        "CG",
         "Congo",
-        "Congo-Brazzaville"
+        "CG"
       ],
       "sourceNames": {
         "un": "Republic of the Congo"
@@ -4511,7 +4071,6 @@
       "id": "dom",
       "displayNamePtBr": "República Dominicana",
       "aliasesPtBr": [
-        "Dominican Republic",
         "DO"
       ],
       "sourceNames": {
@@ -4538,10 +4097,7 @@
       "id": "rou",
       "displayNamePtBr": "Romênia",
       "aliasesPtBr": [
-        "Romania",
-        "RO",
-        "Rumania",
-        "Roumania"
+        "RO"
       ],
       "sourceNames": {
         "un": "Romania"
@@ -4567,12 +4123,8 @@
       "id": "rwa",
       "displayNamePtBr": "Ruanda",
       "aliasesPtBr": [
-        "Rwanda",
-        "Republic of Rwanda",
         "República do Ruanda",
-        "RW",
-        "Repubulika y'u Rwanda",
-        "République du Rwanda"
+        "RW"
       ],
       "sourceNames": {
         "un": "Rwanda"
@@ -4598,10 +4150,8 @@
       "id": "rus",
       "displayNamePtBr": "Rússia",
       "aliasesPtBr": [
-        "Russian Federation",
         "Federação Russa",
-        "RU",
-        "Российская Федерация"
+        "RU"
       ],
       "sourceNames": {
         "un": "Russia"
@@ -4627,10 +4177,8 @@
       "id": "wsm",
       "displayNamePtBr": "Samoa",
       "aliasesPtBr": [
-        "Independent State of Samoa",
         "Estado Independente de Samoa",
-        "WS",
-        "Malo Saʻoloto Tutoʻatasi o Sāmoa"
+        "WS"
       ],
       "sourceNames": {
         "un": "Samoa"
@@ -4656,10 +4204,8 @@
       "id": "smr",
       "displayNamePtBr": "San Marino",
       "aliasesPtBr": [
-        "Republic of San Marino",
         "Sereníssima República de San Marino",
-        "SM",
-        "Repubblica di San Marino"
+        "SM"
       ],
       "sourceNames": {
         "un": "San Marino"
@@ -4685,7 +4231,6 @@
       "id": "lca",
       "displayNamePtBr": "Santa Lúcia",
       "aliasesPtBr": [
-        "Saint Lucia",
         "LC"
       ],
       "sourceNames": {
@@ -4712,8 +4257,6 @@
       "id": "kna",
       "displayNamePtBr": "São Cristóvão e Nevis",
       "aliasesPtBr": [
-        "Saint Kitts and Nevis",
-        "Federation of Saint Christopher and Nevis",
         "Federação de São Cristóvão e Nevis",
         "KN"
       ],
@@ -4741,8 +4284,6 @@
       "id": "stp",
       "displayNamePtBr": "São Tomé e Príncipe",
       "aliasesPtBr": [
-        "São Tomé and Príncipe",
-        "Democratic Republic of São Tomé and Príncipe",
         "República Democrática de São Tomé e Príncipe",
         "ST"
       ],
@@ -4770,7 +4311,7 @@
       "id": "vct",
       "displayNamePtBr": "São Vicente e Granadinas",
       "aliasesPtBr": [
-        "Saint Vincent and the Grenadines",
+        "São Vincente e Granadinas",
         "VC"
       ],
       "sourceNames": {
@@ -4797,12 +4338,8 @@
       "id": "syc",
       "displayNamePtBr": "Seicheles",
       "aliasesPtBr": [
-        "Seychelles",
-        "Republic of Seychelles",
         "República das Seychelles",
-        "SC",
-        "Repiblik Sesel",
-        "République des Seychelles"
+        "SC"
       ],
       "sourceNames": {
         "un": "Seychelles"
@@ -4828,10 +4365,8 @@
       "id": "sen",
       "displayNamePtBr": "Senegal",
       "aliasesPtBr": [
-        "Republic of Senegal",
         "República do Senegal",
-        "SN",
-        "République du Sénégal"
+        "SN"
       ],
       "sourceNames": {
         "un": "Senegal"
@@ -4857,8 +4392,6 @@
       "id": "sle",
       "displayNamePtBr": "Serra Leoa",
       "aliasesPtBr": [
-        "Sierra Leone",
-        "Republic of Sierra Leone",
         "República da Serra Leoa",
         "SL"
       ],
@@ -4886,13 +4419,8 @@
       "id": "srb",
       "displayNamePtBr": "Sérvia",
       "aliasesPtBr": [
-        "Serbia",
-        "Republic of Serbia",
         "República da Sérvia",
-        "RS",
-        "Srbija",
-        "Република Србија",
-        "Republika Srbija"
+        "RS"
       ],
       "sourceNames": {
         "un": "Serbia"
@@ -4918,12 +4446,8 @@
       "id": "sgp",
       "displayNamePtBr": "Singapura",
       "aliasesPtBr": [
-        "Singapore",
-        "Republic of Singapore",
         "República de Singapura",
-        "SG",
-        "Republik Singapura",
-        "新加坡共和国"
+        "SG"
       ],
       "sourceNames": {
         "un": "Singapore"
@@ -4949,11 +4473,8 @@
       "id": "syr",
       "displayNamePtBr": "Síria",
       "aliasesPtBr": [
-        "Syria",
-        "Syrian Arab Republic",
         "República Árabe Síria",
-        "SY",
-        "Al-Jumhūrīyah Al-ʻArabīyah As-Sūrīyah"
+        "SY"
       ],
       "sourceNames": {
         "un": "Syria"
@@ -4979,12 +4500,8 @@
       "id": "som",
       "displayNamePtBr": "Somália",
       "aliasesPtBr": [
-        "Federal Republic of Somalia",
         "República Federal da Somália",
-        "SO",
-        "aṣ-Ṣūmāl",
-        "Jamhuuriyadda Federaalka Soomaaliya",
-        "Jumhūriyyat aṣ-Ṣūmāl al-Fiderāliyya"
+        "SO"
       ],
       "sourceNames": {
         "un": "Somalia"
@@ -5010,10 +4527,8 @@
       "id": "lka",
       "displayNamePtBr": "Sri Lanka",
       "aliasesPtBr": [
-        "Democratic Socialist Republic of Sri Lanka",
         "República Democrática Socialista do Sri Lanka",
-        "LK",
-        "ilaṅkai"
+        "LK"
       ],
       "sourceNames": {
         "un": "Sri Lanka"
@@ -5039,11 +4554,8 @@
       "id": "sdn",
       "displayNamePtBr": "Sudão",
       "aliasesPtBr": [
-        "Sudan",
-        "Republic of the Sudan",
         "República do Sudão",
-        "SD",
-        "Jumhūrīyat as-Sūdān"
+        "SD"
       ],
       "sourceNames": {
         "un": "Sudan"
@@ -5069,8 +4581,6 @@
       "id": "ssd",
       "displayNamePtBr": "Sudão do Sul",
       "aliasesPtBr": [
-        "South Sudan",
-        "Republic of South Sudan",
         "República do Sudão do Sul",
         "SS"
       ],
@@ -5098,11 +4608,8 @@
       "id": "swe",
       "displayNamePtBr": "Suécia",
       "aliasesPtBr": [
-        "Sweden",
-        "Kingdom of Sweden",
         "Reino da Suécia",
-        "SE",
-        "Konungariket Sverige"
+        "SE"
       ],
       "sourceNames": {
         "un": "Sweden"
@@ -5128,14 +4635,8 @@
       "id": "che",
       "displayNamePtBr": "Suíça",
       "aliasesPtBr": [
-        "Switzerland",
-        "Swiss Confederation",
         "Confederação Suíça",
-        "CH",
-        "Schweiz",
-        "Suisse",
-        "Svizzera",
-        "Svizra"
+        "CH"
       ],
       "sourceNames": {
         "un": "Switzerland"
@@ -5161,12 +4662,8 @@
       "id": "sur",
       "displayNamePtBr": "Suriname",
       "aliasesPtBr": [
-        "Republic of Suriname",
         "República do Suriname",
-        "SR",
-        "Sarnam",
-        "Sranangron",
-        "Republiek Suriname"
+        "SR"
       ],
       "sourceNames": {
         "un": "Suriname"
@@ -5192,14 +4689,8 @@
       "id": "tha",
       "displayNamePtBr": "Tailândia",
       "aliasesPtBr": [
-        "Thailand",
-        "Kingdom of Thailand",
         "Reino da Tailândia",
-        "TH",
-        "Prathet",
-        "Thai",
-        "ราชอาณาจักรไทย",
-        "Ratcha Anachak Thai"
+        "TH"
       ],
       "sourceNames": {
         "un": "Thailand"
@@ -5225,13 +4716,8 @@
       "id": "tjk",
       "displayNamePtBr": "Tajiquistão",
       "aliasesPtBr": [
-        "Tajikistan",
-        "Republic of Tajikistan",
         "República do Tajiquistão",
-        "TJ",
-        "Toçikiston",
-        "Ҷумҳурии Тоҷикистон",
-        "Çumhuriyi Toçikiston"
+        "TJ"
       ],
       "sourceNames": {
         "un": "Tajikistan"
@@ -5257,11 +4743,8 @@
       "id": "tza",
       "displayNamePtBr": "Tanzânia",
       "aliasesPtBr": [
-        "United Republic of Tanzania",
         "República Unida da Tanzânia",
-        "TZ",
-        "Tanzania, United Republic of",
-        "Jamhuri ya Muungano wa Tanzania"
+        "TZ"
       ],
       "sourceNames": {
         "un": "Tanzania"
@@ -5287,13 +4770,8 @@
       "id": "tls",
       "displayNamePtBr": "Timor-Leste",
       "aliasesPtBr": [
-        "Democratic Republic of Timor-Leste",
         "República Democrática de Timor-Leste",
-        "TL",
-        "East Timor",
-        "Repúblika Demokrátika Timór-Leste",
-        "Timór Lorosa'e",
-        "Timor Lorosae"
+        "TL"
       ],
       "sourceNames": {
         "un": "Timor-Leste"
@@ -5319,11 +4797,8 @@
       "id": "tgo",
       "displayNamePtBr": "Togo",
       "aliasesPtBr": [
-        "Togolese Republic",
         "República do Togo",
-        "TG",
-        "Togolese",
-        "République Togolaise"
+        "TG"
       ],
       "sourceNames": {
         "un": "Togo"
@@ -5349,7 +4824,6 @@
       "id": "ton",
       "displayNamePtBr": "Tonga",
       "aliasesPtBr": [
-        "Kingdom of Tonga",
         "Reino de Tonga",
         "TO"
       ],
@@ -5377,8 +4851,6 @@
       "id": "tto",
       "displayNamePtBr": "Trinidade e Tobago",
       "aliasesPtBr": [
-        "Trinidad and Tobago",
-        "Republic of Trinidad and Tobago",
         "República de Trinidad e Tobago",
         "TT"
       ],
@@ -5406,11 +4878,8 @@
       "id": "tun",
       "displayNamePtBr": "Tunísia",
       "aliasesPtBr": [
-        "Tunisian Republic",
         "República da Tunísia",
-        "TN",
-        "Republic of Tunisia",
-        "al-Jumhūriyyah at-Tūnisiyyah"
+        "TN"
       ],
       "sourceNames": {
         "un": "Tunisia"
@@ -5436,7 +4905,6 @@
       "id": "tkm",
       "displayNamePtBr": "Turquemenistão",
       "aliasesPtBr": [
-        "Turkmenistan",
         "Turcomenistão",
         "TM"
       ],
@@ -5464,12 +4932,8 @@
       "id": "tur",
       "displayNamePtBr": "Turquia",
       "aliasesPtBr": [
-        "Turkey",
-        "Republic of Turkey",
         "República da Turquia",
-        "TR",
-        "Turkiye",
-        "Türkiye Cumhuriyeti"
+        "TR"
       ],
       "sourceNames": {
         "un": "Turkey"
@@ -5521,9 +4985,7 @@
       "id": "ukr",
       "displayNamePtBr": "Ucrânia",
       "aliasesPtBr": [
-        "Ukraine",
-        "UA",
-        "Ukrayina"
+        "UA"
       ],
       "sourceNames": {
         "un": "Ukraine"
@@ -5549,10 +5011,8 @@
       "id": "uga",
       "displayNamePtBr": "Uganda",
       "aliasesPtBr": [
-        "Republic of Uganda",
         "República do Uganda",
-        "UG",
-        "Jamhuri ya Uganda"
+        "UG"
       ],
       "sourceNames": {
         "un": "Uganda"
@@ -5578,11 +5038,8 @@
       "id": "ury",
       "displayNamePtBr": "Uruguai",
       "aliasesPtBr": [
-        "Uruguay",
-        "Oriental Republic of Uruguay",
         "República Oriental do Uruguai",
-        "UY",
-        "República Oriental del Uruguay"
+        "UY"
       ],
       "sourceNames": {
         "un": "Uruguay"
@@ -5608,12 +5065,8 @@
       "id": "uzb",
       "displayNamePtBr": "Uzbequistão",
       "aliasesPtBr": [
-        "Uzbekistan",
-        "Republic of Uzbekistan",
         "República do Usbequistão",
-        "UZ",
-        "O‘zbekiston Respublikasi",
-        "Ўзбекистон Республикаси"
+        "UZ"
       ],
       "sourceNames": {
         "un": "Uzbekistan"
@@ -5639,11 +5092,8 @@
       "id": "vut",
       "displayNamePtBr": "Vanuatu",
       "aliasesPtBr": [
-        "Republic of Vanuatu",
         "República de Vanuatu",
-        "VU",
-        "Ripablik blong Vanuatu",
-        "République de Vanuatu"
+        "VU"
       ],
       "sourceNames": {
         "un": "Vanuatu"
@@ -5669,12 +5119,8 @@
       "id": "vat",
       "displayNamePtBr": "Vaticano",
       "aliasesPtBr": [
-        "Vatican City",
-        "Vatican City State",
         "Cidade do Vaticano",
         "VA",
-        "Holy See (Vatican City State)",
-        "Stato della Città del Vaticano",
         "Santa Sé"
       ],
       "sourceNames": {
@@ -5702,11 +5148,8 @@
       "id": "ven",
       "displayNamePtBr": "Venezuela",
       "aliasesPtBr": [
-        "Bolivarian Republic of Venezuela",
         "República Bolivariana da Venezuela",
-        "VE",
-        "Venezuela, Bolivarian Republic of",
-        "República Bolivariana de Venezuela"
+        "VE"
       ],
       "sourceNames": {
         "un": "Venezuela"
@@ -5732,12 +5175,9 @@
       "id": "vnm",
       "displayNamePtBr": "Vietnã",
       "aliasesPtBr": [
-        "Vietnam",
-        "Socialist Republic of Vietnam",
+        "Vietname",
         "República Socialista do Vietname",
-        "VN",
-        "Cộng hòa Xã hội chủ nghĩa Việt Nam",
-        "Viet Nam"
+        "VN"
       ],
       "sourceNames": {
         "un": "Vietnam"
@@ -5763,7 +5203,6 @@
       "id": "zmb",
       "displayNamePtBr": "Zâmbia",
       "aliasesPtBr": [
-        "Republic of Zambia",
         "República da Zâmbia",
         "ZM"
       ],
@@ -5792,7 +5231,6 @@
       "displayNamePtBr": "Zimbábue",
       "aliasesPtBr": [
         "Zimbabwe",
-        "Republic of Zimbabwe",
         "República do Zimbabwe",
         "ZW"
       ],
