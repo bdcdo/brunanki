@@ -6,25 +6,19 @@ import { useMemo, useState } from "react";
 import { FlagImage } from "@/components/FlagImage";
 import { entities } from "@/data/runtime-catalog";
 import { normalizeCountryName } from "@/domain/text";
-import type { Organization } from "@/types/catalog";
 
 export function CatalogClient() {
   const [query, setQuery] = useState("");
-  const [membership, setMembership] = useState("all");
 
   const filtered = useMemo(() => {
     const normalized = normalizeCountryName(query);
 
-    return entities.filter((entity) => {
-      const names = normalizeCountryName(
+    return entities.filter((entity) =>
+      normalizeCountryName(
         [entity.displayNamePtBr, ...entity.aliasesPtBr].join(" ")
-      );
-      const organizationMatch =
-        membership === "all" ||
-        entity.organizations.includes(membership as Organization);
-      return names.includes(normalized) && organizationMatch;
-    });
-  }, [membership, query]);
+      ).includes(normalized)
+    );
+  }, [query]);
 
   return (
     <div className="page">
@@ -33,7 +27,7 @@ export function CatalogClient() {
           <span className="eyebrow">Atlas completo</span>
           <h1>Bandeiras</h1>
           <p>
-            {entities.length} entidades da ONU e da FIFA, com nomes comuns em
+            {entities.length} Estados reconhecidos pela ONU, com nomes comuns em
             português e a origem de cada imagem.
           </p>
         </div>
@@ -49,17 +43,6 @@ export function CatalogClient() {
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Buscar bandeira"
           />
-        </label>
-        <label className="field">
-          <span className="sr-only">Filtrar por organização</span>
-          <select
-            value={membership}
-            onChange={(event) => setMembership(event.target.value)}
-          >
-            <option value="all">ONU e FIFA</option>
-            <option value="UN">ONU</option>
-            <option value="FIFA">FIFA</option>
-          </select>
         </label>
       </div>
 

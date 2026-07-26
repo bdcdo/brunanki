@@ -1,7 +1,5 @@
 import type { ColorNamePtBr } from "@/domain/palette";
 
-import type { Organization } from "./catalog";
-
 /**
  * A parte do catálogo que o navegador precisa.
  *
@@ -10,13 +8,17 @@ import type { Organization } from "./catalog";
  * estudar, mas tudo isso viajava até o navegador em toda rota porque um único
  * módulo exportava as duas coisas. Este contrato é o corte: se um campo não
  * aparece aqui, ele não chega ao cliente.
+ *
+ * Sem nenhum import de `@/types/catalog`, e isso é o ponto: enquanto `Organization`
+ * era projetada para cá, o contrato de runtime dependia do vocabulário do
+ * artefato completo. Toda entidade é filiada à ONU — o campo não distinguia
+ * ninguém de ninguém.
  */
 export interface RuntimeEntity {
   readonly id: string;
   readonly displayNamePtBr: string;
   readonly aliasesPtBr: readonly string[];
   readonly region: string;
-  readonly organizations: readonly Organization[];
   /** Obrigatório: uma entidade sem bandeira não é construível. */
   readonly flagPath: string;
   /**

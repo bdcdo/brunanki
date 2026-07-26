@@ -25,8 +25,8 @@ const USER_AGENT =
 const execFileAsync = promisify(execFile);
 
 const UN_SOURCE_URL = "https://www.un.org/en/about-us/member-states";
-const FIFA_SOURCE_URL = "https://inside.fifa.com/en/about-fifa/associations";
-const FIFA_CODES_PAGE = "List_of_FIFA_country_codes";
+const UN_OBSERVER_SOURCE_URL =
+  "https://www.un.org/en/about-us/non-member-states";
 const REST_COUNTRIES_DATA_URL =
   "https://gitlab.com/restcountries/restcountries/-/raw/master/src/main/resources/countriesV3.1.json";
 
@@ -35,16 +35,10 @@ interface RestCountry {
   cca2?: string;
   cca3: string;
   ccn3?: string;
-  fifa?: string;
   region?: string;
   translations?: { por?: { common: string; official: string } };
   altSpellings?: string[];
   unMember?: boolean;
-}
-
-interface FifaAssociation {
-  name: string;
-  code: string;
 }
 
 interface WikidataCountry {
@@ -62,21 +56,6 @@ interface CommonsMetadata {
   height: number;
   license: FlagRevision["license"];
 }
-
-/**
- * Associações da FIFA que não correspondem a um Estado reconhecido pela ONU.
- *
- * As quatro nações constituintes do Reino Unido competem separadamente no
- * futebol e não têm assento próprio na ONU; com o catálogo definido pela ONU,
- * elas não geram entidade. Continuam nomeadas — em vez de simplesmente
- * ignoradas por falharem o mapeamento — para que uma associação *nova* sem
- * contraparte ISO ainda derrube o refresh, em vez de sumir calada.
- */
-const FIFA_CODES_WITHOUT_UN_STATE = new Set(["ENG", "NIR", "SCO", "WAL"]);
-
-const REST_COUNTRY_BY_FIFA_OVERRIDE: Record<string, string> = {
-  SGP: "SGP"
-};
 
 const QID_OVERRIDE_BY_ISO3: Record<string, `Q${number}`> = {
   PSE: "Q219060",
@@ -183,35 +162,6 @@ function decodeHtml(value: string): string {
     .replaceAll("&nbsp;", " ")
     .replace(/\s+/g, " ")
     .trim();
-}
-
-async function fetchFifaAssociations(): Promise<FifaAssociation[]> {
-  const url =
-    "https://en.wikipedia.org/w/api.php?action=parse&prop=text&format=json&formatversion=2&page=" +
-    FIFA_CODES_PAGE;
-  const result = await fetchJson<{ parse: { text: string } }>(url);
-  const tables = [
-    ...result.parse.text.matchAll(/<table[^>]*wikitable[\s\S]*?<\/table>/g)
-  ].slice(0, 4);
-  const associations = tables.flatMap(([table]) =>
-    [...table.matchAll(/<tr>([\s\S]*?)<\/tr>/g)].flatMap(([, row]) => {
-      const cells = [...row.matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/g)].map(
-        ([, cell]) => decodeHtml(cell)
-      );
-      return cells.length === 2 && /^[A-Z]{3}$/.test(cells[1])
-        ? [{ name: cells[0], code: cells[1] }]
-        : [];
-    })
-  );
-  assert(
-    associations.length === 211,
-    `Expected 211 FIFA members, found ${associations.length}`
-  );
-  assert(
-    new Set(associations.map(({ code }) => code)).size === 211,
-    "FIFA codes are not unique"
-  );
-  return associations;
 }
 
 async function fetchWikidataCountries(): Promise<Map<string, WikidataCountry>> {
@@ -378,23 +328,9 @@ function entityIdForCountry(country: RestCountry): string {
   return country.cca3.toLocaleLowerCase("en-US");
 }
 
-function findCountryForAssociation(
-  association: FifaAssociation,
-  countries: RestCountry[]
-): RestCountry | undefined {
-  const overrideIso3 = REST_COUNTRY_BY_FIFA_OVERRIDE[association.code];
-  if (overrideIso3) return countries.find(({ cca3 }) => cca3 === overrideIso3);
-  return (
-    countries.find(({ fifa }) => fifa === association.code) ??
-    countries.find(({ cca3 }) => cca3 === association.code) ??
-    countries.find(({ name }) => name.common === association.name)
-  );
-}
-
 async function main(): Promise<void> {
-  const [countries, fifaAssociations, wikidataByIso3] = await Promise.all([
+  const [countries, wikidataByIso3] = await Promise.all([
     fetchJson<RestCountry[]>(REST_COUNTRIES_DATA_URL),
-    fetchFifaAssociations(),
     fetchWikidataCountries()
   ]);
   assert(
@@ -413,25 +349,12 @@ async function main(): Promise<void> {
   );
   assert(unIso3.size === 193, `Expected 193 UN members, found ${unIso3.size}`);
 
-  const fifaByIso3 = new Map<string, FifaAssociation>();
-  for (const association of fifaAssociations) {
-    if (FIFA_CODES_WITHOUT_UN_STATE.has(association.code)) continue;
-    const country = findCountryForAssociation(association, countries);
-    assert(
-      country,
-      `Could not map FIFA association ${association.name} (${association.code})`
-    );
-    assert(
-      !fifaByIso3.has(country.cca3),
-      `Two FIFA associations map to ${country.cca3}`
-    );
-    fifaByIso3.set(country.cca3, association);
-  }
-
-  // A raiz do conjunto é a ONU, e só ela. A filiação à FIFA ainda é anotada
-  // como procedência em `memberships`, mas deixou de decidir quem entra — era
-  // por ela que a Palestina chegava ao catálogo, para só depois receber o
-  // status de observadora.
+  // A ONU é o único critério, e por isso a única fonte de rede que decide
+  // conteúdo. Havia aqui uma raspagem da tabela de códigos da FIFA na
+  // Wikipédia que abortava o refresh inteiro se ela não rendesse exatamente
+  // 211 linhas — uma edição naquela página bloqueava a atualização de licenças
+  // e SHA-1 das bandeiras que o app de fato usa, para sustentar um eixo que
+  // nenhuma tela lia.
   const includedIso3 = new Set<string>([...unIso3, ...UN_OBSERVER_ISO3]);
   const entities: LearningEntity[] = [];
   const requestedFlagTitles = new Map<string, `File:${string}`>();
@@ -439,7 +362,6 @@ async function main(): Promise<void> {
   for (const iso3 of [...includedIso3].sort()) {
     const country = countries.find(({ cca3 }) => cca3 === iso3);
     assert(country, `Country reference missing for ${iso3}`);
-    const fifa = fifaByIso3.get(iso3);
     const qid = QID_OVERRIDE_BY_ISO3[iso3] ?? wikidataByIso3.get(iso3)?.qid;
     const flagTitle =
       FLAG_OVERRIDE_BY_ISO3[iso3] ?? wikidataByIso3.get(iso3)?.flagTitle;
@@ -450,31 +372,25 @@ async function main(): Promise<void> {
       DISPLAY_NAME_OVERRIDE_BY_ISO3[iso3] ??
       country.translations?.por?.common ??
       country.name.common;
-    const isUnObserver = (UN_OBSERVER_ISO3 as readonly string[]).includes(iso3);
-    const memberships: LearningEntity["memberships"] = [];
-    if (unIso3.has(iso3)) {
-      memberships.push({
-        organization: "UN",
-        status: "member",
-        sourceUrl: UN_SOURCE_URL,
-        verifiedAt: VERIFIED_AT
-      });
-    } else if (isUnObserver) {
-      memberships.push({
-        organization: "UN",
-        status: "observer",
-        sourceUrl: "https://www.un.org/en/about-us/non-member-states",
-        verifiedAt: VERIFIED_AT
-      });
-    }
-    if (fifa) {
-      memberships.push({
-        organization: "FIFA",
-        status: "member",
-        sourceUrl: FIFA_SOURCE_URL,
-        verifiedAt: VERIFIED_AT
-      });
-    }
+    // O ternário é exaustivo porque `includedIso3` é a união de `unIso3` com
+    // os observadores: quem chega aqui é uma coisa ou a outra, e a lista tem
+    // sempre exatamente um elemento. Se um observador for admitido como membro
+    // pela ONU, `unIso3` passa a contê-lo e o status acompanha sozinho.
+    const memberships: LearningEntity["memberships"] = [
+      unIso3.has(iso3)
+        ? {
+            organization: "UN",
+            status: "member",
+            sourceUrl: UN_SOURCE_URL,
+            verifiedAt: VERIFIED_AT
+          }
+        : {
+            organization: "UN",
+            status: "observer",
+            sourceUrl: UN_OBSERVER_SOURCE_URL,
+            verifiedAt: VERIFIED_AT
+          }
+    ];
     entities.push({
       id,
       displayNamePtBr: displayName,
@@ -484,27 +400,20 @@ async function main(): Promise<void> {
           country.name.official,
           country.translations?.por?.official,
           ...(country.altSpellings ?? []),
-          fifa?.name,
           iso3 === "VAT" ? "Santa Sé" : undefined
         ],
         displayName
       ),
       sourceNames: {
-        ...(unIso3.has(iso3) || isUnObserver
-          ? {
-              un:
-                iso3 === "VAT"
-                  ? "Holy See"
-                  : iso3 === "PSE"
-                    ? "State of Palestine"
-                    : country.name.common
-            }
-          : {}),
-        ...(fifa ? { fifa: fifa.name } : {})
+        un:
+          iso3 === "VAT"
+            ? "Holy See"
+            : iso3 === "PSE"
+              ? "State of Palestine"
+              : country.name.common
       },
       identifiers: {
         wikidataQid: qid,
-        ...(fifa ? { fifaCode: fifa.code } : {}),
         ...(country.cca2 ? { isoAlpha2: country.cca2 } : {}),
         isoAlpha3: country.cca3,
         ...(country.ccn3 ? { unM49: country.ccn3 } : {})

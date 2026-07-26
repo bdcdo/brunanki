@@ -566,8 +566,7 @@ a {
   gap: 12px;
 }
 
-.search-field,
-.field {
+.search-field {
   display: grid;
   gap: 7px;
 }
@@ -585,9 +584,7 @@ a {
   color: var(--ink-soft);
 }
 
-.search-field input,
-.field input,
-.field select {
+.search-field input {
   width: 100%;
   min-height: 50px;
   padding: 11px 14px;
@@ -599,10 +596,6 @@ a {
 
 .search-field input {
   padding-left: 46px;
-}
-
-.field label {
-  font-weight: 700;
 }
 
 .field-hint {

@@ -60,8 +60,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
                 className="pill"
                 key={`${membership.organization}-${membership.status}`}
               >
-                {membership.organization === "UN" ? "ONU" : "FIFA"}
-                {membership.status === "observer" ? " · observador" : ""}
+                ONU{membership.status === "observer" ? " · observador" : ""}
               </span>
             ))}
           </div>

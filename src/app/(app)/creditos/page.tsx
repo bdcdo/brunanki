@@ -14,9 +14,8 @@ export default function CreditsPage() {
           <span className="eyebrow">Transparência editorial</span>
           <h1>Fontes e créditos</h1>
           <p>
-            ONU e FIFA definem quem entra no atlas. Wikidata ajuda a localizar
-            os arquivos, e cada imagem preserva a referência ao Wikimedia
-            Commons.
+            A ONU define quem entra no atlas. Wikidata ajuda a localizar os
+            arquivos, e cada imagem preserva a referência ao Wikimedia Commons.
           </p>
         </div>
       </header>
@@ -24,9 +23,8 @@ export default function CreditsPage() {
       <section className="card" style={{ marginBottom: 20 }}>
         <h2>Fontes institucionais</h2>
         <p>
-          O catálogo combina os 193 Estados-membros da ONU, as 211 associações
-          da FIFA e a Santa Sé como Estado observador não membro. A Palestina já
-          integra a união pela FIFA.
+          O catálogo reúne os 193 Estados-membros da ONU e os dois observadores
+          permanentes não membros: a Santa Sé e a Palestina.
         </p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
           <a
@@ -36,14 +34,6 @@ export default function CreditsPage() {
             rel="noreferrer"
           >
             Membros da ONU <ExternalLink size={16} aria-hidden="true" />
-          </a>
-          <a
-            className="button button-secondary"
-            href="https://inside.fifa.com/about-fifa/associations"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Associações FIFA <ExternalLink size={16} aria-hidden="true" />
           </a>
           <a
             className="button button-secondary"

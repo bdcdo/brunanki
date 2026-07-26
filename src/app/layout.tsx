@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     template: "%s · Ptanki"
   },
   description:
-    "Aprenda e revise as bandeiras dos membros da ONU e das associações da FIFA.",
+    "Aprenda e revise as bandeiras dos Estados reconhecidos pela ONU.",
   icons: {
     icon: "/favicon.svg"
   }

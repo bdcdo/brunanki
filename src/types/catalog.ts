@@ -1,12 +1,16 @@
-export type Organization = "UN" | "FIFA";
+/**
+ * Um único valor porque o catálogo tem um único critério de pertencimento.
+ *
+ * Havia também `"FIFA"`, de quando o recorte era a união ONU + associações da
+ * FIFA. `Membership` continua sendo lista, e não um `unStatus` solto, porque é
+ * essa a forma que sobrevive caso outro eixo volte a definir elegibilidade.
+ */
+export type Organization = "UN";
 export type MembershipStatus = "member" | "observer";
-export type Confederation =
-  "AFC" | "CAF" | "CONCACAF" | "CONMEBOL" | "OFC" | "UEFA";
 
 export interface Membership {
   organization: Organization;
   status: MembershipStatus;
-  confederation?: Confederation;
   sourceUrl: string;
   verifiedAt: string;
 }
@@ -17,11 +21,9 @@ export interface LearningEntity {
   aliasesPtBr: string[];
   sourceNames: {
     un?: string;
-    fifa?: string;
   };
   identifiers: {
     wikidataQid: `Q${number}`;
-    fifaCode?: string;
     isoAlpha2?: string;
     isoAlpha3?: string;
     unM49?: string;

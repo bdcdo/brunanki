@@ -10,7 +10,6 @@ const irlanda: RuntimeEntity = {
   displayNamePtBr: "Irlanda",
   aliasesPtBr: [],
   region: "Europa",
-  organizations: ["UN"],
   flagPath: "/flags/irl.svg",
   palette: ["laranja", "verde", "branco"]
 };

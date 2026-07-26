@@ -13,12 +13,10 @@
         "Afġānistān"
       ],
       "sourceNames": {
-        "un": "Afghanistan",
-        "fifa": "Afghanistan"
+        "un": "Afghanistan"
       },
       "identifiers": {
         "wikidataQid": "Q889",
-        "fifaCode": "AFG",
         "isoAlpha2": "AF",
         "isoAlpha3": "AFG",
         "unM49": "004"
@@ -29,12 +27,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -52,12 +44,10 @@
         "Suid-Afrika"
       ],
       "sourceNames": {
-        "un": "South Africa",
-        "fifa": "South Africa"
+        "un": "South Africa"
       },
       "identifiers": {
         "wikidataQid": "Q258",
-        "fifaCode": "RSA",
         "isoAlpha2": "ZA",
         "isoAlpha3": "ZAF",
         "unM49": "710"
@@ -68,12 +58,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -91,12 +75,10 @@
         "Shqipnia"
       ],
       "sourceNames": {
-        "un": "Albania",
-        "fifa": "Albania"
+        "un": "Albania"
       },
       "identifiers": {
         "wikidataQid": "Q222",
-        "fifaCode": "ALB",
         "isoAlpha2": "AL",
         "isoAlpha3": "ALB",
         "unM49": "008"
@@ -107,12 +89,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -129,12 +105,10 @@
         "Bundesrepublik Deutschland"
       ],
       "sourceNames": {
-        "un": "Germany",
-        "fifa": "Germany"
+        "un": "Germany"
       },
       "identifiers": {
         "wikidataQid": "Q183",
-        "fifaCode": "GER",
         "isoAlpha2": "DE",
         "isoAlpha3": "DEU",
         "unM49": "276"
@@ -145,12 +119,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -166,12 +134,10 @@
         "Principat d'Andorra"
       ],
       "sourceNames": {
-        "un": "Andorra",
-        "fifa": "Andorra"
+        "un": "Andorra"
       },
       "identifiers": {
         "wikidataQid": "Q228",
-        "fifaCode": "AND",
         "isoAlpha2": "AD",
         "isoAlpha3": "AND",
         "unM49": "020"
@@ -182,12 +148,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -203,12 +163,10 @@
         "ʁɛpublika de an'ɡɔla"
       ],
       "sourceNames": {
-        "un": "Angola",
-        "fifa": "Angola"
+        "un": "Angola"
       },
       "identifiers": {
         "wikidataQid": "Q916",
-        "fifaCode": "ANG",
         "isoAlpha2": "AO",
         "isoAlpha3": "AGO",
         "unM49": "024"
@@ -219,12 +177,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -238,12 +190,10 @@
         "AG"
       ],
       "sourceNames": {
-        "un": "Antigua and Barbuda",
-        "fifa": "Antigua and Barbuda"
+        "un": "Antigua and Barbuda"
       },
       "identifiers": {
         "wikidataQid": "Q781",
-        "fifaCode": "ATG",
         "isoAlpha2": "AG",
         "isoAlpha3": "ATG",
         "unM49": "028"
@@ -254,12 +204,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -277,12 +221,10 @@
         "Al-Mamlakah al-‘Arabiyyah as-Su‘ūdiyyah"
       ],
       "sourceNames": {
-        "un": "Saudi Arabia",
-        "fifa": "Saudi Arabia"
+        "un": "Saudi Arabia"
       },
       "identifiers": {
         "wikidataQid": "Q851",
-        "fifaCode": "KSA",
         "isoAlpha2": "SA",
         "isoAlpha3": "SAU",
         "unM49": "682"
@@ -293,12 +235,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -316,12 +252,10 @@
         "Algérie"
       ],
       "sourceNames": {
-        "un": "Algeria",
-        "fifa": "Algeria"
+        "un": "Algeria"
       },
       "identifiers": {
         "wikidataQid": "Q262",
-        "fifaCode": "ALG",
         "isoAlpha2": "DZ",
         "isoAlpha3": "DZA",
         "unM49": "012"
@@ -332,12 +266,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -352,12 +280,10 @@
         "AR"
       ],
       "sourceNames": {
-        "un": "Argentina",
-        "fifa": "Argentina"
+        "un": "Argentina"
       },
       "identifiers": {
         "wikidataQid": "Q414",
-        "fifaCode": "ARG",
         "isoAlpha2": "AR",
         "isoAlpha3": "ARG",
         "unM49": "032"
@@ -368,12 +294,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -390,12 +310,10 @@
         "Հայաստանի Հանրապետություն"
       ],
       "sourceNames": {
-        "un": "Armenia",
-        "fifa": "Armenia"
+        "un": "Armenia"
       },
       "identifiers": {
         "wikidataQid": "Q399",
-        "fifaCode": "ARM",
         "isoAlpha2": "AM",
         "isoAlpha3": "ARM",
         "unM49": "051"
@@ -406,12 +324,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -426,12 +338,10 @@
         "AU"
       ],
       "sourceNames": {
-        "un": "Australia",
-        "fifa": "Australia"
+        "un": "Australia"
       },
       "identifiers": {
         "wikidataQid": "Q408",
-        "fifaCode": "AUS",
         "isoAlpha2": "AU",
         "isoAlpha3": "AUS",
         "unM49": "036"
@@ -442,12 +352,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -464,12 +368,10 @@
         "Oesterreich"
       ],
       "sourceNames": {
-        "un": "Austria",
-        "fifa": "Austria"
+        "un": "Austria"
       },
       "identifiers": {
         "wikidataQid": "Q40",
-        "fifaCode": "AUT",
         "isoAlpha2": "AT",
         "isoAlpha3": "AUT",
         "unM49": "040"
@@ -480,12 +382,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -502,12 +398,10 @@
         "Azərbaycan Respublikası"
       ],
       "sourceNames": {
-        "un": "Azerbaijan",
-        "fifa": "Azerbaijan"
+        "un": "Azerbaijan"
       },
       "identifiers": {
         "wikidataQid": "Q227",
-        "fifaCode": "AZE",
         "isoAlpha2": "AZ",
         "isoAlpha3": "AZE",
         "unM49": "031"
@@ -518,12 +412,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -538,12 +426,10 @@
         "BS"
       ],
       "sourceNames": {
-        "un": "Bahamas",
-        "fifa": "Bahamas"
+        "un": "Bahamas"
       },
       "identifiers": {
         "wikidataQid": "Q778",
-        "fifaCode": "BAH",
         "isoAlpha2": "BS",
         "isoAlpha3": "BHS",
         "unM49": "044"
@@ -554,12 +440,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -576,12 +456,10 @@
         "Mamlakat al-Baḥrayn"
       ],
       "sourceNames": {
-        "un": "Bahrain",
-        "fifa": "Bahrain"
+        "un": "Bahrain"
       },
       "identifiers": {
         "wikidataQid": "Q398",
-        "fifaCode": "BHR",
         "isoAlpha2": "BH",
         "isoAlpha3": "BHR",
         "unM49": "048"
@@ -592,12 +470,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -613,12 +485,10 @@
         "Gônôprôjatôntri Bangladesh"
       ],
       "sourceNames": {
-        "un": "Bangladesh",
-        "fifa": "Bangladesh"
+        "un": "Bangladesh"
       },
       "identifiers": {
         "wikidataQid": "Q902",
-        "fifaCode": "BAN",
         "isoAlpha2": "BD",
         "isoAlpha3": "BGD",
         "unM49": "050"
@@ -629,12 +499,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -647,12 +511,10 @@
         "BB"
       ],
       "sourceNames": {
-        "un": "Barbados",
-        "fifa": "Barbados"
+        "un": "Barbados"
       },
       "identifiers": {
         "wikidataQid": "Q244",
-        "fifaCode": "BRB",
         "isoAlpha2": "BB",
         "isoAlpha3": "BRB",
         "unM49": "052"
@@ -663,12 +525,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -690,12 +546,10 @@
         "Königreich Belgien"
       ],
       "sourceNames": {
-        "un": "Belgium",
-        "fifa": "Belgium"
+        "un": "Belgium"
       },
       "identifiers": {
         "wikidataQid": "Q31",
-        "fifaCode": "BEL",
         "isoAlpha2": "BE",
         "isoAlpha3": "BEL",
         "unM49": "056"
@@ -706,12 +560,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -724,12 +572,10 @@
         "BZ"
       ],
       "sourceNames": {
-        "un": "Belize",
-        "fifa": "Belize"
+        "un": "Belize"
       },
       "identifiers": {
         "wikidataQid": "Q242",
-        "fifaCode": "BLZ",
         "isoAlpha2": "BZ",
         "isoAlpha3": "BLZ",
         "unM49": "084"
@@ -740,12 +586,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -761,12 +601,10 @@
         "République du Bénin"
       ],
       "sourceNames": {
-        "un": "Benin",
-        "fifa": "Benin"
+        "un": "Benin"
       },
       "identifiers": {
         "wikidataQid": "Q962",
-        "fifaCode": "BEN",
         "isoAlpha2": "BJ",
         "isoAlpha3": "BEN",
         "unM49": "204"
@@ -777,12 +615,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -801,12 +633,10 @@
         "Республика Белоруссия"
       ],
       "sourceNames": {
-        "un": "Belarus",
-        "fifa": "Belarus"
+        "un": "Belarus"
       },
       "identifiers": {
         "wikidataQid": "Q184",
-        "fifaCode": "BLR",
         "isoAlpha2": "BY",
         "isoAlpha3": "BLR",
         "unM49": "112"
@@ -817,12 +647,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -844,12 +668,10 @@
         "Tetã Volívia"
       ],
       "sourceNames": {
-        "un": "Bolivia",
-        "fifa": "Bolivia"
+        "un": "Bolivia"
       },
       "identifiers": {
         "wikidataQid": "Q750",
-        "fifaCode": "BOL",
         "isoAlpha2": "BO",
         "isoAlpha3": "BOL",
         "unM49": "068"
@@ -860,12 +682,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -881,12 +697,10 @@
         "Босна и Херцеговина"
       ],
       "sourceNames": {
-        "un": "Bosnia and Herzegovina",
-        "fifa": "Bosnia and Herzegovina"
+        "un": "Bosnia and Herzegovina"
       },
       "identifiers": {
         "wikidataQid": "Q225",
-        "fifaCode": "BIH",
         "isoAlpha2": "BA",
         "isoAlpha3": "BIH",
         "unM49": "070"
@@ -897,12 +711,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -919,12 +727,10 @@
         "Lefatshe la Botswana"
       ],
       "sourceNames": {
-        "un": "Botswana",
-        "fifa": "Botswana"
+        "un": "Botswana"
       },
       "identifiers": {
         "wikidataQid": "Q963",
-        "fifaCode": "BOT",
         "isoAlpha2": "BW",
         "isoAlpha3": "BWA",
         "unM49": "072"
@@ -935,12 +741,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -956,12 +756,10 @@
         "BR"
       ],
       "sourceNames": {
-        "un": "Brazil",
-        "fifa": "Brazil"
+        "un": "Brazil"
       },
       "identifiers": {
         "wikidataQid": "Q155",
-        "fifaCode": "BRA",
         "isoAlpha2": "BR",
         "isoAlpha3": "BRA",
         "unM49": "076"
@@ -972,12 +770,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -995,12 +787,10 @@
         "the Abode of Peace"
       ],
       "sourceNames": {
-        "un": "Brunei",
-        "fifa": "Brunei"
+        "un": "Brunei"
       },
       "identifiers": {
         "wikidataQid": "Q921",
-        "fifaCode": "BRU",
         "isoAlpha2": "BN",
         "isoAlpha3": "BRN",
         "unM49": "096"
@@ -1011,12 +801,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1032,12 +816,10 @@
         "Република България"
       ],
       "sourceNames": {
-        "un": "Bulgaria",
-        "fifa": "Bulgaria"
+        "un": "Bulgaria"
       },
       "identifiers": {
         "wikidataQid": "Q219",
-        "fifaCode": "BUL",
         "isoAlpha2": "BG",
         "isoAlpha3": "BGR",
         "unM49": "100"
@@ -1048,12 +830,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1066,12 +842,10 @@
         "BF"
       ],
       "sourceNames": {
-        "un": "Burkina Faso",
-        "fifa": "Burkina Faso"
+        "un": "Burkina Faso"
       },
       "identifiers": {
         "wikidataQid": "Q965",
-        "fifaCode": "BFA",
         "isoAlpha2": "BF",
         "isoAlpha3": "BFA",
         "unM49": "854"
@@ -1082,12 +856,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1104,12 +872,10 @@
         "République du Burundi"
       ],
       "sourceNames": {
-        "un": "Burundi",
-        "fifa": "Burundi"
+        "un": "Burundi"
       },
       "identifiers": {
         "wikidataQid": "Q967",
-        "fifaCode": "BDI",
         "isoAlpha2": "BI",
         "isoAlpha3": "BDI",
         "unM49": "108"
@@ -1120,12 +886,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1141,12 +901,10 @@
         "BT"
       ],
       "sourceNames": {
-        "un": "Bhutan",
-        "fifa": "Bhutan"
+        "un": "Bhutan"
       },
       "identifiers": {
         "wikidataQid": "Q917",
-        "fifaCode": "BHU",
         "isoAlpha2": "BT",
         "isoAlpha3": "BTN",
         "unM49": "064"
@@ -1157,12 +915,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1178,12 +930,10 @@
         "CV"
       ],
       "sourceNames": {
-        "un": "Cape Verde",
-        "fifa": "Cape Verde"
+        "un": "Cape Verde"
       },
       "identifiers": {
         "wikidataQid": "Q1011",
-        "fifaCode": "CPV",
         "isoAlpha2": "CV",
         "isoAlpha3": "CPV",
         "unM49": "132"
@@ -1194,12 +944,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1216,12 +960,10 @@
         "République du Cameroun"
       ],
       "sourceNames": {
-        "un": "Cameroon",
-        "fifa": "Cameroon"
+        "un": "Cameroon"
       },
       "identifiers": {
         "wikidataQid": "Q1009",
-        "fifaCode": "CMR",
         "isoAlpha2": "CM",
         "isoAlpha3": "CMR",
         "unM49": "120"
@@ -1232,12 +974,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1253,12 +989,10 @@
         "KH"
       ],
       "sourceNames": {
-        "un": "Cambodia",
-        "fifa": "Cambodia"
+        "un": "Cambodia"
       },
       "identifiers": {
         "wikidataQid": "Q424",
-        "fifaCode": "CAM",
         "isoAlpha2": "KH",
         "isoAlpha3": "KHM",
         "unM49": "116"
@@ -1269,12 +1003,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1287,12 +1015,10 @@
         "CA"
       ],
       "sourceNames": {
-        "un": "Canada",
-        "fifa": "Canada"
+        "un": "Canada"
       },
       "identifiers": {
         "wikidataQid": "Q16",
-        "fifaCode": "CAN",
         "isoAlpha2": "CA",
         "isoAlpha3": "CAN",
         "unM49": "124"
@@ -1303,12 +1029,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1325,12 +1045,10 @@
         "Dawlat Qaṭar"
       ],
       "sourceNames": {
-        "un": "Qatar",
-        "fifa": "Qatar"
+        "un": "Qatar"
       },
       "identifiers": {
         "wikidataQid": "Q846",
-        "fifaCode": "QAT",
         "isoAlpha2": "QA",
         "isoAlpha3": "QAT",
         "unM49": "634"
@@ -1341,12 +1059,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1368,12 +1080,10 @@
         "Respublika Kazakhstan"
       ],
       "sourceNames": {
-        "un": "Kazakhstan",
-        "fifa": "Kazakhstan"
+        "un": "Kazakhstan"
       },
       "identifiers": {
         "wikidataQid": "Q232",
-        "fifaCode": "KAZ",
         "isoAlpha2": "KZ",
         "isoAlpha3": "KAZ",
         "unM49": "398"
@@ -1384,12 +1094,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1407,12 +1111,10 @@
         "République du Tchad"
       ],
       "sourceNames": {
-        "un": "Chad",
-        "fifa": "Chad"
+        "un": "Chad"
       },
       "identifiers": {
         "wikidataQid": "Q657",
-        "fifaCode": "CHA",
         "isoAlpha2": "TD",
         "isoAlpha3": "TCD",
         "unM49": "148"
@@ -1423,12 +1125,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1446,12 +1142,10 @@
         "Česko"
       ],
       "sourceNames": {
-        "un": "Czechia",
-        "fifa": "Czech Republic"
+        "un": "Czechia"
       },
       "identifiers": {
         "wikidataQid": "Q213",
-        "fifaCode": "CZE",
         "isoAlpha2": "CZ",
         "isoAlpha3": "CZE",
         "unM49": "203"
@@ -1462,12 +1156,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1483,12 +1171,10 @@
         "República de Chile"
       ],
       "sourceNames": {
-        "un": "Chile",
-        "fifa": "Chile"
+        "un": "Chile"
       },
       "identifiers": {
         "wikidataQid": "Q298",
-        "fifaCode": "CHI",
         "isoAlpha2": "CL",
         "isoAlpha3": "CHL",
         "unM49": "152"
@@ -1499,12 +1185,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1523,12 +1203,10 @@
         "Zhōnghuá Rénmín Gònghéguó"
       ],
       "sourceNames": {
-        "un": "China",
-        "fifa": "China"
+        "un": "China"
       },
       "identifiers": {
         "wikidataQid": "Q148",
-        "fifaCode": "CHN",
         "isoAlpha2": "CN",
         "isoAlpha3": "CHN",
         "unM49": "156"
@@ -1539,12 +1217,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1564,12 +1236,10 @@
         "Kıbrıs Cumhuriyeti"
       ],
       "sourceNames": {
-        "un": "Cyprus",
-        "fifa": "Cyprus"
+        "un": "Cyprus"
       },
       "identifiers": {
         "wikidataQid": "Q229",
-        "fifaCode": "CYP",
         "isoAlpha2": "CY",
         "isoAlpha3": "CYP",
         "unM49": "196"
@@ -1580,12 +1250,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1601,12 +1265,10 @@
         "República de Colombia"
       ],
       "sourceNames": {
-        "un": "Colombia",
-        "fifa": "Colombia"
+        "un": "Colombia"
       },
       "identifiers": {
         "wikidataQid": "Q739",
-        "fifaCode": "COL",
         "isoAlpha2": "CO",
         "isoAlpha3": "COL",
         "unM49": "170"
@@ -1617,12 +1279,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1641,12 +1297,10 @@
         "al-Ittiḥād al-Qumurī"
       ],
       "sourceNames": {
-        "un": "Comoros",
-        "fifa": "Comoros"
+        "un": "Comoros"
       },
       "identifiers": {
         "wikidataQid": "Q970",
-        "fifaCode": "COM",
         "isoAlpha2": "KM",
         "isoAlpha3": "COM",
         "unM49": "174"
@@ -1657,12 +1311,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1684,12 +1332,10 @@
         "북조선"
       ],
       "sourceNames": {
-        "un": "North Korea",
-        "fifa": "North Korea"
+        "un": "North Korea"
       },
       "identifiers": {
         "wikidataQid": "Q423",
-        "fifaCode": "PRK",
         "isoAlpha2": "KP",
         "isoAlpha3": "PRK",
         "unM49": "408"
@@ -1700,12 +1346,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1724,12 +1364,10 @@
         "남조선"
       ],
       "sourceNames": {
-        "un": "South Korea",
-        "fifa": "South Korea"
+        "un": "South Korea"
       },
       "identifiers": {
         "wikidataQid": "Q884",
-        "fifaCode": "KOR",
         "isoAlpha2": "KR",
         "isoAlpha3": "KOR",
         "unM49": "410"
@@ -1740,12 +1378,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1763,12 +1395,10 @@
         "République de Côte d'Ivoire"
       ],
       "sourceNames": {
-        "un": "Ivory Coast",
-        "fifa": "Ivory Coast"
+        "un": "Ivory Coast"
       },
       "identifiers": {
         "wikidataQid": "Q1008",
-        "fifaCode": "CIV",
         "isoAlpha2": "CI",
         "isoAlpha3": "CIV",
         "unM49": "384"
@@ -1779,12 +1409,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1800,12 +1424,10 @@
         "República de Costa Rica"
       ],
       "sourceNames": {
-        "un": "Costa Rica",
-        "fifa": "Costa Rica"
+        "un": "Costa Rica"
       },
       "identifiers": {
         "wikidataQid": "Q800",
-        "fifaCode": "CRC",
         "isoAlpha2": "CR",
         "isoAlpha3": "CRI",
         "unM49": "188"
@@ -1816,12 +1438,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1839,12 +1455,10 @@
         "Republika Hrvatska"
       ],
       "sourceNames": {
-        "un": "Croatia",
-        "fifa": "Croatia"
+        "un": "Croatia"
       },
       "identifiers": {
         "wikidataQid": "Q224",
-        "fifaCode": "CRO",
         "isoAlpha2": "HR",
         "isoAlpha3": "HRV",
         "unM49": "191"
@@ -1855,12 +1469,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1875,12 +1483,10 @@
         "CU"
       ],
       "sourceNames": {
-        "un": "Cuba",
-        "fifa": "Cuba"
+        "un": "Cuba"
       },
       "identifiers": {
         "wikidataQid": "Q241",
-        "fifaCode": "CUB",
         "isoAlpha2": "CU",
         "isoAlpha3": "CUB",
         "unM49": "192"
@@ -1891,12 +1497,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1914,12 +1514,10 @@
         "Kongeriget Danmark"
       ],
       "sourceNames": {
-        "un": "Denmark",
-        "fifa": "Denmark"
+        "un": "Denmark"
       },
       "identifiers": {
         "wikidataQid": "Q35",
-        "fifaCode": "DEN",
         "isoAlpha2": "DK",
         "isoAlpha3": "DNK",
         "unM49": "208"
@@ -1930,12 +1528,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1956,12 +1548,10 @@
         "Jamhuuriyadda Jabuuti"
       ],
       "sourceNames": {
-        "un": "Djibouti",
-        "fifa": "Djibouti"
+        "un": "Djibouti"
       },
       "identifiers": {
         "wikidataQid": "Q977",
-        "fifaCode": "DJI",
         "isoAlpha2": "DJ",
         "isoAlpha3": "DJI",
         "unM49": "262"
@@ -1972,12 +1562,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -1994,12 +1578,10 @@
         "Wai‘tu kubuli"
       ],
       "sourceNames": {
-        "un": "Dominica",
-        "fifa": "Dominica"
+        "un": "Dominica"
       },
       "identifiers": {
         "wikidataQid": "Q784",
-        "fifaCode": "DMA",
         "isoAlpha2": "DM",
         "isoAlpha3": "DMA",
         "unM49": "212"
@@ -2010,12 +1592,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2031,12 +1607,10 @@
         "EG"
       ],
       "sourceNames": {
-        "un": "Egypt",
-        "fifa": "Egypt"
+        "un": "Egypt"
       },
       "identifiers": {
         "wikidataQid": "Q79",
-        "fifaCode": "EGY",
         "isoAlpha2": "EG",
         "isoAlpha3": "EGY",
         "unM49": "818"
@@ -2047,12 +1621,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2067,12 +1635,10 @@
         "SV"
       ],
       "sourceNames": {
-        "un": "El Salvador",
-        "fifa": "El Salvador"
+        "un": "El Salvador"
       },
       "identifiers": {
         "wikidataQid": "Q792",
-        "fifaCode": "SLV",
         "isoAlpha2": "SV",
         "isoAlpha3": "SLV",
         "unM49": "222"
@@ -2083,12 +1649,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2104,12 +1664,10 @@
         "Emirates"
       ],
       "sourceNames": {
-        "un": "United Arab Emirates",
-        "fifa": "United Arab Emirates"
+        "un": "United Arab Emirates"
       },
       "identifiers": {
         "wikidataQid": "Q878",
-        "fifaCode": "UAE",
         "isoAlpha2": "AE",
         "isoAlpha3": "ARE",
         "unM49": "784"
@@ -2120,12 +1678,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2142,12 +1694,10 @@
         "República del Ecuador"
       ],
       "sourceNames": {
-        "un": "Ecuador",
-        "fifa": "Ecuador"
+        "un": "Ecuador"
       },
       "identifiers": {
         "wikidataQid": "Q736",
-        "fifaCode": "ECU",
         "isoAlpha2": "EC",
         "isoAlpha3": "ECU",
         "unM49": "218"
@@ -2158,12 +1708,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2183,12 +1727,10 @@
         "Iritriyā"
       ],
       "sourceNames": {
-        "un": "Eritrea",
-        "fifa": "Eritrea"
+        "un": "Eritrea"
       },
       "identifiers": {
         "wikidataQid": "Q986",
-        "fifaCode": "ERI",
         "isoAlpha2": "ER",
         "isoAlpha3": "ERI",
         "unM49": "232"
@@ -2199,12 +1741,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2221,12 +1757,10 @@
         "Slovenská republika"
       ],
       "sourceNames": {
-        "un": "Slovakia",
-        "fifa": "Slovakia"
+        "un": "Slovakia"
       },
       "identifiers": {
         "wikidataQid": "Q214",
-        "fifaCode": "SVK",
         "isoAlpha2": "SK",
         "isoAlpha3": "SVK",
         "unM49": "703"
@@ -2237,12 +1771,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2259,12 +1787,10 @@
         "Republika Slovenija"
       ],
       "sourceNames": {
-        "un": "Slovenia",
-        "fifa": "Slovenia"
+        "un": "Slovenia"
       },
       "identifiers": {
         "wikidataQid": "Q215",
-        "fifaCode": "SVN",
         "isoAlpha2": "SI",
         "isoAlpha3": "SVN",
         "unM49": "705"
@@ -2275,12 +1801,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2297,12 +1817,10 @@
         "Reino de España"
       ],
       "sourceNames": {
-        "un": "Spain",
-        "fifa": "Spain"
+        "un": "Spain"
       },
       "identifiers": {
         "wikidataQid": "Q29",
-        "fifaCode": "ESP",
         "isoAlpha2": "ES",
         "isoAlpha3": "ESP",
         "unM49": "724"
@@ -2313,12 +1831,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2339,12 +1851,10 @@
         "Umbuso weSwatini"
       ],
       "sourceNames": {
-        "un": "Eswatini",
-        "fifa": "Eswatini"
+        "un": "Eswatini"
       },
       "identifiers": {
         "wikidataQid": "Q1050",
-        "fifaCode": "SWZ",
         "isoAlpha2": "SZ",
         "isoAlpha3": "SWZ",
         "unM49": "748"
@@ -2355,12 +1865,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2377,12 +1881,10 @@
         "USA"
       ],
       "sourceNames": {
-        "un": "United States",
-        "fifa": "United States"
+        "un": "United States"
       },
       "identifiers": {
         "wikidataQid": "Q30",
-        "fifaCode": "USA",
         "isoAlpha2": "US",
         "isoAlpha3": "USA",
         "unM49": "840"
@@ -2393,12 +1895,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2415,12 +1911,10 @@
         "Eesti Vabariik"
       ],
       "sourceNames": {
-        "un": "Estonia",
-        "fifa": "Estonia"
+        "un": "Estonia"
       },
       "identifiers": {
         "wikidataQid": "Q191",
-        "fifaCode": "EST",
         "isoAlpha2": "EE",
         "isoAlpha3": "EST",
         "unM49": "233"
@@ -2431,12 +1925,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2454,12 +1942,10 @@
         "የኢትዮጵያ ፌዴራላዊ ዲሞክራሲያዊ ሪፐብሊክ"
       ],
       "sourceNames": {
-        "un": "Ethiopia",
-        "fifa": "Ethiopia"
+        "un": "Ethiopia"
       },
       "identifiers": {
         "wikidataQid": "Q115",
-        "fifaCode": "ETH",
         "isoAlpha2": "ET",
         "isoAlpha3": "ETH",
         "unM49": "231"
@@ -2470,12 +1956,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2493,12 +1973,10 @@
         "Fijī Gaṇarājya"
       ],
       "sourceNames": {
-        "un": "Fiji",
-        "fifa": "Fiji"
+        "un": "Fiji"
       },
       "identifiers": {
         "wikidataQid": "Q712",
-        "fifaCode": "FIJ",
         "isoAlpha2": "FJ",
         "isoAlpha3": "FJI",
         "unM49": "242"
@@ -2509,12 +1987,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2531,12 +2003,10 @@
         "Repúblika ng Pilipinas"
       ],
       "sourceNames": {
-        "un": "Philippines",
-        "fifa": "Philippines"
+        "un": "Philippines"
       },
       "identifiers": {
         "wikidataQid": "Q928",
-        "fifaCode": "PHI",
         "isoAlpha2": "PH",
         "isoAlpha3": "PHL",
         "unM49": "608"
@@ -2547,12 +2017,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2571,12 +2035,10 @@
         "Republiken Finland"
       ],
       "sourceNames": {
-        "un": "Finland",
-        "fifa": "Finland"
+        "un": "Finland"
       },
       "identifiers": {
         "wikidataQid": "Q33",
-        "fifaCode": "FIN",
         "isoAlpha2": "FI",
         "isoAlpha3": "FIN",
         "unM49": "246"
@@ -2587,12 +2049,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2609,12 +2065,10 @@
         "République française"
       ],
       "sourceNames": {
-        "un": "France",
-        "fifa": "France"
+        "un": "France"
       },
       "identifiers": {
         "wikidataQid": "Q142",
-        "fifaCode": "FRA",
         "isoAlpha2": "FR",
         "isoAlpha3": "FRA",
         "unM49": "250"
@@ -2625,12 +2079,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2647,12 +2095,10 @@
         "République Gabonaise"
       ],
       "sourceNames": {
-        "un": "Gabon",
-        "fifa": "Gabon"
+        "un": "Gabon"
       },
       "identifiers": {
         "wikidataQid": "Q1000",
-        "fifaCode": "GAB",
         "isoAlpha2": "GA",
         "isoAlpha3": "GAB",
         "unM49": "266"
@@ -2663,12 +2109,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2683,12 +2123,10 @@
         "GM"
       ],
       "sourceNames": {
-        "un": "Gambia",
-        "fifa": "Gambia"
+        "un": "Gambia"
       },
       "identifiers": {
         "wikidataQid": "Q1005",
-        "fifaCode": "GAM",
         "isoAlpha2": "GM",
         "isoAlpha3": "GMB",
         "unM49": "270"
@@ -2699,12 +2137,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2720,12 +2152,10 @@
         "GH"
       ],
       "sourceNames": {
-        "un": "Ghana",
-        "fifa": "Ghana"
+        "un": "Ghana"
       },
       "identifiers": {
         "wikidataQid": "Q117",
-        "fifaCode": "GHA",
         "isoAlpha2": "GH",
         "isoAlpha3": "GHA",
         "unM49": "288"
@@ -2736,12 +2166,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2755,12 +2179,10 @@
         "Sakartvelo"
       ],
       "sourceNames": {
-        "un": "Georgia",
-        "fifa": "Georgia"
+        "un": "Georgia"
       },
       "identifiers": {
         "wikidataQid": "Q230",
-        "fifaCode": "GEO",
         "isoAlpha2": "GE",
         "isoAlpha3": "GEO",
         "unM49": "268"
@@ -2771,12 +2193,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2790,12 +2206,10 @@
         "GD"
       ],
       "sourceNames": {
-        "un": "Grenada",
-        "fifa": "Grenada"
+        "un": "Grenada"
       },
       "identifiers": {
         "wikidataQid": "Q769",
-        "fifaCode": "GRN",
         "isoAlpha2": "GD",
         "isoAlpha3": "GRD",
         "unM49": "308"
@@ -2806,12 +2220,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2829,12 +2237,10 @@
         "Ελληνική Δημοκρατία"
       ],
       "sourceNames": {
-        "un": "Greece",
-        "fifa": "Greece"
+        "un": "Greece"
       },
       "identifiers": {
         "wikidataQid": "Q41",
-        "fifaCode": "GRE",
         "isoAlpha2": "GR",
         "isoAlpha3": "GRC",
         "unM49": "300"
@@ -2845,12 +2251,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2865,12 +2265,10 @@
         "GT"
       ],
       "sourceNames": {
-        "un": "Guatemala",
-        "fifa": "Guatemala"
+        "un": "Guatemala"
       },
       "identifiers": {
         "wikidataQid": "Q774",
-        "fifaCode": "GUA",
         "isoAlpha2": "GT",
         "isoAlpha3": "GTM",
         "unM49": "320"
@@ -2881,12 +2279,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2902,12 +2294,10 @@
         "GY"
       ],
       "sourceNames": {
-        "un": "Guyana",
-        "fifa": "Guyana"
+        "un": "Guyana"
       },
       "identifiers": {
         "wikidataQid": "Q734",
-        "fifaCode": "GUY",
         "isoAlpha2": "GY",
         "isoAlpha3": "GUY",
         "unM49": "328"
@@ -2918,12 +2308,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2940,12 +2324,10 @@
         "République de Guinée"
       ],
       "sourceNames": {
-        "un": "Guinea",
-        "fifa": "Guinea"
+        "un": "Guinea"
       },
       "identifiers": {
         "wikidataQid": "Q1006",
-        "fifaCode": "GUI",
         "isoAlpha2": "GN",
         "isoAlpha3": "GIN",
         "unM49": "324"
@@ -2956,12 +2338,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -2979,12 +2355,10 @@
         "République de Guinée équatoriale"
       ],
       "sourceNames": {
-        "un": "Equatorial Guinea",
-        "fifa": "Equatorial Guinea"
+        "un": "Equatorial Guinea"
       },
       "identifiers": {
         "wikidataQid": "Q983",
-        "fifaCode": "EQG",
         "isoAlpha2": "GQ",
         "isoAlpha3": "GNQ",
         "unM49": "226"
@@ -2995,12 +2369,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3016,12 +2384,10 @@
         "GW"
       ],
       "sourceNames": {
-        "un": "Guinea-Bissau",
-        "fifa": "Guinea-Bissau"
+        "un": "Guinea-Bissau"
       },
       "identifiers": {
         "wikidataQid": "Q1007",
-        "fifaCode": "GNB",
         "isoAlpha2": "GW",
         "isoAlpha3": "GNB",
         "unM49": "624"
@@ -3032,12 +2398,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3054,12 +2414,10 @@
         "Repiblik Ayiti"
       ],
       "sourceNames": {
-        "un": "Haiti",
-        "fifa": "Haiti"
+        "un": "Haiti"
       },
       "identifiers": {
         "wikidataQid": "Q790",
-        "fifaCode": "HAI",
         "isoAlpha2": "HT",
         "isoAlpha3": "HTI",
         "unM49": "332"
@@ -3070,12 +2428,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3090,12 +2442,10 @@
         "HN"
       ],
       "sourceNames": {
-        "un": "Honduras",
-        "fifa": "Honduras"
+        "un": "Honduras"
       },
       "identifiers": {
         "wikidataQid": "Q783",
-        "fifaCode": "HON",
         "isoAlpha2": "HN",
         "isoAlpha3": "HND",
         "unM49": "340"
@@ -3106,12 +2456,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3125,12 +2469,10 @@
         "HU"
       ],
       "sourceNames": {
-        "un": "Hungary",
-        "fifa": "Hungary"
+        "un": "Hungary"
       },
       "identifiers": {
         "wikidataQid": "Q28",
-        "fifaCode": "HUN",
         "isoAlpha2": "HU",
         "isoAlpha3": "HUN",
         "unM49": "348"
@@ -3141,12 +2483,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3164,12 +2500,10 @@
         "al-Jumhūriyyah al-Yamaniyyah"
       ],
       "sourceNames": {
-        "un": "Yemen",
-        "fifa": "Yemen"
+        "un": "Yemen"
       },
       "identifiers": {
         "wikidataQid": "Q805",
-        "fifaCode": "YEM",
         "isoAlpha2": "YE",
         "isoAlpha3": "YEM",
         "unM49": "887"
@@ -3180,12 +2514,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3229,12 +2557,10 @@
         "SB"
       ],
       "sourceNames": {
-        "un": "Solomon Islands",
-        "fifa": "Solomon Islands"
+        "un": "Solomon Islands"
       },
       "identifiers": {
         "wikidataQid": "Q685",
-        "fifaCode": "SOL",
         "isoAlpha2": "SB",
         "isoAlpha3": "SLB",
         "unM49": "090"
@@ -3245,12 +2571,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3268,12 +2588,10 @@
         "இந்தியா"
       ],
       "sourceNames": {
-        "un": "India",
-        "fifa": "India"
+        "un": "India"
       },
       "identifiers": {
         "wikidataQid": "Q668",
-        "fifaCode": "IND",
         "isoAlpha2": "IN",
         "isoAlpha3": "IND",
         "unM49": "356"
@@ -3284,12 +2602,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3305,12 +2617,10 @@
         "Republik Indonesia"
       ],
       "sourceNames": {
-        "un": "Indonesia",
-        "fifa": "Indonesia"
+        "un": "Indonesia"
       },
       "identifiers": {
         "wikidataQid": "Q252",
-        "fifaCode": "IDN",
         "isoAlpha2": "ID",
         "isoAlpha3": "IDN",
         "unM49": "360"
@@ -3321,12 +2631,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3344,12 +2648,10 @@
         "Jomhuri-ye Eslāmi-ye Irān"
       ],
       "sourceNames": {
-        "un": "Iran",
-        "fifa": "Iran"
+        "un": "Iran"
       },
       "identifiers": {
         "wikidataQid": "Q794",
-        "fifaCode": "IRN",
         "isoAlpha2": "IR",
         "isoAlpha3": "IRN",
         "unM49": "364"
@@ -3360,12 +2662,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3382,12 +2678,10 @@
         "Jumhūriyyat al-‘Irāq"
       ],
       "sourceNames": {
-        "un": "Iraq",
-        "fifa": "Iraq"
+        "un": "Iraq"
       },
       "identifiers": {
         "wikidataQid": "Q796",
-        "fifaCode": "IRQ",
         "isoAlpha2": "IQ",
         "isoAlpha3": "IRQ",
         "unM49": "368"
@@ -3398,12 +2692,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3421,12 +2709,10 @@
         "Poblacht na hÉireann"
       ],
       "sourceNames": {
-        "un": "Ireland",
-        "fifa": "Republic of Ireland"
+        "un": "Ireland"
       },
       "identifiers": {
         "wikidataQid": "Q27",
-        "fifaCode": "IRL",
         "isoAlpha2": "IE",
         "isoAlpha3": "IRL",
         "unM49": "372"
@@ -3437,12 +2723,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3459,12 +2739,10 @@
         "Lýðveldið Ísland"
       ],
       "sourceNames": {
-        "un": "Iceland",
-        "fifa": "Iceland"
+        "un": "Iceland"
       },
       "identifiers": {
         "wikidataQid": "Q189",
-        "fifaCode": "ISL",
         "isoAlpha2": "IS",
         "isoAlpha3": "ISL",
         "unM49": "352"
@@ -3475,12 +2753,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3496,12 +2768,10 @@
         "Medīnat Yisrā'el"
       ],
       "sourceNames": {
-        "un": "Israel",
-        "fifa": "Israel"
+        "un": "Israel"
       },
       "identifiers": {
         "wikidataQid": "Q801",
-        "fifaCode": "ISR",
         "isoAlpha2": "IL",
         "isoAlpha3": "ISR",
         "unM49": "376"
@@ -3512,12 +2782,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3534,12 +2798,10 @@
         "Repubblica italiana"
       ],
       "sourceNames": {
-        "un": "Italy",
-        "fifa": "Italy"
+        "un": "Italy"
       },
       "identifiers": {
         "wikidataQid": "Q38",
-        "fifaCode": "ITA",
         "isoAlpha2": "IT",
         "isoAlpha3": "ITA",
         "unM49": "380"
@@ -3550,12 +2812,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3568,12 +2824,10 @@
         "JM"
       ],
       "sourceNames": {
-        "un": "Jamaica",
-        "fifa": "Jamaica"
+        "un": "Jamaica"
       },
       "identifiers": {
         "wikidataQid": "Q766",
-        "fifaCode": "JAM",
         "isoAlpha2": "JM",
         "isoAlpha3": "JAM",
         "unM49": "388"
@@ -3584,12 +2838,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3605,12 +2853,10 @@
         "Nihon"
       ],
       "sourceNames": {
-        "un": "Japan",
-        "fifa": "Japan"
+        "un": "Japan"
       },
       "identifiers": {
         "wikidataQid": "Q17",
-        "fifaCode": "JPN",
         "isoAlpha2": "JP",
         "isoAlpha3": "JPN",
         "unM49": "392"
@@ -3621,12 +2867,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3643,12 +2883,10 @@
         "al-Mamlakah al-Urdunīyah al-Hāshimīyah"
       ],
       "sourceNames": {
-        "un": "Jordan",
-        "fifa": "Jordan"
+        "un": "Jordan"
       },
       "identifiers": {
         "wikidataQid": "Q810",
-        "fifaCode": "JOR",
         "isoAlpha2": "JO",
         "isoAlpha3": "JOR",
         "unM49": "400"
@@ -3659,12 +2897,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3710,12 +2942,10 @@
         "Dawlat al-Kuwait"
       ],
       "sourceNames": {
-        "un": "Kuwait",
-        "fifa": "Kuwait"
+        "un": "Kuwait"
       },
       "identifiers": {
         "wikidataQid": "Q817",
-        "fifaCode": "KUW",
         "isoAlpha2": "KW",
         "isoAlpha3": "KWT",
         "unM49": "414"
@@ -3726,12 +2956,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3748,12 +2972,10 @@
         "Sathalanalat Paxathipatai Paxaxon Lao"
       ],
       "sourceNames": {
-        "un": "Laos",
-        "fifa": "Laos"
+        "un": "Laos"
       },
       "identifiers": {
         "wikidataQid": "Q819",
-        "fifaCode": "LAO",
         "isoAlpha2": "LA",
         "isoAlpha3": "LAO",
         "unM49": "418"
@@ -3764,12 +2986,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3786,12 +3002,10 @@
         "Muso oa Lesotho"
       ],
       "sourceNames": {
-        "un": "Lesotho",
-        "fifa": "Lesotho"
+        "un": "Lesotho"
       },
       "identifiers": {
         "wikidataQid": "Q1013",
-        "fifaCode": "LES",
         "isoAlpha2": "LS",
         "isoAlpha3": "LSO",
         "unM49": "426"
@@ -3802,12 +3016,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3824,12 +3032,10 @@
         "Latvijas Republika"
       ],
       "sourceNames": {
-        "un": "Latvia",
-        "fifa": "Latvia"
+        "un": "Latvia"
       },
       "identifiers": {
         "wikidataQid": "Q211",
-        "fifaCode": "LVA",
         "isoAlpha2": "LV",
         "isoAlpha3": "LVA",
         "unM49": "428"
@@ -3840,12 +3046,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3862,12 +3062,10 @@
         "Al-Jumhūrīyah Al-Libnānīyah"
       ],
       "sourceNames": {
-        "un": "Lebanon",
-        "fifa": "Lebanon"
+        "un": "Lebanon"
       },
       "identifiers": {
         "wikidataQid": "Q822",
-        "fifaCode": "LBN",
         "isoAlpha2": "LB",
         "isoAlpha3": "LBN",
         "unM49": "422"
@@ -3878,12 +3076,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3898,12 +3090,10 @@
         "LR"
       ],
       "sourceNames": {
-        "un": "Liberia",
-        "fifa": "Liberia"
+        "un": "Liberia"
       },
       "identifiers": {
         "wikidataQid": "Q1014",
-        "fifaCode": "LBR",
         "isoAlpha2": "LR",
         "isoAlpha3": "LBR",
         "unM49": "430"
@@ -3914,12 +3104,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3936,12 +3120,10 @@
         "Dawlat Libya"
       ],
       "sourceNames": {
-        "un": "Libya",
-        "fifa": "Libya"
+        "un": "Libya"
       },
       "identifiers": {
         "wikidataQid": "Q1016",
-        "fifaCode": "LBY",
         "isoAlpha2": "LY",
         "isoAlpha3": "LBY",
         "unM49": "434"
@@ -3952,12 +3134,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -3973,12 +3149,10 @@
         "Fürstentum Liechtenstein"
       ],
       "sourceNames": {
-        "un": "Liechtenstein",
-        "fifa": "Liechtenstein"
+        "un": "Liechtenstein"
       },
       "identifiers": {
         "wikidataQid": "Q347",
-        "fifaCode": "LIE",
         "isoAlpha2": "LI",
         "isoAlpha3": "LIE",
         "unM49": "438"
@@ -3989,12 +3163,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4011,12 +3179,10 @@
         "Lietuvos Respublika"
       ],
       "sourceNames": {
-        "un": "Lithuania",
-        "fifa": "Lithuania"
+        "un": "Lithuania"
       },
       "identifiers": {
         "wikidataQid": "Q37",
-        "fifaCode": "LTU",
         "isoAlpha2": "LT",
         "isoAlpha3": "LTU",
         "unM49": "440"
@@ -4027,12 +3193,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4051,12 +3211,10 @@
         "Groussherzogtum Lëtzebuerg"
       ],
       "sourceNames": {
-        "un": "Luxembourg",
-        "fifa": "Luxembourg"
+        "un": "Luxembourg"
       },
       "identifiers": {
         "wikidataQid": "Q32",
-        "fifaCode": "LUX",
         "isoAlpha2": "LU",
         "isoAlpha3": "LUX",
         "unM49": "442"
@@ -4067,12 +3225,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4091,12 +3243,10 @@
         "Република Северна Македонија"
       ],
       "sourceNames": {
-        "un": "North Macedonia",
-        "fifa": "North Macedonia"
+        "un": "North Macedonia"
       },
       "identifiers": {
         "wikidataQid": "Q221",
-        "fifaCode": "MKD",
         "isoAlpha2": "MK",
         "isoAlpha3": "MKD",
         "unM49": "807"
@@ -4107,12 +3257,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4129,12 +3273,10 @@
         "République de Madagascar"
       ],
       "sourceNames": {
-        "un": "Madagascar",
-        "fifa": "Madagascar"
+        "un": "Madagascar"
       },
       "identifiers": {
         "wikidataQid": "Q1019",
-        "fifaCode": "MAD",
         "isoAlpha2": "MG",
         "isoAlpha3": "MDG",
         "unM49": "450"
@@ -4145,12 +3287,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4164,12 +3300,10 @@
         "MY"
       ],
       "sourceNames": {
-        "un": "Malaysia",
-        "fifa": "Malaysia"
+        "un": "Malaysia"
       },
       "identifiers": {
         "wikidataQid": "Q833",
-        "fifaCode": "MAS",
         "isoAlpha2": "MY",
         "isoAlpha3": "MYS",
         "unM49": "458"
@@ -4180,12 +3314,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4200,12 +3328,10 @@
         "MW"
       ],
       "sourceNames": {
-        "un": "Malawi",
-        "fifa": "Malawi"
+        "un": "Malawi"
       },
       "identifiers": {
         "wikidataQid": "Q1020",
-        "fifaCode": "MWI",
         "isoAlpha2": "MW",
         "isoAlpha3": "MWI",
         "unM49": "454"
@@ -4216,12 +3342,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4239,12 +3359,10 @@
         "Dhivehi Raajjeyge Jumhooriyya"
       ],
       "sourceNames": {
-        "un": "Maldives",
-        "fifa": "Maldives"
+        "un": "Maldives"
       },
       "identifiers": {
         "wikidataQid": "Q826",
-        "fifaCode": "MDV",
         "isoAlpha2": "MV",
         "isoAlpha3": "MDV",
         "unM49": "462"
@@ -4255,12 +3373,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4276,12 +3388,10 @@
         "République du Mali"
       ],
       "sourceNames": {
-        "un": "Mali",
-        "fifa": "Mali"
+        "un": "Mali"
       },
       "identifiers": {
         "wikidataQid": "Q912",
-        "fifaCode": "MLI",
         "isoAlpha2": "ML",
         "isoAlpha3": "MLI",
         "unM49": "466"
@@ -4292,12 +3402,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4313,12 +3417,10 @@
         "Repubblika ta' Malta"
       ],
       "sourceNames": {
-        "un": "Malta",
-        "fifa": "Malta"
+        "un": "Malta"
       },
       "identifiers": {
         "wikidataQid": "Q233",
-        "fifaCode": "MLT",
         "isoAlpha2": "MT",
         "isoAlpha3": "MLT",
         "unM49": "470"
@@ -4329,12 +3431,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4351,12 +3447,10 @@
         "Al-Mamlakah al-Maġribiyah"
       ],
       "sourceNames": {
-        "un": "Morocco",
-        "fifa": "Morocco"
+        "un": "Morocco"
       },
       "identifiers": {
         "wikidataQid": "Q1028",
-        "fifaCode": "MAR",
         "isoAlpha2": "MA",
         "isoAlpha3": "MAR",
         "unM49": "504"
@@ -4367,12 +3461,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4389,12 +3477,10 @@
         "République de Maurice"
       ],
       "sourceNames": {
-        "un": "Mauritius",
-        "fifa": "Mauritius"
+        "un": "Mauritius"
       },
       "identifiers": {
         "wikidataQid": "Q1027",
-        "fifaCode": "MRI",
         "isoAlpha2": "MU",
         "isoAlpha3": "MUS",
         "unM49": "480"
@@ -4405,12 +3491,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4426,12 +3506,10 @@
         "al-Jumhūriyyah al-ʾIslāmiyyah al-Mūrītāniyyah"
       ],
       "sourceNames": {
-        "un": "Mauritania",
-        "fifa": "Mauritania"
+        "un": "Mauritania"
       },
       "identifiers": {
         "wikidataQid": "Q1025",
-        "fifaCode": "MTN",
         "isoAlpha2": "MR",
         "isoAlpha3": "MRT",
         "unM49": "478"
@@ -4442,12 +3520,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4463,12 +3535,10 @@
         "Mexicanos"
       ],
       "sourceNames": {
-        "un": "Mexico",
-        "fifa": "Mexico"
+        "un": "Mexico"
       },
       "identifiers": {
         "wikidataQid": "Q96",
-        "fifaCode": "MEX",
         "isoAlpha2": "MX",
         "isoAlpha3": "MEX",
         "unM49": "484"
@@ -4479,12 +3549,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4529,12 +3593,10 @@
         "MZ"
       ],
       "sourceNames": {
-        "un": "Mozambique",
-        "fifa": "Mozambique"
+        "un": "Mozambique"
       },
       "identifiers": {
         "wikidataQid": "Q1029",
-        "fifaCode": "MOZ",
         "isoAlpha2": "MZ",
         "isoAlpha3": "MOZ",
         "unM49": "508"
@@ -4545,12 +3607,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4568,12 +3624,10 @@
         "Republica Moldova"
       ],
       "sourceNames": {
-        "un": "Moldova",
-        "fifa": "Moldova"
+        "un": "Moldova"
       },
       "identifiers": {
         "wikidataQid": "Q217",
-        "fifaCode": "MDA",
         "isoAlpha2": "MD",
         "isoAlpha3": "MDA",
         "unM49": "498"
@@ -4584,12 +3638,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4631,12 +3679,10 @@
         "MN"
       ],
       "sourceNames": {
-        "un": "Mongolia",
-        "fifa": "Mongolia"
+        "un": "Mongolia"
       },
       "identifiers": {
         "wikidataQid": "Q711",
-        "fifaCode": "MNG",
         "isoAlpha2": "MN",
         "isoAlpha3": "MNG",
         "unM49": "496"
@@ -4647,12 +3693,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4666,12 +3706,10 @@
         "Crna Gora"
       ],
       "sourceNames": {
-        "un": "Montenegro",
-        "fifa": "Montenegro"
+        "un": "Montenegro"
       },
       "identifiers": {
         "wikidataQid": "Q236",
-        "fifaCode": "MNE",
         "isoAlpha2": "ME",
         "isoAlpha3": "MNE",
         "unM49": "499"
@@ -4682,12 +3720,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4704,12 +3736,10 @@
         "Pyidaunzu Thanmăda Myăma Nainngandaw"
       ],
       "sourceNames": {
-        "un": "Myanmar",
-        "fifa": "Myanmar"
+        "un": "Myanmar"
       },
       "identifiers": {
         "wikidataQid": "Q836",
-        "fifaCode": "MYA",
         "isoAlpha2": "MM",
         "isoAlpha3": "MMR",
         "unM49": "104"
@@ -4720,12 +3750,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4741,12 +3765,10 @@
         "Namibië"
       ],
       "sourceNames": {
-        "un": "Namibia",
-        "fifa": "Namibia"
+        "un": "Namibia"
       },
       "identifiers": {
         "wikidataQid": "Q1030",
-        "fifaCode": "NAM",
         "isoAlpha2": "NA",
         "isoAlpha3": "NAM",
         "unM49": "516"
@@ -4757,12 +3779,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4809,12 +3825,10 @@
         "Loktāntrik Ganatantra Nepāl"
       ],
       "sourceNames": {
-        "un": "Nepal",
-        "fifa": "Nepal"
+        "un": "Nepal"
       },
       "identifiers": {
         "wikidataQid": "Q837",
-        "fifaCode": "NEP",
         "isoAlpha2": "NP",
         "isoAlpha3": "NPL",
         "unM49": "524"
@@ -4825,12 +3839,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4846,12 +3854,10 @@
         "República de Nicaragua"
       ],
       "sourceNames": {
-        "un": "Nicaragua",
-        "fifa": "Nicaragua"
+        "un": "Nicaragua"
       },
       "identifiers": {
         "wikidataQid": "Q811",
-        "fifaCode": "NCA",
         "isoAlpha2": "NI",
         "isoAlpha3": "NIC",
         "unM49": "558"
@@ -4862,12 +3868,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4883,12 +3883,10 @@
         "Nijar"
       ],
       "sourceNames": {
-        "un": "Niger",
-        "fifa": "Niger"
+        "un": "Niger"
       },
       "identifiers": {
         "wikidataQid": "Q1032",
-        "fifaCode": "NIG",
         "isoAlpha2": "NE",
         "isoAlpha3": "NER",
         "unM49": "562"
@@ -4899,12 +3897,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4921,12 +3913,10 @@
         "Naíjíríà"
       ],
       "sourceNames": {
-        "un": "Nigeria",
-        "fifa": "Nigeria"
+        "un": "Nigeria"
       },
       "identifiers": {
         "wikidataQid": "Q1033",
-        "fifaCode": "NGA",
         "isoAlpha2": "NG",
         "isoAlpha3": "NGA",
         "unM49": "566"
@@ -4937,12 +3927,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4962,12 +3946,10 @@
         "Kongeriket Noreg"
       ],
       "sourceNames": {
-        "un": "Norway",
-        "fifa": "Norway"
+        "un": "Norway"
       },
       "identifiers": {
         "wikidataQid": "Q20",
-        "fifaCode": "NOR",
         "isoAlpha2": "NO",
         "isoAlpha3": "NOR",
         "unM49": "578"
@@ -4978,12 +3960,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -4998,12 +3974,10 @@
         "Aotearoa"
       ],
       "sourceNames": {
-        "un": "New Zealand",
-        "fifa": "New Zealand"
+        "un": "New Zealand"
       },
       "identifiers": {
         "wikidataQid": "Q664",
-        "fifaCode": "NZL",
         "isoAlpha2": "NZ",
         "isoAlpha3": "NZL",
         "unM49": "554"
@@ -5014,12 +3988,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5036,12 +4004,10 @@
         "Salṭanat ʻUmān"
       ],
       "sourceNames": {
-        "un": "Oman",
-        "fifa": "Oman"
+        "un": "Oman"
       },
       "identifiers": {
         "wikidataQid": "Q842",
-        "fifaCode": "OMA",
         "isoAlpha2": "OM",
         "isoAlpha3": "OMN",
         "unM49": "512"
@@ -5052,12 +4018,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5076,12 +4036,10 @@
         "The Netherlands"
       ],
       "sourceNames": {
-        "un": "Netherlands",
-        "fifa": "Netherlands"
+        "un": "Netherlands"
       },
       "identifiers": {
         "wikidataQid": "Q29999",
-        "fifaCode": "NED",
         "isoAlpha2": "NL",
         "isoAlpha3": "NLD",
         "unM49": "528"
@@ -5092,12 +4050,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5144,12 +4096,10 @@
         "Dawlat Filasṭin"
       ],
       "sourceNames": {
-        "un": "State of Palestine",
-        "fifa": "Palestine"
+        "un": "State of Palestine"
       },
       "identifiers": {
         "wikidataQid": "Q219060",
-        "fifaCode": "PLE",
         "isoAlpha2": "PS",
         "isoAlpha3": "PSE",
         "unM49": "275"
@@ -5160,12 +4110,6 @@
           "organization": "UN",
           "status": "observer",
           "sourceUrl": "https://www.un.org/en/about-us/non-member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5181,12 +4125,10 @@
         "República de Panamá"
       ],
       "sourceNames": {
-        "un": "Panama",
-        "fifa": "Panama"
+        "un": "Panama"
       },
       "identifiers": {
         "wikidataQid": "Q804",
-        "fifaCode": "PAN",
         "isoAlpha2": "PA",
         "isoAlpha3": "PAN",
         "unM49": "591"
@@ -5197,12 +4139,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5219,12 +4155,10 @@
         "Independen Stet bilong Papua Niugini"
       ],
       "sourceNames": {
-        "un": "Papua New Guinea",
-        "fifa": "Papua New Guinea"
+        "un": "Papua New Guinea"
       },
       "identifiers": {
         "wikidataQid": "Q691",
-        "fifaCode": "PNG",
         "isoAlpha2": "PG",
         "isoAlpha3": "PNG",
         "unM49": "598"
@@ -5235,12 +4169,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5257,12 +4185,10 @@
         "Islāmī Jumhūriya'eh Pākistān"
       ],
       "sourceNames": {
-        "un": "Pakistan",
-        "fifa": "Pakistan"
+        "un": "Pakistan"
       },
       "identifiers": {
         "wikidataQid": "Q843",
-        "fifaCode": "PAK",
         "isoAlpha2": "PK",
         "isoAlpha3": "PAK",
         "unM49": "586"
@@ -5273,12 +4199,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5296,12 +4216,10 @@
         "Tetã Paraguái"
       ],
       "sourceNames": {
-        "un": "Paraguay",
-        "fifa": "Paraguay"
+        "un": "Paraguay"
       },
       "identifiers": {
         "wikidataQid": "Q733",
-        "fifaCode": "PAR",
         "isoAlpha2": "PY",
         "isoAlpha3": "PRY",
         "unM49": "600"
@@ -5312,12 +4230,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5334,12 +4246,10 @@
         "República del Perú"
       ],
       "sourceNames": {
-        "un": "Peru",
-        "fifa": "Peru"
+        "un": "Peru"
       },
       "identifiers": {
         "wikidataQid": "Q419",
-        "fifaCode": "PER",
         "isoAlpha2": "PE",
         "isoAlpha3": "PER",
         "unM49": "604"
@@ -5350,12 +4260,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5372,12 +4276,10 @@
         "Rzeczpospolita Polska"
       ],
       "sourceNames": {
-        "un": "Poland",
-        "fifa": "Poland"
+        "un": "Poland"
       },
       "identifiers": {
         "wikidataQid": "Q36",
-        "fifaCode": "POL",
         "isoAlpha2": "PL",
         "isoAlpha3": "POL",
         "unM49": "616"
@@ -5388,12 +4290,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5410,12 +4306,10 @@
         "República Portuguesa"
       ],
       "sourceNames": {
-        "un": "Portugal",
-        "fifa": "Portugal"
+        "un": "Portugal"
       },
       "identifiers": {
         "wikidataQid": "Q45",
-        "fifaCode": "POR",
         "isoAlpha2": "PT",
         "isoAlpha3": "PRT",
         "unM49": "620"
@@ -5426,12 +4320,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5448,12 +4336,10 @@
         "Jamhuri ya Kenya"
       ],
       "sourceNames": {
-        "un": "Kenya",
-        "fifa": "Kenya"
+        "un": "Kenya"
       },
       "identifiers": {
         "wikidataQid": "Q114",
-        "fifaCode": "KEN",
         "isoAlpha2": "KE",
         "isoAlpha3": "KEN",
         "unM49": "404"
@@ -5464,12 +4350,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5488,12 +4368,10 @@
         "Kyrgyz Respublikasy"
       ],
       "sourceNames": {
-        "un": "Kyrgyzstan",
-        "fifa": "Kyrgyzstan"
+        "un": "Kyrgyzstan"
       },
       "identifiers": {
         "wikidataQid": "Q813",
-        "fifaCode": "KGZ",
         "isoAlpha2": "KG",
         "isoAlpha3": "KGZ",
         "unM49": "417"
@@ -5504,12 +4382,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5556,12 +4428,10 @@
         "République centrafricaine"
       ],
       "sourceNames": {
-        "un": "Central African Republic",
-        "fifa": "Central African Republic"
+        "un": "Central African Republic"
       },
       "identifiers": {
         "wikidataQid": "Q929",
-        "fifaCode": "CTA",
         "isoAlpha2": "CF",
         "isoAlpha3": "CAF",
         "unM49": "140"
@@ -5572,12 +4442,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5595,12 +4459,10 @@
         "DRC"
       ],
       "sourceNames": {
-        "un": "DR Congo",
-        "fifa": "DR Congo"
+        "un": "DR Congo"
       },
       "identifiers": {
         "wikidataQid": "Q974",
-        "fifaCode": "COD",
         "isoAlpha2": "CD",
         "isoAlpha3": "COD",
         "unM49": "180"
@@ -5611,12 +4473,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5632,12 +4488,10 @@
         "Congo-Brazzaville"
       ],
       "sourceNames": {
-        "un": "Republic of the Congo",
-        "fifa": "Congo"
+        "un": "Republic of the Congo"
       },
       "identifiers": {
         "wikidataQid": "Q971",
-        "fifaCode": "CGO",
         "isoAlpha2": "CG",
         "isoAlpha3": "COG",
         "unM49": "178"
@@ -5648,12 +4502,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5667,12 +4515,10 @@
         "DO"
       ],
       "sourceNames": {
-        "un": "Dominican Republic",
-        "fifa": "Dominican Republic"
+        "un": "Dominican Republic"
       },
       "identifiers": {
         "wikidataQid": "Q786",
-        "fifaCode": "DOM",
         "isoAlpha2": "DO",
         "isoAlpha3": "DOM",
         "unM49": "214"
@@ -5683,12 +4529,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5704,12 +4544,10 @@
         "Roumania"
       ],
       "sourceNames": {
-        "un": "Romania",
-        "fifa": "Romania"
+        "un": "Romania"
       },
       "identifiers": {
         "wikidataQid": "Q218",
-        "fifaCode": "ROU",
         "isoAlpha2": "RO",
         "isoAlpha3": "ROU",
         "unM49": "642"
@@ -5720,12 +4558,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5743,12 +4575,10 @@
         "République du Rwanda"
       ],
       "sourceNames": {
-        "un": "Rwanda",
-        "fifa": "Rwanda"
+        "un": "Rwanda"
       },
       "identifiers": {
         "wikidataQid": "Q1037",
-        "fifaCode": "RWA",
         "isoAlpha2": "RW",
         "isoAlpha3": "RWA",
         "unM49": "646"
@@ -5759,12 +4589,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5780,12 +4604,10 @@
         "Российская Федерация"
       ],
       "sourceNames": {
-        "un": "Russia",
-        "fifa": "Russia"
+        "un": "Russia"
       },
       "identifiers": {
         "wikidataQid": "Q159",
-        "fifaCode": "RUS",
         "isoAlpha2": "RU",
         "isoAlpha3": "RUS",
         "unM49": "643"
@@ -5796,12 +4618,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5817,12 +4633,10 @@
         "Malo Saʻoloto Tutoʻatasi o Sāmoa"
       ],
       "sourceNames": {
-        "un": "Samoa",
-        "fifa": "Samoa"
+        "un": "Samoa"
       },
       "identifiers": {
         "wikidataQid": "Q683",
-        "fifaCode": "SAM",
         "isoAlpha2": "WS",
         "isoAlpha3": "WSM",
         "unM49": "882"
@@ -5833,12 +4647,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5854,12 +4662,10 @@
         "Repubblica di San Marino"
       ],
       "sourceNames": {
-        "un": "San Marino",
-        "fifa": "San Marino"
+        "un": "San Marino"
       },
       "identifiers": {
         "wikidataQid": "Q238",
-        "fifaCode": "SMR",
         "isoAlpha2": "SM",
         "isoAlpha3": "SMR",
         "unM49": "674"
@@ -5870,12 +4676,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5889,12 +4689,10 @@
         "LC"
       ],
       "sourceNames": {
-        "un": "Saint Lucia",
-        "fifa": "Saint Lucia"
+        "un": "Saint Lucia"
       },
       "identifiers": {
         "wikidataQid": "Q760",
-        "fifaCode": "LCA",
         "isoAlpha2": "LC",
         "isoAlpha3": "LCA",
         "unM49": "662"
@@ -5905,12 +4703,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5926,12 +4718,10 @@
         "KN"
       ],
       "sourceNames": {
-        "un": "Saint Kitts and Nevis",
-        "fifa": "Saint Kitts and Nevis"
+        "un": "Saint Kitts and Nevis"
       },
       "identifiers": {
         "wikidataQid": "Q763",
-        "fifaCode": "SKN",
         "isoAlpha2": "KN",
         "isoAlpha3": "KNA",
         "unM49": "659"
@@ -5942,12 +4732,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5963,12 +4747,10 @@
         "ST"
       ],
       "sourceNames": {
-        "un": "São Tomé and Príncipe",
-        "fifa": "São Tomé and Príncipe"
+        "un": "São Tomé and Príncipe"
       },
       "identifiers": {
         "wikidataQid": "Q1039",
-        "fifaCode": "STP",
         "isoAlpha2": "ST",
         "isoAlpha3": "STP",
         "unM49": "678"
@@ -5979,12 +4761,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -5998,12 +4774,10 @@
         "VC"
       ],
       "sourceNames": {
-        "un": "Saint Vincent and the Grenadines",
-        "fifa": "Saint Vincent and the Grenadines"
+        "un": "Saint Vincent and the Grenadines"
       },
       "identifiers": {
         "wikidataQid": "Q757",
-        "fifaCode": "VIN",
         "isoAlpha2": "VC",
         "isoAlpha3": "VCT",
         "unM49": "670"
@@ -6014,12 +4788,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6037,12 +4805,10 @@
         "République des Seychelles"
       ],
       "sourceNames": {
-        "un": "Seychelles",
-        "fifa": "Seychelles"
+        "un": "Seychelles"
       },
       "identifiers": {
         "wikidataQid": "Q1042",
-        "fifaCode": "SEY",
         "isoAlpha2": "SC",
         "isoAlpha3": "SYC",
         "unM49": "690"
@@ -6053,12 +4819,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6074,12 +4834,10 @@
         "République du Sénégal"
       ],
       "sourceNames": {
-        "un": "Senegal",
-        "fifa": "Senegal"
+        "un": "Senegal"
       },
       "identifiers": {
         "wikidataQid": "Q1041",
-        "fifaCode": "SEN",
         "isoAlpha2": "SN",
         "isoAlpha3": "SEN",
         "unM49": "686"
@@ -6090,12 +4848,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6111,12 +4863,10 @@
         "SL"
       ],
       "sourceNames": {
-        "un": "Sierra Leone",
-        "fifa": "Sierra Leone"
+        "un": "Sierra Leone"
       },
       "identifiers": {
         "wikidataQid": "Q1044",
-        "fifaCode": "SLE",
         "isoAlpha2": "SL",
         "isoAlpha3": "SLE",
         "unM49": "694"
@@ -6127,12 +4877,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6151,12 +4895,10 @@
         "Republika Srbija"
       ],
       "sourceNames": {
-        "un": "Serbia",
-        "fifa": "Serbia"
+        "un": "Serbia"
       },
       "identifiers": {
         "wikidataQid": "Q403",
-        "fifaCode": "SRB",
         "isoAlpha2": "RS",
         "isoAlpha3": "SRB",
         "unM49": "688"
@@ -6167,12 +4909,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6190,12 +4926,10 @@
         "新加坡共和国"
       ],
       "sourceNames": {
-        "un": "Singapore",
-        "fifa": "Singapore"
+        "un": "Singapore"
       },
       "identifiers": {
         "wikidataQid": "Q334",
-        "fifaCode": "SGP",
         "isoAlpha2": "SG",
         "isoAlpha3": "SGP",
         "unM49": "702"
@@ -6206,12 +4940,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6228,12 +4956,10 @@
         "Al-Jumhūrīyah Al-ʻArabīyah As-Sūrīyah"
       ],
       "sourceNames": {
-        "un": "Syria",
-        "fifa": "Syria"
+        "un": "Syria"
       },
       "identifiers": {
         "wikidataQid": "Q858",
-        "fifaCode": "SYR",
         "isoAlpha2": "SY",
         "isoAlpha3": "SYR",
         "unM49": "760"
@@ -6244,12 +4970,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6267,12 +4987,10 @@
         "Jumhūriyyat aṣ-Ṣūmāl al-Fiderāliyya"
       ],
       "sourceNames": {
-        "un": "Somalia",
-        "fifa": "Somalia"
+        "un": "Somalia"
       },
       "identifiers": {
         "wikidataQid": "Q1045",
-        "fifaCode": "SOM",
         "isoAlpha2": "SO",
         "isoAlpha3": "SOM",
         "unM49": "706"
@@ -6283,12 +5001,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6304,12 +5016,10 @@
         "ilaṅkai"
       ],
       "sourceNames": {
-        "un": "Sri Lanka",
-        "fifa": "Sri Lanka"
+        "un": "Sri Lanka"
       },
       "identifiers": {
         "wikidataQid": "Q854",
-        "fifaCode": "SRI",
         "isoAlpha2": "LK",
         "isoAlpha3": "LKA",
         "unM49": "144"
@@ -6320,12 +5030,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6342,12 +5046,10 @@
         "Jumhūrīyat as-Sūdān"
       ],
       "sourceNames": {
-        "un": "Sudan",
-        "fifa": "Sudan"
+        "un": "Sudan"
       },
       "identifiers": {
         "wikidataQid": "Q1049",
-        "fifaCode": "SDN",
         "isoAlpha2": "SD",
         "isoAlpha3": "SDN",
         "unM49": "729"
@@ -6358,12 +5060,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6379,12 +5075,10 @@
         "SS"
       ],
       "sourceNames": {
-        "un": "South Sudan",
-        "fifa": "South Sudan"
+        "un": "South Sudan"
       },
       "identifiers": {
         "wikidataQid": "Q958",
-        "fifaCode": "SSD",
         "isoAlpha2": "SS",
         "isoAlpha3": "SSD",
         "unM49": "728"
@@ -6395,12 +5089,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6417,12 +5105,10 @@
         "Konungariket Sverige"
       ],
       "sourceNames": {
-        "un": "Sweden",
-        "fifa": "Sweden"
+        "un": "Sweden"
       },
       "identifiers": {
         "wikidataQid": "Q34",
-        "fifaCode": "SWE",
         "isoAlpha2": "SE",
         "isoAlpha3": "SWE",
         "unM49": "752"
@@ -6433,12 +5119,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6458,12 +5138,10 @@
         "Svizra"
       ],
       "sourceNames": {
-        "un": "Switzerland",
-        "fifa": "Switzerland"
+        "un": "Switzerland"
       },
       "identifiers": {
         "wikidataQid": "Q39",
-        "fifaCode": "SUI",
         "isoAlpha2": "CH",
         "isoAlpha3": "CHE",
         "unM49": "756"
@@ -6474,12 +5152,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6497,12 +5169,10 @@
         "Republiek Suriname"
       ],
       "sourceNames": {
-        "un": "Suriname",
-        "fifa": "Suriname"
+        "un": "Suriname"
       },
       "identifiers": {
         "wikidataQid": "Q730",
-        "fifaCode": "SUR",
         "isoAlpha2": "SR",
         "isoAlpha3": "SUR",
         "unM49": "740"
@@ -6513,12 +5183,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6538,12 +5202,10 @@
         "Ratcha Anachak Thai"
       ],
       "sourceNames": {
-        "un": "Thailand",
-        "fifa": "Thailand"
+        "un": "Thailand"
       },
       "identifiers": {
         "wikidataQid": "Q869",
-        "fifaCode": "THA",
         "isoAlpha2": "TH",
         "isoAlpha3": "THA",
         "unM49": "764"
@@ -6554,12 +5216,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6578,12 +5234,10 @@
         "Çumhuriyi Toçikiston"
       ],
       "sourceNames": {
-        "un": "Tajikistan",
-        "fifa": "Tajikistan"
+        "un": "Tajikistan"
       },
       "identifiers": {
         "wikidataQid": "Q863",
-        "fifaCode": "TJK",
         "isoAlpha2": "TJ",
         "isoAlpha3": "TJK",
         "unM49": "762"
@@ -6594,12 +5248,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6616,12 +5264,10 @@
         "Jamhuri ya Muungano wa Tanzania"
       ],
       "sourceNames": {
-        "un": "Tanzania",
-        "fifa": "Tanzania"
+        "un": "Tanzania"
       },
       "identifiers": {
         "wikidataQid": "Q924",
-        "fifaCode": "TAN",
         "isoAlpha2": "TZ",
         "isoAlpha3": "TZA",
         "unM49": "834"
@@ -6632,12 +5278,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6656,12 +5296,10 @@
         "Timor Lorosae"
       ],
       "sourceNames": {
-        "un": "Timor-Leste",
-        "fifa": "Timor-Leste"
+        "un": "Timor-Leste"
       },
       "identifiers": {
         "wikidataQid": "Q574",
-        "fifaCode": "TLS",
         "isoAlpha2": "TL",
         "isoAlpha3": "TLS",
         "unM49": "626"
@@ -6672,12 +5310,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6694,12 +5326,10 @@
         "République Togolaise"
       ],
       "sourceNames": {
-        "un": "Togo",
-        "fifa": "Togo"
+        "un": "Togo"
       },
       "identifiers": {
         "wikidataQid": "Q945",
-        "fifaCode": "TOG",
         "isoAlpha2": "TG",
         "isoAlpha3": "TGO",
         "unM49": "768"
@@ -6710,12 +5340,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6730,12 +5354,10 @@
         "TO"
       ],
       "sourceNames": {
-        "un": "Tonga",
-        "fifa": "Tonga"
+        "un": "Tonga"
       },
       "identifiers": {
         "wikidataQid": "Q678",
-        "fifaCode": "TGA",
         "isoAlpha2": "TO",
         "isoAlpha3": "TON",
         "unM49": "776"
@@ -6746,12 +5368,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6767,12 +5383,10 @@
         "TT"
       ],
       "sourceNames": {
-        "un": "Trinidad and Tobago",
-        "fifa": "Trinidad and Tobago"
+        "un": "Trinidad and Tobago"
       },
       "identifiers": {
         "wikidataQid": "Q754",
-        "fifaCode": "TRI",
         "isoAlpha2": "TT",
         "isoAlpha3": "TTO",
         "unM49": "780"
@@ -6783,12 +5397,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6805,12 +5413,10 @@
         "al-Jumhūriyyah at-Tūnisiyyah"
       ],
       "sourceNames": {
-        "un": "Tunisia",
-        "fifa": "Tunisia"
+        "un": "Tunisia"
       },
       "identifiers": {
         "wikidataQid": "Q948",
-        "fifaCode": "TUN",
         "isoAlpha2": "TN",
         "isoAlpha3": "TUN",
         "unM49": "788"
@@ -6821,12 +5427,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6841,12 +5441,10 @@
         "TM"
       ],
       "sourceNames": {
-        "un": "Turkmenistan",
-        "fifa": "Turkmenistan"
+        "un": "Turkmenistan"
       },
       "identifiers": {
         "wikidataQid": "Q874",
-        "fifaCode": "TKM",
         "isoAlpha2": "TM",
         "isoAlpha3": "TKM",
         "unM49": "795"
@@ -6857,12 +5455,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6880,12 +5472,10 @@
         "Türkiye Cumhuriyeti"
       ],
       "sourceNames": {
-        "un": "Turkey",
-        "fifa": "Turkey"
+        "un": "Turkey"
       },
       "identifiers": {
         "wikidataQid": "Q43",
-        "fifaCode": "TUR",
         "isoAlpha2": "TR",
         "isoAlpha3": "TUR",
         "unM49": "792"
@@ -6896,12 +5486,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6942,12 +5526,10 @@
         "Ukrayina"
       ],
       "sourceNames": {
-        "un": "Ukraine",
-        "fifa": "Ukraine"
+        "un": "Ukraine"
       },
       "identifiers": {
         "wikidataQid": "Q212",
-        "fifaCode": "UKR",
         "isoAlpha2": "UA",
         "isoAlpha3": "UKR",
         "unM49": "804"
@@ -6958,12 +5540,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -6979,12 +5555,10 @@
         "Jamhuri ya Uganda"
       ],
       "sourceNames": {
-        "un": "Uganda",
-        "fifa": "Uganda"
+        "un": "Uganda"
       },
       "identifiers": {
         "wikidataQid": "Q1036",
-        "fifaCode": "UGA",
         "isoAlpha2": "UG",
         "isoAlpha3": "UGA",
         "unM49": "800"
@@ -6995,12 +5569,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -7017,12 +5585,10 @@
         "República Oriental del Uruguay"
       ],
       "sourceNames": {
-        "un": "Uruguay",
-        "fifa": "Uruguay"
+        "un": "Uruguay"
       },
       "identifiers": {
         "wikidataQid": "Q77",
-        "fifaCode": "URU",
         "isoAlpha2": "UY",
         "isoAlpha3": "URY",
         "unM49": "858"
@@ -7033,12 +5599,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -7056,12 +5616,10 @@
         "Ўзбекистон Республикаси"
       ],
       "sourceNames": {
-        "un": "Uzbekistan",
-        "fifa": "Uzbekistan"
+        "un": "Uzbekistan"
       },
       "identifiers": {
         "wikidataQid": "Q265",
-        "fifaCode": "UZB",
         "isoAlpha2": "UZ",
         "isoAlpha3": "UZB",
         "unM49": "860"
@@ -7072,12 +5630,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -7094,12 +5646,10 @@
         "République de Vanuatu"
       ],
       "sourceNames": {
-        "un": "Vanuatu",
-        "fifa": "Vanuatu"
+        "un": "Vanuatu"
       },
       "identifiers": {
         "wikidataQid": "Q686",
-        "fifaCode": "VAN",
         "isoAlpha2": "VU",
         "isoAlpha3": "VUT",
         "unM49": "548"
@@ -7110,12 +5660,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -7165,12 +5709,10 @@
         "República Bolivariana de Venezuela"
       ],
       "sourceNames": {
-        "un": "Venezuela",
-        "fifa": "Venezuela"
+        "un": "Venezuela"
       },
       "identifiers": {
         "wikidataQid": "Q717",
-        "fifaCode": "VEN",
         "isoAlpha2": "VE",
         "isoAlpha3": "VEN",
         "unM49": "862"
@@ -7181,12 +5723,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -7204,12 +5740,10 @@
         "Viet Nam"
       ],
       "sourceNames": {
-        "un": "Vietnam",
-        "fifa": "Vietnam"
+        "un": "Vietnam"
       },
       "identifiers": {
         "wikidataQid": "Q881",
-        "fifaCode": "VIE",
         "isoAlpha2": "VN",
         "isoAlpha3": "VNM",
         "unM49": "704"
@@ -7220,12 +5754,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -7240,12 +5768,10 @@
         "ZM"
       ],
       "sourceNames": {
-        "un": "Zambia",
-        "fifa": "Zambia"
+        "un": "Zambia"
       },
       "identifiers": {
         "wikidataQid": "Q953",
-        "fifaCode": "ZAM",
         "isoAlpha2": "ZM",
         "isoAlpha3": "ZMB",
         "unM49": "894"
@@ -7256,12 +5782,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],
@@ -7277,12 +5797,10 @@
         "ZW"
       ],
       "sourceNames": {
-        "un": "Zimbabwe",
-        "fifa": "Zimbabwe"
+        "un": "Zimbabwe"
       },
       "identifiers": {
         "wikidataQid": "Q954",
-        "fifaCode": "ZIM",
         "isoAlpha2": "ZW",
         "isoAlpha3": "ZWE",
         "unM49": "716"
@@ -7293,12 +5811,6 @@
           "organization": "UN",
           "status": "member",
           "sourceUrl": "https://www.un.org/en/about-us/member-states",
-          "verifiedAt": "2026-07-25"
-        },
-        {
-          "organization": "FIFA",
-          "status": "member",
-          "sourceUrl": "https://inside.fifa.com/en/about-fifa/associations",
           "verifiedAt": "2026-07-25"
         }
       ],

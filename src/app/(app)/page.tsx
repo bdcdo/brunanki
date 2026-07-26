@@ -70,7 +70,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
             <article className="stat-card">
               <span>Entidades</span>
               <strong>{entities.length}</strong>
-              <small className="muted">ONU e FIFA</small>
+              <small className="muted">reconhecidas pela ONU</small>
             </article>
             <article className="stat-card">
               <span>Diagnóstico</span>
