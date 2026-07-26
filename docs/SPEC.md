@@ -1,9 +1,11 @@
 # SPEC — Plataforma de conquistas pessoais de conhecimento
 
-**Status:** rascunho inicial para implementação  
-**Versão:** 0.1  
-**Data:** 26 de julho de 2026  
-**Nome do projeto:** a definir
+**Status:** vigente; decisões derivadas em [`adr/`](adr/)
+**Versão:** 1.0
+**Data:** 26 de julho de 2026
+**Nome do projeto:** brunanki
+
+Este documento é dono da tese, dos não objetivos, dos princípios pedagógicos, do vocabulário e do roadmap de domínios. O que ele decidiu e o código materializou vive nos ADRs; o desenho do primeiro harness, em [`HARNESS-VISUAL.md`](HARNESS-VISUAL.md); a política editorial da coleção de bandeiras, em [`CONTENT-FLAGS.md`](CONTENT-FLAGS.md); o plano de trabalho, em [`MVP-BACKLOG.md`](MVP-BACKLOG.md). Onde uma seção daqui foi substituída por um desses documentos, ela aponta para ele em vez de repeti-lo.
 
 ---
 
@@ -787,20 +789,11 @@ A interface deve evitar apresentar decisões editoriais controversas como verdad
 
 ### 11.3. Modos de exercício
 
-Obrigatórios no MVP:
+Quatro modos são obrigatórios no MVP: bandeira → país em múltipla escolha e em resposta digitada, país → bandeira em seleção visual, e o contraste de bandeiras confundíveis — este último decidido em [ADR-0006](adr/0006-contraste-como-exercicio-de-primeira-classe.md) e ainda pendente.
 
-1. **Bandeira → país, múltipla escolha.**
-2. **Bandeira → país, resposta digitada.**
-3. **País → bandeira, seleção visual.**
-4. **Contraste de bandeiras confundíveis.**
+A tabela que diz **que evidência cada exercício produz** — e que serve de teste para admitir ou recusar qualquer exercício novo — está em [`HARNESS-VISUAL.md`](HARNESS-VISUAL.md), seção 2.
 
-Posteriores:
-
-- bandeira parcialmente ocultada;
-- reconstrução de elementos da bandeira;
-- explicação de símbolos;
-- bandeiras históricas;
-- proporções e detalhes.
+Previstos para depois: bandeira parcialmente ocultada, reconstrução de elementos, explicação de símbolos, bandeiras históricas, proporções e detalhes.
 
 ### 11.4. Progressão
 
@@ -818,37 +811,17 @@ Uma trilha sugerida poderá começar por regiões menores e visualmente distinta
 
 ### 11.5. Distratores
 
-Distratores não devem ser sempre aleatórios. Devem considerar:
-
-- semelhança visual;
-- mesma região;
-- erros anteriores do usuário;
-- nível de dificuldade;
-- equilíbrio para evitar memorização da posição da resposta.
+Distratores não devem ser sempre aleatórios: precisam considerar semelhança visual, mesma região, erros anteriores da pessoa, nível de dificuldade e equilíbrio de posição da resposta. A política implementada, o que ela cobre e o que ela comprovadamente não enxerga estão em [`HARNESS-VISUAL.md`](HARNESS-VISUAL.md), seção 4.
 
 ### 11.6. Introdução de uma nova bandeira
 
-A introdução poderá mostrar:
-
-- bandeira;
-- nome do país;
-- localização regional breve;
-- característica visual distintiva, quando útil;
-- contraste com uma bandeira próxima, quando necessário.
-
-A introdução deve ser curta e imediatamente seguida de recuperação ativa.
+A introdução deve ser curta e imediatamente seguida de recuperação ativa, podendo mostrar a bandeira, o nome, a localização regional, a característica visual distintiva e o contraste com uma bandeira próxima. O desenho implementado — e o que dele ainda falta — está em [`HARNESS-VISUAL.md`](HARNESS-VISUAL.md), seção 3.
 
 ### 11.7. Critério de domínio sugerido
 
-Uma bandeira será considerada dominada em uma direção quando houver:
+Uma bandeira dominada em uma direção exige acertos sem ajuda, revisões em dias diferentes, discriminação correta contra item confundível quando aplicável, retenção acima do limiar e aprovação em avaliação de consolidação. A coleção completa exigirá domínio nas direções obrigatórias e uma avaliação final.
 
-- múltiplos acertos sem ajuda;
-- revisões em dias diferentes;
-- pelo menos uma discriminação correta contra item confundível, quando aplicável;
-- probabilidade de retenção acima do limiar definido;
-- aprovação em avaliação de consolidação.
-
-A coleção completa exigirá domínio nas direções obrigatórias e uma avaliação final amostral ou completa, conforme o tamanho.
+O critério implementado, as razões que ele devolve quando não é atendido, e os dois requisitos que ainda faltam estão em [`HARNESS-VISUAL.md`](HARNESS-VISUAL.md), seção 10.
 
 ### 11.8. Conquistas iniciais
 
@@ -1048,32 +1021,11 @@ A decisão final poderá mudar, mas o padrão recomendado é:
 
 O MVP poderá funcionar sem conta. A sincronização deverá ser adicionada depois sem alterar o modelo conceitual de progresso.
 
-### 15.3. Organização sugerida do repositório
+### 15.3. Organização do repositório
 
-```text
-/apps
-  /web
-/packages
-  /core-learning
-  /scheduler
-  /harness-visual
-  /harness-association
-  /harness-spatial
-  /content-schema
-  /ui
-/content
-  /flags-world
-  /capitals-world
-  /elements
-/pipelines
-  /sources
-  /normalize
-  /validate
-  /build
-/docs
-  SPEC.md
-  /adr
-```
+**Superada por [ADR-0002](adr/0002-app-unico-sem-monorepo.md).** A divisão em `apps/` e `packages/` originalmente proposta aqui foi descartada enquanto houver um único harness: as fronteiras entre engine, harness e coleção são mantidas como invariantes verificáveis dentro de `src/`, e não como limites de pacote.
+
+A reorganização intermediária — `src/engine/`, `src/harnesses/` e `src/content/`, tornando o vocabulário desta spec visível no caminho dos arquivos — segue desejável e está registrada como issue. O sinal para executá-la é o segundo harness.
 
 ### 15.4. Interface entre engine e harness
 
@@ -1620,36 +1572,11 @@ Um módulo só pode ser publicado quando todos os itens abaixo forem atendidos.
 
 ## 27. Backlog inicial
 
-### P0 — Necessário para a primeira versão utilizável
+### P0 e P1 — bandeiras
 
-- [ ] Definir nome provisório e identidade mínima.
-- [ ] Criar monorepo e estrutura de pacotes.
-- [ ] Definir schemas de conteúdo e progresso.
-- [ ] Criar validador de manifestos.
-- [ ] Implementar armazenamento local.
-- [ ] Implementar histórico de revisão.
-- [ ] Implementar interface abstrata de scheduler.
-- [ ] Implementar harness de reconhecimento visual.
-- [ ] Criar pipeline de bandeiras.
-- [ ] Curar lista inicial e aliases em português.
-- [ ] Criar sessões de aprendizagem.
-- [ ] Criar diagnóstico inicial.
-- [ ] Implementar feedback e contraste de confusões.
-- [ ] Criar tela de progresso.
-- [ ] Criar primeira conquista validada.
-- [ ] Criar página de fontes e atribuições.
-- [ ] Adicionar testes de conteúdo e E2E.
+Movidos para [`MVP-BACKLOG.md`](MVP-BACKLOG.md), que é onde vivem a sequência, as dependências e os critérios de aceitação verificáveis. A maior parte do P0 original está feita; o que resta não é infraestrutura, é aprendizado — contraste entre confundíveis, feedback que fala da bandeira, currículo editorial, diagnóstico amostral.
 
-### P1 — Completar a experiência de bandeiras
-
-- [ ] Trilhas por continente.
-- [ ] País → bandeira.
-- [ ] Resposta digitada robusta.
-- [ ] Avaliação de consolidação.
-- [ ] Download offline da coleção.
-- [ ] Importação/exportação local do progresso.
-- [ ] Melhorias de acessibilidade.
-- [ ] Painel de erros e confusões.
+O status de cada item vive nas issues do repositório, não em caixas de seleção deste documento.
 
 ### P2 — Primeiro reaproveitamento da engine
 
@@ -1695,46 +1622,44 @@ Um módulo só pode ser publicado quando todos os itens abaixo forem atendidos.
 11. A primeira implementação será bandeiras.
 12. Multimodalidade é uma prioridade, com instrumentos como primeiro candidato forte.
 13. O projeto será gratuito e não comercial no horizonte atual.
+14. Nenhum outro domínio de conhecimento entra antes de bandeiras funcionar muito bem. As fases 2 a 10 da seção 10 são roadmap, não fila de trabalho.
 
 ---
 
 ## 29. Questões em aberto
 
-Estas decisões não impedem o início do MVP, mas deverão virar ADRs quando forem resolvidas.
+Oito das treze foram respondidas pelo próprio código, e agora estão registradas onde podem ser auditadas. As cinco que seguem abertas não impedem o MVP; duas delas bloqueiam etapas específicas.
 
-1. Qual será o nome do produto?
-2. A primeira versão será Next.js, SPA ou outro formato?
-3. Qual algoritmo de repetição espaçada será usado inicialmente?
-4. O MVP terá apenas múltipla escolha antes de resposta digitada, ou ambas desde o começo?
-5. Qual política exata definirá países e territórios da coleção de bandeiras?
-6. Qual será a licença do código e dos manifestos de conteúdo?
-7. O progresso local será exportável em qual formato?
-8. Quando introduzir conta e sincronização?
-9. Qual grau de explicação histórica e simbólica acompanhará bandeiras?
-10. Instrumentos entrarão antes ou depois de elementos químicos?
-11. Qual sistema numérico será padrão no módulo de π: PAO próprio, Major System ou escolha guiada?
-12. Como representar visualmente “conquista mantida” versus “precisa ser renovada”?
-13. Qual política de idade será adotada antes de recursos sociais?
+| #   | Questão                                       | Estado                                                              | Onde vive a resposta                                                                      |
+| --- | --------------------------------------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| 1   | Nome do produto                               | Resolvida                                                           | [ADR-0001](adr/0001-renomear-para-brunanki.md)                                            |
+| 2   | Next.js, SPA ou outro formato                 | Resolvida                                                           | [ADR-0002](adr/0002-app-unico-sem-monorepo.md)                                            |
+| 3   | Algoritmo de repetição espaçada               | Resolvida                                                           | [ADR-0003](adr/0003-fsrs-via-ts-fsrs.md)                                                  |
+| 4   | Múltipla escolha antes da digitada, ou ambas  | Resolvida: ambas, encadeadas — a alternativa é andaime e não agenda | [`HARNESS-VISUAL.md`](HARNESS-VISUAL.md), seção 2                                         |
+| 5   | Política de países e territórios              | Resolvida                                                           | [ADR-0004](adr/0004-escopo-onu-fifa-santa-se.md) e [`CONTENT-FLAGS.md`](CONTENT-FLAGS.md) |
+| 6   | Licença do código e do conteúdo               | **Aberta** — bloqueia publicação, não o MVP                         | não há `LICENSE` no repositório                                                           |
+| 7   | Formato de exportação do progresso            | Resolvida                                                           | [ADR-0005](adr/0005-progresso-local-first.md)                                             |
+| 8   | Quando introduzir conta e sincronização       | Aberta                                                              | [ADR-0005](adr/0005-progresso-local-first.md) fixa que o modelo não a pressupõe           |
+| 9   | Grau de explicação histórica e simbólica      | Parcial — a nota editorial existe e hoje só desambigua              | [`CONTENT-FLAGS.md`](CONTENT-FLAGS.md), seção 4                                           |
+| 10  | Instrumentos antes ou depois de elementos     | Aberta                                                              | fora do escopo enquanto valer a decisão 14                                                |
+| 11  | Sistema mnemônico numérico do módulo de π     | Aberta                                                              | fora do escopo                                                                            |
+| 12  | Conquista mantida vs. precisando de renovação | Aberta                                                              | depende do sistema de conquistas, que não existe                                          |
+| 13  | Política de idade                             | **Aberta** — bloqueia qualquer recurso social                       | —                                                                                         |
 
 ---
 
-## 30. Próximo passo recomendado
+## 30. Documentos derivados
 
-Transformar esta SPEC em quatro documentos de execução:
+Os quatro documentos de execução que esta seção recomendava existem:
 
-1. **ADR-001 — arquitetura do MVP**  
-   Stack, armazenamento local, divisão de pacotes e estratégia de sincronização futura.
+- [`adr/`](adr/) — as decisões estruturais, cada uma com a alternativa que foi de fato descartada;
+- [`CONTENT-FLAGS.md`](CONTENT-FLAGS.md) — escopo geopolítico, fontes, aliases, casos disputados e regras de curadoria;
+- [`HARNESS-VISUAL.md`](HARNESS-VISUAL.md) — atividades e a evidência de cada uma, distratores, correção, diagnóstico e critério de domínio;
+- [`MVP-BACKLOG.md`](MVP-BACKLOG.md) — sequência, dependências e critérios de aceitação verificáveis.
 
-2. **CONTENT-FLAGS.md — especificação editorial de bandeiras**  
-   Escopo geopolítico, fontes, aliases, confusões, ordem de introdução e regras de curadoria.
+As convenções de quem escreve o código estão em [`../CLAUDE.md`](../CLAUDE.md).
 
-3. **HARNESS-VISUAL.md — contrato do primeiro harness**  
-   Tipos de atividade, avaliação, distratores, diagnóstico, domínio e interface.
-
-4. **MVP-BACKLOG.md — plano de implementação**  
-   Issues pequenas, dependências, critérios de aceitação e sequência de vibecoding.
-
-A primeira vertical slice deve permitir:
+A fatia vertical que valida a tese central continua sendo o critério de pronto:
 
 ```text
 abrir o app

@@ -195,8 +195,9 @@ function DiagnosticSessionReady({
           />
           <h1 className="study-title">Seu ponto de partida está pronto.</h1>
           <p className="muted">
-            Agora o Brunanki vai revisar os acertos e ensinar o que foi pulado ou
-            confundido. Reconhecer a bandeira pelo nome será medido nas sessões.
+            Agora o Brunanki vai revisar os acertos e ensinar o que foi pulado
+            ou confundido. Reconhecer a bandeira pelo nome será medido nas
+            sessões.
           </p>
           <Link href="/estudar" className="button" style={{ marginTop: 18 }}>
             Começar a aprender <ArrowRight size={18} aria-hidden="true" />

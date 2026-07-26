@@ -1,12 +1,16 @@
-# Brunanki
+# brunanki
 
-Brunanki é um webapp em pt-BR para aprender e revisar as bandeiras dos membros da ONU e das associações da FIFA. O catálogo combina 193 Estados-membros da ONU, 211 associações da FIFA e a Santa Sé como Estado observador, totalizando 220 entidades de aprendizagem.
+Há conhecimentos que são bons de ter mesmo sem serem úteis, que têm limite claro e que dão uma sensação nítida de completude: reconhecer todas as bandeiras nacionais, saber as capitais do mundo, identificar instrumentos pelo som. Cursos não os atendem, e baralhos genéricos de flashcards tratam todos eles como se fossem a mesma coisa. O brunanki existe para transformar esse tipo de objetivo numa conquista alcançável — com cada domínio ensinado por uma experiência desenhada para a natureza daquele conhecimento.
+
+A primeira coleção é a das bandeiras: 193 Estados-membros da ONU, 211 associações da FIFA e a Santa Sé como Estado observador, somando 220 entidades de aprendizagem. Ela é também a única, por decisão: nenhum outro domínio entra antes de bandeiras funcionar muito bem. A ideia completa, com os demais domínios previstos e aquilo que o produto recusa ser, está em [`docs/SPEC.md`](docs/SPEC.md).
 
 ## Como funciona
 
-O primeiro acesso oferece um diagnóstico completo, retomável e sem alternativas: a pessoa digita o nome da entidade ou pula. Depois, sessões adaptativas combinam recordação digitada, associação inversa e revisão espaçada por FSRS, com alternativas escolhidas entre as bandeiras mais fáceis de confundir com a correta. O domínio exige as duas direções, acertos em dias distintos e estabilidade de pelo menos 30 dias.
+O primeiro acesso oferece um diagnóstico retomável e sem alternativas: a pessoa digita o nome da entidade ou pula. Depois, as sessões combinam recordação digitada, reconhecimento na direção inversa e revisão espaçada por FSRS, com alternativas escolhidas entre as bandeiras mais fáceis de confundir com a correta — não sorteadas ao acaso.
 
-O progresso fica no IndexedDB do navegador. Não há conta, backend, tracking ou sincronização automática. A tela de ajustes permite exportar e restaurar um backup JSON versionado.
+Domínio não é sinônimo de acerto: exige as duas direções, recuperações em ocasiões separadas e evidência de retenção ao longo do tempo. Os critérios exatos, e a razão de cada um, estão em [`docs/HARNESS-VISUAL.md`](docs/HARNESS-VISUAL.md).
+
+O progresso fica no IndexedDB do navegador. Não há conta, backend, rastreamento nem sincronização automática. A tela de ajustes exporta e restaura um backup JSON versionado, que é o único jeito de levar o progresso para outro dispositivo.
 
 ## Desenvolvimento
 
@@ -17,7 +21,7 @@ pnpm install
 pnpm dev
 ```
 
-Validações:
+Validações, na ordem em que o CI as roda:
 
 ```bash
 pnpm data:validate
@@ -28,9 +32,24 @@ pnpm build
 pnpm test:e2e
 ```
 
+As convenções do repositório e as fronteiras que o código não cruza estão em [`CLAUDE.md`](CLAUDE.md).
+
+## Catálogo e licenças
+
+ONU e FIFA definem a elegibilidade; os critérios de inclusão, a nomenclatura em português e o tratamento de casos disputados estão em [`docs/CONTENT-FLAGS.md`](docs/CONTENT-FLAGS.md). O Wikidata é usado para localizar os arquivos e o Wikimedia Commons fornece as imagens e os metadados de licença. Os arquivos são fixados em `public/flags`; o aplicativo não faz hotlink em runtime. `src/data/catalog.json` é o artefato versionado que o pipeline gera, com procedência, hash e licença por arquivo — a página de créditos é renderizada a partir dele.
+
+Para conferir mudanças nas fontes e reconstruir os artefatos:
+
+```bash
+pnpm data:refresh
+pnpm data:validate
+```
+
+O refresh nunca publica mudanças por conta própria: ele produz um diff para revisão. Overrides editoriais registram casos como Taiwan e Chinese Taipei, Irlanda do Norte, Vaticano e Santa Sé, e o anverso do Paraguai.
+
 ## Hospedagem
 
-O app roda no [Fly.io](https://fly.io) na região `gru`, como imagem Docker do build standalone do Next.js. A configuração fica em `fly.toml` e `Dockerfile`.
+O aplicativo roda no [Fly.io](https://fly.io) na região `gru`, como imagem Docker do build standalone do Next.js. A configuração fica em `fly.toml` e `Dockerfile`.
 
 A máquina opera sob demanda: `min_machines_running = 0` com `auto_stop_machines = "suspend"` faz o Fly suspendê-la quando não há tráfego e retomá-la na requisição seguinte, restaurando um snapshot de memória em vez de dar boot completo. Parada, a máquina custa apenas o armazenamento do sistema de arquivos raiz.
 
@@ -41,16 +60,3 @@ fly logs
 ```
 
 Os cabeçalhos de cache e de segurança são definidos em `headers()` no `next.config.ts`.
-
-## Catálogo e licenças
-
-ONU e FIFA definem a elegibilidade. Wikidata é usado para localizar os arquivos e o Wikimedia Commons fornece as imagens e metadados de licença. Os arquivos são fixados em `public/flags`; o app não faz hotlink em runtime. `src/data/catalog.json` e `src/data/credits.json` são artefatos versionados gerados pelo pipeline.
-
-Para conferir mudanças nas fontes e reconstruir os artefatos:
-
-```bash
-pnpm data:refresh
-pnpm data:validate
-```
-
-O refresh nunca publica mudanças por conta própria. Overrides editoriais registram casos como Taiwan/Chinese Taipei, Irlanda do Norte, Vaticano/Santa Sé e o anverso do Paraguai.
