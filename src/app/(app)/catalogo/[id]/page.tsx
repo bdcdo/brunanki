@@ -38,7 +38,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
       <Link href="/catalogo" className="button button-ghost">
         <ArrowLeft size={18} aria-hidden="true" /> Voltar ao atlas
       </Link>
-      <header className="page-header" style={{ marginTop: 20 }}>
+      <header className="page-header mt-5">
         <div>
           <span className="eyebrow">{entity.region}</span>
           <h1>{entity.displayNamePtBr}</h1>
@@ -46,7 +46,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
         </div>
       </header>
 
-      <div className="detail-grid">
+      <div className="grid grid-cols-[minmax(300px,1fr)_1fr] gap-[34px] max-md:grid-cols-1">
         <FlagImage
           entity={runtimeEntityById.get(entity.id)!}
           alt={{ kind: "named" }}
@@ -54,7 +54,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
           size="fill"
         />
         <div>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <div className="flex flex-wrap gap-2">
             {entity.memberships.map((membership) => (
               <span
                 className="pill"
@@ -64,26 +64,38 @@ export default async function DetailPage({ params }: DetailPageProps) {
               </span>
             ))}
           </div>
-          <dl className="detail-meta">
-            <div>
-              <dt>Nomes aceitos</dt>
-              <dd>{entity.aliasesPtBr.join(", ") || entity.displayNamePtBr}</dd>
+          <dl className="m-0 grid gap-0">
+            <div className="border-b border-line py-[14px]">
+              <dt className="text-xs leading-body font-bold tracking-label-sm text-ink-soft uppercase">
+                Nomes aceitos
+              </dt>
+              <dd className="mt-1 mb-0 font-bold">
+                {entity.aliasesPtBr.join(", ") || entity.displayNamePtBr}
+              </dd>
             </div>
-            <div>
-              <dt>Representação</dt>
-              <dd>
+            <div className="border-b border-line py-[14px]">
+              <dt className="text-xs leading-body font-bold tracking-label-sm text-ink-soft uppercase">
+                Representação
+              </dt>
+              <dd className="mt-1 mb-0 font-bold">
                 {flag.officialStatus === "official"
                   ? "Oficial"
                   : "Comumente utilizada"}
               </dd>
             </div>
-            <div>
-              <dt>Arquivo</dt>
-              <dd>{flag.commons.fileTitle.replace("File:", "")}</dd>
+            <div className="border-b border-line py-[14px]">
+              <dt className="text-xs leading-body font-bold tracking-label-sm text-ink-soft uppercase">
+                Arquivo
+              </dt>
+              <dd className="mt-1 mb-0 font-bold">
+                {flag.commons.fileTitle.replace("File:", "")}
+              </dd>
             </div>
-            <div>
-              <dt>Licença</dt>
-              <dd>{flag.license.shortName}</dd>
+            <div className="border-b border-line py-[14px]">
+              <dt className="text-xs leading-body font-bold tracking-label-sm text-ink-soft uppercase">
+                Licença
+              </dt>
+              <dd className="mt-1 mb-0 font-bold">{flag.license.shortName}</dd>
             </div>
           </dl>
           <a

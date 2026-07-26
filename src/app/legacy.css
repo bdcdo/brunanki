@@ -404,45 +404,6 @@ a {
   background: var(--teal);
 }
 
-.catalog-toolbar {
-  display: flex;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.search-field {
-  display: grid;
-  gap: 7px;
-}
-
-.search-field {
-  position: relative;
-  min-width: min(360px, 100%);
-  flex: 1;
-}
-
-.search-field svg {
-  position: absolute;
-  top: 14px;
-  left: 15px;
-  color: var(--ink-soft);
-}
-
-.search-field input {
-  width: 100%;
-  min-height: 50px;
-  padding: 11px 14px;
-  border: 1px solid var(--input);
-  border-radius: 12px;
-  background: var(--surface);
-  color: var(--ink);
-}
-
-.search-field input {
-  padding-left: 46px;
-}
-
 .field-hint {
   margin: 0;
   color: var(--ink-soft);
@@ -453,39 +414,6 @@ a {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
-}
-
-.flag-card {
-  display: grid;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: var(--surface);
-  box-shadow: 0 7px 20px rgb(21 50 54 / 5%);
-  color: inherit;
-  text-decoration: none;
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease;
-}
-
-.flag-card:hover {
-  box-shadow: 0 14px 30px rgb(21 50 54 / 12%);
-  transform: translateY(-3px);
-}
-
-.flag-card-body {
-  padding: 15px;
-}
-
-.flag-card-body strong {
-  display: block;
-  line-height: 1.25;
-}
-
-.flag-card-body span {
-  color: var(--ink-soft);
-  font-size: 13px;
 }
 
 .pill {
@@ -618,14 +546,6 @@ a {
   background: var(--yellow-soft);
 }
 
-.empty-state {
-  padding: 44px;
-  border: 1px dashed var(--input);
-  border-radius: var(--radius-md);
-  color: var(--ink-soft);
-  text-align: center;
-}
-
 .settings-stack {
   display: grid;
   gap: 18px;
@@ -651,36 +571,6 @@ a {
   max-width: 640px;
   margin: 0;
   color: var(--ink-soft);
-}
-
-.detail-grid {
-  display: grid;
-  grid-template-columns: minmax(300px, 1fr) 1fr;
-  gap: 34px;
-}
-
-.detail-meta {
-  display: grid;
-  margin: 0;
-  gap: 0;
-}
-
-.detail-meta div {
-  padding: 14px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.detail-meta dt {
-  color: var(--ink-soft);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.detail-meta dd {
-  margin: 4px 0 0;
-  font-weight: 700;
 }
 
 .muted {
@@ -768,8 +658,7 @@ a {
   }
 
   .stats-grid,
-  .catalog-grid,
-  .detail-grid {
+  .catalog-grid {
     grid-template-columns: 1fr;
   }
 
