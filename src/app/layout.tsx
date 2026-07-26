@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Atkinson_Hyperlegible, Bricolage_Grotesque } from "next/font/google";
 import "@/app/globals.css";
-import { AppShell } from "@/components/AppShell";
 import { AppProvider } from "@/components/AppProvider";
 
 const bodyFont = Atkinson_Hyperlegible({
@@ -51,10 +50,11 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${bodyFont.variable} ${displayFont.variable}`}
     >
+      {/* O provider fica aqui, e não em cada grupo de rotas: as duas sessões
+          consomem `useApp()`, então ele precisa envolver os dois. A casca
+          visual é que se divide, em (app)/layout.tsx e (session)/layout.tsx. */}
       <body>
-        <AppProvider>
-          <AppShell>{children}</AppShell>
-        </AppProvider>
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   );

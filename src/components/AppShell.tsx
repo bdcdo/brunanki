@@ -13,6 +13,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+import { BrandLink } from "@/components/BrandMark";
+import { SkipLink } from "@/components/SkipLink";
+
 const navigation = [
   { href: "/", label: "Hoje", icon: Compass },
   { href: "/estudar", label: "Estudar", icon: BookOpen },
@@ -21,30 +24,15 @@ const navigation = [
   { href: "/configuracoes", label: "Ajustes", icon: Settings }
 ];
 
-function Mark() {
-  return (
-    <span className="brand-mark" aria-hidden="true">
-      <span />
-      <span />
-      <span />
-    </span>
-  );
-}
-
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   return (
     <div className="app-frame">
-      <a className="skip-link" href="#main">
-        Pular para o conteúdo
-      </a>
+      <SkipLink />
       <header className="mobile-header">
-        <Link href="/" className="brand" aria-label="Ptanki — início">
-          <Mark />
-          <strong>ptanki</strong>
-        </Link>
+        <BrandLink />
         <button
           className="icon-button"
           type="button"
@@ -58,14 +46,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </header>
 
       <aside className={open ? "sidebar sidebar-open" : "sidebar"}>
-        <Link
-          href="/"
-          className="brand desktop-brand"
-          aria-label="Ptanki — início"
-        >
-          <Mark />
-          <strong>ptanki</strong>
-        </Link>
+        <BrandLink className="desktop-brand" />
         <p className="sidebar-kicker">Atlas de memória</p>
         <nav id="primary-navigation" aria-label="Navegação principal">
           {navigation.map(({ href, label, icon: Icon }) => {
