@@ -18,6 +18,18 @@ export const EXPORT_FORMAT = "ptanki-export" as const;
 export const EXPORT_SCHEMA_VERSION = 1 as const;
 
 const isoDateTimeSchema = z.string().datetime({ offset: true });
+
+/**
+ * A versão do catálogo é uma data em AAAA.MM.DD — o formato que
+ * `scripts/refresh-catalog.ts` grava. Validar aqui impede que um backup com
+ * outro formato seja aceito e depois comparado como string opaca.
+ */
+const catalogVersionSchema = z
+  .string()
+  .regex(
+    /^\d{4}\.\d{2}\.\d{2}$/,
+    "A versão de catálogo deve ter o formato AAAA.MM.DD"
+  );
 const skillSchema = z.enum(["flagToNameRecall", "nameToFlagRecognition"]);
 const outcomeSchema = z.enum(["correct", "partial", "incorrect", "skipped"]);
 const exerciseSchema = z.enum([
@@ -148,7 +160,7 @@ export const ptankiExportSchema = z
   .object({
     format: z.literal(EXPORT_FORMAT),
     schemaVersion: z.literal(EXPORT_SCHEMA_VERSION),
-    catalogVersion: z.string().min(1),
+    catalogVersion: catalogVersionSchema,
     exportedAt: isoDateTimeSchema,
     settings: settingsSchema,
     skillStates: z.array(serializedSkillStateSchema),
@@ -166,6 +178,34 @@ export type PtankiExport = z.infer<typeof ptankiExportSchema>;
 export interface PreparedImport {
   data: PtankiExport;
   backupJson: string;
+}
+
+/**
+ * O catálogo contra o qual um backup será importado.
+ *
+ * O que de fato protege os dados na importação não é a igualdade entre as
+ * strings de versão, e sim o backup só referenciar entidades que o catálogo
+ * atual conhece: `pnpm data:refresh` muda a versão sempre que reconfere as
+ * fontes, mesmo quando nenhum ID muda. Guardar a versão como gate rejeitava
+ * todos os backups a cada refresh, sem ganho de segurança.
+ */
+export interface ImportTarget {
+  readonly catalogVersion: string;
+  readonly knownEntityIds: ReadonlySet<string>;
+}
+
+/** Backup que referencia entidades ausentes do catálogo atual. */
+export class UnknownEntitiesError extends Error {
+  constructor(readonly unknownEntityIds: readonly string[]) {
+    const shown = unknownEntityIds.slice(0, 5).join(", ");
+    const rest = unknownEntityIds.length - 5;
+    super(
+      `O backup referencia entidades que não existem no catálogo atual: ${shown}${
+        rest > 0 ? ` e mais ${rest}` : ""
+      }`
+    );
+    this.name = "UnknownEntitiesError";
+  }
 }
 
 function serializeCard(card: Card): SerializedCard {
@@ -272,18 +312,26 @@ export function parseExportJson(json: string): PtankiExport {
 export async function prepareImport(
   db: PtankiDatabase,
   json: string,
-  currentCatalogVersion: string,
+  target: ImportTarget,
   now: Date = new Date()
 ): Promise<PreparedImport> {
   const data = parseExportJson(json);
-  if (data.catalogVersion !== currentCatalogVersion) {
-    throw new Error(
-      `Versão de catálogo incompatível: arquivo ${data.catalogVersion}, aplicativo ${currentCatalogVersion}`
-    );
+
+  const referenced = new Set<string>();
+  for (const state of data.skillStates) referenced.add(state.entityId);
+  for (const attempt of data.attempts) referenced.add(attempt.entityId);
+  for (const id of data.diagnosticState?.entityOrder ?? []) referenced.add(id);
+
+  const unknown = [...referenced]
+    .filter((id) => !target.knownEntityIds.has(id))
+    .sort();
+  if (unknown.length > 0) {
+    throw new UnknownEntitiesError(unknown);
   }
+
   return {
     data,
-    backupJson: await serializeDatabaseExport(db, currentCatalogVersion, now)
+    backupJson: await serializeDatabaseExport(db, target.catalogVersion, now)
   };
 }
 

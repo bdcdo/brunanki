@@ -3,7 +3,12 @@
 import { Download, RotateCcw, Upload } from "lucide-react";
 import { useRef, useState } from "react";
 import { useApp } from "@/components/AppProvider";
-import { catalog } from "@/data/catalog";
+import { catalog, entityById } from "@/data/catalog";
+
+const importTarget = {
+  catalogVersion: catalog.version,
+  knownEntityIds: new Set(entityById.keys())
+};
 
 function downloadJson(contents: string) {
   const blob = new Blob([contents], { type: "application/json" });
@@ -29,10 +34,17 @@ export function SettingsClient() {
   async function handleImport(file?: File) {
     if (!file) return;
     const storage = await import("@/storage");
-    const restored = await storage.importProgress(
-      await file.text(),
-      catalog.version
-    );
+    let restored: boolean;
+    try {
+      restored = await storage.importProgress(await file.text(), importTarget);
+    } catch (error) {
+      setStatus(
+        error instanceof Error
+          ? `Não foi possível restaurar: ${error.message}`
+          : "Não foi possível restaurar o backup."
+      );
+      return;
+    }
     if (!restored) {
       setStatus("Restauração cancelada. O progresso atual foi mantido.");
       return;

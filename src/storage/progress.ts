@@ -6,7 +6,6 @@ import type {
   ReviewAttempt,
   SkillState
 } from "@/types/learning";
-import { catalog } from "@/data/catalog";
 
 import {
   advanceDiagnostic,
@@ -29,6 +28,7 @@ import {
   applyPreparedImport,
   prepareImport,
   serializeDatabaseExport,
+  type ImportTarget,
   type PtankiExport
 } from "./export";
 
@@ -188,7 +188,7 @@ export async function resetAllData(
 }
 
 export async function exportProgress(
-  catalogVersion: string = catalog.version,
+  catalogVersion: string,
   db: PtankiDatabase = getDatabase()
 ): Promise<string> {
   return serializeDatabaseExport(db, catalogVersion);
@@ -201,11 +201,11 @@ export interface ImportProgressOptions {
 
 export async function importProgress(
   json: string,
-  currentCatalogVersion: string = catalog.version,
+  target: ImportTarget,
   options?: ImportProgressOptions,
   db: PtankiDatabase = getDatabase()
 ): Promise<boolean> {
-  const prepared = await prepareImport(db, json, currentCatalogVersion);
+  const prepared = await prepareImport(db, json, target);
   const handlers = options ?? browserImportHandlers();
   await handlers.saveBackup(prepared.backupJson);
   if (!(await handlers.confirmReplace(prepared.data))) return false;
