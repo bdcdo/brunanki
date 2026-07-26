@@ -102,3 +102,12 @@ describe("CountryNameResolver", () => {
     ).toThrow(/colide/);
   });
 });
+
+describe("índice de nomes", () => {
+  it("devolve sempre a mesma instância", async () => {
+    // O índice cobre os nomes e apelidos das 220 entidades e era construído
+    // duas vezes, no escopo de módulo de cada tela de sessão.
+    const { getNameResolver } = await import("@/data/name-index");
+    expect(getNameResolver()).toBe(getNameResolver());
+  });
+});

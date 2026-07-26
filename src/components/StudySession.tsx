@@ -11,8 +11,8 @@ import {
 import { FlagImage } from "@/components/FlagImage";
 import { ProgressBar } from "@/components/ProgressBar";
 import { entities, entityById } from "@/data/catalog";
+import { getNameResolver } from "@/data/name-index";
 import { buildDailyQueue, type DailyQueueItem } from "@/domain/daily-queue";
-import { CountryNameResolver } from "@/domain/name-resolution";
 import {
   createSkillState,
   scheduleAttempt,
@@ -37,7 +37,6 @@ interface StudyFeedback {
   nextStep?: StudyStep;
 }
 
-const resolver = new CountryNameResolver(entities);
 const SESSION_LIMIT = 20;
 
 function distractors(entityId: string, count = 3) {
@@ -289,7 +288,7 @@ function StudySessionReady({
   async function submitForward(event: FormEvent) {
     event.preventDefault();
     if (!entity || !answer.trim()) return;
-    const result = resolver.classify(answer, entity.id);
+    const result = getNameResolver().classify(answer, entity.id);
     const outcome: AttemptOutcome =
       result.kind === "exact"
         ? "correct"

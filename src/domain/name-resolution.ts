@@ -13,6 +13,15 @@ export type NameResolution =
 interface IndexedName {
   entityId: string;
   value: string;
+  /** Comprimento em pontos de código, pré-computado: entra no limiar de erro
+   *  de digitação e seria recalculado a cada classificação. */
+  length: number;
+}
+
+/** Nome mais parecido de uma entidade com a entrada sendo classificada. */
+interface NearestName {
+  distance: number;
+  length: number;
 }
 
 export function damerauLevenshteinDistance(
@@ -91,18 +100,14 @@ export class CountryNameResolver {
 
         if (!existingEntityId) {
           this.exactNames.set(value, entity.id);
-          this.indexedNames.push({ entityId: entity.id, value });
+          this.indexedNames.push({
+            entityId: entity.id,
+            value,
+            length: Array.from(value).length
+          });
         }
       }
     }
-  }
-
-  resolve(input: string): NameResolution {
-    const normalizedInput = normalizeCountryName(input);
-    if (!normalizedInput) return { kind: "empty" };
-
-    const entityId = this.exactNames.get(normalizedInput);
-    return entityId ? { kind: "exact", entityId } : { kind: "incorrect" };
   }
 
   classify(input: string, targetEntityId: string): NameResolution {
@@ -120,39 +125,48 @@ export class CountryNameResolver {
         : { kind: "incorrect", matchedEntityId: exactEntityId };
     }
 
-    const distanceByEntity = new Map<string, number>();
+    // Um único passe guarda, por entidade, a menor distância e o comprimento
+    // do nome que a atingiu. Antes o comprimento saía de um segundo passe que
+    // recalculava a distância de Damerau-Levenshtein para os nomes do alvo —
+    // o cálculo mais caro do módulo, feito duas vezes.
+    const nearestByEntity = new Map<string, NearestName>();
     for (const indexedName of this.indexedNames) {
       const distance = damerauLevenshteinDistance(
         normalizedInput,
         indexedName.value
       );
-      const previous = distanceByEntity.get(indexedName.entityId);
-      if (previous === undefined || distance < previous) {
-        distanceByEntity.set(indexedName.entityId, distance);
+      const previous = nearestByEntity.get(indexedName.entityId);
+      // Empate de distância resolve pelo nome mais curto, que é o que define
+      // o limiar de erro de digitação tolerado.
+      if (
+        previous === undefined ||
+        distance < previous.distance ||
+        (distance === previous.distance && indexedName.length < previous.length)
+      ) {
+        nearestByEntity.set(indexedName.entityId, {
+          distance,
+          length: indexedName.length
+        });
       }
     }
 
-    const targetDistance = distanceByEntity.get(targetEntityId);
-    if (targetDistance === undefined) {
+    const target = nearestByEntity.get(targetEntityId);
+    if (target === undefined) {
       throw new Error(`Entidade sem nome indexado: ${targetEntityId}`);
     }
+    const targetDistance = target.distance;
+    const nearestTargetLength = target.length;
 
-    const targetNames = this.indexedNames.filter(
-      ({ entityId }) => entityId === targetEntityId
-    );
-    const nearestTargetLength = Math.min(
-      ...targetNames
-        .filter(
-          ({ value }) =>
-            damerauLevenshteinDistance(normalizedInput, value) ===
-            targetDistance
-        )
-        .map(({ value }) => Array.from(value).length)
-    );
-    const nearestDistance = Math.min(...distanceByEntity.values());
-    const nearestCount = [...distanceByEntity.values()].filter(
-      (distance) => distance === nearestDistance
-    ).length;
+    let nearestDistance = Infinity;
+    let nearestCount = 0;
+    for (const { distance } of nearestByEntity.values()) {
+      if (distance < nearestDistance) {
+        nearestDistance = distance;
+        nearestCount = 1;
+      } else if (distance === nearestDistance) {
+        nearestCount += 1;
+      }
+    }
 
     if (
       targetDistance === nearestDistance &&

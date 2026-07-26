@@ -17,7 +17,7 @@ import {
 import { FlagImage } from "@/components/FlagImage";
 import { ProgressBar } from "@/components/ProgressBar";
 import { entities, entityById } from "@/data/catalog";
-import { CountryNameResolver } from "@/domain/name-resolution";
+import { getNameResolver } from "@/data/name-index";
 import type { AttemptOutcome, DiagnosticState } from "@/types/learning";
 
 interface Feedback {
@@ -25,8 +25,6 @@ interface Feedback {
   entityId: string;
   answer?: string;
 }
-
-const resolver = new CountryNameResolver(entities);
 
 /**
  * Gate dos três estados do armazenamento. Fica separado do corpo porque o
@@ -121,7 +119,7 @@ function DiagnosticSessionReady({
   function submit(event: FormEvent) {
     event.preventDefault();
     if (!current || !answer.trim()) return;
-    const resolution = resolver.classify(answer, current.id);
+    const resolution = getNameResolver().classify(answer, current.id);
     const outcome: AttemptOutcome =
       resolution.kind === "exact"
         ? "correct"
