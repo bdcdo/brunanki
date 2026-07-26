@@ -1,6 +1,5 @@
 "use client";
 
-import type { Card } from "ts-fsrs";
 import { CheckCircle2, Clock3, Layers3, Sparkles } from "lucide-react";
 import { useApp } from "@/components/AppProvider";
 import {
@@ -8,11 +7,8 @@ import {
   StorageUnavailableScreen
 } from "@/components/SystemScreens";
 import { ProgressBar } from "@/components/ProgressBar";
+import { summarizeProgress } from "@/domain/mastery";
 import { entities } from "@/data/catalog";
-
-function stability(card?: Card) {
-  return card?.stability ?? 0;
-}
 
 export default function ProgressPage() {
   const { state } = useApp();
@@ -24,33 +20,18 @@ export default function ProgressPage() {
   }
 
   const { skills, attempts } = state.snapshot;
-  const perEntity = new Map<string, typeof skills>();
-  for (const skill of skills) {
-    perEntity.set(skill.entityId, [
-      ...(perEntity.get(skill.entityId) ?? []),
-      skill
-    ]);
-  }
-
-  const mastered = [...perEntity.values()].filter(
-    (entitySkills) =>
-      entitySkills.length === 2 &&
-      entitySkills.every(
-        (skill) =>
-          skill.phase === "scheduled" &&
-          skill.distinctSuccessDays.length >= 2 &&
-          stability(skill.card) >= 30
-      )
-  ).length;
-  const learning = [...perEntity.values()].filter((entitySkills) =>
-    entitySkills.some((skill) => skill.phase === "acquiring")
-  ).length;
-  const reviewing = [...perEntity.values()].filter((entitySkills) =>
-    entitySkills.some((skill) => skill.phase === "scheduled")
-  ).length;
-  const firstTry = attempts.filter(
-    (attempt) => attempt.outcome === "correct"
-  ).length;
+  // A regra de domínio vive em domain/mastery.ts. Esta tela a reimplementava
+  // à mão e divergia dela: não exigia que a última tentativa fosse correta e
+  // contava a mesma entidade em dois estágios ao mesmo tempo.
+  const summary = summarizeProgress(
+    entities.map(({ id }) => id),
+    skills,
+    attempts
+  );
+  const mastered = summary.byStage.mastered;
+  const learning = summary.byStage.acquiring;
+  const reviewing = summary.byStage.reviewing;
+  const firstTry = summary.firstTryCorrect;
 
   return (
     <div className="page">
@@ -92,12 +73,12 @@ export default function ProgressPage() {
         <div className="section-heading">
           <h2>Atlas dominado</h2>
           <span className="pill">
-            {Math.round((mastered / entities.length) * 100)}%
+            {Math.round((mastered / summary.total) * 100)}%
           </span>
         </div>
         <ProgressBar
           value={mastered}
-          max={entities.length}
+          max={summary.total}
           label="Entidades dominadas"
         />
       </section>

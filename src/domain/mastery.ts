@@ -1,4 +1,4 @@
-import type { SkillKind, SkillState } from "@/types/learning";
+import type { ReviewAttempt, SkillKind, SkillState } from "@/types/learning";
 
 export const REQUIRED_MASTERY_SKILLS: readonly SkillKind[] = [
   "flagToNameRecall",
@@ -72,4 +72,63 @@ export function isEntityMastered(
   states: readonly SkillState[]
 ): boolean {
   return getMasteryStatus(entityId, states).mastered;
+}
+
+/**
+ * O estágio de uma entidade — exclusivo por construção.
+ *
+ * A tela de progresso classificava cada estágio com um filtro independente,
+ * de modo que uma entidade com uma habilidade em aquisição e outra em revisão
+ * era contada duas vezes. Uma função que devolve um único estágio torna essa
+ * dupla contagem impossível de escrever.
+ */
+export type EntityStage = "unseen" | "acquiring" | "reviewing" | "mastered";
+
+export function entityStage(
+  entityId: string,
+  states: readonly SkillState[]
+): EntityStage {
+  const own = states.filter((state) => state.entityId === entityId);
+  if (own.length === 0 || own.every((state) => state.phase === "unseen")) {
+    return "unseen";
+  }
+  if (isEntityMastered(entityId, own)) return "mastered";
+  // Aquisição vence revisão: enquanto qualquer direção ainda precisar de
+  // apoio, a entidade como um todo ainda está sendo aprendida.
+  if (own.some((state) => state.phase === "acquiring")) return "acquiring";
+  return "reviewing";
+}
+
+export interface ProgressSummary {
+  readonly total: number;
+  readonly byStage: Readonly<Record<EntityStage, number>>;
+  readonly firstTryCorrect: number;
+}
+
+export function summarizeProgress(
+  entityIds: readonly string[],
+  states: readonly SkillState[],
+  attempts: readonly ReviewAttempt[]
+): ProgressSummary {
+  const byStage: Record<EntityStage, number> = {
+    unseen: 0,
+    acquiring: 0,
+    reviewing: 0,
+    mastered: 0
+  };
+  for (const entityId of entityIds) {
+    byStage[entityStage(entityId, states)] += 1;
+  }
+
+  return {
+    total: entityIds.length,
+    byStage,
+    // Repetição imediata depois de um erro não é acerto de primeira: o
+    // agendador já a desconsiderava para retenção, e o rótulo da tela
+    // prometia justamente a contagem sem ela.
+    firstTryCorrect: attempts.filter(
+      (attempt) =>
+        attempt.outcome === "correct" && !attempt.isImmediateCorrection
+    ).length
+  };
 }
