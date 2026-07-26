@@ -3,7 +3,7 @@
 import { ArrowRight, Brain, CalendarClock, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { useApp } from "@/components/AppProvider";
-import { ProgressBar } from "@/components/ProgressBar";
+import { Meter } from "@/components/ui/meter";
 import {
   LoadingScreen,
   StorageUnavailableScreen
@@ -99,7 +99,7 @@ export default function HomePage() {
                 <h2 id="diagnostic-progress-title">Seu diagnóstico</h2>
                 <Link href="/diagnostico">Retomar</Link>
               </div>
-              <ProgressBar
+              <Meter
                 value={diagnosed}
                 max={entities.length}
                 label="Bandeiras avaliadas"

@@ -124,12 +124,14 @@ test("o exercício inverso registra o erro e agenda a repetição imediata", asy
   await expect(page.getByText("Vamos corrigir")).toBeVisible();
   await expect(page.getByText(brazil.displayNamePtBr)).toBeVisible();
 
-  // O erro insere o item de novo, quatro posições à frente: o denominador da
-  // sessão cresce no meio dela. É o comportamento que qualquer indicador de
-  // progresso desta tela precisa acomodar.
+  // O erro insere o item de novo na fila, quatro posições à frente. O
+  // denominador anunciado NÃO acompanha: as bolinhas são indexadas por item, e
+  // a repetição reescreve a do item que corrige em vez de criar outra. Antes
+  // deste commit o total saltava de seis para sete no meio da sessão, e o
+  // progresso andava para trás sob os pés de quem estudava.
   await expect(sessionProgress(page)).toHaveAttribute(
     "aria-valuemax",
-    String(NEW_ITEMS + 2)
+    String(NEW_ITEMS + 1)
   );
 
   await expectNoHorizontalOverflow(page);

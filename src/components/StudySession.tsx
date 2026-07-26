@@ -9,7 +9,12 @@ import {
   StorageUnavailableScreen
 } from "@/components/SystemScreens";
 import { FlagImage } from "@/components/FlagImage";
-import { ProgressBar } from "@/components/ProgressBar";
+import {
+  SessionPips,
+  amendedPipState,
+  pipStateFor,
+  type PipState
+} from "@/components/ui/pips";
 import { entities, entityById } from "@/data/runtime-catalog";
 import { getNameResolver } from "@/data/name-index";
 import { newAttemptId } from "@/domain/ids";
@@ -114,6 +119,13 @@ function StudySessionReady({
   const [busy, setBusy] = useState(false);
   const [initialized, setInitialized] = useState(false);
   const [retryCounts, setRetryCounts] = useState<Record<string, number>>({});
+  // As bolinhas são indexadas pelo item, e não pela posição na fila. A fila
+  // cresce no meio da sessão — um erro reinsere o item quatro posições à
+  // frente —, e por posição isso faria nascer uma bolinha do nada. Como a
+  // repetição imediata tem o mesmo `skillStateId` do item que corrige, ela
+  // reescreve a bolinha existente: uma correção não é um item novo.
+  const [pipOrder, setPipOrder] = useState<string[]>([]);
+  const [pipOutcomes, setPipOutcomes] = useState<Record<string, PipState>>({});
   const startedAt = useRef(0);
   // Semente sorteada uma vez por sessão. Combinada com a posição na fila, dá
   // alternativas estáveis enquanto a questão está na tela — nada de
@@ -135,6 +147,11 @@ function StudySessionReady({
     });
     const items = plan.items.slice(0, SESSION_LIMIT);
     setQueue(items);
+    // Fixado aqui, e nunca reescrito: é o conjunto de itens desta sessão, que
+    // não muda quando a fila ganha uma repetição.
+    setPipOrder(
+      items.map(({ entityId, skill }) => skillStateId(entityId, skill))
+    );
     const first = items[0];
     if (first) {
       setStep(
@@ -150,6 +167,13 @@ function StudySessionReady({
 
   const item = queue[index];
   const entity = item ? entityById.get(item.entityId) : undefined;
+  const pipStates = pipOrder.map((id) => pipOutcomes[id] ?? "pending");
+  // A posição também sai da identidade do item, e não de `index`: depois de
+  // uma repetição imediata os dois divergem, e é a bolinha do item corrigido
+  // que deve estar marcada.
+  const pipPosition = item
+    ? pipOrder.indexOf(skillStateId(item.entityId, item.skill))
+    : pipOrder.length;
   const choices = useMemo(() => {
     if (!entity) return [];
     return buildChoiceRound(
@@ -212,6 +236,12 @@ function StudySessionReady({
         ? scheduleAttempt(current, attempt, settings)
         : current;
       await storage.saveReview(nextState, attempt);
+      setPipOutcomes((current) => ({
+        ...current,
+        [nextState.id]: item.immediate
+          ? amendedPipState(outcome)
+          : pipStateFor(outcome)
+      }));
 
       if (
         schedule &&
@@ -395,10 +425,10 @@ function StudySessionReady({
     <div className="page page-narrow">
       <div className="study-shell">
         <div className="study-topbar">
-          <div style={{ flex: 1 }}>
-            <ProgressBar
-              value={index}
-              max={queue.length}
+          <div className="min-w-0 flex-1">
+            <SessionPips
+              states={pipStates}
+              position={pipPosition}
               label="Sessão de hoje"
             />
           </div>

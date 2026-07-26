@@ -6,7 +6,7 @@ import {
   LoadingScreen,
   StorageUnavailableScreen
 } from "@/components/SystemScreens";
-import { ProgressBar } from "@/components/ProgressBar";
+import { Meter, percentOf } from "@/components/ui/meter";
 import { summarizeProgress } from "@/domain/mastery";
 import { entities } from "@/data/runtime-catalog";
 
@@ -72,11 +72,9 @@ export default function ProgressPage() {
       <section className="card">
         <div className="section-heading">
           <h2>Atlas dominado</h2>
-          <span className="pill">
-            {Math.round((mastered / summary.total) * 100)}%
-          </span>
+          <span className="pill">{percentOf(mastered, summary.total)}%</span>
         </div>
-        <ProgressBar
+        <Meter
           value={mastered}
           max={summary.total}
           label="Entidades dominadas"

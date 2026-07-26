@@ -15,7 +15,7 @@ import {
   StorageUnavailableScreen
 } from "@/components/SystemScreens";
 import { FlagImage } from "@/components/FlagImage";
-import { ProgressBar } from "@/components/ProgressBar";
+import { Meter } from "@/components/ui/meter";
 import { entities, entityById } from "@/data/runtime-catalog";
 import { getNameResolver } from "@/data/name-index";
 import type { AttemptOutcome, DiagnosticState } from "@/types/learning";
@@ -214,12 +214,8 @@ function DiagnosticSessionReady({
     <div className="page page-narrow">
       <div className="study-shell">
         <div className="study-topbar">
-          <div style={{ flex: 1 }}>
-            <ProgressBar
-              value={measured}
-              max={entities.length}
-              label="Diagnóstico"
-            />
+          <div className="min-w-0 flex-1">
+            <Meter value={measured} max={entities.length} label="Diagnóstico" />
           </div>
           <Link href="/" className="button button-secondary">
             <Pause size={17} aria-hidden="true" /> Pausar
