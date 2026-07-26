@@ -1,3 +1,5 @@
+import type { Region } from "@/types/region";
+
 /**
  * Um único valor porque o catálogo tem um único critério de pertencimento.
  *
@@ -28,7 +30,7 @@ export interface LearningEntity {
     isoAlpha3?: string;
     unM49?: string;
   };
-  region: string;
+  region: Region;
   memberships: Membership[];
   primaryFlagRevisionId: string;
   editorialNote?: string;

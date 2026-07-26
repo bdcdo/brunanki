@@ -13,6 +13,7 @@ import type {
   FlagRevision,
   LearningEntity
 } from "../src/types/catalog";
+import type { Region } from "../src/types/region";
 
 const VERIFIED_AT = "2026-07-25";
 // A versão sobe porque o conjunto de entidades mudou, ainda que as fontes não
@@ -56,6 +57,41 @@ interface CommonsMetadata {
   height: number;
   license: FlagRevision["license"];
 }
+
+/**
+ * Traduz a região na fronteira com o restcountries, que é o único ponto do
+ * sistema onde o inglês entra. O tipo `Region` fecha o conjunto do outro lado.
+ *
+ * O que havia aqui era `country.region ?? "Other"`: um fallback silencioso que
+ * inventava uma sexta região para um campo ausente e deixava as cinco em
+ * inglês atravessarem até a tela. `regionPtBr` faz o oposto — um valor
+ * inesperado derruba a atualização do catálogo, nomeando a entidade.
+ */
+const REGION_PT_BR: Record<string, Region> = {
+  Africa: "África",
+  Americas: "Américas",
+  Asia: "Ásia",
+  Europe: "Europa",
+  Oceania: "Oceania"
+};
+
+function regionPtBr(region: string | undefined, iso3: string): Region {
+  assert(region, `Região ausente na fonte: ${iso3}`);
+  const translated = REGION_PT_BR[region];
+  assert(translated, `Região sem tradução: ${region} (${iso3})`);
+  return translated;
+}
+
+/**
+ * Rótulos de licença que se traduzem. A chave é o valor cru do Commons em
+ * caixa baixa; o que não está aqui passa intacto, e isso é o padrão certo:
+ * quase toda licença é nome próprio internacional — `CC BY-SA 4.0`,
+ * `OGL-om 1.0` —, e traduzi-las seria descrever errado o instrumento legal.
+ * "Public domain" é a exceção porque é substantivo comum, não sigla.
+ */
+const LICENSE_LABEL_PT_BR: Record<string, string> = {
+  "public domain": "Domínio público"
+};
 
 const QID_OVERRIDE_BY_ISO3: Record<string, `Q${number}`> = {
   PSE: "Q219060",
@@ -255,10 +291,17 @@ async function fetchCommonsMetadata(
         `Unsupported flag MIME ${info.mime}: ${page.title}`
       );
       const ext = info.extmetadata ?? {};
-      const shortName =
+      // O rótulo cru do Commons, e o traduzido, são coisas distintas de
+      // propósito: `attributionRequired` abaixo decide por casamento textual
+      // sobre este valor, e traduzi-lo antes faria as 194 bandeiras de domínio
+      // público passarem a exigir atribuição — em silêncio, e com a obrigação
+      // legal invertida de lado.
+      const sourceShortName =
         stripMarkup(ext.LicenseShortName?.value) ??
         stripMarkup(ext.UsageTerms?.value) ??
         "Public domain";
+      const shortName =
+        LICENSE_LABEL_PT_BR[sourceShortName.toLowerCase()] ?? sourceShortName;
       metadata.set(page.title.replaceAll("_", " "), {
         title: page.title.replaceAll("_", " ") as `File:${string}`,
         descriptionUrl: info.descriptionurl,
@@ -272,7 +315,7 @@ async function fetchCommonsMetadata(
           url: stripMarkup(ext.LicenseUrl?.value),
           artist: stripMarkup(ext.Artist?.value),
           credit: stripMarkup(ext.Credit?.value),
-          attributionRequired: !/public domain|cc0/i.test(shortName)
+          attributionRequired: !/public domain|cc0/i.test(sourceShortName)
         }
       });
     }
@@ -418,7 +461,7 @@ async function main(): Promise<void> {
         isoAlpha3: country.cca3,
         ...(country.ccn3 ? { unM49: country.ccn3 } : {})
       },
-      region: country.region ?? "Other",
+      region: regionPtBr(country.region, iso3),
       memberships,
       primaryFlagRevisionId: `${id}-flag-2026`,
       ...(EDITORIAL_NOTE_BY_ISO3[iso3]

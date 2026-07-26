@@ -1,4 +1,5 @@
 import type { ColorNamePtBr } from "@/domain/palette";
+import type { Region } from "@/types/region";
 
 /**
  * A parte do catálogo que o navegador precisa.
@@ -12,13 +13,15 @@ import type { ColorNamePtBr } from "@/domain/palette";
  * Sem nenhum import de `@/types/catalog`, e isso é o ponto: enquanto `Organization`
  * era projetada para cá, o contrato de runtime dependia do vocabulário do
  * artefato completo. Toda entidade é filiada à ONU — o campo não distinguia
- * ninguém de ninguém.
+ * ninguém de ninguém. `Region` é compartilhada com o catálogo completo, e por
+ * isso mesmo vive em módulo próprio: ela é vocabulário de interface, não de
+ * procedência, e nenhum dos dois artefatos é dono dela.
  */
 export interface RuntimeEntity {
   readonly id: string;
   readonly displayNamePtBr: string;
   readonly aliasesPtBr: readonly string[];
-  readonly region: string;
+  readonly region: Region;
   /** Obrigatório: uma entidade sem bandeira não é construível. */
   readonly flagPath: string;
   /**
