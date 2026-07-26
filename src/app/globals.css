@@ -12,20 +12,29 @@
    classes-assinatura, mas perdem de qualquer utilitário, propriedade por
    propriedade.
 
-   ESTADO ATUAL: primeiro passo da migração, deliberadamente pixel-idêntico ao
-   que havia antes. Por isso o subset de dois arquivos em vez do
-   `@import "tailwindcss"` completo: o preflight zera list-style de ol/ul,
-   font-size/font-weight de h1..h6 e text-decoration de a (preflight.css:84-85,
-   94-95, 205), e há elementos no app sem nenhuma regra legada que os proteja —
-   o <ol> de regras do diagnóstico, sete <h2> nus e todos os links de texto.
-   Ligar o preflight é o passo seguinte, junto das devoluções.
+   O preflight entra pelo `@import "tailwindcss"` completo. Ele zera
+   list-style de ol/ul, font-size e font-weight de h1..h6 e text-decoration de
+   a (preflight.css:84-85, 94-95, 205), e a camada legacy só o vence nas
+   propriedades que ela mesma declara — há elementos no app sem regra legada
+   nenhuma. O bloco @layer base adiante devolve, um a um, o que o preflight
+   tira e o legado não repõe.
+
+   Duas mudanças visuais ele traz de propósito, e ambas são melhorias que
+   valem registrar porque aparecem em qualquer comparação de tela:
+
+   1. `img, svg, video… { display: block }` (preflight.css:214-223) elimina o
+      vão de linha-base que elementos substituídos inline reservam para as
+      descendentes. Os ícones dos cartões da home carregavam 7,5px de espaço
+      fantasma cada um.
+   2. Os links de texto passam a ter sublinhado com deslocamento e espessura
+      derivados da fonte, em lugar do padrão do navegador, que corta as
+      descendentes da Atkinson Hyperlegible.
 
    A camada legacy é temporária e morre junto com src/app/legacy.css.
 --------------------------------------------------------------------------- */
 @layer theme, base, components, legacy, utilities;
 
-@import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/utilities.css" layer(utilities);
+@import "tailwindcss";
 @import "./legacy.css" layer(legacy);
 
 /* O detector de classes do Tailwind varre todo arquivo versionado do projeto,
@@ -377,4 +386,129 @@
      sai com o tempo do app, sem repetir duration-* em cada call site. */
   --default-transition-duration: 160ms;
   --default-transition-timing-function: ease;
+}
+
+/* ---------------------------------------------------------------------------
+   BASE. Só o que é do elemento, e sobretudo o que o preflight tira e o CSS
+   legado não repõe. Enquanto a coexistência durar, a camada legacy vence nas
+   propriedades que ela repete (html e body, legacy.css:25-41); estas
+   declarações assumem sozinhas quando legacy.css for apagado.
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    /* Light-first declarado. Nada declarava color-scheme, e por isso o
+       <select> do catálogo (CatalogClient.tsx:55) renderiza com a paleta
+       escura do sistema dentro de um cartão claro. O par disso é
+       colorScheme: "light" no viewport, em src/app/layout.tsx. */
+    color-scheme: light;
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  body {
+    /* 100dvh, e não 100vh: no mobile a barra de URL do navegador fazia o
+       min-height render maior que a área visível. */
+    min-height: 100dvh;
+    background:
+      linear-gradient(var(--paper-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--paper-grid-line) 1px, transparent 1px),
+      var(--color-background);
+    background-size: var(--paper-grid-step) var(--paper-grid-step);
+    font-family: var(--font-sans), sans-serif;
+    font-size: var(--text-base);
+    line-height: var(--leading-body);
+  }
+
+  /* O preflight remove o sublinhado de todo <a> (preflight.css:94-95). Devolvê-lo
+     não é preferência: sem ele, um link dentro de um parágrafo passa a se
+     distinguir só pela cor, o que é a falha que a WCAG 1.4.1 descreve. Que o
+     legado desligue text-decoration explicitamente em .brand, .nav-link,
+     .button e .flag-card prova que o sublinhado do restante era intencional.
+
+     Deslocamento e espessura vêm da fonte porque o sublinhado padrão corta as
+     descendentes da Atkinson Hyperlegible. Quem não é link de texto desliga
+     com `no-underline`. */
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    text-decoration-thickness: from-font;
+  }
+
+  /* O preflight zera list-style de ol/ul/menu (preflight.css:205), e a lista
+     de regras da abertura do diagnóstico (DiagnosticSession.tsx:165-172)
+     depende da numeração para fazer sentido: "1. Não há alternativas" só é
+     lido como regra numerada se o número estiver lá. */
+  ol {
+    list-style: decimal;
+    padding-inline-start: 1.4em;
+  }
+
+  /* Devolve o que o app tomava emprestado do agente do usuário.
+     O preflight zera margem de tudo e faz h1..h6 herdarem tamanho e peso
+     (preflight.css:13, 84-85). O CSS legado declara `font-size` em alguns
+     títulos — .settings-card h2 em 21px, .section-heading h2 em 28px — mas
+     nunca declara `font-weight`, porque o negrito vinha de graça. Sem estas
+     regras, seis títulos ficam em peso normal e dois deles caem para o tamanho
+     do corpo.
+
+     Devolver aqui, e não espalhar utilitários pelos sete arquivos que os
+     contêm, tem duas razões: o dano é do elemento, não do componente; e cada
+     uma dessas telas será migrada para utilitários mais adiante, o que jogaria
+     fora o trabalho. Como a camada legacy está acima desta, todo título que já
+     tem tamanho próprio continua com ele — o que estas regras fazem é apenas
+     preencher o que ninguém declarava.
+
+     Saem quando legacy.css morrer e as telas estiverem todas em utilitários. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 700;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  h3 {
+    font-size: 1.17em;
+  }
+
+  p {
+    margin-block: 1em;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Foco visível, e caro de perder. Três pixels de coral com três de folga
+     (4,63:1 contra o papel, acima dos 3:1 que a WCAG 1.4.11 pede de um
+     indicador), e :focus-visible em vez de :focus para não punir quem clica
+     com o mouse. */
+  :focus-visible {
+    outline: 3px solid var(--color-ring);
+    outline-offset: 3px;
+  }
+
+  /* Duplica legacy.css:1070-1078 de propósito: quando aquele arquivo for
+     apagado, esta guarda precisa continuar existindo. Declarações idênticas,
+     portanto sem efeito algum enquanto as duas convivem. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
 }
