@@ -11,9 +11,10 @@ export interface DistractorCandidate {
 /**
  * Quantos candidatos entram no sorteio, dos mais parecidos para os menos.
  *
- * Sem esse recorte o viés se dilui: com 219 candidatos, mesmo a bandeira mais
- * parecida ficava com cerca de 1% de chance por extração, e as alternativas
- * saíam praticamente aleatórias — o efeito pedagógico se perdia. Com uma
+ * Sem esse recorte o viés se dilui: com todas as outras bandeiras do catálogo
+ * no sorteio, mesmo a mais parecida ficava com uma fração de ponto percentual
+ * de chance por extração, e as alternativas saíam praticamente aleatórias — o
+ * efeito pedagógico se perdia. Com uma
  * vizinhança de 24, as opções erradas são reconhecidamente parecidas e ainda
  * assim variam bastante de uma sessão para outra.
  */

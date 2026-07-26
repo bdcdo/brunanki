@@ -6,7 +6,7 @@ import { AppShell } from "@/components/AppShell";
  *
  * O grupo `(app)` não entra no caminho da URL, então nenhum endereço muda por
  * causa desta separação: `/catalogo` continua sendo `/catalogo`, o
- * `generateStaticParams` das 220 páginas de detalhe segue intacto e o e2e não
+ * `generateStaticParams` das páginas de detalhe segue intacto e o e2e não
  * precisou de um ajuste.
  */
 export default function AppRoutesLayout({

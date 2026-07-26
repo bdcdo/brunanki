@@ -46,8 +46,9 @@ describe("feedbackTone", () => {
 
 describe("InkBubble", () => {
   it("não ocupa espaço quando não há nota", () => {
-    // A nota existe em 4 das 220 entidades. Reservar altura deixaria 98% das
-    // telas com um buraco, então a ausência precisa render nada.
+    // A nota existe em uma fração mínima das entidades. Reservar altura
+    // deixaria quase toda tela com um buraco, então a ausência precisa
+    // render nada.
     const { container } = render(<InkBubble />);
     expect(container).toBeEmptyDOMElement();
   });

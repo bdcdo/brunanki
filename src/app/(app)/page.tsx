@@ -37,7 +37,9 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
         <>
           <section className="hero">
             <div>
-              <span className="eyebrow">220 bandeiras · um plano só seu</span>
+              <span className="eyebrow">
+                {entities.length} bandeiras · um plano só seu
+              </span>
               <h1>Reconheça o mundo inteiro.</h1>
               <p>
                 Descubra o que você já sabe, aprenda no seu ritmo e reveja cada
@@ -67,7 +69,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
           <div className="stats-grid" aria-label="O que você vai aprender">
             <article className="stat-card">
               <span>Entidades</span>
-              <strong>220</strong>
+              <strong>{entities.length}</strong>
               <small className="muted">ONU e FIFA</small>
             </article>
             <article className="stat-card">

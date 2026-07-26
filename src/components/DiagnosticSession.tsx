@@ -131,8 +131,9 @@ function DiagnosticSessionReady({
             <span className="eyebrow">Antes de ensinar, medir</span>
             <h1>O que você já reconhece?</h1>
             <p>
-              Você verá as 220 bandeiras uma vez. Digite o nome quando souber ou
-              pule sem chutar. O teste pode ser pausado a qualquer momento.
+              Você verá as {entities.length} bandeiras uma vez. Digite o nome
+              quando souber ou pule sem chutar. O teste pode ser pausado a
+              qualquer momento.
             </p>
           </div>
         </header>

@@ -18,7 +18,7 @@ interface MeterProps {
 }
 
 /**
- * Progresso para conjuntos grandes: as 220 do atlas, as 220 do diagnóstico.
+ * Progresso para conjuntos grandes: o atlas inteiro, o diagnóstico inteiro.
  *
  * Continua sendo `role="progressbar"` e não o `<meter>` nativo — aquele
  * elemento tem semântica de medição (nível de tanque), não de avanço, e a
@@ -27,7 +27,7 @@ interface MeterProps {
  * Duas coisas que a barra anterior não fazia. O valor é limitado ao intervalo
  * antes de virar `aria-valuenow`: a fila de estudo cresce no meio da sessão
  * quando um erro reinsere o item, e o valor cru podia ultrapassar o máximo
- * anunciado. E `aria-valuetext` existe para o leitor dizer "12 de 220" em vez
+ * anunciado. E `aria-valuetext` existe para o leitor dizer "12 de 40" em vez
  * de "5%" — a porcentagem é o que se vê, a contagem é o que se quer saber.
  */
 export function Meter({ value, max, label, className }: MeterProps) {

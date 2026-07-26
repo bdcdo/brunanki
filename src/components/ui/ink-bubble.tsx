@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
  * Um bloco de tinta invertido, com rabicho apontando para o que ele comenta.
  *
  * A geometria diz "outra voz" — algo que não é o cromo da interface. No Ptanki
- * quem fala é a nota editorial do catálogo, que existe em 4 das 220 entidades
- * e hoje só aparece na página de detalhe, portanto nunca é vista por quem está
+ * quem fala é a nota editorial do catálogo, que poucas entidades têm e hoje só
+ * aparece na página de detalhe, portanto nunca é vista por quem está
  * aprendendo. São exatamente os casos em que a pessoa tem direito a saber por
  * que a bandeira é aquela: Taiwan, Santa Sé, Irlanda do Norte e o anverso do
  * Paraguai.

@@ -4,6 +4,12 @@ import {
   expectNoHorizontalOverflow,
   expectNoSeriousAccessibilityViolations
 } from "./helpers";
+import { catalogEntities } from "./seed";
+
+/** O tamanho do catálogo aparece em seis asserções, e fixá-lo faria toda
+ *  mudança no conjunto de entidades quebrar testes que nada têm a ver com
+ *  ela. Vem da mesma fonte que a UI lê. */
+const ENTITY_COUNT = catalogEntities.length;
 
 async function openFreshApp(page: Page) {
   await page.goto("/");
@@ -19,7 +25,9 @@ test("home apresenta a proposta e a entrada do diagnóstico sem overflow", async
   await expect(
     page.getByRole("heading", { name: "Reconheça o mundo inteiro." })
   ).toBeVisible();
-  await expect(page.getByText("220 bandeiras · um plano só seu")).toBeVisible();
+  await expect(
+    page.getByText(`${ENTITY_COUNT} bandeiras · um plano só seu`)
+  ).toBeVisible();
   await expect(
     page.getByRole("link", { name: /Começar diagnóstico/ })
   ).toBeVisible();
@@ -58,7 +66,7 @@ test("catálogo filtra nomes, abre detalhes e mantém bandeiras inteiras", async
 }) => {
   await page.goto("/catalogo");
 
-  await expect(page.getByText("220 resultados")).toBeVisible();
+  await expect(page.getByText(`${ENTITY_COUNT} resultados`)).toBeVisible();
   await page.getByRole("searchbox", { name: "Buscar por nome" }).fill("Brasil");
   await expect(page.getByText("1 resultado")).toBeVisible();
 
@@ -106,7 +114,7 @@ test("diagnóstico registra feedback e persiste o avanço após reload", async (
   await expect(
     page.getByRole("heading", { name: "De onde é esta bandeira?" })
   ).toBeVisible();
-  await expect(page.getByText("Bandeira 1 de 220")).toBeVisible();
+  await expect(page.getByText(`Bandeira 1 de ${ENTITY_COUNT}`)).toBeVisible();
   // A bandeira do diagnóstico é descrita pelas cores, e não com um texto
   // genérico igual para todas: descreve sem entregar a resposta.
   await expect(page.getByRole("img", { name: /^Bandeira com / })).toBeVisible();
@@ -126,7 +134,7 @@ test("diagnóstico registra feedback e persiste o avanço após reload", async (
   await expect(page.getByRole("img", { name: /^Bandeira de / })).toBeVisible();
 
   await page.reload();
-  await expect(page.getByText("Bandeira 2 de 220")).toBeVisible();
+  await expect(page.getByText(`Bandeira 2 de ${ENTITY_COUNT}`)).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "De onde é esta bandeira?" })
   ).toBeVisible();
@@ -208,7 +216,9 @@ test("cancelar restauração não informa que o backup foi aplicado", async ({
   );
 });
 
-test("créditos informam fontes, método e as 220 imagens", async ({ page }) => {
+test("créditos informam fontes, método e uma imagem por entidade", async ({
+  page
+}) => {
   await page.goto("/creditos");
 
   await expect(
@@ -223,7 +233,7 @@ test("créditos informam fontes, método e as 220 imagens", async ({ page }) => 
   await expect(
     page.getByRole("heading", { name: "Arquivos de bandeira" })
   ).toBeVisible();
-  await expect(page.getByText("220 imagens")).toBeVisible();
+  await expect(page.getByText(`${ENTITY_COUNT} imagens`)).toBeVisible();
   await expect(
     page.getByRole("link", { name: /Membros da ONU/ })
   ).toHaveAttribute("href", "https://www.un.org/en/about-us/member-states");

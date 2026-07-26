@@ -36,7 +36,7 @@ interface AppReadyProps {
  * `StudySession`.
  *
  * Um layout de rota não parametriza `children`, então não teria como entregar
- * o snapshot — e gatearia `/catalogo`, `/creditos` e as 220 páginas estáticas
+ * o snapshot — e gatearia `/catalogo`, `/creditos` e as páginas estáticas
  * de detalhe, que não dependem de armazenamento nenhum.
  *
  * Um HOC teria o mesmo efeito com tipos piores, e esconderia onde o portão
