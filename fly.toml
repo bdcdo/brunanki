@@ -1,4 +1,4 @@
-# Fly.io — app único, sem worker e sem secrets: o Ptanki é essencialmente SSG e
+# Fly.io — app único, sem worker e sem secrets: o Brunanki é essencialmente SSG e
 # guarda todo o progresso no navegador.
 #
 # On demand total: min_machines_running = 0 faz a máquina dormir sem tráfego e
@@ -8,7 +8,7 @@
 # snapshot não estiver disponível (todo deploy o invalida, migração de host
 # também), o Fly cai para `stop` sozinho.
 
-app = "ptanki"
+app = "brunanki"
 primary_region = "gru" # São Paulo
 
 [build]

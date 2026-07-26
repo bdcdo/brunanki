@@ -17,8 +17,8 @@ const displayFont = Bricolage_Grotesque({
 
 export const metadata: Metadata = {
   title: {
-    default: "Ptanki — aprenda todas as bandeiras",
-    template: "%s · Ptanki"
+    default: "Brunanki — aprenda todas as bandeiras",
+    template: "%s · Brunanki"
   },
   description:
     "Aprenda e revise as bandeiras dos membros da ONU e das associações da FIFA.",

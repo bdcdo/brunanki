@@ -1,6 +1,6 @@
-# Ptanki
+# Brunanki
 
-Ptanki é um webapp em pt-BR para aprender e revisar as bandeiras dos membros da ONU e das associações da FIFA. O catálogo combina 193 Estados-membros da ONU, 211 associações da FIFA e a Santa Sé como Estado observador, totalizando 220 entidades de aprendizagem.
+Brunanki é um webapp em pt-BR para aprender e revisar as bandeiras dos membros da ONU e das associações da FIFA. O catálogo combina 193 Estados-membros da ONU, 211 associações da FIFA e a Santa Sé como Estado observador, totalizando 220 entidades de aprendizagem.
 
 ## Como funciona
 

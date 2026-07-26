@@ -12,7 +12,7 @@ export function downloadBackupFile(json: string, now: Date = new Date()): void {
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
   anchor.href = url;
-  anchor.download = `ptanki-backup-${now.toISOString().slice(0, 10)}.json`;
+  anchor.download = `brunanki-backup-${now.toISOString().slice(0, 10)}.json`;
   anchor.click();
   URL.revokeObjectURL(url);
 }

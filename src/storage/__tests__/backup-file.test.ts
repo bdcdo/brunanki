@@ -17,11 +17,11 @@ describe("downloadBackupFile", () => {
     vi.spyOn(document, "createElement").mockReturnValue(anchor);
 
     downloadBackupFile(
-      '{"format":"ptanki-export"}',
+      '{"format":"brunanki-export"}',
       new Date("2026-07-26T10:00:00Z")
     );
 
-    expect(anchor.download).toBe("ptanki-backup-2026-07-26.json");
+    expect(anchor.download).toBe("brunanki-backup-2026-07-26.json");
     expect(anchor.href).toContain("blob:fake");
     expect(click).toHaveBeenCalledOnce();
     // Sem o revoke, cada backup baixado vazaria um Blob na memória da aba.

@@ -11,7 +11,7 @@ import type {
 
 import { defaultSchedulingPreferences } from "@/domain/scheduler";
 
-export const DATABASE_NAME = "ptanki";
+export const DATABASE_NAME = "brunanki";
 export const SINGLETON_KEY = "current";
 
 export interface DiagnosticRecord {
@@ -33,7 +33,7 @@ export function defaultAppSettings(): AppSettings {
   return defaultSchedulingPreferences();
 }
 
-export class PtankiDatabase extends Dexie {
+export class BrunankiDatabase extends Dexie {
   skillStates!: EntityTable<SkillState, "id">;
   attempts!: EntityTable<ReviewAttempt, "id">;
   diagnostics!: EntityTable<DiagnosticRecord, "id">;
@@ -51,34 +51,34 @@ export class PtankiDatabase extends Dexie {
   }
 }
 
-let database: PtankiDatabase | undefined;
+let database: BrunankiDatabase | undefined;
 
-export function getDatabase(): PtankiDatabase {
-  database ??= new PtankiDatabase();
+export function getDatabase(): BrunankiDatabase {
+  database ??= new BrunankiDatabase();
   return database;
 }
 
 export async function getDiagnosticState(
-  db: PtankiDatabase = getDatabase()
+  db: BrunankiDatabase = getDatabase()
 ): Promise<DiagnosticState | undefined> {
   return (await db.diagnostics.get(SINGLETON_KEY))?.state;
 }
 
 export async function saveDiagnosticState(
   state: DiagnosticState,
-  db: PtankiDatabase = getDatabase()
+  db: BrunankiDatabase = getDatabase()
 ): Promise<void> {
   await db.diagnostics.put({ id: SINGLETON_KEY, state });
 }
 
 export async function clearDiagnosticState(
-  db: PtankiDatabase = getDatabase()
+  db: BrunankiDatabase = getDatabase()
 ): Promise<void> {
   await db.diagnostics.delete(SINGLETON_KEY);
 }
 
 export async function getAppSettings(
-  db: PtankiDatabase = getDatabase()
+  db: BrunankiDatabase = getDatabase()
 ): Promise<AppSettings> {
   return (
     (await db.appSettings.get(SINGLETON_KEY))?.settings ?? defaultAppSettings()
@@ -87,7 +87,7 @@ export async function getAppSettings(
 
 export async function saveAppSettings(
   settings: AppSettings,
-  db: PtankiDatabase = getDatabase()
+  db: BrunankiDatabase = getDatabase()
 ): Promise<void> {
   if (
     !Number.isFinite(settings.desiredRetention) ||
@@ -102,7 +102,7 @@ export async function saveAppSettings(
 export async function saveReview(
   state: SkillState,
   attempt: ReviewAttempt,
-  db: PtankiDatabase = getDatabase()
+  db: BrunankiDatabase = getDatabase()
 ): Promise<void> {
   if (state.entityId !== attempt.entityId || state.skill !== attempt.skill) {
     throw new Error("Tentativa e estado de habilidade não correspondem");
