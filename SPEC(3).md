@@ -638,8 +638,10 @@ Entregas:
 - sistema de resposta e histórico;
 - componentes básicos de exercício;
 - acessibilidade mínima;
-- página de fontes e atribuições;
+- registro de fontes e atribuições (ver nota abaixo);
 - testes de validação de conteúdo.
+
+> **Revisto em 26/07/2026.** A exigência de "página de fontes e atribuições" era de tela no produto. Ela foi removida do site: a lista completa passou a viver em `docs/atribuicao-de-bandeiras.md`, gerada do catálogo por `scripts/build-attribution.ts` e conferida por `pnpm data:validate`. O que a licença de fato obriga continua no produto — a página de detalhe de cada bandeira mostra arquivo, licença e link para o Wikimedia Commons, e uma única imagem do catálogo (a de Omã, sob OGL Oman 1.0) tem `attributionRequired`. A motivação foi enxugar a interface, e o requisito de preservar autoria e licença segue atendido.
 
 ### Fase 1 — Bandeiras do mundo
 
@@ -1637,7 +1639,7 @@ Um módulo só pode ser publicado quando todos os itens abaixo forem atendidos.
 - [ ] Implementar feedback e contraste de confusões.
 - [ ] Criar tela de progresso.
 - [ ] Criar primeira conquista validada.
-- [ ] Criar página de fontes e atribuições.
+- [x] Registrar fontes e atribuições — em `docs/atribuicao-de-bandeiras.md`, não como página do site (ver nota na Fase 0).
 - [ ] Adicionar testes de conteúdo e E2E.
 
 ### P1 — Completar a experiência de bandeiras

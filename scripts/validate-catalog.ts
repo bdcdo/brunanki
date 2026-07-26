@@ -5,6 +5,10 @@ import { basename, join } from "node:path";
 import { normalizeCountryName as normalize } from "../src/domain/text";
 import catalogJson from "../src/data/catalog.json";
 import type { Catalog } from "../src/types/catalog";
+import {
+  ATTRIBUTION_PATH,
+  buildAttributionMarkdown
+} from "./build-attribution";
 import { unMembership, UN_OBSERVER_ENTITY_IDS } from "./catalog-rules";
 
 /**
@@ -165,6 +169,17 @@ async function main(): Promise<void> {
   assert(
     orphans.length === 0,
     `Flag files with no entity: ${orphans.join(", ")}`
+  );
+
+  // A atribuição saiu do site com a página `/creditos` e virou documento no
+  // repositório. Derivado, não escrito: sem este check ele desatualizaria em
+  // silêncio no primeiro `data:refresh` que reconferisse licenças.
+  const attribution = await readFile(ATTRIBUTION_PATH, "utf8").catch(
+    () => undefined
+  );
+  assert(
+    attribution === buildAttributionMarkdown(catalog),
+    "docs/atribuicao-de-bandeiras.md está fora de sincronia com o catálogo; rode `pnpm data:attribution`"
   );
 
   console.log(

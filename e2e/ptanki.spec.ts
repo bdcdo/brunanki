@@ -216,33 +216,19 @@ test("cancelar restauração não informa que o backup foi aplicado", async ({
   );
 });
 
-test("créditos informam fontes, método e uma imagem por entidade", async ({
+test("a página de detalhe atribui a licença de cada bandeira", async ({
   page
 }) => {
-  await page.goto("/creditos");
+  // Substitui o teste da página `/creditos`, removida. A atribuição que a
+  // licença exige passa a viver só aqui no produto — Omã é a única bandeira do
+  // catálogo com `attributionRequired`, então é dela que a obrigação depende.
+  await page.goto("/catalogo/omn");
 
+  await expect(page.getByRole("heading", { name: "Omã" })).toBeVisible();
+  await expect(page.getByText("OGL-om 1.0")).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Fontes e créditos" })
-  ).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Fontes institucionais" })
-  ).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Método de aprendizagem" })
-  ).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Arquivos de bandeira" })
-  ).toBeVisible();
-  await expect(page.getByText(`${ENTITY_COUNT} imagens`)).toBeVisible();
-  await expect(
-    page.getByRole("link", { name: /Membros da ONU/ })
-  ).toHaveAttribute("href", "https://www.un.org/en/about-us/member-states");
-  await expect(
-    page.getByRole("link", { name: /The Math Academy Way/ })
-  ).toHaveAttribute(
-    "href",
-    "https://www.justinmath.com/files/the-math-academy-way.pdf"
-  );
+    page.getByRole("link", { name: /Ver no Wikimedia Commons/ })
+  ).toHaveAttribute("href", /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
 
   await expectNoHorizontalOverflow(page);
   await expectNoSeriousAccessibilityViolations(page);

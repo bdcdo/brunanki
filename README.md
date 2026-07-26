@@ -44,6 +44,8 @@ Os cabeçalhos de cache e de segurança são definidos em `headers()` no `next.c
 
 ## Catálogo e licenças
 
+A procedência e a licença de cada imagem estão em [`docs/atribuicao-de-bandeiras.md`](docs/atribuicao-de-bandeiras.md), gerado do catálogo por `pnpm data:attribution` e conferido por `pnpm data:validate` — editar à mão falha o gate. A atribuição que a licença exige também aparece no produto, na página de detalhe de cada bandeira.
+
 A ONU define a elegibilidade, e a regra vive em `scripts/catalog-rules.ts` — o mesmo módulo que o gerador aplica, o validador cobra e os testes exercitam contra o artefato commitado. Wikidata é usado para localizar os arquivos e o Wikimedia Commons fornece as imagens e metadados de licença. Os arquivos são fixados em `public/flags`; o app não faz hotlink em runtime. `src/data/catalog.json` e `src/data/runtime-catalog.json` são artefatos versionados gerados pelo pipeline.
 
 Para conferir mudanças nas fontes e reconstruir os artefatos:

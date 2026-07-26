@@ -3,6 +3,12 @@
 src/data/catalog.json
 src/data/runtime-catalog.json
 
+# Também gerado, e por um motivo mais duro: `pnpm data:validate` compara o
+# arquivo em disco byte a byte com a saída de `buildAttributionMarkdown`. Se o
+# Prettier reformatar a tabela de 195 linhas, o gate passa a acusar drift que
+# não existe.
+docs/atribuicao-de-bandeiras.md
+
 # O CSS de antes da migração para o Tailwind, mantido sem reformatação
 # enquanto a camada de cascata `legacy` existir. Ele encolhe a cada tela
 # migrada e some no fim; deixá-lo fora do Prettier faz com que cada diff mostre

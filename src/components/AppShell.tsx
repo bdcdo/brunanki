@@ -127,9 +127,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <strong>Fica neste navegador</strong>
           <p>Sem conta, anúncios ou ranking.</p>
         </div>
-        <Link href="/creditos" className="sidebar-footer">
-          Fontes e créditos
-        </Link>
       </aside>
 
       {open && (

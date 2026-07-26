@@ -19,6 +19,7 @@
     "test:e2e": "playwright test",
     "data:validate": "tsx scripts/validate-catalog.ts",
     "data:runtime": "tsx scripts/build-runtime-catalog.ts",
+    "data:attribution": "tsx scripts/build-attribution.ts",
     "data:refresh": "tsx scripts/refresh-catalog.ts"
   },
   "dependencies": {
