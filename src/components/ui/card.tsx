@@ -1,0 +1,100 @@
+import { cva, type VariantProps } from "class-variance-authority";
+
+import { cn } from "@/lib/utils";
+
+/**
+ * Absorve as quatro superfícies retangulares do CSS legado — `.card`,
+ * `.stat-card`, `.study-card` e `.settings-card` — mais a moldura de
+ * `.flag-card`.
+ *
+ * `default` usa a superfície translúcida a 90% que o legado aplica em `.card`
+ * e `.stat-card`: o papel milimetrado do fundo aparece por baixo, de leve, e é
+ * ele que dá a textura da página.
+ */
+const cardVariants = cva("border text-card-foreground", {
+  variants: {
+    variant: {
+      default: "rounded-card border-line bg-card/90 shadow-card",
+      // Superfície de destaque: raio maior, sombra alta e fundo opaco. É o
+      // cartão de sessão e o painel da meta do dia.
+      panel: "rounded-panel border-line bg-card shadow-panel",
+      // Cartão clicável do catálogo. O levantar de 3px no hover é o único
+      // movimento de lista do app, e sobrevive porque comunica que o cartão
+      // inteiro é o alvo, não só o nome.
+      link: cn(
+        "overflow-hidden rounded-card border-line bg-card shadow-card",
+        "transition hover:-translate-y-[3px] hover:shadow-card-lifted"
+      )
+    },
+    padding: {
+      none: "",
+      sm: "p-5",
+      default: "p-6",
+      lg: "p-[clamp(22px,4vw,46px)]"
+    }
+  },
+  defaultVariants: { variant: "default", padding: "default" }
+});
+
+function Card({
+  className,
+  variant,
+  padding,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof cardVariants>) {
+  return (
+    <div
+      className={cn(cardVariants({ variant, padding }), className)}
+      {...props}
+    />
+  );
+}
+
+/**
+ * Divergência deliberada do upstream do shadcn, que compõe o cabeçalho em
+ * coluna: aqui ele reproduz `.section-heading`, que é uma linha com o título à
+ * esquerda e um link ou uma pílula à direita — a forma que a home e a tela de
+ * progresso já usam.
+ */
+function CardHeader({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      className={cn("mb-4 flex items-center justify-between gap-4", className)}
+      {...props}
+    />
+  );
+}
+
+/**
+ * `<h2>` de verdade, e não o `<div>` do upstream: os títulos de cartão do app
+ * são todos h2, e rebaixá-los a div quebraria a ordem de cabeçalhos que o axe
+ * verifica.
+ */
+function CardTitle({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLHeadingElement>) {
+  return (
+    <h2
+      className={cn("font-title text-3xl tracking-heading", className)}
+      {...props}
+    />
+  );
+}
+
+function CardDescription({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLParagraphElement>) {
+  return (
+    <p
+      className={cn("max-w-copy text-muted-foreground", className)}
+      {...props}
+    />
+  );
+}
+
+export { Card, CardHeader, CardTitle, CardDescription, cardVariants };
