@@ -2,24 +2,21 @@
 
 import { ArrowRight, Brain, CalendarClock, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
-import { useApp } from "@/components/AppProvider";
+import { AppReady } from "@/components/AppReady";
 import { Meter } from "@/components/ui/meter";
-import {
-  LoadingScreen,
-  StorageUnavailableScreen
-} from "@/components/SystemScreens";
 import { entities } from "@/data/runtime-catalog";
+import type { LearningSnapshot } from "@/types/learning";
 
 export default function HomePage() {
-  const { state } = useApp();
-  if (state.kind === "loading") {
-    return <LoadingScreen label="Carregando seu progresso." />;
-  }
-  if (state.kind === "unavailable") {
-    return <StorageUnavailableScreen error={state.error} />;
-  }
+  return (
+    <AppReady loadingLabel="Carregando seu progresso.">
+      {({ snapshot }) => <HomePageReady snapshot={snapshot} />}
+    </AppReady>
+  );
+}
 
-  const { diagnostic, skills, attempts } = state.snapshot;
+function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
+  const { diagnostic, skills, attempts } = snapshot;
   const completedDiagnostic = Boolean(diagnostic?.completedAt);
   const diagnosed = diagnostic?.currentIndex ?? 0;
   const scheduled = skills.filter(

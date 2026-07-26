@@ -9,11 +9,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import { useApp } from "@/components/AppProvider";
-import {
-  LoadingScreen,
-  StorageUnavailableScreen
-} from "@/components/SystemScreens";
+import { AppReady } from "@/components/AppReady";
 import { FlagImage } from "@/components/FlagImage";
 import { Meter } from "@/components/ui/meter";
 import { entities, entityById } from "@/data/runtime-catalog";
@@ -26,24 +22,16 @@ interface Feedback {
   answer?: string;
 }
 
-/**
- * Gate dos três estados do armazenamento. Fica separado do corpo porque o
- * estado inicial do diagnóstico é semeado a partir do snapshot, e um
- * `useState` não pode ficar atrás de um early return.
- */
 export function DiagnosticSession() {
-  const { state, refresh } = useApp();
-  if (state.kind === "loading") {
-    return <LoadingScreen label="Carregando seu diagnóstico." />;
-  }
-  if (state.kind === "unavailable") {
-    return <StorageUnavailableScreen error={state.error} />;
-  }
   return (
-    <DiagnosticSessionReady
-      savedDiagnostic={state.snapshot.diagnostic}
-      refresh={refresh}
-    />
+    <AppReady loadingLabel="Carregando seu diagnóstico.">
+      {({ snapshot, refresh }) => (
+        <DiagnosticSessionReady
+          savedDiagnostic={snapshot.diagnostic}
+          refresh={refresh}
+        />
+      )}
+    </AppReady>
   );
 }
 

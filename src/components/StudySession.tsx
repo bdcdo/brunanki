@@ -3,11 +3,8 @@
 import { ArrowRight, Check, CornerDownLeft, Pause } from "lucide-react";
 import Link from "next/link";
 import { FormEvent, useMemo, useRef, useState } from "react";
-import { useApp } from "@/components/AppProvider";
-import {
-  LoadingScreen,
-  StorageUnavailableScreen
-} from "@/components/SystemScreens";
+import { AppReady } from "@/components/AppReady";
+import { EmptyState } from "@/components/SystemScreens";
 import { FlagImage } from "@/components/FlagImage";
 import {
   SessionPips,
@@ -85,22 +82,14 @@ function initialStep(item: SessionItem, state?: SkillState): StudyStep {
   return "forwardInput";
 }
 
-/**
- * Faz o gate dos três estados do armazenamento antes de montar a sessão.
- *
- * Separado do corpo porque os hooks de sessão não podem ficar atrás de um
- * early return; assim `StudySessionReady` só existe quando há um snapshot,
- * e nenhum de seus hooks precisa lidar com dados ausentes.
- */
 export function StudySession() {
-  const { state, refresh } = useApp();
-  if (state.kind === "loading") {
-    return <LoadingScreen label="Preparando sua sessão." />;
-  }
-  if (state.kind === "unavailable") {
-    return <StorageUnavailableScreen error={state.error} />;
-  }
-  return <StudySessionReady snapshot={state.snapshot} refresh={refresh} />;
+  return (
+    <AppReady loadingLabel="Preparando sua sessão.">
+      {({ snapshot, refresh }) => (
+        <StudySessionReady snapshot={snapshot} refresh={refresh} />
+      )}
+    </AppReady>
+  );
 }
 
 function StudySessionReady({
@@ -321,22 +310,16 @@ function StudySessionReady({
 
   if (!diagnostic?.completedAt) {
     return (
-      <div className="page page-narrow">
-        <section className="study-card" style={{ textAlign: "center" }}>
-          <span className="eyebrow">Primeiro passo</span>
-          <h1 className="study-title">Faça o diagnóstico antes de estudar.</h1>
-          <p className="muted">
-            Assim a primeira sessão começa no que você ainda não reconhece.
-          </p>
-          <Link
-            href="/diagnostico"
-            className="button"
-            style={{ marginTop: 18 }}
-          >
+      <EmptyState
+        eyebrow="Primeiro passo"
+        title="Faça o diagnóstico antes de estudar."
+        description="Assim a primeira sessão começa no que você ainda não reconhece."
+        action={
+          <Link href="/diagnostico" className="button">
             Ir ao diagnóstico <ArrowRight size={18} aria-hidden="true" />
           </Link>
-        </section>
-      </div>
+        }
+      />
     );
   }
 
@@ -373,26 +356,16 @@ function StudySessionReady({
 
   if (initialized && queue.length === 0) {
     return (
-      <div className="page page-narrow">
-        <section className="study-card" style={{ textAlign: "center" }}>
-          <Check
-            size={54}
-            aria-hidden="true"
-            style={{ margin: "30px auto 14px" }}
-          />
-          <h1 className="study-title">Tudo em dia por enquanto.</h1>
-          <p className="muted">
-            As próximas revisões aparecerão quando estiverem vencidas.
-          </p>
-          <Link
-            href="/catalogo"
-            className="button button-secondary"
-            style={{ marginTop: 18 }}
-          >
+      <EmptyState
+        icon={<Check size={54} aria-hidden="true" />}
+        title="Tudo em dia por enquanto."
+        description="As próximas revisões aparecerão quando estiverem vencidas."
+        action={
+          <Link href="/catalogo" className="button button-secondary">
             Explorar o atlas
           </Link>
-        </section>
-      </div>
+        }
+      />
     );
   }
 

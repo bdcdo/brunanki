@@ -1,25 +1,22 @@
 "use client";
 
 import { CheckCircle2, Clock3, Layers3, Sparkles } from "lucide-react";
-import { useApp } from "@/components/AppProvider";
-import {
-  LoadingScreen,
-  StorageUnavailableScreen
-} from "@/components/SystemScreens";
+import { AppReady } from "@/components/AppReady";
 import { Meter, percentOf } from "@/components/ui/meter";
 import { summarizeProgress } from "@/domain/mastery";
 import { entities } from "@/data/runtime-catalog";
+import type { LearningSnapshot } from "@/types/learning";
 
 export default function ProgressPage() {
-  const { state } = useApp();
-  if (state.kind === "loading") {
-    return <LoadingScreen label="Carregando seu progresso." />;
-  }
-  if (state.kind === "unavailable") {
-    return <StorageUnavailableScreen error={state.error} />;
-  }
+  return (
+    <AppReady loadingLabel="Carregando seu progresso.">
+      {({ snapshot }) => <ProgressPageReady snapshot={snapshot} />}
+    </AppReady>
+  );
+}
 
-  const { skills, attempts } = state.snapshot;
+function ProgressPageReady({ snapshot }: { snapshot: LearningSnapshot }) {
+  const { skills, attempts } = snapshot;
   // A regra de domínio vive em domain/mastery.ts. Esta tela a reimplementava
   // à mão e divergia dela: não exigia que a última tentativa fosse correta e
   // contava a mesma entidade em dois estágios ao mesmo tempo.

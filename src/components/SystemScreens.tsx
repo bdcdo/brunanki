@@ -2,6 +2,7 @@
 
 import { DatabaseBackup } from "lucide-react";
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 /**
  * Exibida enquanto o armazenamento local ainda não respondeu. É um estado
@@ -67,6 +68,47 @@ export function StorageUnavailableScreen({ error }: { error: Error }) {
         <summary className="muted">Detalhe técnico</summary>
         <p className="muted">{error.message}</p>
       </details>
+    </div>
+  );
+}
+
+/**
+ * Tela inteira para quando não há o que fazer agora — o diagnóstico ainda não
+ * foi feito, ou não há revisão vencida.
+ *
+ * É de página, com `h1` próprio, e não um aviso embutido numa lista. A caixa
+ * tracejada de "nenhum resultado" do catálogo continua onde está de propósito:
+ * ali o vazio é do filtro, a página tem título e conteúdo em volta, e dar um
+ * `h1` àquele trecho quebraria a hierarquia de cabeçalhos que o axe verifica.
+ * São dois conceitos, não duas cópias do mesmo.
+ *
+ * O que ela deliberadamente NÃO absorve é a landing de quem ainda não fez o
+ * diagnóstico: aquilo não é ausência de conteúdo, é a apresentação do produto.
+ */
+export function EmptyState({
+  icon,
+  eyebrow,
+  title,
+  description,
+  action
+}: {
+  icon?: ReactNode;
+  eyebrow?: string;
+  title: string;
+  description: string;
+  action?: ReactNode;
+}) {
+  return (
+    <div className="page page-narrow">
+      <section className="study-card text-center">
+        {icon && (
+          <div className="mt-[30px] mb-3.5 flex justify-center">{icon}</div>
+        )}
+        {eyebrow && <span className="eyebrow">{eyebrow}</span>}
+        <h1 className="study-title">{title}</h1>
+        <p className="muted">{description}</p>
+        {action && <div className="mt-[18px]">{action}</div>}
+      </section>
     </div>
   );
 }
