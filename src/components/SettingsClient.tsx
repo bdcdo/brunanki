@@ -66,11 +66,13 @@ export function SettingsClient() {
         </div>
       </header>
 
-      <div className="settings-stack">
-        <section className="settings-card">
+      <div className="grid gap-[18px]">
+        <section className="grid grid-cols-[1fr_auto] items-center gap-6 rounded-card border border-line bg-surface p-6 max-md:grid-cols-1 max-md:items-stretch">
           <div>
-            <h2>Exportar progresso</h2>
-            <p>
+            <h2 className="mt-0 mb-[5px] text-xl leading-body">
+              Exportar progresso
+            </h2>
+            <p className="m-0 max-w-[640px] text-ink-soft">
               Baixe diagnóstico, revisões, preferências e histórico em um
               arquivo JSON versionado.
             </p>
@@ -80,10 +82,12 @@ export function SettingsClient() {
           </button>
         </section>
 
-        <section className="settings-card">
+        <section className="grid grid-cols-[1fr_auto] items-center gap-6 rounded-card border border-line bg-surface p-6 max-md:grid-cols-1 max-md:items-stretch">
           <div>
-            <h2>Restaurar backup</h2>
-            <p>
+            <h2 className="mt-0 mb-[5px] text-xl leading-body">
+              Restaurar backup
+            </h2>
+            <p className="m-0 max-w-[640px] text-ink-soft">
               O arquivo será validado antes de substituir o progresso atual. Um
               backup do estado presente será baixado automaticamente.
             </p>
@@ -117,10 +121,10 @@ export function SettingsClient() {
           </div>
         </section>
 
-        <section className="settings-card">
+        <section className="grid grid-cols-[1fr_auto] items-center gap-6 rounded-card border border-line bg-surface p-6 max-md:grid-cols-1 max-md:items-stretch">
           <div>
-            <h2>Recomeçar</h2>
-            <p>
+            <h2 className="mt-0 mb-[5px] text-xl leading-body">Recomeçar</h2>
+            <p className="m-0 max-w-[640px] text-ink-soft">
               Apaga todos os dados locais depois de baixar uma cópia de
               segurança.
             </p>
