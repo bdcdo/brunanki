@@ -35,17 +35,30 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
     <div className="page">
       {!completedDiagnostic ? (
         <>
-          <section className="hero">
+          <section className="relative mb-[34px] grid min-h-[430px] items-center overflow-hidden rounded-panel bg-ink p-[clamp(30px,5vw,62px)] text-on-ink shadow-panel max-md:min-h-0 max-md:px-6 max-md:py-[30px] lg:grid-cols-[1.1fr_0.9fr]">
+            {/* Era `.hero::after`. Vira elemento porque um pseudo não se
+                escreve em utilitário — e o `aria-hidden` explícito diz o que o
+                `::after` só implicava. */}
+            <span
+              aria-hidden="true"
+              className="absolute -right-[90px] -bottom-[130px] size-[380px] rounded-full border-[80px] border-highlight/14"
+            />
+            {/* Sem `z-index` aqui de propósito: o anel decorativo acima é
+                posicionado e já pinta sobre conteúdo estático, e promover este
+                bloco a camada própria troca o antialiasing subpixel do título
+                por grayscale. */}
             <div>
-              <span className="eyebrow">
+              <span className="eyebrow text-highlight">
                 {entities.length} bandeiras · um plano só seu
               </span>
-              <h1>Reconheça o mundo inteiro.</h1>
-              <p>
+              <h1 className="mt-3 mb-5 max-w-[700px] font-title text-hero font-bold tracking-[-0.045em] max-md:text-[45px]">
+                Reconheça o mundo inteiro.
+              </h1>
+              <p className="mb-7 max-w-[580px] text-lg text-on-ink-soft">
                 Descubra o que você já sabe, aprenda no seu ritmo e reveja cada
                 bandeira antes de esquecer.
               </p>
-              <div className="hero-actions">
+              <div className="flex flex-wrap gap-3">
                 <Link href="/diagnostico" className="button button-coral">
                   {diagnosed > 0
                     ? "Continuar diagnóstico"
@@ -57,11 +70,17 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
                 </Link>
               </div>
             </div>
-            <div className="hero-visual" aria-hidden="true">
-              <div className="hero-stack">
-                <span className="mini-flag" />
-                <span className="mini-flag" />
-                <span className="mini-flag" />
+            <div
+              className="relative z-[1] grid min-h-[280px] place-items-center max-lg:hidden"
+              aria-hidden="true"
+            >
+              <div className="relative h-[230px] w-[270px]">
+                {/* As três são decorativas e não saem do catálogo: são
+                    gradientes, não bandeiras de verdade. Por isso o bloco
+                    inteiro é `aria-hidden` e as cores ficam literais. */}
+                <span className="absolute top-1 left-2 h-32 w-[190px] -rotate-[11deg] rounded-2xl border-[9px] border-white bg-[linear-gradient(#009b3a_0_33%,#fedf00_33%_66%,#002776_66%)] shadow-float" />
+                <span className="absolute top-[52px] right-0 h-32 w-[190px] rotate-[8deg] rounded-2xl border-[9px] border-white bg-[linear-gradient(90deg,#002395_0_33%,white_33%_66%,#ed2939_66%)] shadow-float" />
+                <span className="absolute bottom-0 left-[30px] h-32 w-[190px] -rotate-2 rounded-2xl border-[9px] border-white bg-[linear-gradient(#000_0_33%,#dd0000_33%_66%,#ffce00_66%)] shadow-float" />
               </div>
             </div>
           </section>
@@ -119,11 +138,13 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
             </div>
           </header>
 
-          <section className="daily-card">
+          <section className="grid min-h-[200px] grid-cols-[1fr_auto] items-center gap-6 rounded-panel border border-highlight-edge bg-outcome-partial p-[30px] max-md:grid-cols-1">
             <div>
               <span className="eyebrow">Meta adaptativa</span>
-              <h2>Pronto para reforçar a memória?</h2>
-              <p>
+              <h2 className="mt-[5px] mb-2 font-title text-4xl leading-body tracking-[-0.04em]">
+                Pronto para reforçar a memória?
+              </h2>
+              <p className="mb-5 max-w-[600px] text-ink-soft">
                 A sessão mistura recordação digitada e reconhecimento, com
                 alternativas fáceis de confundir com a resposta certa.
               </p>
@@ -132,17 +153,19 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
               </Link>
             </div>
             <div
-              className="daily-number"
+              className="grid size-[132px] place-items-center rounded-full border-[10px] border-highlight bg-surface text-center max-md:row-start-1 max-md:size-[110px]"
               aria-label={`${Math.max(5, acquiring)} exercícios previstos`}
             >
               <div>
-                <strong>{Math.max(5, acquiring)}</strong>
-                <span>exercícios</span>
+                <strong className="block font-title text-5xl leading-[0.8]">
+                  {Math.max(5, acquiring)}
+                </strong>
+                <span className="text-2xs leading-body">exercícios</span>
               </div>
             </div>
           </section>
 
-          <div className="stats-grid" style={{ marginTop: 24 }}>
+          <div className="stats-grid mt-6">
             <article className="stat-card">
               <span>Em revisão</span>
               <strong>{scheduled}</strong>
@@ -163,29 +186,35 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
         </>
       )}
 
-      <section style={{ marginTop: 34 }} aria-labelledby="method-title">
+      <section className="mt-[34px]" aria-labelledby="method-title">
         <div className="section-heading">
           <h2 id="method-title">Como o Ptanki ensina</h2>
         </div>
         <div className="stats-grid">
           <article className="stat-card">
             <Brain size={24} aria-hidden="true" />
-            <strong style={{ fontSize: 22 }}>Tente antes de ver</strong>
+            <strong className="text-xl leading-body">Tente antes de ver</strong>
             <span>Recuperar a resposta fortalece mais do que reler.</span>
           </article>
           <article className="stat-card">
             <CalendarClock size={24} aria-hidden="true" />
-            <strong style={{ fontSize: 22 }}>Reveja na hora certa</strong>
+            <strong className="text-xl leading-body">
+              Reveja na hora certa
+            </strong>
             <span>O intervalo cresce conforme a lembrança se estabiliza.</span>
           </article>
           <article className="stat-card">
             <CheckCircle2 size={24} aria-hidden="true" />
-            <strong style={{ fontSize: 22 }}>Avance com evidência</strong>
+            <strong className="text-xl leading-body">
+              Avance com evidência
+            </strong>
             <span>Digitar o nome faz parte do domínio, sem atalhos.</span>
           </article>
           <article className="stat-card">
             <ArrowRight size={24} aria-hidden="true" />
-            <strong style={{ fontSize: 22 }}>Alternativas parecidas</strong>
+            <strong className="text-xl leading-body">
+              Alternativas parecidas
+            </strong>
             <span>As opções erradas são bandeiras fáceis de confundir.</span>
           </article>
         </div>
