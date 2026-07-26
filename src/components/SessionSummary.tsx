@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { sessionCard } from "@/components/ui/card";
 import { SessionPips, type PipState } from "@/components/ui/pips";
 
 interface Tally {
@@ -45,7 +46,7 @@ export function SessionSummary({
 }: SessionSummaryProps) {
   return (
     <div className="page page-narrow">
-      <section className="study-card">
+      <section className={sessionCard}>
         <span className="eyebrow">{eyebrow}</span>
         {/* min-w-0 obrigatório: o tracking negativo da escala de display num
             filho de flex estoura a largura numa Pixel 7 sem ele. */}

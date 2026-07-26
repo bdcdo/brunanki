@@ -7,6 +7,7 @@ import { AppReady } from "@/components/AppReady";
 import { EmptyState } from "@/components/SystemScreens";
 import { FlagImage } from "@/components/FlagImage";
 import { SessionSummary } from "@/components/SessionSummary";
+import { sessionCard } from "@/components/ui/card";
 import { FeedbackPanel, feedbackTone } from "@/components/ui/feedback-panel";
 import { InkBubble } from "@/components/ui/ink-bubble";
 import { OptionButton, type OptionState } from "@/components/ui/option-button";
@@ -358,9 +359,11 @@ function StudySessionReady({
     });
     return (
       <div className="page page-narrow">
-        <section className="study-card">
+        <section className={sessionCard}>
           <span className="eyebrow">Meta adaptativa</span>
-          <h1 className="study-title">Sua sessão está pronta.</h1>
+          <h1 className="m-0 font-title leading-page font-bold tracking-page">
+            Sua sessão está pronta.
+          </h1>
           <p className="muted">
             Hoje há {preview.dueCount} revisões vencidas,{" "}
             {preview.correctionCount} correções e espaço para até{" "}
@@ -422,8 +425,10 @@ function StudySessionReady({
 
   return (
     <div className="page page-narrow">
-      <div className="study-shell">
-        <div className="study-topbar">
+      <div className="grid gap-[18px]">
+        {/* Em coluna única a barra empilha: lado a lado, os pips e o "Encerrar"
+            não cabem numa Pixel 7. */}
+        <div className="flex items-center justify-between gap-5 max-md:flex-col max-md:items-start">
           <div className="min-w-0 flex-1">
             <SessionPips
               states={pipStates}
@@ -440,11 +445,11 @@ function StudySessionReady({
             grade permanecendo montada, uma região viva no cartão inteiro faria
             o leitor reler enunciado, bandeira e as quatro alternativas a cada
             passo. */}
-        <section className="study-card">
+        <section className={sessionCard}>
           {step === "teach" ? (
             <>
               <span className="eyebrow">Primeiro contato</span>
-              <h1 className="study-prompt">
+              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
                 Esta é a bandeira de {entity.displayNamePtBr}.
               </h1>
               <FlagImage
@@ -461,7 +466,7 @@ function StudySessionReady({
               <p className="muted text-center">
                 Observe a composição antes de tentar recuperar o nome.
               </p>
-              <div className="answer-actions">
+              <div className="flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
                 <button
                   className="button"
                   type="button"
@@ -477,7 +482,9 @@ function StudySessionReady({
           ) : step === "forwardChoice" ? (
             <>
               <span className="eyebrow">Reconhecimento com apoio</span>
-              <h1 className="study-prompt">De onde é esta bandeira?</h1>
+              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
+                De onde é esta bandeira?
+              </h1>
               <FlagImage
                 entity={entity}
                 // Respondida, a bandeira passa a ser nomeada: a resposta já
@@ -487,7 +494,7 @@ function StudySessionReady({
                 eager
                 size="hero"
               />
-              <div className="choice-grid">
+              <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
                 {choices.map((choice) => (
                   <OptionButton
                     key={choice.id}
@@ -504,10 +511,10 @@ function StudySessionReady({
           ) : step === "reverseChoice" ? (
             <>
               <span className="eyebrow">Associação inversa</span>
-              <h1 className="study-prompt">
+              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
                 Qual é a bandeira de {entity.displayNamePtBr}?
               </h1>
-              <div className="choice-grid">
+              <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
                 {choices.map((choice, choiceIndex) => (
                   <OptionButton
                     key={choice.id}
@@ -537,7 +544,9 @@ function StudySessionReady({
           ) : (
             <>
               <span className="eyebrow">Recordação sem pista</span>
-              <h1 className="study-prompt">Digite o nome desta entidade.</h1>
+              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
+                Digite o nome desta entidade.
+              </h1>
               <FlagImage
                 entity={entity}
                 alt={{ kind: feedback ? "named" : "unnamed" }}
@@ -547,12 +556,16 @@ function StudySessionReady({
               {/* O formulário permanece montado depois de respondido, pelo
                   mesmo motivo da grade: o que a pessoa escreveu continua à
                   vista ao lado da correção. */}
-              <form className="answer-form" onSubmit={submitForward}>
+              <form
+                className="mx-auto grid max-w-copy gap-3"
+                onSubmit={submitForward}
+              >
                 <label htmlFor="study-answer" className="sr-only">
                   Nome da entidade
                 </label>
                 <input
                   id="study-answer"
+                  className="h-[58px] w-full rounded-[13px] border-2 border-input bg-white px-4 py-[13px] text-lg text-ink"
                   value={answer}
                   onChange={(event) => setAnswer(event.target.value)}
                   placeholder="Digite o nome em português"
@@ -563,10 +576,10 @@ function StudySessionReady({
                 />
                 {!feedback && (
                   <>
-                    <span className="field-hint">
+                    <span className="text-sm text-ink-soft">
                       Acentos são opcionais; nomes ambíguos não são aceitos.
                     </span>
-                    <div className="answer-actions">
+                    <div className="flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
                       <button
                         className="button"
                         type="submit"
@@ -606,7 +619,7 @@ function StudySessionReady({
                       : "O item reaparecerá depois de outras bandeiras; a correção imediata não contará como retenção."
                 }
               />
-              <div className="answer-actions mt-[18px]">
+              <div className="mt-[18px] flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
                 <button
                   className="button"
                   type="button"

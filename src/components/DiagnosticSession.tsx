@@ -7,6 +7,7 @@ import { AppReady } from "@/components/AppReady";
 import { FlagImage } from "@/components/FlagImage";
 import { SessionSummary } from "@/components/SessionSummary";
 import { FeedbackPanel, feedbackTone } from "@/components/ui/feedback-panel";
+import { sessionCard } from "@/components/ui/card";
 import { Meter } from "@/components/ui/meter";
 import { entities, entityById } from "@/data/runtime-catalog";
 import { getNameResolver } from "@/data/name-index";
@@ -211,8 +212,10 @@ function DiagnosticSessionReady({
 
   return (
     <div className="page page-narrow">
-      <div className="study-shell">
-        <div className="study-topbar">
+      <div className="grid gap-[18px]">
+        {/* Em coluna única a barra empilha: lado a lado, o medidor e o "Pausar"
+            não cabem numa Pixel 7. */}
+        <div className="flex items-center justify-between gap-5 max-md:flex-col max-md:items-start">
           <div className="min-w-0 flex-1">
             <Meter value={measured} max={entities.length} label="Diagnóstico" />
           </div>
@@ -227,7 +230,7 @@ function DiagnosticSessionReady({
             todo relia enunciado, texto alternativo e dica a cada bandeira. O
             veredito é anunciado pelo próprio painel; a pergunta seguinte se
             anuncia sozinha, porque o foco vai para o campo. */}
-        <section className="study-card">
+        <section className={sessionCard}>
           {feedback && feedbackEntity ? (
             <>
               <FlagImage
@@ -258,7 +261,7 @@ function DiagnosticSessionReady({
                       : "Esta bandeira entrará na etapa de aprendizagem."
                 }
               />
-              <div className="answer-actions mt-[18px]">
+              <div className="mt-[18px] flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
                 <button className="button" type="button" onClick={next}>
                   {complete ? "Ver resultado" : "Próxima bandeira"}
                   <ArrowRight size={18} aria-hidden="true" />
@@ -270,19 +273,22 @@ function DiagnosticSessionReady({
               <span className="eyebrow">
                 Bandeira {measured + 1} de {entities.length}
               </span>
-              <h1 className="study-prompt">De onde é esta bandeira?</h1>
+              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
+                De onde é esta bandeira?
+              </h1>
               <FlagImage
                 entity={current}
                 alt={{ kind: "unnamed" }}
                 eager
                 size="hero"
               />
-              <form className="answer-form" onSubmit={submit}>
+              <form className="mx-auto grid max-w-copy gap-3" onSubmit={submit}>
                 <label htmlFor="country-answer" className="sr-only">
                   Nome da entidade
                 </label>
                 <input
                   id="country-answer"
+                  className="h-[58px] w-full rounded-[13px] border-2 border-input bg-white px-4 py-[13px] text-lg text-ink"
                   value={answer}
                   onChange={(event) => setAnswer(event.target.value)}
                   placeholder="Digite o nome em português"
@@ -291,10 +297,10 @@ function DiagnosticSessionReady({
                   autoFocus
                   disabled={busy}
                 />
-                <span className="field-hint">
+                <span className="text-sm text-ink-soft">
                   Pressione Enter para responder. Acentos são opcionais.
                 </span>
-                <div className="answer-actions">
+                <div className="flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
                   <button
                     className="button button-ghost"
                     type="button"

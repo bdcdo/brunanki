@@ -97,4 +97,29 @@ function CardDescription({
   );
 }
 
-export { Card, CardHeader, CardTitle, CardDescription, cardVariants };
+/**
+ * A superfície de um passo de sessão — o cartão de `/estudar` e `/diagnostico`,
+ * mais as telas de abertura, resumo e estado vazio que compartilham a moldura.
+ *
+ * É o `panel` com um piso de altura, e o piso é o ponto: sem ele o cartão muda
+ * de tamanho a cada passo — apresentação, alternativas, digitação, veredito —
+ * e a bandeira, que é o artefato a memorizar, salta de posição no meio da
+ * sessão.
+ *
+ * Em coluna única a folga horizontal aperta para 18px. O `clamp` do `padding`
+ * `lg` chega a 22px numa Pixel 7, e quatro pixels de cada lado é o que separa
+ * uma bandeira legível de uma bandeira estreita.
+ */
+const sessionCard = cn(
+  cardVariants({ variant: "panel", padding: "lg" }),
+  "min-h-[580px] max-md:min-h-[520px] max-md:px-[18px]"
+);
+
+export {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  cardVariants,
+  sessionCard
+};

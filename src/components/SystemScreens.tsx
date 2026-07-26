@@ -4,6 +4,9 @@ import { DatabaseBackup } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import { sessionCard } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+
 /**
  * Exibida enquanto o armazenamento local ainda não respondeu. É um estado
  * distinto de "sem progresso": confundir os dois faria a interface anunciar
@@ -100,12 +103,14 @@ export function EmptyState({
 }) {
   return (
     <div className="page page-narrow">
-      <section className="study-card text-center">
+      <section className={cn(sessionCard, "text-center")}>
         {icon && (
           <div className="mt-[30px] mb-3.5 flex justify-center">{icon}</div>
         )}
         {eyebrow && <span className="eyebrow">{eyebrow}</span>}
-        <h1 className="study-title">{title}</h1>
+        <h1 className="m-0 font-title leading-page font-bold tracking-page">
+          {title}
+        </h1>
         <p className="muted">{description}</p>
         {action && <div className="mt-[18px]">{action}</div>}
       </section>
