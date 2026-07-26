@@ -237,3 +237,33 @@ test("créditos informam fontes, método e as 220 imagens", async ({ page }) => 
   await expectNoHorizontalOverflow(page);
   await expectNoSeriousAccessibilityViolations(page);
 });
+
+test("a gaveta devolve o foco e não deixa links alcançáveis quando fechada", async ({
+  page,
+  isMobile
+}) => {
+  test.skip(!isMobile, "A gaveta só existe abaixo de 761px.");
+
+  // Fechada, os cinco links continuavam na ordem de tabulação, fora da tela:
+  // quem navega por teclado percorria um menu invisível antes do conteúdo.
+  const hidden = await page
+    .getByRole("navigation", { name: "Navegação principal" })
+    .isVisible();
+  expect(hidden).toBe(false);
+
+  const toggle = page.getByRole("button", { name: "Abrir menu" });
+  await toggle.click();
+  await expect(
+    page.getByRole("navigation", { name: "Navegação principal" })
+  ).toBeVisible();
+
+  await page.keyboard.press("Escape");
+  await expect(
+    page.getByRole("navigation", { name: "Navegação principal" })
+  ).toBeHidden();
+  // O foco volta para quem abriu; sem isto ele ficaria num elemento que
+  // acabou de sair da tela.
+  await expect(page.getByRole("button", { name: "Abrir menu" })).toBeFocused();
+
+  await expectNoSeriousAccessibilityViolations(page);
+});

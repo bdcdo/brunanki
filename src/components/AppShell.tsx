@@ -11,10 +11,11 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { BrandLink } from "@/components/BrandMark";
 import { SkipLink } from "@/components/SkipLink";
+import { cn } from "@/lib/utils";
 
 const navigation = [
   { href: "/", label: "Hoje", icon: Compass },
@@ -24,9 +25,50 @@ const navigation = [
   { href: "/configuracoes", label: "Ajustes", icon: Settings }
 ];
 
+/** Complemento exato do `@media (max-width: 760px)` da folha legada. */
+const DESKTOP = "(min-width: 761px)";
+
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const drawerRef = useRef<HTMLElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  /**
+   * Fecha a gaveta ao passar para o desktop.
+   *
+   * Não é cosmético. Com `inert` no conteúdo principal, alargar a janela com a
+   * gaveta aberta deixaria o app inteiro inerte no desktop — a gaveta vira
+   * coluna fixa, o botão de fechar desaparece, e não sobra nada clicável.
+   */
+  useEffect(() => {
+    const desktop = window.matchMedia(DESKTOP);
+    const sync = () => {
+      if (desktop.matches) setOpen(false);
+    };
+    sync();
+    desktop.addEventListener("change", sync);
+    return () => desktop.removeEventListener("change", sync);
+  }, []);
+
+  /** Escape fecha e devolve o foco ao botão que abriu — sem isso o foco fica
+   *  órfão num elemento que acabou de sair da tela. */
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setOpen(false);
+      toggleRef.current?.focus();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
+  /** Ao abrir, o foco entra na gaveta. Antes ele continuava no botão e a
+   *  primeira tecla Tab caía no conteúdo por baixo. */
+  useEffect(() => {
+    if (open) drawerRef.current?.focus();
+  }, [open]);
 
   return (
     <div className="app-frame">
@@ -34,6 +76,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <header className="mobile-header">
         <BrandLink />
         <button
+          ref={toggleRef}
           className="icon-button"
           type="button"
           aria-expanded={open}
@@ -45,7 +88,20 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </button>
       </header>
 
-      <aside className={open ? "sidebar sidebar-open" : "sidebar"}>
+      <aside
+        ref={drawerRef}
+        tabIndex={-1}
+        className={cn(
+          open ? "sidebar sidebar-open" : "sidebar",
+          // `invisible`, e não apenas o deslocamento que o CSS legado aplica:
+          // `visibility: hidden` tira os cinco links da ordem de tabulação e
+          // da árvore de acessibilidade. Sem isso eles continuavam
+          // alcançáveis por Tab com a gaveta fechada, fora da tela.
+          // `md:visible` garante que a coluna do desktop nunca dependa deste
+          // estado, que lá não existe.
+          !open && "invisible md:visible"
+        )}
+      >
         <BrandLink className="desktop-brand" />
         <p className="sidebar-kicker">Atlas de memória</p>
         <nav id="primary-navigation" aria-label="Navegação principal">
@@ -85,7 +141,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         />
       )}
 
-      <main id="main" className="main-content">
+      {/* O cerco de foco é `inert` no conteúdo, sem biblioteca: com o principal
+          inerte e a gaveta visível, o conjunto focável é botão + gaveta +
+          fundo. O cabeçalho fica de fora de propósito, porque o botão vira o
+          "X" e precisa continuar alcançável. */}
+      <main id="main" className="main-content" inert={open}>
         {children}
       </main>
     </div>
