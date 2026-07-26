@@ -3,6 +3,8 @@ import { execFile } from "node:child_process";
 import { readFile, mkdir, writeFile } from "node:fs/promises";
 import { basename, join } from "node:path";
 import { promisify } from "node:util";
+
+import { normalizeCountryName as normalizeAlias } from "../src/domain/text";
 import type {
   Catalog,
   FlagRevision,
@@ -299,15 +301,6 @@ async function fetchWikidataCountries(): Promise<Map<string, WikidataCountry>> {
     byIso3.set(iso3, { qid, flagTitle: `File:${fileName}` });
   }
   return byIso3;
-}
-
-function normalizeAlias(value: string): string {
-  return value
-    .normalize("NFD")
-    .replace(/\p{M}/gu, "")
-    .toLocaleLowerCase("pt-BR")
-    .replace(/[^\p{L}\p{N}]+/gu, " ")
-    .trim();
 }
 
 function uniqueAliases(

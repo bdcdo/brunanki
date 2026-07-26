@@ -5,23 +5,19 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { FlagImage } from "@/components/FlagImage";
 import { entities } from "@/data/catalog";
+import { normalizeCountryName } from "@/domain/text";
 
 export function CatalogClient() {
   const [query, setQuery] = useState("");
   const [membership, setMembership] = useState("all");
 
   const filtered = useMemo(() => {
-    const normalized = query
-      .normalize("NFD")
-      .replace(/\p{Diacritic}/gu, "")
-      .toLocaleLowerCase("pt-BR");
+    const normalized = normalizeCountryName(query);
 
     return entities.filter((entity) => {
-      const names = [entity.displayNamePtBr, ...entity.aliasesPtBr]
-        .join(" ")
-        .normalize("NFD")
-        .replace(/\p{Diacritic}/gu, "")
-        .toLocaleLowerCase("pt-BR");
+      const names = normalizeCountryName(
+        [entity.displayNamePtBr, ...entity.aliasesPtBr].join(" ")
+      );
       const organizationMatch =
         membership === "all" ||
         entity.memberships.some(

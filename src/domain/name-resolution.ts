@@ -1,5 +1,9 @@
 import type { LearningEntity } from "@/types/catalog";
 
+import { normalizeCountryName } from "./text";
+
+export { normalizeCountryName };
+
 export type NameResolution =
   | { kind: "empty" }
   | { kind: "exact"; entityId: string }
@@ -9,16 +13,6 @@ export type NameResolution =
 interface IndexedName {
   entityId: string;
   value: string;
-}
-
-export function normalizeCountryName(value: string): string {
-  return value
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
-    .toLocaleLowerCase("pt-BR")
-    .replace(/[^\p{Letter}\p{Number}]+/gu, " ")
-    .trim()
-    .replace(/\s+/g, " ");
 }
 
 export function damerauLevenshteinDistance(

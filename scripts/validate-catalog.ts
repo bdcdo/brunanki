@@ -1,6 +1,8 @@
 import { createHash } from "node:crypto";
 import { access, readFile } from "node:fs/promises";
 import { join } from "node:path";
+
+import { normalizeCountryName as normalize } from "../src/domain/text";
 import catalogJson from "../src/data/catalog.json";
 import type { Catalog } from "../src/types/catalog";
 
@@ -8,15 +10,6 @@ const catalog = catalogJson as Catalog;
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message);
-}
-
-function normalize(value: string): string {
-  return value
-    .normalize("NFD")
-    .replace(/\p{M}/gu, "")
-    .toLocaleLowerCase("pt-BR")
-    .replace(/[^\p{L}\p{N}]+/gu, " ")
-    .trim();
 }
 
 async function main(): Promise<void> {
