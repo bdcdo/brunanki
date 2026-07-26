@@ -122,7 +122,17 @@ test("o exercício inverso registra o erro e agenda a repetição imediata", asy
     .click();
 
   await expect(page.getByText("Vamos corrigir")).toBeVisible();
-  await expect(page.getByText(brazil.displayNamePtBr)).toBeVisible();
+  // `exact`, porque o enunciado "Qual é a bandeira de Brasil?" continua na
+  // tela durante o veredito — a grade não é mais desmontada — e o nome solto
+  // casaria com os dois. A permanência é a mudança, não um efeito colateral.
+  await expect(
+    page.getByText(brazil.displayNamePtBr, { exact: true })
+  ).toBeVisible();
+  // A alternativa escolhida continua montada e marcada como erro, que é o que
+  // liga o engano ao estímulo que o provocou.
+  await expect(
+    page.getByRole("button", { name: /^Opção \d+: bandeira com / }).first()
+  ).toBeVisible();
 
   // O erro insere o item de novo na fila, quatro posições à frente. O
   // denominador anunciado NÃO acompanha: as bolinhas são indexadas por item, e
