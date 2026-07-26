@@ -16,7 +16,7 @@ import {
 } from "@/components/SystemScreens";
 import { FlagImage } from "@/components/FlagImage";
 import { ProgressBar } from "@/components/ProgressBar";
-import { entities, entityById } from "@/data/catalog";
+import { entities, entityById } from "@/data/runtime-catalog";
 import { getNameResolver } from "@/data/name-index";
 import type { AttemptOutcome, DiagnosticState } from "@/types/learning";
 

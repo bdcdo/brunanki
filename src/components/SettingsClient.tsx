@@ -4,10 +4,10 @@ import { Download, RotateCcw, Upload } from "lucide-react";
 import { useRef, useState } from "react";
 import { useApp } from "@/components/AppProvider";
 import { downloadBackupFile } from "@/storage/backup-file";
-import { catalog, entityById } from "@/data/catalog";
+import { runtimeCatalog, entityById } from "@/data/runtime-catalog";
 
 const importTarget = {
-  catalogVersion: catalog.version,
+  catalogVersion: runtimeCatalog.version,
   knownEntityIds: new Set(entityById.keys())
 };
 
@@ -18,7 +18,7 @@ export function SettingsClient() {
 
   async function handleExport() {
     const storage = await import("@/storage");
-    downloadBackupFile(await storage.exportProgress(catalog.version));
+    downloadBackupFile(await storage.exportProgress(runtimeCatalog.version));
     setStatus("Backup baixado.");
   }
 
@@ -50,7 +50,7 @@ export function SettingsClient() {
     );
     if (!confirmed) return;
     const storage = await import("@/storage");
-    downloadBackupFile(await storage.exportProgress(catalog.version));
+    downloadBackupFile(await storage.exportProgress(runtimeCatalog.version));
     await storage.resetAllData();
     await refresh();
     setStatus("Progresso apagado. O backup foi baixado.");

@@ -8,7 +8,7 @@ import {
 } from "@/components/SystemScreens";
 import { ProgressBar } from "@/components/ProgressBar";
 import { summarizeProgress } from "@/domain/mastery";
-import { entities } from "@/data/catalog";
+import { entities } from "@/data/runtime-catalog";
 
 export default function ProgressPage() {
   const { state } = useApp();

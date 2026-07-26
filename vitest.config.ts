@@ -6,7 +6,12 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url))
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      // `server-only` só resolve dentro do pipeline do Next; sem este alias,
+      // qualquer teste que alcance @/data/catalog lança em jsdom.
+      "server-only": fileURLToPath(
+        new URL("./src/test/server-only-stub.ts", import.meta.url)
+      )
     }
   },
   test: {

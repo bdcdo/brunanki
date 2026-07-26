@@ -1,8 +1,17 @@
-import type { LearningEntity } from "@/types/catalog";
-
 import { normalizeCountryName } from "./text";
 
 export { normalizeCountryName };
+
+/**
+ * O mínimo para indexar uma entidade por nome. Estrutural de propósito: serve
+ * tanto ao catálogo completo quanto ao de runtime, sem que o domínio precise
+ * conhecer qual dos dois o chamador tem em mãos.
+ */
+export interface NameableEntity {
+  id: string;
+  displayNamePtBr: string;
+  aliasesPtBr: readonly string[];
+}
 
 export type NameResolution =
   | { kind: "empty" }
@@ -65,7 +74,7 @@ export function damerauLevenshteinDistance(
   return matrix[source.length][target.length];
 }
 
-function acceptedNames(entity: LearningEntity): string[] {
+function acceptedNames(entity: NameableEntity): string[] {
   return [entity.displayNamePtBr, ...entity.aliasesPtBr];
 }
 
@@ -80,7 +89,7 @@ export class CountryNameResolver {
   private readonly indexedNames: IndexedName[];
   private readonly entityIds: Set<string>;
 
-  constructor(entities: readonly LearningEntity[]) {
+  constructor(entities: readonly NameableEntity[]) {
     this.entityIds = new Set(entities.map(({ id }) => id));
     this.indexedNames = [];
 

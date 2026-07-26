@@ -4,8 +4,9 @@ import { Search } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { FlagImage } from "@/components/FlagImage";
-import { entities } from "@/data/catalog";
+import { entities } from "@/data/runtime-catalog";
 import { normalizeCountryName } from "@/domain/text";
+import type { Organization } from "@/types/catalog";
 
 export function CatalogClient() {
   const [query, setQuery] = useState("");
@@ -20,9 +21,7 @@ export function CatalogClient() {
       );
       const organizationMatch =
         membership === "all" ||
-        entity.memberships.some(
-          ({ organization }) => organization === membership
-        );
+        entity.organizations.includes(membership as Organization);
       return names.includes(normalized) && organizationMatch;
     });
   }, [membership, query]);

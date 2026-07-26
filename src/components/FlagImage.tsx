@@ -1,8 +1,7 @@
-import type { LearningEntity } from "@/types/catalog";
-import { flagByEntityId } from "@/data/catalog";
+import type { RuntimeEntity } from "@/types/runtime-catalog";
 
 interface FlagImageProps {
-  entity: LearningEntity;
+  entity: RuntimeEntity;
   revealName?: boolean;
   eager?: boolean;
   className?: string;
@@ -14,13 +13,13 @@ export function FlagImage({
   eager = false,
   className = ""
 }: FlagImageProps) {
-  const flag = flagByEntityId.get(entity.id);
-
   return (
     <span className={`flag-frame ${className}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={flag?.filePath ?? `/flags/${entity.id}.svg`}
+        // `flagPath` é obrigatório em RuntimeEntity, então não há caminho
+        // adivinhado a partir do id: uma entidade sem bandeira não chega aqui.
+        src={entity.flagPath}
         alt={
           revealName
             ? `Bandeira de ${entity.displayNamePtBr}`

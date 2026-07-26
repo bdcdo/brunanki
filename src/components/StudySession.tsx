@@ -10,7 +10,7 @@ import {
 } from "@/components/SystemScreens";
 import { FlagImage } from "@/components/FlagImage";
 import { ProgressBar } from "@/components/ProgressBar";
-import { entities, entityById } from "@/data/catalog";
+import { entities, entityById } from "@/data/runtime-catalog";
 import { getNameResolver } from "@/data/name-index";
 import { newAttemptId } from "@/domain/ids";
 import { buildDailyQueue, type DailyQueueItem } from "@/domain/daily-queue";

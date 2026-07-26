@@ -4,6 +4,9 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { FlagImage } from "@/components/FlagImage";
 import { entities, entityById, flagByEntityId } from "@/data/catalog";
+// Server Component: consome o catálogo completo para procedência e licença, e
+// o de runtime só para o que o FlagImage precisa.
+import { entityById as runtimeEntityById } from "@/data/runtime-catalog";
 
 interface DetailPageProps {
   params: Promise<{ id: string }>;
@@ -44,7 +47,12 @@ export default async function DetailPage({ params }: DetailPageProps) {
       </header>
 
       <div className="detail-grid">
-        <FlagImage entity={entity} revealName eager className="detail-flag" />
+        <FlagImage
+          entity={runtimeEntityById.get(entity.id)!}
+          revealName
+          eager
+          className="detail-flag"
+        />
         <div>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             {entity.memberships.map((membership) => (

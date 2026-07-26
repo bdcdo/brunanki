@@ -5,6 +5,7 @@ import { basename, join } from "node:path";
 import { promisify } from "node:util";
 
 import { normalizeCountryName as normalizeAlias } from "../src/domain/text";
+import { projectRuntimeCatalog } from "../src/data/project-runtime-catalog";
 import type {
   Catalog,
   FlagRevision,
@@ -693,20 +694,11 @@ async function main(): Promise<void> {
     join(dataDirectory, "catalog.json"),
     `${JSON.stringify(catalog, null, 2)}\n`
   );
+  // O catálogo de runtime é derivado do completo por projectRuntimeCatalog;
+  // regerar aqui evita que os dois artefatos saiam de sincronia.
   await writeFile(
-    join(dataDirectory, "credits.json"),
-    `${JSON.stringify(
-      flagRevisions.map((revision) => ({
-        entityId: revision.entityId,
-        displayNamePtBr: entities.find(({ id }) => id === revision.entityId)
-          ?.displayNamePtBr,
-        fileTitle: revision.commons.fileTitle,
-        descriptionUrl: revision.commons.descriptionUrl,
-        license: revision.license
-      })),
-      null,
-      2
-    )}\n`
+    join(dataDirectory, "runtime-catalog.json"),
+    `${JSON.stringify(projectRuntimeCatalog(catalog), null, 2)}\n`
   );
   console.log(
     `Catalog refreshed: ${entities.length} entities, ${flagRevisions.length} local flags.`

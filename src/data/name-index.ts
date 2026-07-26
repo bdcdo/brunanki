@@ -1,6 +1,6 @@
 import { CountryNameResolver } from "@/domain/name-resolution";
 
-import { entities } from "./catalog";
+import { entities } from "./runtime-catalog";
 
 let resolver: CountryNameResolver | undefined;
 

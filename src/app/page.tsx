@@ -8,7 +8,7 @@ import {
   LoadingScreen,
   StorageUnavailableScreen
 } from "@/components/SystemScreens";
-import { entities } from "@/data/catalog";
+import { entities } from "@/data/runtime-catalog";
 
 export default function HomePage() {
   const { state } = useApp();
