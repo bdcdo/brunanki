@@ -30,17 +30,7 @@ pnpm test:e2e
 
 ## Hospedagem
 
-O app roda no [Fly.io](https://fly.io) na região `gru`, como imagem Docker do build standalone do Next.js. A configuração fica em `fly.toml` e `Dockerfile`.
-
-A máquina opera sob demanda: `min_machines_running = 0` com `auto_stop_machines = "suspend"` faz o Fly suspendê-la quando não há tráfego e retomá-la na requisição seguinte, restaurando um snapshot de memória em vez de dar boot completo. Parada, a máquina custa apenas o armazenamento do sistema de arquivos raiz.
-
-```bash
-fly deploy --ha=false   # --ha=false mantém uma única máquina
-fly status
-fly logs
-```
-
-Os cabeçalhos de cache e de segurança são definidos em `headers()` no `next.config.ts`.
+O deploy no Fly.io foi desativado.
 
 ## Catálogo e licenças
 
