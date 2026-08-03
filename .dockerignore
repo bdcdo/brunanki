@@ -14,5 +14,4 @@ e2e
 .DS_Store
 Dockerfile
 .dockerignore
-fly.toml
 README.md
