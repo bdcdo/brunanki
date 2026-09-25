@@ -3,9 +3,8 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 /**
- * Absorve `.button` e as quatro variantes que o CSS legado declara por classe
- * adicional: `.button-secondary`, `.button-coral`, `.button-ghost` e
- * `.icon-button`.
+ * O botão do app, em cinco variantes: a ação principal, o convite dentro de
+ * painel de tinta, a secundária, a destrutiva e a fantasma.
  *
  * `min-h`, e não `h`: rótulos como "Agora, lembre sem alternativas" quebram em
  * duas linhas em tela estreita, e uma altura fixa os cortaria.
@@ -36,24 +35,16 @@ const buttonVariants = cva(
           "bg-highlight text-ink hover:bg-highlight-hover hover:-translate-y-px",
         secondary:
           "border-line bg-surface text-ink hover:border-ink-soft hover:bg-white hover:-translate-y-px",
-        // Exclusiva da ação irreversível. O CSS legado usa `.button-coral`
-        // tanto em "Começar diagnóstico" quanto em "Apagar progresso", ou
-        // seja, dá ao convite de entrada e à destruição de dados o mesmo
-        // tratamento visual. Aqui os dois se separam: os convites são
-        // `default`, e o coral fica reservado ao que não tem volta.
+        // Exclusiva da ação irreversível. O convite de entrada e a destruição
+        // de dados não podem ter o mesmo tratamento visual: a cor de alerta
+        // fica reservada ao que não tem volta.
         destructive:
           "bg-alert text-alert-on hover:bg-alert-hover hover:-translate-y-px",
         ghost: "bg-transparent text-ink hover:bg-accent"
       },
       size: {
         default: "",
-        sm: "min-h-10 px-3.5 py-2 text-sm",
-        // O quadrado do menu: alvo de toque de 44px, borda de 1px e raio
-        // menor. É a única variante que abre mão da moldura de 2px, porque
-        // não alterna entre ter e não ter borda visível. O `rounded-[10px]`
-        // estava descrito no comentário e faltava na receita — escrita antes
-        // de existir chamador que a exercitasse.
-        icon: "size-11 min-h-0 gap-0 rounded-[10px] border border-line bg-surface p-0 text-ink"
+        sm: "min-h-10 px-3.5 py-2 text-sm"
       }
     },
     defaultVariants: { variant: "default", size: "default" }

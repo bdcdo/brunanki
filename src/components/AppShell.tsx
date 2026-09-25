@@ -60,7 +60,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   href={href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "flex items-center no-underline",
+                    // O anel fica para dentro: para fora ele seria cortado na
+                    // borda da viewport, no topo das abas e na base da barra.
+                    "flex items-center no-underline focus-visible:outline-offset-[-5px]",
                     // No desktop a aba ativa se marca pelo traço inferior e
                     // pelo peso, não só pela cor: as duas pistas sobrevivem a
                     // quem não distingue o verde da tinta.

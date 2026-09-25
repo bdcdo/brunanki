@@ -12,10 +12,15 @@ const bodyFont = Atkinson_Hyperlegible({
 // Condensada e de peso alto, a face dos números de figurinha e dos títulos.
 // O eixo `opsz` vai junto porque sem ele o navegador usa o desenho de texto
 // corrido, de traço fino, também nos títulos de 70px.
+// O next/font não tem métricas da Big Shoulders para ajustar a fonte
+// substituta, e sem uma condensada no lugar o título salta de largura quando
+// a fonte carrega. As da lista têm proporção parecida onde existem.
 const displayFont = Big_Shoulders({
   subsets: ["latin"],
   variable: "--font-display",
-  axes: ["opsz"]
+  axes: ["opsz"],
+  adjustFontFallback: false,
+  fallback: ["Arial Narrow", "Roboto Condensed", "sans-serif"]
 });
 
 export const metadata: Metadata = {
@@ -42,6 +47,10 @@ export const metadata: Metadata = {
  */
 export const viewport: Viewport = {
   colorScheme: "light",
+  // Sem `cover`, o navegador do iPhone reserva a área segura por conta própria
+  // e `env(safe-area-inset-bottom)` vale zero, o que anularia o respiro que a
+  // barra inferior do AppShell dá ao indicador de início do sistema.
+  viewportFit: "cover",
   themeColor: "#e9edf3"
 };
 
