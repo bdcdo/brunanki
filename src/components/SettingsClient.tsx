@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, RotateCcw, Upload } from "lucide-react";
+import { Download, HardDrive, RotateCcw, Upload } from "lucide-react";
 import { useRef, useState } from "react";
 import { useApp } from "@/components/AppProvider";
 import { ContinentPicker } from "@/components/ContinentPicker";
@@ -68,6 +68,30 @@ export function SettingsClient() {
       />
 
       <div className="grid gap-[18px]">
+        {/* O único lugar onde a pessoa descobre que o progresso não viaja
+            sozinho. Sem ele, abrir o app no celular depois de uma semana no
+            PC mostra um álbum vazio, e a primeira leitura é que tudo se
+            perdeu. */}
+        <section
+          aria-labelledby="storage-title"
+          className="flex gap-4 rounded-card border-2 border-dashed border-input bg-surface p-6 max-md:flex-col"
+        >
+          <HardDrive size={28} aria-hidden="true" className="shrink-0" />
+          <div>
+            <h2
+              id="storage-title"
+              className="mt-0 mb-[5px] text-xl leading-body"
+            >
+              Seu progresso mora neste navegador
+            </h2>
+            <p className="m-0 max-w-[640px] text-ink-soft">
+              Não há conta nem servidor. Outro aparelho, outro navegador ou uma
+              janela anônima começam do zero, e limpar os dados do site apaga o
+              progresso. Para continuar em outro aparelho, baixe o backup aqui e
+              restaure lá.
+            </p>
+          </div>
+        </section>
         <section className="rounded-card border border-line bg-surface p-6">
           <ContinentPicker />
         </section>

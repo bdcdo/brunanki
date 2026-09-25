@@ -164,6 +164,10 @@ test("ajustes expõem backup, restauração e reset com status acessível", asyn
   await page.goto("/configuracoes");
 
   await expect(page.getByRole("heading", { name: "Ajustes" })).toBeVisible();
+  // Sem conta, o progresso não viaja sozinho, e a tela diz isso.
+  await expect(
+    page.getByRole("heading", { name: "Seu progresso mora neste navegador" })
+  ).toBeVisible();
   await expect(
     page.getByRole("button", { name: /Baixar backup/ })
   ).toBeVisible();
