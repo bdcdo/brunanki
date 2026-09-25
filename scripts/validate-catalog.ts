@@ -239,8 +239,9 @@ async function main(): Promise<void> {
     for (const pair of curriculum.pairs) {
       const [first, second] = pair.entityIds;
       assert(
-        continentById.has(first) && continentById.has(second),
-        `Par com entidade fora do catálogo: ${first}, ${second}`
+        continentById.get(first) === continent &&
+          continentById.get(second) === continent,
+        `Par com entidade fora do catálogo ou de outro continente: ${first}, ${second}`
       );
       const key = pairStateId(first, second);
       assert(!keys.has(key), `Par repetido no currículo: ${key}`);
@@ -253,6 +254,27 @@ async function main(): Promise<void> {
         `Par sem os dois traços: ${key}`
       );
       curatedPairs += 1;
+    }
+    // As exceções também se conferem: uma justificativa vazia, uma exceção
+    // de outro continente ou uma que repete um par curado passariam a valer
+    // como decisão sem ser uma.
+    for (const exception of curriculum.notConfusable) {
+      const [first, second] = exception.entityIds;
+      const key = pairStateId(first, second);
+      assert(
+        continentById.get(first) === continent &&
+          continentById.get(second) === continent,
+        `Exceção com entidade fora do catálogo ou de outro continente: ${key}`
+      );
+      assert(
+        !keys.has(key),
+        `Exceção repete um par curado ou outra exceção: ${key}`
+      );
+      keys.add(key);
+      assert(
+        exception.justification.trim() !== "",
+        `Exceção sem justificativa: ${key}`
+      );
     }
     const undecided = undecidedConfusablePairs(
       continent,

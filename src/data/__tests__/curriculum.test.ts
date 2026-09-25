@@ -36,12 +36,12 @@ describe.each(
     expect([...curriculum.order].sort()).toEqual(expected);
   });
 
-  it("dá a cada par duas entidades do catálogo, razão e os dois traços", () => {
+  it("dá a cada par duas entidades do continente, razão e os dois traços", () => {
     const keys = new Set<string>();
     for (const pair of curriculum.pairs) {
       const [first, second] = pair.entityIds;
-      expect(continentOf.has(first)).toBe(true);
-      expect(continentOf.has(second)).toBe(true);
+      expect(continentOf.get(first)).toBe(continent);
+      expect(continentOf.get(second)).toBe(continent);
       const key = pairStateId(first, second);
       expect(keys.has(key)).toBe(false);
       keys.add(key);
@@ -110,6 +110,30 @@ describe("introductionOrder", () => {
     expect(introductionOrder("americas", "fra")).toEqual(
       introductionOrder("americas")
     );
+  });
+});
+
+describe.each(
+  CONTINENT_IDS.filter((id) => CURRICULUM[id] !== undefined).map((id) => [
+    id,
+    CURRICULUM[id]!
+  ])
+)("exceções de %s", (continent, curriculum) => {
+  it("são do continente, justificadas e não repetem par curado", () => {
+    const curated = new Set(
+      curriculum.pairs.map(({ entityIds: [a, b] }) => pairStateId(a, b))
+    );
+    const seen = new Set<string>();
+    for (const exception of curriculum.notConfusable) {
+      const [first, second] = exception.entityIds;
+      const key = pairStateId(first, second);
+      expect(continentOf.get(first)).toBe(continent);
+      expect(continentOf.get(second)).toBe(continent);
+      expect(curated.has(key)).toBe(false);
+      expect(seen.has(key)).toBe(false);
+      seen.add(key);
+      expect(exception.justification.trim()).not.toBe("");
+    }
   });
 });
 
