@@ -13,6 +13,7 @@ import { AppReady } from "@/components/AppReady";
 import { EmptyState } from "@/components/SystemScreens";
 import { FlagImage } from "@/components/FlagImage";
 import { SessionSummary } from "@/components/SessionSummary";
+import { StickerMoment } from "@/components/ui/sticker-moment";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { sessionCard } from "@/components/ui/card";
 import { Eyebrow } from "@/components/ui/eyebrow";
@@ -43,6 +44,7 @@ import {
 import { awardedXpFor, xpTotals } from "@/domain/xp";
 import { buildChoiceRound } from "@/domain/distractors";
 import { describePalette } from "@/domain/palette";
+import { isEntityMastered } from "@/domain/mastery";
 import { mulberry32 } from "@/domain/shuffle";
 import {
   dueCount,
@@ -188,6 +190,8 @@ function StudySessionReady({
   });
   const step = position.step;
   const [graded, setGraded] = useState<GradedAttempt>();
+  // A resposta que acabou de fazer a bandeira passar a dominada.
+  const [justMastered, setJustMastered] = useState(false);
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState<StudyFeedback>();
   // Guardado para marcar em lugar a alternativa escolhida. Antes a grade era
@@ -244,6 +248,7 @@ function StudySessionReady({
     setSelectedId(undefined);
     setAnswer("");
     setGraded(undefined);
+    setJustMastered(false);
     startedAt.current = clockNow();
     firstInputAt.current = undefined;
   }
@@ -357,6 +362,16 @@ function StudySessionReady({
       // escolha do nome não move o FSRS, e o agendador a devolve intacta.
       const nextState = scheduleAttempt(current, attempt, settings, attempts);
       await storage.saveReview(nextState, attempt);
+      // Quem decide o domínio é o domínio: a sessão só compara o antes e o
+      // depois desta resposta, para mostrar a figurinha uma vez.
+      const after = [
+        ...skills.filter((state) => state.id !== nextState.id),
+        nextState
+      ];
+      setJustMastered(
+        !isEntityMastered(item.entityId, skills) &&
+          isEntityMastered(item.entityId, after)
+      );
       setGraded({
         original: attempt,
         stateBefore: current,
@@ -830,6 +845,7 @@ function StudySessionReady({
                   CURRICULUM[entity.continent]?.pairs ?? []
                 )}
               />
+              {justMastered && <StickerMoment entity={entity} />}
               <div className="mt-[18px] flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
                 {/* Só depois de acerto em escolha: é o único caso em que o
                     acerto pode ter vindo da sorte, uma em quatro. */}

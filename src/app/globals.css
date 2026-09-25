@@ -373,6 +373,27 @@
      o tempo do app, sem repetir duration-* em cada call site. */
   --default-transition-duration: 160ms;
   --default-transition-timing-function: ease;
+
+  /* O único movimento que não responde a um toque: a figurinha que desce,
+     passa um pouco do ponto e assenta, como papel pressionado com o polegar.
+     Usada só com `motion-safe:`, para que com movimento reduzido a classe nem
+     seja aplicada, em vez de apenas encurtada pela regra geral da base. */
+  --animate-sticker-press: sticker-press 650ms cubic-bezier(0.2, 0.9, 0.3, 1.25)
+    both;
+
+  @keyframes sticker-press {
+    0% {
+      transform: translateY(-22px) rotate(-9deg) scale(1.08);
+      box-shadow: 0 16px 24px rgb(27 36 71 / 22%);
+    }
+    70% {
+      transform: translateY(0) rotate(-1deg) scale(0.97);
+    }
+    100% {
+      transform: rotate(-2deg);
+      box-shadow: var(--shadow-sticker);
+    }
+  }
 }
 
 /* ---------------------------------------------------------------------------

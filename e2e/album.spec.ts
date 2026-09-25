@@ -75,3 +75,61 @@ test("o álbum mostra as figurinhas coladas, em andamento e vazias", async ({
   await expectNoHorizontalOverflow(page);
   await expectNoSeriousAccessibilityViolations(page);
 });
+
+/** A uma resposta do domínio: o reconhecimento já firme, e a recordação
+ *  vencida, estável, com um dia de sucesso só. */
+function oneAnswerFromMastery(entityId: string): DueSkillState[] {
+  const [recognition] = masteredStates(entityId).filter(
+    ({ skill }) => skill === "nameToFlagRecognition"
+  );
+  return [
+    recognition!,
+    {
+      entityId,
+      skill: "flagToNameRecall",
+      dueAt: new Date(Date.now() - dayMs),
+      stability: 40,
+      successDays: [
+        new Date(Date.now() - 10 * dayMs).toISOString().slice(0, 10)
+      ]
+    }
+  ];
+}
+
+async function answerTheMasteringReview(page: import("@playwright/test").Page) {
+  await seedProgress(page, { dueStates: oneAnswerFromMastery(first!.id) });
+  await page.goto("/estudar");
+  await page.getByRole("button", { name: /Começar sessão/ }).click();
+  const field = page.getByRole("textbox", { name: "Nome da entidade" });
+  await field.fill(first!.displayNamePtBr);
+  await field.press("Enter");
+  await expect(page.getByText("Figurinha colada")).toBeVisible();
+  return page.getByTestId("sticker");
+}
+
+test("a resposta que domina a bandeira cola a figurinha", async ({ page }) => {
+  const sticker = await answerTheMasteringReview(page);
+  await expect(
+    page.getByText(`${first!.displayNamePtBr} entrou para o álbum.`)
+  ).toBeVisible();
+  expect(
+    await sticker.evaluate((element) => getComputedStyle(element).animationName)
+  ).toBe("sticker-press");
+  await expectNoSeriousAccessibilityViolations(page);
+
+  // No álbum, a mesma bandeira aparece colada.
+  await page.goto("/catalogo");
+  await expect(
+    page.getByRole("link", { name: `1, ${first!.displayNamePtBr}, colada` })
+  ).toBeVisible();
+});
+
+test("com movimento reduzido, a figurinha aparece sem animação", async ({
+  page
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const sticker = await answerTheMasteringReview(page);
+  expect(
+    await sticker.evaluate((element) => getComputedStyle(element).animationName)
+  ).toBe("none");
+});
