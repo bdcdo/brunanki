@@ -45,9 +45,10 @@ function isCleanFirstTry(attempt: ReviewAttempt): boolean {
  *
  * É relativo à pessoa e ao tipo de exercício, e não um número fixo para
  * todos: quem escolhe entre quatro bandeiras e quem digita um nome têm tempos
- * incomparáveis. Como o progresso mora no navegador, o histórico já é o de um
- * aparelho só, e o teclado do celular não se mistura com o do PC. O percentil
- * é o quartil mais rápido dos acertos limpos de primeira da pessoa.
+ * incomparáveis. Como o progresso mora no navegador, o histórico costuma ser o
+ * de um aparelho só; a exceção é o backup restaurado em outro aparelho, que
+ * leva junto os tempos do primeiro até as amostras novas os diluírem. O
+ * percentil é o quartil mais rápido dos acertos limpos de primeira da pessoa.
  */
 export function fastThresholdMs(
   exercise: ExerciseKind,
@@ -80,10 +81,9 @@ function earlierThan(
   history: readonly ReviewAttempt[]
 ): ReviewAttempt[] {
   const time = new Date(attempt.createdAt).getTime();
-  return history.filter(
-    (other) =>
-      other.id !== attempt.id && new Date(other.createdAt).getTime() < time
-  );
+  // O tempo estritamente anterior já exclui a própria tentativa, que tem o
+  // mesmo instante que ela.
+  return history.filter((other) => new Date(other.createdAt).getTime() < time);
 }
 
 /**
@@ -112,11 +112,13 @@ export function ratingForAttempt(
       if (attempt.isImmediateCorrection || attempt.firstInputMs === undefined) {
         return Rating.Good;
       }
-      // Na primeira vez que o cartão é visto, só a digitação promove. Um
-      // acerto em escolha pode ser sorte, uma em quatro, e Easy num cartão
-      // novo pula a aprendizagem: duas respostas assim bastariam para a
-      // estabilidade do domínio. É o motivo pelo qual o primeiro contato é
-      // digitado, e não escolhido.
+      // Na primeira vez que o cartão é visto, só a digitação promove. Quem
+      // digita o nome certo de uma bandeira que ninguém lhe mostrou já o
+      // sabia, e Easy poupa essa pessoa de aprender o que sabe. Um acerto em
+      // escolha pode ser sorte, uma em quatro, e Easy num cartão novo pula a
+      // aprendizagem: duas respostas assim bastariam para a estabilidade do
+      // domínio. A digitação que vem logo depois de um ensino precisa chegar
+      // aqui como correção imediata, senão o nome recém-mostrado viraria Easy.
       if (context.firstReview && attempt.exercise !== "flagToNameInput") {
         return Rating.Good;
       }
