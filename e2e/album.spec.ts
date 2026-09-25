@@ -4,6 +4,7 @@ import {
   expectNoHorizontalOverflow,
   expectNoSeriousAccessibilityViolations
 } from "./helpers";
+import { MASTERY_STABILITY_DAYS } from "../src/domain/mastery";
 import { americasIntroduction, seedProgress, type DueSkillState } from "./seed";
 
 const [first, second, third] = americasIntroduction;
@@ -22,7 +23,7 @@ function masteredStates(entityId: string): DueSkillState[] {
       entityId,
       skill,
       dueAt: inAMonth,
-      stability: 60,
+      stability: MASTERY_STABILITY_DAYS * 2,
       successDays
     })
   );
@@ -88,7 +89,7 @@ function oneAnswerFromMastery(entityId: string): DueSkillState[] {
       entityId,
       skill: "flagToNameRecall",
       dueAt: new Date(Date.now() - dayMs),
-      stability: 40,
+      stability: MASTERY_STABILITY_DAYS + 10,
       successDays: [
         new Date(Date.now() - 10 * dayMs).toISOString().slice(0, 10)
       ]
@@ -110,7 +111,7 @@ async function answerTheMasteringReview(page: import("@playwright/test").Page) {
 test("a resposta que domina a bandeira cola a figurinha", async ({ page }) => {
   const sticker = await answerTheMasteringReview(page);
   await expect(
-    page.getByText(`${first!.displayNamePtBr} entrou para o álbum.`)
+    page.getByText(`${first!.displayNamePtBr} ficou dominada.`)
   ).toBeVisible();
   expect(
     await sticker.evaluate((element) => getComputedStyle(element).animationName)
@@ -132,4 +133,59 @@ test("com movimento reduzido, a figurinha aparece sem animação", async ({
   expect(
     await sticker.evaluate((element) => getComputedStyle(element).animationName)
   ).toBe("none");
+});
+
+test("Foi chute que desfaz o domínio descola a figurinha", async ({ page }) => {
+  // O inverso do caso acima: a recordação firme e o reconhecimento a uma
+  // resposta do domínio, que é a escolha em que Foi chute aparece.
+  const [recall] = masteredStates(first!.id).filter(
+    ({ skill }) => skill === "flagToNameRecall"
+  );
+  await seedProgress(page, {
+    dueStates: [
+      recall!,
+      {
+        entityId: first!.id,
+        skill: "nameToFlagRecognition",
+        dueAt: new Date(Date.now() - dayMs),
+        stability: MASTERY_STABILITY_DAYS + 10,
+        successDays: [
+          new Date(Date.now() - 10 * dayMs).toISOString().slice(0, 10)
+        ]
+      }
+    ]
+  });
+  await page.goto("/estudar");
+  await page.getByRole("button", { name: /Começar sessão/ }).click();
+  await page
+    .getByRole("button", { name: /^Opção \d+: bandeira com / })
+    .filter({ has: page.locator(`img[src="${first!.flagPath}"]`) })
+    .click();
+  await expect(page.getByText("Figurinha colada")).toBeVisible();
+
+  const guess = page.getByRole("button", { name: "Foi chute" });
+  await guess.click();
+  await expect(guess).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByText("Figurinha colada")).toHaveCount(0);
+
+  await guess.click();
+  await expect(page.getByText("Figurinha colada")).toBeVisible();
+});
+
+test("revisar uma bandeira já dominada não cola a figurinha de novo", async ({
+  page
+}) => {
+  const states = masteredStates(first!.id).map((state) =>
+    state.skill === "flagToNameRecall"
+      ? { ...state, dueAt: new Date(Date.now() - dayMs) }
+      : state
+  );
+  await seedProgress(page, { dueStates: states });
+  await page.goto("/estudar");
+  await page.getByRole("button", { name: /Começar sessão/ }).click();
+  const field = page.getByRole("textbox", { name: "Nome da entidade" });
+  await field.fill(first!.displayNamePtBr);
+  await field.press("Enter");
+  await expect(page.getByText("Acerto de primeira")).toBeVisible();
+  await expect(page.getByText("Figurinha colada")).toHaveCount(0);
 });

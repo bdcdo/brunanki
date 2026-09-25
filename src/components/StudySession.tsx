@@ -84,6 +84,8 @@ interface GradedAttempt {
   stateBefore: SkillState;
   historyBefore: readonly ReviewAttempt[];
   guessed: boolean;
+  /** Se a bandeira já estava dominada antes desta resposta. */
+  masteredBefore: boolean;
 }
 
 const CHOICE_COUNT = 4;
@@ -190,8 +192,6 @@ function StudySessionReady({
   });
   const step = position.step;
   const [graded, setGraded] = useState<GradedAttempt>();
-  // A resposta que acabou de fazer a bandeira passar a dominada.
-  const [justMastered, setJustMastered] = useState(false);
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState<StudyFeedback>();
   // Guardado para marcar em lugar a alternativa escolhida. Antes a grade era
@@ -248,7 +248,6 @@ function StudySessionReady({
     setSelectedId(undefined);
     setAnswer("");
     setGraded(undefined);
-    setJustMastered(false);
     startedAt.current = clockNow();
     firstInputAt.current = undefined;
   }
@@ -362,21 +361,12 @@ function StudySessionReady({
       // escolha do nome não move o FSRS, e o agendador a devolve intacta.
       const nextState = scheduleAttempt(current, attempt, settings, attempts);
       await storage.saveReview(nextState, attempt);
-      // Quem decide o domínio é o domínio: a sessão só compara o antes e o
-      // depois desta resposta, para mostrar a figurinha uma vez.
-      const after = [
-        ...skills.filter((state) => state.id !== nextState.id),
-        nextState
-      ];
-      setJustMastered(
-        !isEntityMastered(item.entityId, skills) &&
-          isEntityMastered(item.entityId, after)
-      );
       setGraded({
         original: attempt,
         stateBefore: current,
         historyBefore: attempts,
-        guessed: false
+        guessed: false,
+        masteredBefore: isEntityMastered(item.entityId, skills)
       });
       // A escolha do nome não move o FSRS, porque não é recuperação, e fica
       // fora do resumo.
@@ -844,8 +834,17 @@ function StudySessionReady({
                     : undefined,
                   CURRICULUM[entity.continent]?.pairs ?? []
                 )}
-              />
-              {justMastered && <StickerMoment entity={entity} />}
+              >
+                {/* Derivada a cada renderização, e não guardada: "Foi chute"
+                    reescreve a resposta e pode desfazer o domínio, e a
+                    figurinha precisa sumir junto. Quem decide é o domínio; a
+                    sessão só compara o antes desta resposta com o agora. */}
+                {graded &&
+                  !graded.masteredBefore &&
+                  isEntityMastered(entity.id, skills) && (
+                    <StickerMoment entity={entity} />
+                  )}
+              </FeedbackPanel>
               <div className="mt-[18px] flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
                 {/* Só depois de acerto em escolha: é o único caso em que o
                     acerto pode ter vindo da sorte, uma em quatro. */}
