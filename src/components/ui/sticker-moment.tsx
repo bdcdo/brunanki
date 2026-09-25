@@ -23,7 +23,9 @@ export function StickerMoment({ entity }: { entity: RuntimeEntity }) {
         <strong className="block font-title text-2xl leading-name font-extrabold tracking-title">
           Figurinha colada
         </strong>
-        {entity.displayNamePtBr} ficou dominada.
+        {/* Sem concordância com o nome: "Estados Unidos", "Bahamas" e
+            "Peru" pediriam gêneros e números diferentes. */}
+        Bandeira dominada: {entity.displayNamePtBr}.
       </span>
     </span>
   );

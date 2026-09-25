@@ -111,7 +111,7 @@ async function answerTheMasteringReview(page: import("@playwright/test").Page) {
 test("a resposta que domina a bandeira cola a figurinha", async ({ page }) => {
   const sticker = await answerTheMasteringReview(page);
   await expect(
-    page.getByText(`${first!.displayNamePtBr} ficou dominada.`)
+    page.getByText(`Bandeira dominada: ${first!.displayNamePtBr}.`)
   ).toBeVisible();
   expect(
     await sticker.evaluate((element) => getComputedStyle(element).animationName)
