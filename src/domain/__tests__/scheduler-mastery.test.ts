@@ -8,11 +8,7 @@ import type {
 } from "@/types/learning";
 
 import { getMasteryStatus } from "../mastery";
-import {
-  createSkillState,
-  ratingForOutcome,
-  scheduleAttempt
-} from "../scheduler";
+import { createSkillState, scheduleAttempt } from "../scheduler";
 import { awardedXpFor } from "../xp";
 
 function attempt(
@@ -40,11 +36,93 @@ const saoPaulo: SchedulingPreferences = {
 };
 
 describe("scheduleAttempt", () => {
-  it("mapeia resultados para Again, Hard e Good", () => {
-    expect(ratingForOutcome("incorrect")).toBe(1);
-    expect(ratingForOutcome("skipped")).toBe(1);
-    expect(ratingForOutcome("partial")).toBe(2);
-    expect(ratingForOutcome("correct")).toBe(3);
+  const start = new Date("2026-07-24T12:00:00Z");
+  function timed(
+    exercise: ReviewAttempt["exercise"],
+    firstInputMs: number,
+    createdAt = "2026-07-24T12:00:00.000Z"
+  ): ReviewAttempt {
+    return {
+      ...attempt("correct", createdAt),
+      id: `${exercise}-${firstInputMs}-${createdAt}`,
+      skill:
+        exercise === "nameToFlagChoice"
+          ? "nameToFlagRecognition"
+          : "flagToNameRecall",
+      exercise,
+      firstInputMs
+    };
+  }
+
+  it("leva a digitação rápida de uma bandeira nova direto à revisão", () => {
+    // Easy num cartão novo pula a aprendizagem; Good passa por ela.
+    const initial = createSkillState("brasil", "flagToNameRecall", start);
+    expect(
+      scheduleAttempt(initial, timed("flagToNameInput", 300), saoPaulo).card
+        ?.state
+    ).toBe(State.Review);
+    expect(
+      scheduleAttempt(initial, timed("flagToNameInput", 60_000), saoPaulo).card
+        ?.state
+    ).toBe(State.Learning);
+  });
+
+  it("não promove a escolha rápida no primeiro contato do cartão", () => {
+    const initial = createSkillState("brasil", "nameToFlagRecognition", start);
+    expect(
+      scheduleAttempt(initial, timed("nameToFlagChoice", 300), saoPaulo).card
+        ?.state
+    ).toBe(State.Learning);
+  });
+
+  it("usa o histórico da pessoa para decidir o que é rápido", () => {
+    // Dez digitações anteriores em 200 ms fazem de 300 ms uma resposta lenta
+    // para esta pessoa, embora fosse rápida pelo limiar fixo.
+    const initial = createSkillState("brasil", "flagToNameRecall", start);
+    const history = Array.from({ length: 10 }, (_, index) =>
+      timed(
+        "flagToNameInput",
+        200,
+        `2026-07-${String(10 + index).padStart(2, "0")}T12:00:00.000Z`
+      )
+    );
+    expect(
+      scheduleAttempt(initial, timed("flagToNameInput", 300), saoPaulo, history)
+        .card?.state
+    ).toBe(State.Learning);
+  });
+
+  it("não deixa a escolha na direção bandeira→nome contar para a recordação", () => {
+    // Acertar entre quatro nomes não prova que a pessoa sabe escrever o nome:
+    // nem o cartão nem os dias de sucesso mudam.
+    const initial = createSkillState(
+      "brasil",
+      "flagToNameRecall",
+      new Date("2026-07-24T12:00:00Z")
+    );
+    const choice: ReviewAttempt = {
+      ...attempt("correct", "2026-07-24T12:00:00.000Z"),
+      exercise: "flagToNameChoice"
+    };
+    expect(scheduleAttempt(initial, choice, saoPaulo)).toBe(initial);
+  });
+
+  it("não conta chute declarado como dia de sucesso", () => {
+    const initial = createSkillState(
+      "brasil",
+      "nameToFlagRecognition",
+      new Date("2026-07-24T12:00:00Z")
+    );
+    const guessed: ReviewAttempt = {
+      ...attempt("correct", "2026-07-24T12:00:00.000Z"),
+      skill: "nameToFlagRecognition",
+      exercise: "nameToFlagChoice",
+      guessed: true,
+      awardedXp: 0
+    };
+    expect(
+      scheduleAttempt(initial, guessed, saoPaulo).distinctSuccessDays
+    ).toEqual([]);
   });
 
   it("cria e atualiza um cartão independente por entidade e habilidade", () => {
