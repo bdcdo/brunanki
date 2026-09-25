@@ -301,3 +301,30 @@ test("digitar o nome de outro país explica a diferença entre os dois", async (
   ).toBeVisible();
   await expectNoSeriousAccessibilityViolations(page);
 });
+
+test.describe("celular estreito", () => {
+  // O Pixel 7 do projeto mobile tem 412 px, e a bandeira em tamanho de
+  // destaque, com altura fixa no celular, tinha largura mínima maior do que a
+  // coluna de 360 px: a sessão transbordava para o lado sem que o gate de
+  // overflow do projeto notasse.
+  test.use({ viewport: { width: 360, height: 780 } });
+
+  test("os passos da sessão cabem sem rolagem lateral", async ({ page }) => {
+    await page.goto("/estudar");
+    await page.getByRole("button", { name: /Começar sessão/ }).click();
+    await expect(
+      page.getByRole("heading", { name: "De onde é esta bandeira?" })
+    ).toBeVisible();
+    await expectNoHorizontalOverflow(page);
+
+    await page.getByRole("button", { name: /Não sei/ }).click();
+    await expectNoHorizontalOverflow(page);
+
+    await page.getByRole("button", { name: /Praticar/ }).click();
+    await page
+      .getByRole("button", { name: firstNew.displayNamePtBr, exact: true })
+      .click();
+    await expect(page.getByRole("button", { name: "Foi chute" })).toBeVisible();
+    await expectNoHorizontalOverflow(page);
+  });
+});

@@ -528,7 +528,7 @@ function StudySessionReady({
 
   return (
     <div className="mx-auto w-full max-w-narrow">
-      <div className="grid gap-[18px]">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-[18px]">
         {/* Em coluna única a barra empilha: lado a lado, os pips e o "Encerrar"
             não cabem numa Pixel 7. */}
         <div className="flex items-center justify-between gap-5 max-md:flex-col max-md:items-start">
