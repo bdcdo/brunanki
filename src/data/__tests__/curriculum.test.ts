@@ -3,12 +3,18 @@ import { describe, expect, it } from "vitest";
 import { pairStateId } from "@/domain/pairs";
 import { CONTINENT_IDS } from "@/types/geography";
 
+import { buildDailyQueue } from "@/domain/daily-queue";
+
 import {
   CURRICULUM,
   introductionOrder,
-  isContinentAvailable
+  isContinentAvailable,
+  undecidedConfusablePairs
 } from "../curriculum";
 import runtimeJson from "../runtime-catalog.json";
+import type { RuntimeCatalog } from "@/types/runtime-catalog";
+
+const entities = (runtimeJson as RuntimeCatalog).entities;
 
 const continentOf = new Map(
   runtimeJson.entities.map(({ id, continent }) => [id, continent])
@@ -45,6 +51,50 @@ describe.each(
         expect(trait.trim()).not.toBe("");
       }
     }
+  });
+});
+
+describe("pares confundíveis sem decisão", () => {
+  it("não sobra par acima do corte sem curadoria nem exceção", () => {
+    expect(undecidedConfusablePairs("americas", entities)).toEqual([]);
+  });
+
+  it("aponta um par curado que for retirado", () => {
+    // A lista só é útil se acusa: sem o par Haiti e República Dominicana,
+    // ele reaparece como indeciso.
+    const americas = CURRICULUM.americas!;
+    const semHaiti = {
+      ...americas,
+      pairs: americas.pairs.filter(
+        ({ entityIds }) => !entityIds.includes("hti")
+      )
+    };
+    const original = CURRICULUM.americas;
+    (CURRICULUM as Record<string, unknown>).americas = semHaiti;
+    try {
+      expect(undecidedConfusablePairs("americas", entities)).toContain(
+        "dom|hti"
+      );
+    } finally {
+      (CURRICULUM as Record<string, unknown>).americas = original;
+    }
+  });
+});
+
+describe("fila de um perfil zerado", () => {
+  it("começa pelas primeiras bandeiras da ordem sugerida", () => {
+    const queue = buildDailyQueue({
+      entityOrder: introductionOrder("americas"),
+      states: [],
+      baseNewLimit: 5
+    });
+    expect(queue.items.map(({ entityId }) => entityId)).toEqual([
+      "usa",
+      "can",
+      "bra",
+      "arg",
+      "chl"
+    ]);
   });
 });
 

@@ -1,3 +1,5 @@
+import { confusability, type DistractorCandidate } from "@/domain/distractors";
+import { pairStateId } from "@/domain/pairs";
 import type { ContinentId } from "@/types/geography";
 
 /**
@@ -28,7 +30,27 @@ export interface CuratedPair {
 export interface ContinentCurriculum {
   readonly order: readonly string[];
   readonly pairs: readonly CuratedPair[];
+  /**
+   * Pares que a heurística de paleta considera confundíveis e que a curadoria
+   * decidiu não tratar como par, com a justificativa. Ficam escritos para que
+   * a decisão seja revisável, e para que um par novo acima do corte não passe
+   * sem que alguém decida sobre ele.
+   */
+  readonly notConfusable: readonly {
+    readonly entityIds: readonly [string, string];
+    readonly justification: string;
+  }[];
 }
+
+/**
+ * O corte da heurística a partir do qual um par precisa de decisão editorial:
+ * ou vira par curado, ou entra em `notConfusable` com justificativa.
+ *
+ * Medido nas Américas em 24/09/2026: abaixo de 0,84 ficam os pares que só
+ * dividem cores soltas, como Chile e Venezuela; a partir dele, os que dividem
+ * paleta e sub-região, que é onde a confusão real acontece.
+ */
+export const CONFUSABILITY_REVIEW_THRESHOLD = 0.84;
 
 export const CURRICULUM: Readonly<
   Partial<Record<ContinentId, ContinentCurriculum>>
@@ -162,12 +184,74 @@ export const CURRICULUM: Readonly<
         }
       },
       {
+        entityIds: ["dom", "hti"],
+        reason:
+          "Azul, vermelho e branco com o brasão no centro, e as duas dividem a mesma ilha.",
+        traits: {
+          dom: "a República Dominicana tem uma cruz branca que divide quatro quadrantes",
+          hti: "o Haiti tem só duas faixas horizontais, azul sobre vermelho, com o brasão num retângulo branco"
+        }
+      },
+      {
+        entityIds: ["gtm", "slv"],
+        reason: "Azul, branco e azul, com um brasão no centro da faixa branca.",
+        traits: {
+          gtm: "a Guatemala tem as faixas na vertical, em azul-celeste",
+          slv: "El Salvador tem as faixas na horizontal"
+        }
+      },
+      {
+        entityIds: ["gtm", "nic"],
+        reason: "Azul, branco e azul, com um brasão no centro da faixa branca.",
+        traits: {
+          gtm: "a Guatemala tem as faixas na vertical",
+          nic: "a Nicarágua tem as faixas na horizontal"
+        }
+      },
+      {
         entityIds: ["can", "per"],
         reason: "Vermelho, branco e vermelho em faixas verticais.",
         traits: {
           can: "o Canadá tem a faixa branca mais larga, com a folha de bordo",
           per: "o Peru tem as três faixas iguais e nada no centro"
         }
+      }
+    ],
+    notConfusable: [
+      {
+        entityIds: ["cri", "pan"],
+        justification:
+          "Mesmas cores, disposição sem nada em comum: faixas horizontais na Costa Rica, quadrantes com estrelas no Panamá."
+      },
+      {
+        entityIds: ["dom", "kna"],
+        justification:
+          "Cores parecidas, desenho oposto: cruz com brasão contra faixa diagonal com estrelas."
+      },
+      {
+        entityIds: ["gtm", "mex"],
+        justification:
+          "Os dois têm três faixas verticais com brasão, mas o México é verde e vermelho, e a Guatemala, azul-celeste."
+      },
+      {
+        entityIds: ["blz", "mex"],
+        justification:
+          "Belize tem fundo azul-escuro inteiro com listras vermelhas; o México tem três faixas verdes, brancas e vermelhas."
+      },
+      {
+        entityIds: ["blz", "gtm"],
+        justification:
+          "Belize tem fundo azul-escuro inteiro com o brasão num disco branco; a Guatemala tem faixas verticais azul-celeste e branca."
+      },
+      {
+        entityIds: ["mex", "slv"],
+        justification:
+          "O México é verde, branco e vermelho em faixas verticais; El Salvador é azul e branco em faixas horizontais."
+      },
+      {
+        entityIds: ["blz", "slv"],
+        justification:
+          "Belize tem fundo azul-escuro inteiro com listras vermelhas; El Salvador tem três faixas horizontais, sem vermelho."
       }
     ]
   }
@@ -195,4 +279,37 @@ export function introductionOrder(
   const order = CURRICULUM[continent]?.order ?? [];
   if (priority === undefined || !order.includes(priority)) return order;
   return [priority, ...order.filter((id) => id !== priority)];
+}
+
+/**
+ * Os pares do continente que a heurística considera confundíveis e sobre os
+ * quais a curadoria ainda não decidiu: nem par curado, nem exceção
+ * justificada. O validador falha se a lista não estiver vazia, e é isso que
+ * impede um refresh de paletas de criar uma confusão que ninguém olhou.
+ */
+export function undecidedConfusablePairs(
+  continent: ContinentId,
+  entities: readonly DistractorCandidate[]
+): string[] {
+  const curriculum = CURRICULUM[continent];
+  if (!curriculum) return [];
+  const decided = new Set(
+    [...curriculum.pairs, ...curriculum.notConfusable].map(
+      ({ entityIds: [first, second] }) => pairStateId(first, second)
+    )
+  );
+  const members = entities.filter((entity) => entity.continent === continent);
+  const undecided: string[] = [];
+  for (const [index, left] of members.entries()) {
+    for (const right of members.slice(index + 1)) {
+      const key = pairStateId(left.id, right.id);
+      if (
+        !decided.has(key) &&
+        confusability(left, right) >= CONFUSABILITY_REVIEW_THRESHOLD
+      ) {
+        undecided.push(key);
+      }
+    }
+  }
+  return undecided.sort();
 }

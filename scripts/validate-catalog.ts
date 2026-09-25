@@ -6,7 +6,9 @@ import { normalizeCountryName as normalize } from "../src/domain/text";
 import catalogJson from "../src/data/catalog.json";
 import m49Json from "./sources/m49.json";
 import { geographyFor, indexM49, type M49Snapshot } from "../src/data/m49";
-import { CURRICULUM } from "../src/data/curriculum";
+import runtimeCatalogJson from "../src/data/runtime-catalog.json";
+import type { RuntimeCatalog } from "../src/types/runtime-catalog";
+import { CURRICULUM, undecidedConfusablePairs } from "../src/data/curriculum";
 import { pairStateId } from "../src/domain/pairs";
 import { CONTINENT_IDS } from "../src/types/geography";
 import type { Catalog } from "../src/types/catalog";
@@ -252,6 +254,14 @@ async function main(): Promise<void> {
       );
       curatedPairs += 1;
     }
+    const undecided = undecidedConfusablePairs(
+      continent,
+      (runtimeCatalogJson as RuntimeCatalog).entities
+    );
+    assert(
+      undecided.length === 0,
+      `Pares confundíveis pela heurística sem decisão no currículo de ${continent}: ${undecided.join(", ")}. Cure o par ou registre a exceção em notConfusable.`
+    );
   }
 
   console.log(
