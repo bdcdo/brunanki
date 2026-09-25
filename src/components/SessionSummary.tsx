@@ -22,10 +22,9 @@ interface SessionSummaryProps {
 /**
  * O fecho de uma sessão, com um número.
  *
- * As duas telas de resumo que existiam eram cartões estáticos sem nenhum: a de
- * estudo dizia "Bom trabalho de recuperação" e a de diagnóstico dizia que o
- * ponto de partida estava pronto, e nem uma nem outra dizia *o quê*. Os dados
- * já estavam nos componentes; faltava mostrá-los.
+ * A tela de resumo que existia era um cartão estático sem nenhum: dizia "Bom
+ * trabalho de recuperação" e não dizia *o quê*. Os dados já estavam no
+ * componente; faltava mostrá-los.
  *
  * O acabamento herdado é a escala de display aplicada a um número — mas a um
  * recapitulativo, não a um pôster. Fica de fora a gramática de jogo: nada de

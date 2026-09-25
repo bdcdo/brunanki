@@ -29,11 +29,14 @@ export interface SeedOptions {
   dueStates?: readonly DueSkillState[];
 }
 
-const ENTITY_IDS = runtimeCatalog.entities.map(({ id }) => id);
-
 /** Entidades na ordem do catálogo, que é a ordem em que `buildDailyQueue`
  *  escolhe os itens novos — o que torna a primeira questão previsível. */
 export const catalogEntities = runtimeCatalog.entities;
+
+/** As novidades vêm só do continente ativo, e o padrão são as Américas. */
+export const americasEntities = catalogEntities.filter(
+  ({ continent }) => continent === "americas"
+);
 
 function isoDay(date: Date): string {
   return date.toISOString().slice(0, 10);
@@ -45,12 +48,16 @@ function buildBackup({ dueStates = [] }: SeedOptions) {
 
   return {
     format: "brunanki-export",
-    schemaVersion: 2,
+    schemaVersion: 3,
     // Derivada do catálogo, e não fixada: se o conjunto de entidades mudar de
     // tamanho, a semeadura acompanha em vez de quebrar.
     catalogVersion: runtimeCatalog.version,
     exportedAt: now.toISOString(),
-    settings: { desiredRetention: 0.9, timeZone: "America/Sao_Paulo" },
+    settings: {
+      desiredRetention: 0.9,
+      timeZone: "America/Sao_Paulo",
+      activeContinent: "americas"
+    },
     skillStates: dueStates.map(({ entityId, skill, dueAt }) => ({
       // O schema exige esta composição exata; um id livre é rejeitado com
       // "ID do estado não corresponde à entidade e habilidade".
@@ -80,20 +87,12 @@ function buildBackup({ dueStates = [] }: SeedOptions) {
     // recentes e reduz o limite de itens novos quando o acerto cai: seria uma
     // segunda variável mexendo no tamanho da fila.
     attempts: [],
-    diagnosticState: {
-      entityOrder: ENTITY_IDS,
-      // `completedAt` é a única coisa que libera /estudar, mas o schema o
-      // recusa quando o índice não alcançou o fim da ordem. Os dois campos
-      // precisam concordar.
-      currentIndex: ENTITY_IDS.length,
-      startedAt: lastReview.toISOString(),
-      completedAt: now.toISOString()
-    }
+    pairStates: []
   };
 }
 
 /**
- * Deixa o navegador com um diagnóstico concluído e os estados pedidos.
+ * Deixa o navegador com os estados pedidos.
  *
  * A ordem observável importa: a importação primeiro baixa um backup de
  * segurança do estado atual e só então pergunta a confirmação. Sem consumir o
@@ -101,7 +100,7 @@ function buildBackup({ dueStates = [] }: SeedOptions) {
  * padrão e a importação devolve `false` — em silêncio, porque a tela apenas
  * informa que a restauração foi cancelada.
  */
-export async function seedCompletedDiagnostic(
+export async function seedProgress(
   page: Page,
   options: SeedOptions = {}
 ): Promise<void> {

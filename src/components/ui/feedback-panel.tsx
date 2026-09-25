@@ -8,9 +8,9 @@ import type { AttemptOutcome } from "@/types/learning";
 export type FeedbackTone = "correct" | "partial" | "incorrect";
 
 /**
- * O mapeamento que as duas sessões já faziam, cada uma na sua cópia: acerto,
- * parcial, e todo o resto como incorreto — de modo que "pulado", que só o
- * diagnóstico produz, cai no mesmo tom de um erro.
+ * Acerto, parcial, e todo o resto como incorreto: "pulado", que é o desfecho
+ * de "Não sei", cai no mesmo tom de um erro, porque na prática é uma bandeira
+ * que a pessoa não reconhece.
  */
 export function feedbackTone(outcome: AttemptOutcome): FeedbackTone {
   switch (outcome) {

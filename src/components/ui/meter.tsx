@@ -18,7 +18,7 @@ interface MeterProps {
 }
 
 /**
- * Progresso para conjuntos grandes: o atlas inteiro, o diagnóstico inteiro.
+ * Progresso para conjuntos grandes, como o álbum inteiro.
  *
  * Continua sendo `role="progressbar"` e não o `<meter>` nativo — aquele
  * elemento tem semântica de medição (nível de tanque), não de avanço, e a

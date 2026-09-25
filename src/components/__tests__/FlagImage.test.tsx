@@ -55,9 +55,9 @@ describe("FlagImage", () => {
   it("preserva o quadro em todos os tamanhos", () => {
     // O quadro é o que dá altura à imagem: ela é `position: absolute`, então
     // sem ele não sobra filho em fluxo e a caixa desaba para os 2px da borda.
-    // Foi assim que as três bandeiras da abertura do diagnóstico sumiram. Um
-    // tamanho que substituísse a classe em vez de somar a ela traria o defeito
-    // de volta, agora em três lugares.
+    // Foi assim que bandeiras de exemplo já sumiram. Um tamanho que
+    // substituísse a classe em vez de somar a ela traria o defeito de volta,
+    // agora em três lugares.
     for (const size of ["hero", "card", "fill"] as const) {
       const { container } = render(
         <FlagImage entity={irlanda} alt={{ kind: "decorative" }} size={size} />

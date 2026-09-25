@@ -15,8 +15,8 @@ import type { LearningSnapshot } from "@/types/learning";
  *
  * Antes, "carregando", "sem progresso" e "não foi possível ler" colapsavam no
  * mesmo valor: um `catch` silencioso devolvia listas vazias, e quem estivesse
- * em janela anônima via a tela de primeiro acesso — com o convite a refazer o
- * diagnóstico sobre dados que continuavam lá. Como union discriminado, o
+ * em janela anônima via a tela de primeiro acesso, com o convite a recomeçar
+ * sobre dados que continuavam lá. Como union discriminado, o
  * compilador exige que cada tela trate os três.
  */
 export type AppState =

@@ -13,6 +13,7 @@ import {
   ratingForOutcome,
   scheduleAttempt
 } from "../scheduler";
+import { awardedXpFor } from "../xp";
 
 function attempt(
   outcome: ReviewAttempt["outcome"],
@@ -26,6 +27,8 @@ function attempt(
     exercise: "flagToNameInput",
     outcome,
     isImmediateCorrection,
+    mode: "scheduled",
+    awardedXp: awardedXpFor({ outcome, isImmediateCorrection }),
     responseMs: 800,
     createdAt
   };

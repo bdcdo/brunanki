@@ -3,19 +3,21 @@ import { z } from "zod";
 import type { Card } from "ts-fsrs";
 import type {
   AppSettings,
-  DiagnosticState,
+  PairState,
   ReviewAttempt,
   SkillState
 } from "@/types/learning";
+import { CONTINENT_IDS } from "@/types/geography";
+import { pairStateId } from "@/domain/pairs";
 
 import {
-  defaultAppSettings,
+  completeAppSettings,
   SINGLETON_KEY,
   type BrunankiDatabase
 } from "./database";
 
 export const EXPORT_FORMAT = "brunanki-export" as const;
-export const EXPORT_SCHEMA_VERSION = 2 as const;
+export const EXPORT_SCHEMA_VERSION = 3 as const;
 
 const isoDateTimeSchema = z.string().datetime({ offset: true });
 
@@ -33,7 +35,6 @@ const catalogVersionSchema = z
 const skillSchema = z.enum(["flagToNameRecall", "nameToFlagRecognition"]);
 const outcomeSchema = z.enum(["correct", "partial", "incorrect", "skipped"]);
 const exerciseSchema = z.enum([
-  "diagnostic",
   "flagToNameChoice",
   "nameToFlagChoice",
   "flagToNameInput"
@@ -97,48 +98,45 @@ const reviewAttemptSchema = z.object({
   exercise: exerciseSchema,
   outcome: outcomeSchema,
   isImmediateCorrection: z.boolean(),
+  mode: z.enum(["scheduled", "free"]),
   responseMs: z.number().int().nonnegative(),
+  firstInputMs: z.number().int().nonnegative().optional(),
+  guessed: z.boolean().optional(),
+  awardedXp: z.union([z.literal(0), z.literal(1)]),
   answer: z.string().optional(),
   createdAt: isoDateTimeSchema
 });
 
-const diagnosticStateSchema = z
+const serializedPairStateSchema = z
   .object({
-    entityOrder: z.array(z.string().min(1)).min(1),
-    currentIndex: z.number().int().nonnegative(),
-    startedAt: isoDateTimeSchema,
-    completedAt: isoDateTimeSchema.optional()
+    id: z.string().min(1),
+    entityIds: z.tuple([z.string().min(1), z.string().min(1)]),
+    card: serializedCardSchema.optional(),
+    distinctSuccessDays: z.array(z.string().date()),
+    lastOutcome: outcomeSchema.optional(),
+    updatedAt: isoDateTimeSchema
   })
-  .superRefine((state, context) => {
-    if (new Set(state.entityOrder).size !== state.entityOrder.length) {
-      context.addIssue({
-        code: "custom",
-        path: ["entityOrder"],
-        message: "O diagnóstico contém entidades duplicadas"
-      });
-    }
-    if (state.currentIndex > state.entityOrder.length) {
-      context.addIssue({
-        code: "custom",
-        path: ["currentIndex"],
-        message: "O índice do diagnóstico excede o total de entidades"
-      });
-    }
+  .superRefine((pair, context) => {
+    // Chave fora da forma canônica gravaria o mesmo par em dois cartões,
+    // e a discriminação treinada numa ordem não contaria na outra.
+    const [first, second] = pair.entityIds;
     if (
-      state.completedAt !== undefined &&
-      state.currentIndex !== state.entityOrder.length
+      first === second ||
+      pair.id !== pairStateId(first, second) ||
+      first > second
     ) {
       context.addIssue({
         code: "custom",
-        path: ["completedAt"],
-        message: "Um diagnóstico incompleto não pode ter data de conclusão"
+        path: ["id"],
+        message: "O par não está na forma canônica"
       });
     }
   });
 
 const settingsSchema = z.object({
   desiredRetention: z.number().positive().max(1),
-  timeZone: z.string().min(1)
+  timeZone: z.string().min(1),
+  activeContinent: z.enum(CONTINENT_IDS)
 });
 
 function uniqueIds<T extends { id: string }>(
@@ -155,18 +153,18 @@ function uniqueIds<T extends { id: string }>(
   }
 }
 
-const exportV2Schema = z.object({
+const exportV3Schema = z.object({
   format: z.literal(EXPORT_FORMAT),
-  schemaVersion: z.literal(2),
+  schemaVersion: z.literal(EXPORT_SCHEMA_VERSION),
   catalogVersion: catalogVersionSchema,
   exportedAt: isoDateTimeSchema,
   settings: settingsSchema,
   skillStates: z.array(serializedSkillStateSchema),
   attempts: z.array(reviewAttemptSchema),
-  diagnosticState: diagnosticStateSchema.optional()
+  pairStates: z.array(serializedPairStateSchema)
 });
 
-type ExportV2 = z.infer<typeof exportV2Schema>;
+type ExportV3 = z.infer<typeof exportV3Schema>;
 
 /**
  * Há uma única forma legível, e nenhum caminho de migração.
@@ -181,15 +179,16 @@ type ExportV2 = z.infer<typeof exportV2Schema>;
  * que um backup de versão futura falhe de forma explícita em vez de ser
  * aceito como atual e perder campos em silêncio.
  */
-export const brunankiExportSchema = exportV2Schema.superRefine(
+export const brunankiExportSchema = exportV3Schema.superRefine(
   (data, context) => {
     uniqueIds(data.skillStates, "skillStates", context);
     uniqueIds(data.attempts, "attempts", context);
+    uniqueIds(data.pairStates, "pairStates", context);
   }
 );
 
 export type SerializedCard = z.infer<typeof serializedCardSchema>;
-export type BrunankiExport = ExportV2;
+export type BrunankiExport = ExportV3;
 
 export interface PreparedImport {
   data: BrunankiExport;
@@ -208,6 +207,22 @@ export interface PreparedImport {
 export interface ImportTarget {
   readonly catalogVersion: string;
   readonly knownEntityIds: ReadonlySet<string>;
+}
+
+/**
+ * Backup do próprio Brunanki, mas de antes do piloto.
+ *
+ * Existe para que a recusa diga o motivo. O esquema literal já recusaria o
+ * arquivo, mas com um erro de validação que fala de `schemaVersion` e não diz
+ * a quem restaura que o progresso antigo não volta, nem por quê.
+ */
+export class IncompatibleBackupError extends Error {
+  constructor(readonly schemaVersion: number) {
+    super(
+      `Este backup é de uma versão anterior do Brunanki (formato ${schemaVersion}) e não pode ser restaurado. A versão atual recomeçou o progresso do zero, porque as tentativas antigas não registravam o que ela precisa medir.`
+    );
+    this.name = "IncompatibleBackupError";
+  }
 }
 
 /** Backup que referencia entidades ausentes do catálogo atual. */
@@ -256,18 +271,47 @@ function serializeSkillState(
   };
 }
 
+function deserializeCard(card: SerializedCard | undefined): Card | undefined {
+  return card
+    ? ({
+        ...card,
+        due: new Date(card.due),
+        ...(card.last_review ? { last_review: new Date(card.last_review) } : {})
+      } as Card)
+    : undefined;
+}
+
+function serializePairState(
+  pair: PairState
+): BrunankiExport["pairStates"][number] {
+  return {
+    id: pair.id,
+    entityIds: [pair.entityIds[0], pair.entityIds[1]],
+    distinctSuccessDays: pair.distinctSuccessDays,
+    updatedAt: pair.updatedAt,
+    ...(pair.lastOutcome ? { lastOutcome: pair.lastOutcome } : {}),
+    ...(pair.card ? { card: serializeCard(pair.card) } : {})
+  };
+}
+
+function deserializePairState(
+  pair: BrunankiExport["pairStates"][number]
+): PairState {
+  const card = deserializeCard(pair.card);
+  return {
+    id: pair.id,
+    entityIds: pair.entityIds,
+    distinctSuccessDays: pair.distinctSuccessDays,
+    updatedAt: pair.updatedAt,
+    ...(pair.lastOutcome ? { lastOutcome: pair.lastOutcome } : {}),
+    ...(card ? { card } : {})
+  };
+}
+
 function deserializeSkillState(
   state: BrunankiExport["skillStates"][number]
 ): SkillState {
-  const card: Card | undefined = state.card
-    ? ({
-        ...state.card,
-        due: new Date(state.card.due),
-        ...(state.card.last_review
-          ? { last_review: new Date(state.card.last_review) }
-          : {})
-      } as Card)
-    : undefined;
+  const card = deserializeCard(state.card);
   return {
     id: state.id,
     entityId: state.entityId,
@@ -285,15 +329,15 @@ export async function createExport(
   catalogVersion: string,
   now: Date = new Date()
 ): Promise<BrunankiExport> {
-  const [skillStates, attempts, diagnosticRecord, settingsRecord] =
-    await Promise.all([
+  const [skillStates, attempts, pairStates, settingsRecord] = await Promise.all(
+    [
       db.skillStates.toArray(),
       db.attempts.toArray(),
-      db.diagnostics.get(SINGLETON_KEY),
+      db.pairStates.toArray(),
       db.appSettings.get(SINGLETON_KEY)
-    ]);
-  const settings: AppSettings =
-    settingsRecord?.settings ?? defaultAppSettings();
+    ]
+  );
+  const settings: AppSettings = completeAppSettings(settingsRecord?.settings);
 
   return brunankiExportSchema.parse({
     format: EXPORT_FORMAT,
@@ -303,7 +347,7 @@ export async function createExport(
     settings,
     skillStates: skillStates.map(serializeSkillState),
     attempts,
-    diagnosticState: diagnosticRecord?.state
+    pairStates: pairStates.map(serializePairState)
   });
 }
 
@@ -322,6 +366,17 @@ export function parseExportJson(json: string): BrunankiExport {
   } catch {
     throw new Error("O arquivo não contém JSON válido");
   }
+  if (
+    typeof raw === "object" &&
+    raw !== null &&
+    "format" in raw &&
+    raw.format === EXPORT_FORMAT &&
+    "schemaVersion" in raw &&
+    typeof raw.schemaVersion === "number" &&
+    raw.schemaVersion < EXPORT_SCHEMA_VERSION
+  ) {
+    throw new IncompatibleBackupError(raw.schemaVersion);
+  }
   return brunankiExportSchema.parse(raw);
 }
 
@@ -336,7 +391,9 @@ export async function prepareImport(
   const referenced = new Set<string>();
   for (const state of data.skillStates) referenced.add(state.entityId);
   for (const attempt of data.attempts) referenced.add(attempt.entityId);
-  for (const id of data.diagnosticState?.entityOrder ?? []) referenced.add(id);
+  for (const pair of data.pairStates) {
+    for (const id of pair.entityIds) referenced.add(id);
+  }
 
   const unknown = [...referenced]
     .filter((id) => !target.knownEntityIds.has(id))
@@ -357,28 +414,24 @@ export async function applyPreparedImport(
 ): Promise<void> {
   const data = brunankiExportSchema.parse(prepared.data);
   const states = data.skillStates.map(deserializeSkillState);
+  const pairs = data.pairStates.map(deserializePairState);
 
   await db.transaction(
     "rw",
     db.skillStates,
     db.attempts,
-    db.diagnostics,
+    db.pairStates,
     db.appSettings,
     async () => {
       await Promise.all([
         db.skillStates.clear(),
         db.attempts.clear(),
-        db.diagnostics.clear(),
+        db.pairStates.clear(),
         db.appSettings.clear()
       ]);
       await db.skillStates.bulkAdd(states);
       await db.attempts.bulkAdd(data.attempts as ReviewAttempt[]);
-      if (data.diagnosticState) {
-        await db.diagnostics.add({
-          id: SINGLETON_KEY,
-          state: data.diagnosticState as DiagnosticState
-        });
-      }
+      await db.pairStates.bulkAdd(pairs);
       await db.appSettings.add({
         id: SINGLETON_KEY,
         settings: data.settings

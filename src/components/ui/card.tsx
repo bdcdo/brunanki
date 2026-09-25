@@ -104,8 +104,8 @@ function CardDescription({
 }
 
 /**
- * A superfície de um passo de sessão — o cartão de `/estudar` e `/diagnostico`,
- * mais as telas de abertura, resumo e estado vazio que compartilham a moldura.
+ * A superfície de um passo de sessão, o cartão de `/estudar`, mais as telas de
+ * abertura, resumo e estado vazio que compartilham a moldura.
  *
  * É o `panel` com um piso de altura, e o piso é o ponto: sem ele o cartão muda
  * de tamanho a cada passo — apresentação, alternativas, digitação, veredito —

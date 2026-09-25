@@ -1,28 +1,9 @@
 "use client";
 
-import type {
-  AttemptOutcome,
-  DiagnosticState,
-  LearningSnapshot,
-  ReviewAttempt,
-  SkillState
-} from "@/types/learning";
+import type { LearningSnapshot } from "@/types/learning";
 
 import {
-  advanceDiagnostic,
-  currentDiagnosticEntity,
-  startDiagnostic
-} from "@/domain/diagnostic";
-import { newAttemptId } from "@/domain/ids";
-import {
-  createSkillState,
-  scheduleAttempt,
-  skillStateId
-} from "@/domain/scheduler";
-
-import {
-  defaultAppSettings,
-  getAppSettings,
+  completeAppSettings,
   SINGLETON_KEY,
   getDatabase,
   type BrunankiDatabase
@@ -41,126 +22,20 @@ export type { LearningSnapshot };
 export async function readLearningSnapshot(
   db: BrunankiDatabase = getDatabase()
 ): Promise<LearningSnapshot> {
-  const [skillStates, attempts, diagnosticRecord, settingsRecord] =
-    await Promise.all([
+  const [skillStates, attempts, pairStates, settingsRecord] = await Promise.all(
+    [
       db.skillStates.toArray(),
       db.attempts.orderBy("createdAt").toArray(),
-      db.diagnostics.get(SINGLETON_KEY),
+      db.pairStates.toArray(),
       db.appSettings.get(SINGLETON_KEY)
-    ]);
+    ]
+  );
   return {
     skills: skillStates,
     attempts,
-    ...(diagnosticRecord ? { diagnostic: diagnosticRecord.state } : {}),
-    settings: settingsRecord?.settings ?? defaultAppSettings()
+    pairs: pairStates,
+    settings: completeAppSettings(settingsRecord?.settings)
   };
-}
-
-function sameEntitySet(
-  existingOrder: readonly string[],
-  requestedIds: readonly string[]
-): boolean {
-  return (
-    existingOrder.length === requestedIds.length &&
-    new Set(existingOrder).size === existingOrder.length &&
-    requestedIds.every((id) => existingOrder.includes(id))
-  );
-}
-
-export async function startOrResumeDiagnostic(
-  entityIds: readonly string[],
-  db: BrunankiDatabase = getDatabase(),
-  now: Date = new Date()
-): Promise<DiagnosticState> {
-  const existing = (await db.diagnostics.get(SINGLETON_KEY))?.state;
-  if (existing) {
-    if (!sameEntitySet(existing.entityOrder, entityIds)) {
-      throw new Error(
-        "O diagnóstico salvo pertence a outra versão do catálogo; redefina-o antes de iniciar"
-      );
-    }
-    return existing;
-  }
-
-  const state = startDiagnostic(entityIds, now);
-  await db.diagnostics.add({ id: SINGLETON_KEY, state });
-  return state;
-}
-
-export interface SaveDiagnosticAnswerInput {
-  entityId: string;
-  outcome: AttemptOutcome;
-  responseMs: number;
-  answer?: string;
-  createdAt?: Date;
-  attemptId?: string;
-}
-
-export interface SavedDiagnosticAnswer {
-  skillState: SkillState;
-  attempt: ReviewAttempt;
-  diagnosticState: DiagnosticState;
-}
-
-export async function saveDiagnosticAnswer(
-  input: SaveDiagnosticAnswerInput,
-  db: BrunankiDatabase = getDatabase()
-): Promise<SavedDiagnosticAnswer> {
-  const preferences = await getAppSettings(db);
-  if (!Number.isInteger(input.responseMs) || input.responseMs < 0) {
-    throw new RangeError("responseMs deve ser um inteiro não negativo");
-  }
-  const diagnosticRecord = await db.diagnostics.get(SINGLETON_KEY);
-  if (!diagnosticRecord) {
-    throw new Error("Não há diagnóstico em andamento");
-  }
-  const expectedEntityId = currentDiagnosticEntity(diagnosticRecord.state);
-  if (!expectedEntityId) {
-    throw new Error("O diagnóstico já foi concluído");
-  }
-  if (expectedEntityId !== input.entityId) {
-    throw new Error(
-      `A resposta é de ${input.entityId}, mas o item atual é ${expectedEntityId}`
-    );
-  }
-
-  const createdAt = input.createdAt ?? new Date();
-  const attempt: ReviewAttempt = {
-    id: input.attemptId ?? newAttemptId(),
-    entityId: input.entityId,
-    skill: "flagToNameRecall",
-    exercise: "diagnostic",
-    outcome: input.outcome,
-    // O diagnóstico é a primeira passada por cada bandeira: nunca é a
-    // repetição imediata que se segue a um erro.
-    isImmediateCorrection: false,
-    responseMs: input.responseMs,
-    ...(input.answer !== undefined ? { answer: input.answer } : {}),
-    createdAt: createdAt.toISOString()
-  };
-  const id = skillStateId(input.entityId, "flagToNameRecall");
-  const currentState =
-    (await db.skillStates.get(id)) ??
-    createSkillState(input.entityId, "flagToNameRecall", createdAt);
-  const skillState = scheduleAttempt(currentState, attempt, preferences);
-  const diagnosticState = advanceDiagnostic(diagnosticRecord.state, createdAt);
-
-  await db.transaction(
-    "rw",
-    db.skillStates,
-    db.attempts,
-    db.diagnostics,
-    async () => {
-      await db.skillStates.put(skillState);
-      await db.attempts.add(attempt);
-      await db.diagnostics.put({
-        id: SINGLETON_KEY,
-        state: diagnosticState
-      });
-    }
-  );
-
-  return { skillState, attempt, diagnosticState };
 }
 
 export async function resetAllData(
@@ -170,13 +45,13 @@ export async function resetAllData(
     "rw",
     db.skillStates,
     db.attempts,
-    db.diagnostics,
+    db.pairStates,
     db.appSettings,
     async () => {
       await Promise.all([
         db.skillStates.clear(),
         db.attempts.clear(),
-        db.diagnostics.clear(),
+        db.pairStates.clear(),
         db.appSettings.clear()
       ]);
     }

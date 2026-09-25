@@ -4,7 +4,7 @@ import {
   expectNoHorizontalOverflow,
   expectNoSeriousAccessibilityViolations
 } from "./helpers";
-import { catalogEntities, seedCompletedDiagnostic } from "./seed";
+import { americasEntities, catalogEntities, seedProgress } from "./seed";
 
 /**
  * A sessão de estudo, com estado semeado.
@@ -16,9 +16,9 @@ import { catalogEntities, seedCompletedDiagnostic } from "./seed";
  * quase todo o CSS novo da migração visual.
  */
 
-/** A fila de itens novos segue a ordem do catálogo, então a primeira questão
- *  de uma sessão sem estado é sempre esta entidade. */
-const firstNew = catalogEntities[0];
+/** A fila de itens novos segue a ordem do catálogo dentro do continente
+ *  ativo, então a primeira questão de uma sessão sem estado é sempre esta. */
+const firstNew = americasEntities[0]!;
 const brazil = catalogEntities.find(({ id }) => id === "bra")!;
 
 /** `buildDailyQueue` recebe `baseNewLimit: 5`, e sem nenhuma tentativa recente
@@ -32,7 +32,7 @@ function sessionProgress(page: Page) {
 test("a sessão atravessa apresentação, alternativas e digitação", async ({
   page
 }) => {
-  await seedCompletedDiagnostic(page);
+  await seedProgress(page);
   await page.goto("/estudar");
   await page.getByRole("button", { name: /Começar sessão/ }).click();
 
@@ -87,7 +87,7 @@ test("a sessão atravessa apresentação, alternativas e digitação", async ({
 test("o exercício inverso registra o erro e agenda a repetição imediata", async ({
   page
 }) => {
-  await seedCompletedDiagnostic(page, {
+  await seedProgress(page, {
     dueStates: [
       {
         entityId: brazil.id,
@@ -149,7 +149,7 @@ test("o exercício inverso registra o erro e agenda a repetição imediata", asy
 });
 
 test("progresso resume o estado guardado sem overflow", async ({ page }) => {
-  await seedCompletedDiagnostic(page, {
+  await seedProgress(page, {
     dueStates: [
       {
         entityId: brazil.id,

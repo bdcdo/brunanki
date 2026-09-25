@@ -4,7 +4,7 @@ import Dexie, { type EntityTable } from "dexie";
 
 import type {
   AppSettings,
-  DiagnosticState,
+  PairState,
   ReviewAttempt,
   SkillState
 } from "@/types/learning";
@@ -14,11 +14,6 @@ import { defaultSchedulingPreferences } from "@/domain/scheduler";
 export const DATABASE_NAME = "brunanki";
 export const SINGLETON_KEY = "current";
 
-export interface DiagnosticRecord {
-  id: typeof SINGLETON_KEY;
-  state: DiagnosticState;
-}
-
 export interface SettingsRecord {
   id: typeof SINGLETON_KEY;
   settings: AppSettings;
@@ -27,16 +22,28 @@ export interface SettingsRecord {
 /**
  * O fuso é lido do dispositivo na primeira vez que as preferências são
  * necessárias, e não fixado no módulo, para que o valor gravado seja o de
- * quem está estudando.
+ * quem está estudando. As Américas são o continente inicial porque são o
+ * único liberado no piloto.
  */
 export function defaultAppSettings(): AppSettings {
-  return defaultSchedulingPreferences();
+  return { ...defaultSchedulingPreferences(), activeContinent: "americas" };
+}
+
+/**
+ * Completa preferências gravadas antes de existir o continente ativo. A
+ * versão 3 do banco preserva as preferências de quem já usava o app, e elas
+ * chegam sem o campo; ler assim evita uma segunda migração só para isso.
+ */
+export function completeAppSettings(
+  stored: Partial<AppSettings> | undefined
+): AppSettings {
+  return { ...defaultAppSettings(), ...stored };
 }
 
 export class BrunankiDatabase extends Dexie {
   skillStates!: EntityTable<SkillState, "id">;
   attempts!: EntityTable<ReviewAttempt, "id">;
-  diagnostics!: EntityTable<DiagnosticRecord, "id">;
+  pairStates!: EntityTable<PairState, "id">;
   appSettings!: EntityTable<SettingsRecord, "id">;
 
   constructor(name: string = DATABASE_NAME) {
@@ -71,6 +78,20 @@ export class BrunankiDatabase extends Dexie {
           transaction.table("diagnostics").clear()
         ])
       );
+    // Versão do piloto: o diagnóstico sai (a tabela é apagada, com o que
+    // tiver) e entram os estados de par. O progresso inteiro recomeça, sem
+    // migração, porque as tentativas antigas não têm modalidade nem XP, e
+    // inventar esses campos para elas poria no histórico um dado que ninguém
+    // mediu. As preferências sobrevivem pelo mesmo motivo da versão 2: não
+    // referenciam entidade, e perdê-las seria dano sem motivo.
+    this.version(3)
+      .stores({ diagnostics: null, pairStates: "id, updatedAt" })
+      .upgrade((transaction) =>
+        Promise.all([
+          transaction.table("skillStates").clear(),
+          transaction.table("attempts").clear()
+        ])
+      );
   }
 }
 
@@ -81,30 +102,11 @@ export function getDatabase(): BrunankiDatabase {
   return database;
 }
 
-export async function getDiagnosticState(
-  db: BrunankiDatabase = getDatabase()
-): Promise<DiagnosticState | undefined> {
-  return (await db.diagnostics.get(SINGLETON_KEY))?.state;
-}
-
-export async function saveDiagnosticState(
-  state: DiagnosticState,
-  db: BrunankiDatabase = getDatabase()
-): Promise<void> {
-  await db.diagnostics.put({ id: SINGLETON_KEY, state });
-}
-
-export async function clearDiagnosticState(
-  db: BrunankiDatabase = getDatabase()
-): Promise<void> {
-  await db.diagnostics.delete(SINGLETON_KEY);
-}
-
 export async function getAppSettings(
   db: BrunankiDatabase = getDatabase()
 ): Promise<AppSettings> {
-  return (
-    (await db.appSettings.get(SINGLETON_KEY))?.settings ?? defaultAppSettings()
+  return completeAppSettings(
+    (await db.appSettings.get(SINGLETON_KEY))?.settings
   );
 }
 

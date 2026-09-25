@@ -37,7 +37,9 @@ function recentAccuracy(
   window: number
 ): number | null {
   const relevant = attempts
-    .filter((attempt) => attempt.exercise !== "diagnostic")
+    // Prática livre não mede o que a fila está pedindo: ela escolhe itens já
+    // conhecidos, e contá-la inflaria a precisão que decide novidades.
+    .filter((attempt) => attempt.mode === "scheduled")
     .slice()
     .sort((left, right) => right.createdAt.localeCompare(left.createdAt))
     .slice(0, window);
