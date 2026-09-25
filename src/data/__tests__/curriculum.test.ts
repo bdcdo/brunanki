@@ -158,7 +158,7 @@ describe("albumPages", () => {
   it("não repete sub-região: a ordem do currículo vem agrupada", () => {
     // Se a ordem intercalasse sub-regiões, o álbum ganharia duas páginas com
     // o mesmo título, e a figurinha ficaria na página errada.
-    for (const continent of ["americas"] as const) {
+    for (const continent of CONTINENT_IDS.filter(isContinentAvailable)) {
       const subregions = albumPages(continent).map(
         ({ subregion }) => subregion
       );

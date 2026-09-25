@@ -63,11 +63,13 @@ function ProgressPageReady({ snapshot }: { snapshot: LearningSnapshot }) {
           icon={<Sparkles size={23} aria-hidden="true" />}
           label="XP no total"
           value={xp.total}
+          note="Em todos os álbuns"
         />
         <StatCard
           icon={<Layers3 size={23} aria-hidden="true" />}
           label="Acertos de primeira"
           value={everything.firstTryCorrect}
+          note="Em todos os álbuns"
         />
       </div>
 
@@ -98,7 +100,8 @@ function ProgressPageReady({ snapshot }: { snapshot: LearningSnapshot }) {
           <p className="text-ink-soft">
             Vazia enquanto a bandeira não apareceu; em andamento enquanto ela
             volta nas revisões; colada quando fica dominada. Colar não encerra
-            as revisões: elas continuam, cada vez mais espaçadas.
+            as revisões, e um erro numa figurinha colada a devolve para em
+            andamento.
           </p>
         </article>
         <article className={cardVariants()}>

@@ -24,8 +24,9 @@ export interface DueSkillState {
   entityId: string;
   skill: Skill;
   dueAt: Date;
-  /** Padrão 3,2 dias, longe do domínio; 30 ou mais, com dois dias de
-   *  sucesso, semeia uma habilidade que conta para dominar a bandeira. */
+  /** Padrão 3,2 dias, longe do domínio; `MASTERY_STABILITY_DAYS` ou mais,
+   *  com dois dias de sucesso, semeia uma habilidade que conta para dominar
+   *  a bandeira. */
   stability?: number;
   successDays?: readonly string[];
 }
