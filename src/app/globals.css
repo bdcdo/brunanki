@@ -1,5 +1,5 @@
 /* ---------------------------------------------------------------------------
-   Ptanki — tokens e base. Tailwind v4 é CSS-first: não existe
+   Brunanki: tokens e base. Tailwind v4 é CSS-first: não existe
    tailwind.config.ts, e tudo o que o compilador precisa saber está neste
    arquivo.
 
@@ -78,7 +78,7 @@
 
   /* — desfecho da tentativa ----------------------------------------------
      Nomes de AttemptOutcome (src/types/learning.ts:4), e não de placar: o
-     Ptanki corrige uma tentativa, não julga um duelo.
+     Brunanki corrige uma tentativa, não julga um duelo.
 
      As linhas mudaram de valor porque a cor da borda É o sinal de estado, e as
      antigas não alcançavam 3:1 contra o próprio preenchimento — não contra o
@@ -106,7 +106,7 @@
 
   /* — papéis canônicos do shadcn -----------------------------------------
      Precisam existir com estes nomes, senão todo componente vindo do CLI nasce
-     sem cor. Cada um aponta para um token do Ptanki declarado acima. */
+     sem cor. Cada um aponta para um token do Brunanki declarado acima. */
   --background: var(--paper);
   --foreground: var(--ink);
   --card: var(--surface);

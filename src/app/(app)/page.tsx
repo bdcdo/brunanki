@@ -214,7 +214,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
 
       <section className="mt-[34px]" aria-labelledby="method-title">
         <CardHeader>
-          <CardTitle id="method-title">Como o Ptanki ensina</CardTitle>
+          <CardTitle id="method-title">Como o Brunanki ensina</CardTitle>
         </CardHeader>
         {/* Não são `StatCard`: aqui o cartão não tem número, e a ordem é
             ícone → afirmação → explicação, não rótulo → valor → nota. Mesma

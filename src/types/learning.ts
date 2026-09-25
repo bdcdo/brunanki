@@ -12,7 +12,7 @@ export type LearningPhase = "unseen" | "acquiring" | "scheduled";
  * escolha dos distratores (ver domain/distractors.ts) e de que um exercício à
  * parte seria um segundo jeito de fazer a mesma coisa.
  *
- * Esse argumento foi revertido em docs/adr/0006: acertar entre quatro opções
+ * Esse argumento foi revertido pela ADR-0006: acertar entre quatro opções
  * é evidência de recuperação; distinguir um par é evidência de discriminação,
  * e é essa segunda que o critério de domínio precisa consumir. Some-se que a
  * confundibilidade calculada não enxerga tom nem disposição — ela empata Chade

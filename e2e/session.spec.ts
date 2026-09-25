@@ -9,7 +9,7 @@ import { catalogEntities, seedCompletedDiagnostic } from "./seed";
 /**
  * A sessão de estudo, com estado semeado.
  *
- * Spec próprio, e não um acréscimo a `ptanki.spec.ts`: lá um `beforeEach` de
+ * Spec próprio, e não um acréscimo a `brunanki.spec.ts`: lá um `beforeEach` de
  * escopo de arquivo navega para a home antes de cada teste, e a semeadura
  * precisa controlar a navegação. Sem estes testes, os exercícios ativos e
  * `/progresso` ficam fora do gate de axe e do de overflow — que é onde está

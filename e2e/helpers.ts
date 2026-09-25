@@ -5,7 +5,7 @@ import { expect, type Page } from "@playwright/test";
  * Os dois gates que toda tela atravessa.
  *
  * Vivem aqui, e não dentro de um spec, porque a suíte passou a ter mais de um
- * arquivo: `session.spec.ts` precisa dos mesmos gates que `ptanki.spec.ts`, e
+ * arquivo: `session.spec.ts` precisa dos mesmos gates que `brunanki.spec.ts`, e
  * duplicá-los deixaria dois critérios de aceite que envelhecem em separado.
  */
 

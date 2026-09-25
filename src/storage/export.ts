@@ -171,9 +171,9 @@ type ExportV2 = z.infer<typeof exportV2Schema>;
 /**
  * Há uma única forma legível, e nenhum caminho de migração.
  *
- * O formato foi renomeado junto com o produto (ver
- * `docs/adr/0001-renomear-para-brunanki.md`), de modo que todo backup emitido
- * antes traz `format: "ptanki-export"` e é recusado já no primeiro campo.
+ * O formato foi renomeado junto com o produto (ADR-0001), e o rename é
+ * deliberadamente incompatível: todo backup emitido antes traz
+ * `format: "ptanki-export"` e é recusado já no primeiro campo.
  * Manter o esquema anterior aqui só descreveria um arquivo que nunca existiu —
  * `format` atual combinado com `schemaVersion` antigo.
  *

@@ -38,10 +38,10 @@ export function BrandLink({ className }: { className?: string }) {
         "inline-flex items-center gap-3 font-title text-3xl leading-body tracking-title text-inherit no-underline",
         className
       )}
-      aria-label="Ptanki — início"
+      aria-label="Brunanki, página inicial"
     >
       <BrandMark />
-      <strong>ptanki</strong>
+      <strong>brunanki</strong>
     </Link>
   );
 }

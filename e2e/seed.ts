@@ -44,7 +44,7 @@ function buildBackup({ dueStates = [] }: SeedOptions) {
   const lastReview = new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000);
 
   return {
-    format: "ptanki-export",
+    format: "brunanki-export",
     schemaVersion: 2,
     // Derivada do catálogo, e não fixada: se o conjunto de entidades mudar de
     // tamanho, a semeadura acompanha em vez de quebrar.
@@ -111,7 +111,7 @@ export async function seedCompletedDiagnostic(
   const safetyBackup = page.waitForEvent("download");
 
   await page.locator('input[type="file"]').setInputFiles({
-    name: "ptanki-seed.json",
+    name: "brunanki-seed.json",
     mimeType: "application/json",
     buffer: Buffer.from(JSON.stringify(buildBackup(options)))
   });

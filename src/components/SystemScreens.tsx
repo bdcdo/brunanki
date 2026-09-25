@@ -57,7 +57,7 @@ export function StorageUnavailableScreen({ error }: { error: Error }) {
           <CardTitle>O que dá para fazer agora</CardTitle>
         </CardHeader>
         <p className="text-ink-soft">
-          Abra o Ptanki numa janela normal do mesmo navegador, ou libere o
+          Abra o Brunanki numa janela normal do mesmo navegador, ou libere o
           armazenamento para este site nas configurações. Enquanto isso, o
           catálogo continua disponível: ele não depende de armazenamento.
         </p>
