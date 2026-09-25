@@ -122,6 +122,17 @@ test("o exercício inverso registra o erro e agenda a repetição imediata", asy
     .click();
 
   await expect(page.getByText("Vamos corrigir")).toBeVisible();
+  // O veredito explica o erro pelo contrato de feedback: com par curado, o
+  // traço das duas; sem ele, onde fica cada uma. Nenhuma das formas fala de
+  // fila ou de quando a bandeira volta.
+  const verdict = page.getByRole("status");
+  // A explicação começa pela certa, o Brasil, que não tem par curado: ou as
+  // duas estão na mesma sub-região, ou cada uma é dita com a sua. Com a certa
+  // e a escolhida trocadas, a frase começaria pela escolhida.
+  await expect(
+    verdict.getByText(/^Brasil( e .* são da mesma sub-região|: América do Sul)/)
+  ).toBeVisible();
+  await expect(verdict).not.toContainText(/reaparec|revisão será|agend/i);
   // `exact`, porque o enunciado "Qual é a bandeira de Brasil?" continua na
   // tela durante o veredito — a grade não é mais desmontada — e o nome solto
   // casaria com os dois. A permanência é a mudança, não um efeito colateral.
@@ -169,5 +180,33 @@ test("progresso resume o estado guardado sem overflow", async ({ page }) => {
   ).toBeVisible();
 
   await expectNoHorizontalOverflow(page);
+  await expectNoSeriousAccessibilityViolations(page);
+});
+
+test("digitar o nome de outro país explica a diferença entre os dois", async ({
+  page
+}) => {
+  await page.goto("/estudar");
+  await page.getByRole("button", { name: /Começar sessão/ }).click();
+  await page.getByRole("button", { name: /Praticar/ }).click();
+  await page
+    .getByRole("button", { name: firstNew.displayNamePtBr, exact: true })
+    .click();
+  await page
+    .getByRole("button", { name: /Agora, lembre sem alternativas/ })
+    .click();
+
+  // Canadá é um país de verdade, então o resolvedor de nomes sabe qual
+  // bandeira a pessoa tinha em mente, e o veredito compara as duas.
+  await page.getByRole("textbox", { name: "Nome da entidade" }).fill("Canadá");
+  await page.getByRole("button", { name: /Responder/ }).click();
+
+  const verdict = page.getByRole("status");
+  await expect(verdict).toContainText("Vamos corrigir");
+  await expect(
+    verdict.getByText(
+      `${firstNew.displayNamePtBr} e Canadá são da mesma sub-região: América Setentrional, Américas.`
+    )
+  ).toBeVisible();
   await expectNoSeriousAccessibilityViolations(page);
 });

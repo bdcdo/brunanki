@@ -44,7 +44,8 @@ interface FeedbackPanelProps {
   /** O que a pessoa respondeu, quando difere do correto. */
   submitted?: string;
   submittedLabel?: string;
-  explanation: string;
+  /** Sem explicação, o veredito fica só com a resposta. */
+  explanation?: string;
   className?: string;
 }
 
@@ -92,7 +93,7 @@ export function FeedbackPanel({
           {submittedLabel}: {submitted}
         </span>
       )}
-      <span>{explanation}</span>
+      {explanation && <span>{explanation}</span>}
     </div>
   );
 }
