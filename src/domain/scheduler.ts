@@ -119,7 +119,9 @@ export function scheduleAttempt(
   const { card } = scheduler.next(
     currentCard,
     now,
-    ratingForAttempt(attempt, history)
+    ratingForAttempt(attempt, history, {
+      firstReview: currentCard.state === State.New
+    })
   );
 
   // Chute declarado não é evidência de recuperação, e não conta como dia de

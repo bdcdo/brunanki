@@ -28,9 +28,12 @@ function attempt(overrides: Partial<ReviewAttempt> = {}): ReviewAttempt {
   };
 }
 
-/** Acertos limpos de primeira com os tempos dados, num tipo de exercício. */
+/** Acertos limpos de primeira com os tempos dados, num tipo de exercício,
+ *  todos anteriores à tentativa padrão. */
 function history(exercise: ExerciseKind, times: readonly number[]) {
-  return times.map((firstInputMs) => attempt({ exercise, firstInputMs }));
+  return times.map((firstInputMs) =>
+    attempt({ exercise, firstInputMs, createdAt: "2026-09-20T12:00:00.000Z" })
+  );
 }
 
 describe("ratingForAttempt", () => {
@@ -79,6 +82,47 @@ describe("ratingForAttempt", () => {
     );
   });
 
+  it("na primeira revisão do cartão, só a digitação promove", () => {
+    const first = { firstReview: true };
+    expect(ratingForAttempt(attempt({ firstInputMs: 10 }), [], first)).toBe(
+      Rating.Easy
+    );
+    const escolha = attempt({
+      skill: "nameToFlagRecognition",
+      exercise: "nameToFlagChoice",
+      firstInputMs: 10
+    });
+    expect(ratingForAttempt(escolha, [], first)).toBe(Rating.Good);
+    // Depois da primeira revisão, a escolha rápida promove.
+    expect(ratingForAttempt(escolha, [])).toBe(Rating.Easy);
+  });
+
+  it("o limiar pessoal só usa o que veio antes da tentativa", () => {
+    // Dez amostras de 100 ms, mas no mesmo instante da tentativa ou depois
+    // dela: nenhuma entra, e vale o limiar fixo.
+    const tempo = DEFAULT_FAST_FIRST_INPUT_MS.flagToNameInput - 1;
+    const atual = attempt({ firstInputMs: tempo });
+    const simultaneas = Array.from({ length: 10 }, () =>
+      attempt({ firstInputMs: 100, createdAt: atual.createdAt })
+    );
+    const posteriores = Array.from({ length: 10 }, () =>
+      attempt({ firstInputMs: 100, createdAt: "2026-09-25T12:00:00.000Z" })
+    );
+    expect(ratingForAttempt(atual, [...simultaneas, atual])).toBe(Rating.Easy);
+    expect(ratingForAttempt(atual, posteriores)).toBe(Rating.Easy);
+    // As mesmas dez, anteriores, fixam o limiar em 100 ms.
+    expect(
+      ratingForAttempt(atual, history("flagToNameInput", Array(10).fill(100)))
+    ).toBe(Rating.Good);
+  });
+
+  it("acerto exatamente no limiar é rápido", () => {
+    const limiar = DEFAULT_FAST_FIRST_INPUT_MS.flagToNameInput;
+    expect(ratingForAttempt(attempt({ firstInputMs: limiar }), [])).toBe(
+      Rating.Easy
+    );
+  });
+
   it("sem tempo de primeira entrada, o acerto fica Good", () => {
     const semTempo: ReviewAttempt = attempt();
     delete semTempo.firstInputMs;
@@ -112,6 +156,31 @@ describe("fastThresholdMs", () => {
     expect(ratingForAttempt(attempt({ firstInputMs: 2000 }), doze)).toBe(
       Rating.Easy
     );
+  });
+
+  it("toma o quartil pela posição, com amostras distintas e fora de ordem", () => {
+    // Dez tempos distintos, de 1 a 10 s, embaralhados: o quartil mais rápido
+    // é a terceira posição, 3 s.
+    const tempos = [7, 2, 9, 1, 10, 4, 3, 8, 6, 5].map((s) => s * 1000);
+    expect(
+      fastThresholdMs("flagToNameInput", history("flagToNameInput", tempos))
+    ).toBe(3000);
+  });
+
+  it("não conta como amostra acerto sem tempo medido", () => {
+    // Nove com tempo e três sem, como as tentativas de backups antigos: ainda
+    // faltam amostras, e vale o limiar fixo.
+    const semTempo = Array.from({ length: 3 }, () => {
+      const antiga = attempt({ createdAt: "2026-09-20T12:00:00.000Z" });
+      delete antiga.firstInputMs;
+      return antiga;
+    });
+    expect(
+      fastThresholdMs("flagToNameInput", [
+        ...history("flagToNameInput", Array(9).fill(100)),
+        ...semTempo
+      ])
+    ).toBe(DEFAULT_FAST_FIRST_INPUT_MS.flagToNameInput);
   });
 
   it("calcula por tipo de exercício, sem misturar amostras", () => {
