@@ -1,6 +1,12 @@
 "use client";
 
-import { ArrowRight, Check, CornerDownLeft, Pause } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  CornerDownLeft,
+  HelpCircle,
+  Pause
+} from "lucide-react";
 import Link from "next/link";
 import { FormEvent, useMemo, useRef, useState } from "react";
 import { AppReady } from "@/components/AppReady";
@@ -24,6 +30,14 @@ import { CONTINENT_OF_PT_BR, SUBREGION } from "@/types/geography";
 import { CURRICULUM, introductionOrder } from "@/data/curriculum";
 import { verdictExplanation } from "@/domain/feedback";
 import { newAttemptId } from "@/domain/ids";
+import {
+  attemptFlags,
+  initialPosition,
+  markedAsGuess,
+  nextPosition,
+  skillForStep,
+  type StudyPosition
+} from "@/domain/study-flow";
 import { awardedXpFor, xpTotals } from "@/domain/xp";
 import { buildChoiceRound } from "@/domain/distractors";
 import { describePalette } from "@/domain/palette";
@@ -45,8 +59,6 @@ import type {
   SkillState
 } from "@/types/learning";
 
-type StudyStep = "teach" | "forwardChoice" | "forwardInput" | "reverseChoice";
-
 type SessionItem = NextActivity;
 
 interface StudyFeedback {
@@ -54,55 +66,81 @@ interface StudyFeedback {
   answer?: string;
   /** A bandeira que a pessoa indicou, quando ela é identificável. */
   chosenId?: string;
-  nextStep?: StudyStep;
+  /** O passo seguinte da mesma atividade, ou nada quando a fila retoma. */
+  next?: StudyPosition;
+}
+
+/**
+ * A última tentativa gravada, com o estado e o histórico de antes dela. "Foi
+ * chute" reagenda a partir daqui, e não do estado que a tentativa produziu:
+ * senão a nota rebaixada se somaria à original em vez de substituí-la.
+ */
+interface GradedAttempt {
+  original: ReviewAttempt;
+  stateBefore: SkillState;
+  historyBefore: readonly ReviewAttempt[];
+  guessed: boolean;
 }
 
 const CHOICE_COUNT = 4;
 
+/**
+ * O relógio da sessão. Só é lido em handlers de clique e de digitação, nunca
+ * no render; fica fora do componente porque o lint de pureza do React não
+ * consegue provar isso para funções aninhadas que chamam umas às outras.
+ */
+function clockNow(): number {
+  return performance.now();
+}
+
 function newAttempt(
   item: SessionItem,
+  position: StudyPosition,
   outcome: AttemptOutcome,
-  responseMs: number,
   exercise: ReviewAttempt["exercise"],
-  answer: string | undefined,
-  followsTeaching: boolean
+  timing: { responseMs: number; firstInputMs?: number },
+  answer: string | undefined
 ): ReviewAttempt {
+  // A correção fica registrada na própria tentativa, e não só no argumento do
+  // agendador: assim o histórico distingue uma recuperação genuína de uma
+  // segunda chance. O que conta como correção é regra do domínio.
+  const { isImmediateCorrection } = attemptFlags(position, item.reason);
   return {
     id: newAttemptId(),
     entityId: item.entityId,
-    skill: item.skill,
+    skill: skillForStep(position.step),
     exercise,
     outcome,
-    // A correção que se segue a um erro fica registrada na própria tentativa,
-    // e não só no argumento do agendador: assim o histórico distingue uma
-    // recuperação genuína de uma segunda chance.
-    isImmediateCorrection: item.reason === "correction",
+    isImmediateCorrection,
     mode: "scheduled",
-    awardedXp: awardedXpFor({
-      outcome,
-      isImmediateCorrection: item.reason === "correction",
-      followsTeaching
-    }),
-    responseMs,
-    // Na escolha, o clique é a própria resposta. Na digitação, a primeira
-    // tecla só passa a ser medida com o primeiro contato graduado.
-    ...(exercise === "flagToNameInput" ? {} : { firstInputMs: responseMs }),
+    awardedXp: awardedXpFor({ outcome, isImmediateCorrection }),
+    responseMs: timing.responseMs,
+    ...(timing.firstInputMs === undefined
+      ? {}
+      : { firstInputMs: timing.firstInputMs }),
     ...(answer ? { answer } : {}),
     createdAt: new Date().toISOString()
   };
 }
 
-function initialStep(item: SessionItem, state?: SkillState): StudyStep {
-  if (item.skill === "nameToFlagRecognition") return "reverseChoice";
-  if (
-    item.reason === "new" ||
-    !state ||
-    state.lastOutcome === "incorrect" ||
-    state.lastOutcome === "skipped"
-  ) {
-    return "teach";
+function optionalNext(next: StudyPosition | undefined): {
+  next?: StudyPosition;
+} {
+  return next ? { next } : {};
+}
+
+/** O botão que leva adiante diz para onde leva. */
+function continueLabel(next: StudyPosition | undefined): string {
+  switch (next?.step) {
+    case "teach":
+      return "Ver a bandeira com o nome";
+    case "forwardInput":
+      return "Agora, lembre sem alternativas";
+    case "reverseChoice":
+      return "Agora, ache a bandeira pelo nome";
+    default:
+      return "Continuar";
   }
-  return "forwardInput";
 }
 
 export function StudySession({
@@ -142,7 +180,12 @@ function StudySessionReady({
     [settings.activeContinent, priorityEntityId]
   );
   const [item, setItem] = useState<SessionItem>();
-  const [step, setStep] = useState<StudyStep>("teach");
+  const [position, setPosition] = useState<StudyPosition>({
+    step: "firstContact",
+    taught: false
+  });
+  const step = position.step;
+  const [graded, setGraded] = useState<GradedAttempt>();
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState<StudyFeedback>();
   // Guardado para marcar em lugar a alternativa escolhida. Antes a grade era
@@ -162,6 +205,10 @@ function StudySessionReady({
   // Quantas questões já passaram, para variar a semente das alternativas.
   const [presented, setPresented] = useState(0);
   const startedAt = useRef(0);
+  // O instante da primeira tecla no campo de digitação. A nota por velocidade
+  // lê o tempo até ela, e não até o envio, que somaria o tempo de digitar um
+  // nome longo num teclado de celular ao de reconhecer a bandeira.
+  const firstInputAt = useRef<number | undefined>(undefined);
   // Semente sorteada uma vez por sessão. Combinada com a posição na fila, dá
   // alternativas estáveis enquanto a questão está na tela — nada de
   // reembaralhar a cada re-render — e diferentes a cada nova sessão.
@@ -179,10 +226,17 @@ function StudySessionReady({
     [skills]
   );
 
-  function present(next: SessionItem | undefined) {
+  function resetStep() {
     setFeedback(undefined);
     setSelectedId(undefined);
     setAnswer("");
+    setGraded(undefined);
+    startedAt.current = clockNow();
+    firstInputAt.current = undefined;
+  }
+
+  function present(next: SessionItem | undefined) {
+    resetStep();
     if (!next) {
       setItem(undefined);
       setFinished("exhausted");
@@ -190,10 +244,12 @@ function StudySessionReady({
     }
     setItem(next);
     setPresented((count) => count + 1);
-    setStep(
-      initialStep(next, stateById.get(skillStateId(next.entityId, next.skill)))
-    );
-    startedAt.current = performance.now();
+    setPosition(initialPosition(next));
+  }
+
+  function advanceTo(next: StudyPosition) {
+    resetStep();
+    setPosition(next);
   }
 
   // A próxima atividade é recalculada a cada passo, a partir dos estados
@@ -239,52 +295,59 @@ function StudySessionReady({
   }, [entity, presented, sessionSeed]);
 
   function continueAfterFeedback() {
-    if (feedback?.nextStep) {
-      setStep(feedback.nextStep);
-      setFeedback(undefined);
-      setSelectedId(undefined);
-      setAnswer("");
-      startedAt.current = performance.now();
+    if (feedback?.next) {
+      advanceTo(feedback.next);
       return;
     }
     present(upNext(item));
   }
 
+  function elapsedSince(instant: number): number {
+    return Math.max(0, Math.round(instant - startedAt.current));
+  }
+
   async function persistAttempt(
     outcome: AttemptOutcome,
     exercise: ReviewAttempt["exercise"],
-    typedAnswer?: string,
-    schedule = true
+    firstInputMs: number | undefined,
+    typedAnswer?: string
   ) {
     if (!item) return;
     setBusy(true);
     try {
       const storage = await import("@/storage");
+      const skill = skillForStep(position.step);
       const current =
-        stateById.get(skillStateId(item.entityId, item.skill)) ??
-        createSkillState(item.entityId, item.skill);
+        stateById.get(skillStateId(item.entityId, skill)) ??
+        createSkillState(item.entityId, skill);
       const attempt = newAttempt(
         item,
+        position,
         outcome,
-        Math.max(0, Math.round(performance.now() - startedAt.current)),
         exercise,
-        typedAnswer,
-        // Só a escolha que segue a apresentação deixa de agendar; ver
-        // `followsTeaching` em awardedXpFor.
-        !schedule
+        {
+          responseMs: elapsedSince(clockNow()),
+          ...(firstInputMs === undefined ? {} : { firstInputMs })
+        },
+        typedAnswer
       );
       // O histórico dá o limiar pessoal de velocidade da nota; é o de antes
-      // desta tentativa, como a própria pessoa o tinha quando respondeu.
-      const nextState = schedule
-        ? scheduleAttempt(current, attempt, settings, attempts)
-        : current;
+      // desta tentativa, como a própria pessoa o tinha quando respondeu. A
+      // escolha do nome não move o FSRS, e o agendador a devolve intacta.
+      const nextState = scheduleAttempt(current, attempt, settings, attempts);
       await storage.saveReview(nextState, attempt);
-      // A escolha com o nome recém-mostrado não é recuperação, e contá-la
-      // poria no resumo "2 de 2 na primeira tentativa" para uma bandeira só.
-      if (schedule) {
-        setHistory((current) => [
-          ...current,
-          item.reason === "correction"
+      setGraded({
+        original: attempt,
+        stateBefore: current,
+        historyBefore: attempts,
+        guessed: false
+      });
+      // A escolha do nome não move o FSRS, porque não é recuperação, e
+      // contá-la poria no resumo duas respostas para uma bandeira só.
+      if (exercise !== "flagToNameChoice") {
+        setHistory((pips) => [
+          ...pips,
+          attempt.isImmediateCorrection
             ? amendedPipState(outcome)
             : pipStateFor(outcome)
         ]);
@@ -296,43 +359,57 @@ function StudySessionReady({
     }
   }
 
-  async function answerForwardChoice(selectedId: string) {
+  /**
+   * Marca ou desmarca "Foi chute". Desmarcar existe porque o botão fica ao
+   * lado de "Continuar", e um toque errado no celular não pode rebaixar a
+   * nota sem volta.
+   */
+  async function toggleGuess() {
+    if (!graded) return;
+    const guessed = !graded.guessed;
+    const attempt = guessed ? markedAsGuess(graded.original) : graded.original;
+    setBusy(true);
+    try {
+      const storage = await import("@/storage");
+      await storage.amendReview(
+        scheduleAttempt(
+          graded.stateBefore,
+          attempt,
+          settings,
+          graded.historyBefore
+        ),
+        attempt
+      );
+      setGraded({ ...graded, guessed });
+      await refresh();
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function answerChoice(chosenId: string) {
     if (!entity) return;
-    setSelectedId(selectedId);
+    const clickMs = elapsedSince(clockNow());
+    setSelectedId(chosenId);
     const outcome: AttemptOutcome =
-      selectedId === entity.id ? "correct" : "incorrect";
+      chosenId === entity.id ? "correct" : "incorrect";
+    const chosenName = entityById.get(chosenId)?.displayNamePtBr;
     await persistAttempt(
       outcome,
-      "flagToNameChoice",
-      entityById.get(selectedId)?.displayNamePtBr,
-      false
+      step === "reverseChoice" ? "nameToFlagChoice" : "flagToNameChoice",
+      // Na escolha, o clique é a própria resposta.
+      clickMs,
+      chosenName
     );
     setFeedback({
       outcome,
-      answer: entityById.get(selectedId)?.displayNamePtBr,
-      chosenId: selectedId,
-      nextStep: "forwardInput"
+      answer: chosenName,
+      chosenId,
+      ...optionalNext(nextPosition(position, outcome))
     });
   }
 
-  async function answerReverseChoice(selectedId: string) {
-    if (!entity) return;
-    setSelectedId(selectedId);
-    const outcome: AttemptOutcome =
-      selectedId === entity.id ? "correct" : "incorrect";
-    await persistAttempt(
-      outcome,
-      "nameToFlagChoice",
-      entityById.get(selectedId)?.displayNamePtBr
-    );
-    setFeedback({
-      outcome,
-      answer: entityById.get(selectedId)?.displayNamePtBr,
-      chosenId: selectedId
-    });
-  }
-
-  async function submitForward(event: FormEvent) {
+  async function submitTyped(event: FormEvent) {
     event.preventDefault();
     if (!entity || !answer.trim()) return;
     const result = getNameResolver().classify(answer, entity.id);
@@ -342,7 +419,14 @@ function StudySessionReady({
         : result.kind === "partial"
           ? "partial"
           : "incorrect";
-    await persistAttempt(outcome, "flagToNameInput", answer.trim());
+    await persistAttempt(
+      outcome,
+      "flagToNameInput",
+      firstInputAt.current === undefined
+        ? undefined
+        : elapsedSince(firstInputAt.current),
+      answer.trim()
+    );
     setFeedback({
       outcome,
       answer: answer.trim(),
@@ -350,8 +434,21 @@ function StudySessionReady({
       // e o feedback pode dizer a diferença entre as duas.
       ...(result.kind === "incorrect" && result.matchedEntityId
         ? { chosenId: result.matchedEntityId }
-        : {})
+        : {}),
+      ...optionalNext(nextPosition(position, outcome))
     });
+  }
+
+  /**
+   * "Não sei" vai direto ao ensino, sem veredito: não há resposta a corrigir,
+   * e uma tela dizendo que a pessoa não sabia seria só atrito.
+   */
+  async function answerDontKnow() {
+    const clickMs = elapsedSince(clockNow());
+    await persistAttempt("skipped", "flagToNameInput", clickMs);
+    const next = nextPosition(position, "skipped");
+    if (next) advanceTo(next);
+    else present(upNext(item));
   }
 
   if (!started) {
@@ -500,8 +597,8 @@ function StudySessionReady({
                 <Button
                   type="button"
                   onClick={() => {
-                    setStep("forwardChoice");
-                    startedAt.current = performance.now();
+                    const next = nextPosition(position);
+                    if (next) advanceTo(next);
                   }}
                 >
                   Praticar <ArrowRight size={18} aria-hidden="true" />
@@ -530,7 +627,7 @@ function StudySessionReady({
                     layout="row"
                     state={optionState(choice.id)}
                     locked={busy || Boolean(feedback)}
-                    onClick={() => void answerForwardChoice(choice.id)}
+                    onClick={() => void answerChoice(choice.id)}
                   >
                     {choice.displayNamePtBr}
                   </OptionButton>
@@ -557,7 +654,7 @@ function StudySessionReady({
                     // mesmas três cores — e a navegação precisa ser
                     // inequívoca mesmo assim.
                     aria-label={`Opção ${choiceIndex + 1}: bandeira com ${describePalette(choice.palette)}`}
-                    onClick={() => void answerReverseChoice(choice.id)}
+                    onClick={() => void answerChoice(choice.id)}
                   >
                     {/* Decorativa: o rótulo do botão já descreve a bandeira. */}
                     <FlagImage
@@ -572,9 +669,15 @@ function StudySessionReady({
             </>
           ) : (
             <>
-              <Eyebrow>Recordação sem pista</Eyebrow>
+              <Eyebrow>
+                {step === "firstContact"
+                  ? "Bandeira nova"
+                  : "Recordação sem pista"}
+              </Eyebrow>
               <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-title">
-                Digite o nome desta entidade.
+                {step === "firstContact"
+                  ? "De onde é esta bandeira?"
+                  : "Digite o nome desta entidade."}
               </h1>
               <FlagImage
                 entity={entity}
@@ -587,7 +690,7 @@ function StudySessionReady({
                   vista ao lado da correção. */}
               <form
                 className="mx-auto grid max-w-copy gap-3"
-                onSubmit={submitForward}
+                onSubmit={submitTyped}
               >
                 <label htmlFor="study-answer" className="sr-only">
                   Nome da entidade
@@ -596,7 +699,15 @@ function StudySessionReady({
                   id="study-answer"
                   className="h-[58px] w-full rounded-[13px] border-2 border-input bg-white px-4 py-[13px] text-lg text-ink"
                   value={answer}
-                  onChange={(event) => setAnswer(event.target.value)}
+                  onChange={(event) => {
+                    if (
+                      firstInputAt.current === undefined &&
+                      event.target.value !== ""
+                    ) {
+                      firstInputAt.current = clockNow();
+                    }
+                    setAnswer(event.target.value);
+                  }}
                   placeholder="Digite o nome em português"
                   autoComplete="off"
                   autoFocus
@@ -607,8 +718,20 @@ function StudySessionReady({
                   <>
                     <span className="text-sm text-ink-soft">
                       Acentos são opcionais; nomes ambíguos não são aceitos.
+                      {step === "firstContact" &&
+                        " Se não souber, a bandeira é apresentada com o nome."}
                     </span>
                     <div className="flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
+                      {step === "firstContact" && (
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          disabled={busy}
+                          onClick={() => void answerDontKnow()}
+                        >
+                          <HelpCircle size={18} aria-hidden="true" /> Não sei
+                        </Button>
+                      )}
                       <Button type="submit" disabled={!answer.trim() || busy}>
                         Responder{" "}
                         <CornerDownLeft size={18} aria-hidden="true" />
@@ -627,7 +750,9 @@ function StudySessionReady({
                 tone={feedbackTone(feedback.outcome)}
                 eyebrow={
                   feedback.outcome === "correct"
-                    ? "Acerto de primeira"
+                    ? graded?.original.isImmediateCorrection
+                      ? "Acertou"
+                      : "Acerto de primeira"
                     : feedback.outcome === "partial"
                       ? "Acerto parcial"
                       : "Vamos corrigir"
@@ -646,10 +771,24 @@ function StudySessionReady({
                 )}
               />
               <div className="mt-[18px] flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
+                {/* Só depois de acerto em escolha: é o único caso em que o
+                    acerto pode ter vindo da sorte, uma em quatro. */}
+                {graded &&
+                  feedback.outcome === "correct" &&
+                  graded.original.exercise !== "flagToNameInput" && (
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      aria-pressed={graded.guessed}
+                      disabled={busy}
+                      onClick={() => void toggleGuess()}
+                    >
+                      {graded.guessed && <Check size={18} aria-hidden="true" />}
+                      Foi chute
+                    </Button>
+                  )}
                 <Button type="button" onClick={continueAfterFeedback}>
-                  {feedback.nextStep
-                    ? "Agora, lembre sem alternativas"
-                    : "Continuar"}
+                  {continueLabel(feedback.next)}
                   <ArrowRight size={18} aria-hidden="true" />
                 </Button>
               </div>
