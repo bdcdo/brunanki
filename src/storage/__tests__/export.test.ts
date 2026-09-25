@@ -8,7 +8,7 @@ import {
   prepareImport,
   type ImportTarget
 } from "../export";
-import type { PtankiDatabase } from "../database";
+import type { BrunankiDatabase } from "../database";
 
 function validExport() {
   return {
@@ -31,22 +31,17 @@ function validExport() {
   };
 }
 
-/** Backup na forma anterior: com reduceMotion, sem fuso e sem o flag. */
-function legacyExport() {
+function exportWithAttempt(exercise: string) {
   return {
-    format: EXPORT_FORMAT,
-    schemaVersion: 1,
-    catalogVersion: "2026.07.25",
-    exportedAt: "2026-07-25T12:00:00.000Z",
-    settings: { desiredRetention: 0.85, reduceMotion: true },
-    skillStates: [],
+    ...validExport(),
     attempts: [
       {
         id: "a1",
         entityId: "brasil",
         skill: "flagToNameRecall",
-        exercise: "flagToNameInput",
+        exercise,
         outcome: "correct",
+        isImmediateCorrection: false,
         responseMs: 900,
         createdAt: "2026-07-25T12:00:00.000Z"
       }
@@ -57,7 +52,7 @@ function legacyExport() {
 describe("parseExportJson", () => {
   it("aceita um backup versionado e bem formado", () => {
     expect(parseExportJson(JSON.stringify(validExport()))).toMatchObject({
-      format: "ptanki-export",
+      format: "brunanki-export",
       schemaVersion: 2,
       catalogVersion: "2026.07.25"
     });
@@ -89,18 +84,11 @@ describe("parseExportJson", () => {
     expect(() => parseExportJson(JSON.stringify(data))).toThrow();
   });
 
-  it("migra um backup v1 para a forma atual", () => {
-    const migrated = parseExportJson(JSON.stringify(legacyExport()));
-
-    expect(migrated.schemaVersion).toBe(2);
-    // A preferência que existia é preservada; reduceMotion desaparece porque
-    // nada o lia e a media query de sistema já cobre o caso.
-    expect(migrated.settings.desiredRetention).toBe(0.85);
-    expect(migrated.settings).not.toHaveProperty("reduceMotion");
-    expect(migrated.settings.timeZone).toBeTruthy();
-    // A v1 não distinguia correção imediata: toda tentativa antiga entra
-    // como tentativa comum, que é o que ela assumia implicitamente.
-    expect(migrated.attempts[0].isImmediateCorrection).toBe(false);
+  it("rejeita backup emitido sob o nome anterior do produto", () => {
+    // A renomeação quebrou a compatibilidade de propósito (ADR-0001): o nome
+    // vive no formato, e não há caminho de leitura para o formato antigo.
+    const data = { ...validExport(), format: "ptanki-export" };
+    expect(() => parseExportJson(JSON.stringify(data))).toThrow();
   });
 
   it("rejeita backup de versão de esquema desconhecida", () => {
@@ -111,9 +99,9 @@ describe("parseExportJson", () => {
   it("rejeita exercício que nenhum código jamais gerou", () => {
     // confusablePair e fluency estavam no contrato mas nunca foram
     // produzidos; um backup que os contenha está corrompido.
-    const data = legacyExport();
-    data.attempts[0].exercise = "fluency";
-    expect(() => parseExportJson(JSON.stringify(data))).toThrow();
+    expect(() =>
+      parseExportJson(JSON.stringify(exportWithAttempt("fluency")))
+    ).toThrow();
   });
 
   it("explica JSON sintaticamente inválido", () => {
@@ -135,7 +123,7 @@ function emptyDatabase() {
     attempts: emptyTable,
     diagnostics: singleton,
     appSettings: singleton
-  } as unknown as PtankiDatabase;
+  } as unknown as BrunankiDatabase;
 }
 
 describe("prepareImport", () => {

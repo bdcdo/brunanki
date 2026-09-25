@@ -3,13 +3,22 @@
 import { ArrowRight, Check, CornerDownLeft, Pause } from "lucide-react";
 import Link from "next/link";
 import { FormEvent, useMemo, useRef, useState } from "react";
-import { useApp } from "@/components/AppProvider";
-import {
-  LoadingScreen,
-  StorageUnavailableScreen
-} from "@/components/SystemScreens";
+import { AppReady } from "@/components/AppReady";
+import { EmptyState } from "@/components/SystemScreens";
 import { FlagImage } from "@/components/FlagImage";
-import { ProgressBar } from "@/components/ProgressBar";
+import { SessionSummary } from "@/components/SessionSummary";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { sessionCard } from "@/components/ui/card";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { FeedbackPanel, feedbackTone } from "@/components/ui/feedback-panel";
+import { InkBubble } from "@/components/ui/ink-bubble";
+import { OptionButton, type OptionState } from "@/components/ui/option-button";
+import {
+  SessionPips,
+  amendedPipState,
+  pipStateFor,
+  type PipState
+} from "@/components/ui/pips";
 import { entities, entityById } from "@/data/runtime-catalog";
 import { getNameResolver } from "@/data/name-index";
 import { newAttemptId } from "@/domain/ids";
@@ -80,22 +89,14 @@ function initialStep(item: SessionItem, state?: SkillState): StudyStep {
   return "forwardInput";
 }
 
-/**
- * Faz o gate dos três estados do armazenamento antes de montar a sessão.
- *
- * Separado do corpo porque os hooks de sessão não podem ficar atrás de um
- * early return; assim `StudySessionReady` só existe quando há um snapshot,
- * e nenhum de seus hooks precisa lidar com dados ausentes.
- */
 export function StudySession() {
-  const { state, refresh } = useApp();
-  if (state.kind === "loading") {
-    return <LoadingScreen label="Preparando sua sessão." />;
-  }
-  if (state.kind === "unavailable") {
-    return <StorageUnavailableScreen error={state.error} />;
-  }
-  return <StudySessionReady snapshot={state.snapshot} refresh={refresh} />;
+  return (
+    <AppReady loadingLabel="Preparando sua sessão.">
+      {({ snapshot, refresh }) => (
+        <StudySessionReady snapshot={snapshot} refresh={refresh} />
+      )}
+    </AppReady>
+  );
 }
 
 function StudySessionReady({
@@ -111,9 +112,21 @@ function StudySessionReady({
   const [step, setStep] = useState<StudyStep>("teach");
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState<StudyFeedback>();
+  // Guardado para marcar em lugar a alternativa escolhida. Antes a grade era
+  // desmontada ao surgir o veredito e o app respondia "Sua resposta: Chade" em
+  // prosa; marcar o botão que a pessoa tocou faz o vínculo erro→estímulo, que
+  // num app de memória vale mais do que num quiz.
+  const [selectedId, setSelectedId] = useState<string>();
   const [busy, setBusy] = useState(false);
   const [initialized, setInitialized] = useState(false);
   const [retryCounts, setRetryCounts] = useState<Record<string, number>>({});
+  // As bolinhas são indexadas pelo item, e não pela posição na fila. A fila
+  // cresce no meio da sessão — um erro reinsere o item quatro posições à
+  // frente —, e por posição isso faria nascer uma bolinha do nada. Como a
+  // repetição imediata tem o mesmo `skillStateId` do item que corrige, ela
+  // reescreve a bolinha existente: uma correção não é um item novo.
+  const [pipOrder, setPipOrder] = useState<string[]>([]);
+  const [pipOutcomes, setPipOutcomes] = useState<Record<string, PipState>>({});
   const startedAt = useRef(0);
   // Semente sorteada uma vez por sessão. Combinada com a posição na fila, dá
   // alternativas estáveis enquanto a questão está na tela — nada de
@@ -135,6 +148,11 @@ function StudySessionReady({
     });
     const items = plan.items.slice(0, SESSION_LIMIT);
     setQueue(items);
+    // Fixado aqui, e nunca reescrito: é o conjunto de itens desta sessão, que
+    // não muda quando a fila ganha uma repetição.
+    setPipOrder(
+      items.map(({ entityId, skill }) => skillStateId(entityId, skill))
+    );
     const first = items[0];
     if (first) {
       setStep(
@@ -150,6 +168,26 @@ function StudySessionReady({
 
   const item = queue[index];
   const entity = item ? entityById.get(item.entityId) : undefined;
+  const pipStates = pipOrder.map((id) => pipOutcomes[id] ?? "pending");
+  // A posição também sai da identidade do item, e não de `index`: depois de
+  // uma repetição imediata os dois divergem, e é a bolinha do item corrigido
+  // que deve estar marcada.
+  const pipPosition = item
+    ? pipOrder.indexOf(skillStateId(item.entityId, item.skill))
+    : pipOrder.length;
+  /**
+   * Antes do veredito toda alternativa está em repouso. Depois, a certa é
+   * marcada como correta — inclusive quando foi a escolhida —, a escolhida
+   * errada é marcada como erro, e as outras duas recuam sem sumir: é vendo as
+   * quatro juntas que se percebe *o que* se confundiu com *o quê*.
+   */
+  function optionState(choiceId: string): OptionState {
+    if (!feedback || !entity) return "idle";
+    if (choiceId === entity.id) return "correct";
+    if (choiceId === selectedId) return "wrong";
+    return "muted";
+  }
+
   const choices = useMemo(() => {
     if (!entity) return [];
     return buildChoiceRound(
@@ -162,6 +200,7 @@ function StudySessionReady({
 
   function moveToNext() {
     setFeedback(undefined);
+    setSelectedId(undefined);
     setAnswer("");
     const nextIndex = index + 1;
     setIndex(nextIndex);
@@ -181,6 +220,7 @@ function StudySessionReady({
     if (feedback?.nextStep) {
       setStep(feedback.nextStep);
       setFeedback(undefined);
+      setSelectedId(undefined);
       setAnswer("");
       startedAt.current = performance.now();
       return;
@@ -212,6 +252,12 @@ function StudySessionReady({
         ? scheduleAttempt(current, attempt, settings)
         : current;
       await storage.saveReview(nextState, attempt);
+      setPipOutcomes((current) => ({
+        ...current,
+        [nextState.id]: item.immediate
+          ? amendedPipState(outcome)
+          : pipStateFor(outcome)
+      }));
 
       if (
         schedule &&
@@ -245,6 +291,7 @@ function StudySessionReady({
 
   async function answerForwardChoice(selectedId: string) {
     if (!entity) return;
+    setSelectedId(selectedId);
     const outcome: AttemptOutcome =
       selectedId === entity.id ? "correct" : "incorrect";
     await persistAttempt(
@@ -262,6 +309,7 @@ function StudySessionReady({
 
   async function answerReverseChoice(selectedId: string) {
     if (!entity) return;
+    setSelectedId(selectedId);
     const outcome: AttemptOutcome =
       selectedId === entity.id ? "correct" : "incorrect";
     await persistAttempt(
@@ -291,22 +339,16 @@ function StudySessionReady({
 
   if (!diagnostic?.completedAt) {
     return (
-      <div className="page page-narrow">
-        <section className="study-card" style={{ textAlign: "center" }}>
-          <span className="eyebrow">Primeiro passo</span>
-          <h1 className="study-title">Faça o diagnóstico antes de estudar.</h1>
-          <p className="muted">
-            Assim a primeira sessão começa no que você ainda não reconhece.
-          </p>
-          <Link
-            href="/diagnostico"
-            className="button"
-            style={{ marginTop: 18 }}
-          >
+      <EmptyState
+        eyebrow="Primeiro passo"
+        title="Faça o diagnóstico antes de estudar."
+        description="Assim a primeira sessão começa no que você ainda não reconhece."
+        action={
+          <Link href="/diagnostico" className={buttonVariants()}>
             Ir ao diagnóstico <ArrowRight size={18} aria-hidden="true" />
           </Link>
-        </section>
-      </div>
+        }
+      />
     );
   }
 
@@ -318,24 +360,21 @@ function StudySessionReady({
       baseNewLimit: 5
     });
     return (
-      <div className="page page-narrow">
-        <section className="study-card">
-          <span className="eyebrow">Meta adaptativa</span>
-          <h1 className="study-title">Sua sessão está pronta.</h1>
-          <p className="muted">
+      <div className="mx-auto w-full max-w-narrow">
+        <section className={sessionCard}>
+          <Eyebrow>Meta adaptativa</Eyebrow>
+          <h1 className="m-0 font-title leading-page font-bold tracking-page">
+            Sua sessão está pronta.
+          </h1>
+          <p className="text-ink-soft">
             Hoje há {preview.dueCount} revisões vencidas,{" "}
             {preview.correctionCount} correções e espaço para até{" "}
             {preview.newLimit} novas associações. Esta rodada terá no máximo{" "}
             {SESSION_LIMIT} itens.
           </p>
-          <button
-            className="button"
-            type="button"
-            onClick={beginSession}
-            style={{ marginTop: 18 }}
-          >
+          <Button className="mt-[18px]" type="button" onClick={beginSession}>
             Começar sessão <ArrowRight size={18} aria-hidden="true" />
-          </button>
+          </Button>
         </section>
       </div>
     );
@@ -343,138 +382,92 @@ function StudySessionReady({
 
   if (initialized && queue.length === 0) {
     return (
-      <div className="page page-narrow">
-        <section className="study-card" style={{ textAlign: "center" }}>
-          <Check
-            size={54}
-            aria-hidden="true"
-            style={{ margin: "30px auto 14px" }}
-          />
-          <h1 className="study-title">Tudo em dia por enquanto.</h1>
-          <p className="muted">
-            As próximas revisões aparecerão quando estiverem vencidas.
-          </p>
+      <EmptyState
+        icon={<Check size={54} aria-hidden="true" />}
+        title="Tudo em dia por enquanto."
+        description="As próximas revisões aparecerão quando estiverem vencidas."
+        action={
           <Link
             href="/catalogo"
-            className="button button-secondary"
-            style={{ marginTop: 18 }}
+            className={buttonVariants({ variant: "secondary" })}
           >
             Explorar o atlas
           </Link>
-        </section>
-      </div>
+        }
+      />
     );
   }
 
   if (initialized && (!item || !entity)) {
+    const countOf = (state: PipState) =>
+      pipStates.filter((value) => value === state).length;
     return (
-      <div className="page page-narrow">
-        <section className="study-card" style={{ textAlign: "center" }}>
-          <Check
-            size={54}
-            aria-hidden="true"
-            style={{ margin: "30px auto 14px" }}
-          />
-          <span className="eyebrow">Sessão concluída</span>
-          <h1 className="study-title">Bom trabalho de recuperação.</h1>
-          <p className="muted">
-            Acertos imediatos corrigem o erro; as revisões futuras confirmarão a
-            retenção.
-          </p>
-          <Link href="/" className="button" style={{ marginTop: 18 }}>
-            Voltar ao painel
+      <SessionSummary
+        eyebrow="Sessão concluída"
+        figure={countOf("correct")}
+        figureLabel={`de ${pipStates.length} na primeira tentativa`}
+        pips={pipStates}
+        tallies={[
+          { label: "Parciais", value: countOf("partial") },
+          { label: "Corrigidos", value: countOf("amended") },
+          { label: "Ainda a rever", value: countOf("missed") }
+        ]}
+        action={
+          <Link href="/" className={buttonVariants()}>
+            Voltar ao painel <ArrowRight size={18} aria-hidden="true" />
           </Link>
-        </section>
-      </div>
+        }
+      />
     );
   }
 
   if (!item || !entity) return null;
 
   return (
-    <div className="page page-narrow">
-      <div className="study-shell">
-        <div className="study-topbar">
-          <div style={{ flex: 1 }}>
-            <ProgressBar
-              value={index}
-              max={queue.length}
+    <div className="mx-auto w-full max-w-narrow">
+      <div className="grid gap-[18px]">
+        {/* Em coluna única a barra empilha: lado a lado, os pips e o "Encerrar"
+            não cabem numa Pixel 7. */}
+        <div className="flex items-center justify-between gap-5 max-md:flex-col max-md:items-start">
+          <div className="min-w-0 flex-1">
+            <SessionPips
+              states={pipStates}
+              position={pipPosition}
               label="Sessão de hoje"
             />
           </div>
-          <Link href="/" className="button button-secondary">
+          <Link href="/" className={buttonVariants({ variant: "secondary" })}>
             <Pause size={17} aria-hidden="true" /> Encerrar
           </Link>
         </div>
 
-        <section className="study-card" aria-live="polite">
-          {feedback ? (
+        {/* Sem aria-live aqui. Ele desceu para o painel de veredito: com a
+            grade permanecendo montada, uma região viva no cartão inteiro faria
+            o leitor reler enunciado, bandeira e as quatro alternativas a cada
+            passo. */}
+        <section className={sessionCard}>
+          {step === "teach" ? (
             <>
-              <span className="eyebrow">
-                {feedback.outcome === "correct"
-                  ? "Acerto de primeira"
-                  : feedback.outcome === "partial"
-                    ? "Acerto parcial"
-                    : "Vamos corrigir"}
-              </span>
-              <FlagImage
-                entity={entity}
-                alt={{ kind: "named" }}
-                eager
-                className="quiz-flag"
-              />
-              <div
-                className={`feedback ${
-                  feedback.outcome === "correct"
-                    ? "feedback-correct"
-                    : feedback.outcome === "partial"
-                      ? "feedback-partial"
-                      : "feedback-incorrect"
-                }`}
-              >
-                <strong>{entity.displayNamePtBr}</strong>
-                {feedback.answer && feedback.outcome !== "correct" && (
-                  <span>Sua resposta: {feedback.answer}</span>
-                )}
-                <span>
-                  {feedback.outcome === "correct"
-                    ? "A próxima revisão será espaçada conforme a estabilidade desta lembrança."
-                    : feedback.outcome === "partial"
-                      ? "Você sabia a entidade, mas a grafia será reforçada mais cedo."
-                      : "O item reaparecerá depois de outras bandeiras; a correção imediata não contará como retenção."}
-                </span>
-              </div>
-              <div className="answer-actions" style={{ marginTop: 18 }}>
-                <button
-                  className="button"
-                  type="button"
-                  onClick={continueAfterFeedback}
-                >
-                  {feedback.nextStep
-                    ? "Agora, lembre sem alternativas"
-                    : "Continuar"}
-                  <ArrowRight size={18} aria-hidden="true" />
-                </button>
-              </div>
-            </>
-          ) : step === "teach" ? (
-            <>
-              <span className="eyebrow">Primeiro contato</span>
-              <h1 className="study-prompt">
+              <Eyebrow>Primeiro contato</Eyebrow>
+              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
                 Esta é a bandeira de {entity.displayNamePtBr}.
               </h1>
               <FlagImage
                 entity={entity}
                 alt={{ kind: "named" }}
                 eager
-                className="quiz-flag"
+                size="hero"
               />
-              <p className="muted" style={{ textAlign: "center" }}>
+              {/* Só neste passo. A nota do Paraguai diz qual lado da bandeira
+                  está na tela, e a de Taiwan nomeia a entidade: nos passos de
+                  pergunta seriam dica ou resposta. Aqui o nome já foi
+                  revelado, então ela não vaza nada. */}
+              <InkBubble className="mb-5">{entity.editorialNote}</InkBubble>
+              <p className="text-center text-ink-soft">
                 Observe a composição antes de tentar recuperar o nome.
               </p>
-              <div className="answer-actions">
-                <button
-                  className="button"
+              <div className="flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
+                <Button
                   type="button"
                   onClick={() => {
                     setStep("forwardChoice");
@@ -482,46 +475,51 @@ function StudySessionReady({
                   }}
                 >
                   Praticar <ArrowRight size={18} aria-hidden="true" />
-                </button>
+                </Button>
               </div>
             </>
           ) : step === "forwardChoice" ? (
             <>
-              <span className="eyebrow">Reconhecimento com apoio</span>
-              <h1 className="study-prompt">De onde é esta bandeira?</h1>
+              <Eyebrow>Reconhecimento com apoio</Eyebrow>
+              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
+                De onde é esta bandeira?
+              </h1>
               <FlagImage
                 entity={entity}
-                alt={{ kind: "unnamed" }}
+                // Respondida, a bandeira passa a ser nomeada: a resposta já
+                // está na tela, e descrevê-la pelas cores seria esconder o
+                // que acabou de ser revelado.
+                alt={{ kind: feedback ? "named" : "unnamed" }}
                 eager
-                className="quiz-flag"
+                size="hero"
               />
-              <div className="choice-grid">
+              <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
                 {choices.map((choice) => (
-                  <button
+                  <OptionButton
                     key={choice.id}
-                    className="choice"
-                    type="button"
-                    disabled={busy}
+                    layout="row"
+                    state={optionState(choice.id)}
+                    locked={busy || Boolean(feedback)}
                     onClick={() => void answerForwardChoice(choice.id)}
                   >
                     {choice.displayNamePtBr}
-                  </button>
+                  </OptionButton>
                 ))}
               </div>
             </>
           ) : step === "reverseChoice" ? (
             <>
-              <span className="eyebrow">Associação inversa</span>
-              <h1 className="study-prompt">
+              <Eyebrow>Associação inversa</Eyebrow>
+              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
                 Qual é a bandeira de {entity.displayNamePtBr}?
               </h1>
-              <div className="choice-grid">
+              <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
                 {choices.map((choice, choiceIndex) => (
-                  <button
+                  <OptionButton
                     key={choice.id}
-                    className="choice choice-flag"
-                    type="button"
-                    disabled={busy}
+                    layout="tile"
+                    state={optionState(choice.id)}
+                    locked={busy || Boolean(feedback)}
                     // Sem a descrição das cores, as quatro opções tinham o
                     // mesmo nome acessível e eram indistinguíveis para quem
                     // usa leitor de tela. O ordinal continua no rótulo porque
@@ -532,48 +530,98 @@ function StudySessionReady({
                     onClick={() => void answerReverseChoice(choice.id)}
                   >
                     {/* Decorativa: o rótulo do botão já descreve a bandeira. */}
-                    <FlagImage entity={choice} alt={{ kind: "decorative" }} />
+                    <FlagImage
+                      entity={choice}
+                      alt={{ kind: "decorative" }}
+                      size="fill"
+                    />
                     <span aria-hidden="true">Opção {choiceIndex + 1}</span>
-                  </button>
+                  </OptionButton>
                 ))}
               </div>
             </>
           ) : (
             <>
-              <span className="eyebrow">Recordação sem pista</span>
-              <h1 className="study-prompt">Digite o nome desta entidade.</h1>
+              <Eyebrow>Recordação sem pista</Eyebrow>
+              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
+                Digite o nome desta entidade.
+              </h1>
               <FlagImage
                 entity={entity}
-                alt={{ kind: "unnamed" }}
+                alt={{ kind: feedback ? "named" : "unnamed" }}
                 eager
-                className="quiz-flag"
+                size="hero"
               />
-              <form className="answer-form" onSubmit={submitForward}>
+              {/* O formulário permanece montado depois de respondido, pelo
+                  mesmo motivo da grade: o que a pessoa escreveu continua à
+                  vista ao lado da correção. */}
+              <form
+                className="mx-auto grid max-w-copy gap-3"
+                onSubmit={submitForward}
+              >
                 <label htmlFor="study-answer" className="sr-only">
                   Nome da entidade
                 </label>
                 <input
                   id="study-answer"
+                  className="h-[58px] w-full rounded-[13px] border-2 border-input bg-white px-4 py-[13px] text-lg text-ink"
                   value={answer}
                   onChange={(event) => setAnswer(event.target.value)}
                   placeholder="Digite o nome em português"
                   autoComplete="off"
                   autoFocus
                   disabled={busy}
+                  readOnly={Boolean(feedback)}
                 />
-                <span className="field-hint">
-                  Acentos são opcionais; nomes ambíguos não são aceitos.
-                </span>
-                <div className="answer-actions">
-                  <button
-                    className="button"
-                    type="submit"
-                    disabled={!answer.trim() || busy}
-                  >
-                    Responder <CornerDownLeft size={18} aria-hidden="true" />
-                  </button>
-                </div>
+                {!feedback && (
+                  <>
+                    <span className="text-sm text-ink-soft">
+                      Acentos são opcionais; nomes ambíguos não são aceitos.
+                    </span>
+                    <div className="flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
+                      <Button type="submit" disabled={!answer.trim() || busy}>
+                        Responder{" "}
+                        <CornerDownLeft size={18} aria-hidden="true" />
+                      </Button>
+                    </div>
+                  </>
+                )}
               </form>
+            </>
+          )}
+
+          {feedback && (
+            <>
+              <FeedbackPanel
+                className="mt-5"
+                tone={feedbackTone(feedback.outcome)}
+                eyebrow={
+                  feedback.outcome === "correct"
+                    ? "Acerto de primeira"
+                    : feedback.outcome === "partial"
+                      ? "Acerto parcial"
+                      : "Vamos corrigir"
+                }
+                answer={entity.displayNamePtBr}
+                submitted={
+                  feedback.outcome === "correct" ? undefined : feedback.answer
+                }
+                explanation={
+                  feedback.outcome === "correct"
+                    ? "A próxima revisão será espaçada conforme a estabilidade desta lembrança."
+                    : feedback.outcome === "partial"
+                      ? "Você sabia a entidade, mas a grafia será reforçada mais cedo."
+                      : "O item reaparecerá depois de outras bandeiras; a correção imediata não contará como retenção."
+                }
+              />
+              <div className="mt-[18px] flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
+                <Button type="button" onClick={continueAfterFeedback}>
+                  {feedback.nextStep
+                    ? "Agora, lembre sem alternativas"
+                    : "Continuar"}
+                  <ArrowRight size={18} aria-hidden="true" />
+                </Button>
+              </div>
             </>
           )}
         </section>

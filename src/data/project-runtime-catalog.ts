@@ -32,11 +32,6 @@ export function projectRuntimeCatalog(
       displayNamePtBr: entity.displayNamePtBr,
       aliasesPtBr: entity.aliasesPtBr,
       region: entity.region,
-      // Só a organização interessa ao filtro do catálogo; status, fonte e data
-      // de verificação ficam no artefato completo.
-      organizations: [
-        ...new Set(entity.memberships.map(({ organization }) => organization))
-      ].sort(),
       flagPath: flag.filePath,
       palette,
       ...(entity.editorialNote ? { editorialNote: entity.editorialNote } : {})

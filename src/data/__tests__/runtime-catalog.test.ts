@@ -38,9 +38,9 @@ describe("runtime-catalog.json", () => {
     }
   });
 
-  it("dá a todas as 220 entidades um caminho de bandeira", () => {
+  it("dá a toda entidade um caminho de bandeira", () => {
     const runtime = projectRuntimeCatalog(catalog, palettes);
-    expect(runtime.entities).toHaveLength(220);
+    expect(runtime.entities).toHaveLength(catalog.entities.length);
     for (const entity of runtime.entities) {
       expect(entity.flagPath).toMatch(/^\/flags\/[a-z-]+\.(svg|png)$/);
       // Paleta vazia quebraria tanto a escolha de distratores quanto a

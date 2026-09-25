@@ -25,7 +25,7 @@ import {
   getAppSettings,
   SINGLETON_KEY,
   getDatabase,
-  type PtankiDatabase
+  type BrunankiDatabase
 } from "./database";
 import { downloadBackupFile } from "./backup-file";
 import {
@@ -33,13 +33,13 @@ import {
   prepareImport,
   serializeDatabaseExport,
   type ImportTarget,
-  type PtankiExport
+  type BrunankiExport
 } from "./export";
 
 export type { LearningSnapshot };
 
 export async function readLearningSnapshot(
-  db: PtankiDatabase = getDatabase()
+  db: BrunankiDatabase = getDatabase()
 ): Promise<LearningSnapshot> {
   const [skillStates, attempts, diagnosticRecord, settingsRecord] =
     await Promise.all([
@@ -69,7 +69,7 @@ function sameEntitySet(
 
 export async function startOrResumeDiagnostic(
   entityIds: readonly string[],
-  db: PtankiDatabase = getDatabase(),
+  db: BrunankiDatabase = getDatabase(),
   now: Date = new Date()
 ): Promise<DiagnosticState> {
   const existing = (await db.diagnostics.get(SINGLETON_KEY))?.state;
@@ -104,7 +104,7 @@ export interface SavedDiagnosticAnswer {
 
 export async function saveDiagnosticAnswer(
   input: SaveDiagnosticAnswerInput,
-  db: PtankiDatabase = getDatabase()
+  db: BrunankiDatabase = getDatabase()
 ): Promise<SavedDiagnosticAnswer> {
   const preferences = await getAppSettings(db);
   if (!Number.isInteger(input.responseMs) || input.responseMs < 0) {
@@ -164,7 +164,7 @@ export async function saveDiagnosticAnswer(
 }
 
 export async function resetAllData(
-  db: PtankiDatabase = getDatabase()
+  db: BrunankiDatabase = getDatabase()
 ): Promise<void> {
   await db.transaction(
     "rw",
@@ -185,21 +185,21 @@ export async function resetAllData(
 
 export async function exportProgress(
   catalogVersion: string,
-  db: PtankiDatabase = getDatabase()
+  db: BrunankiDatabase = getDatabase()
 ): Promise<string> {
   return serializeDatabaseExport(db, catalogVersion);
 }
 
 export interface ImportProgressOptions {
   saveBackup: (backupJson: string) => void | Promise<void>;
-  confirmReplace: (incoming: PtankiExport) => boolean | Promise<boolean>;
+  confirmReplace: (incoming: BrunankiExport) => boolean | Promise<boolean>;
 }
 
 export async function importProgress(
   json: string,
   target: ImportTarget,
   options?: ImportProgressOptions,
-  db: PtankiDatabase = getDatabase()
+  db: BrunankiDatabase = getDatabase()
 ): Promise<boolean> {
   const prepared = await prepareImport(db, json, target);
   const handlers = options ?? browserImportHandlers();

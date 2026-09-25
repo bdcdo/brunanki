@@ -17,7 +17,10 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     setupFiles: ["./src/test/setup.ts"],
-    exclude: ["e2e/**", "node_modules/**"],
+    // `**/node_modules/**` e não `node_modules/**`: o segundo é ancorado na
+    // raiz e deixa passar as dependências de qualquer worktree que o harness
+    // crie em `.claude/worktrees/`, que a suíte então coleta e executa.
+    exclude: ["e2e/**", "**/node_modules/**", ".claude/**"],
     coverage: {
       reporter: ["text", "html"],
       // Sem `include`, o v8 só reporta arquivos que algum teste importou, e a

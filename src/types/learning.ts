@@ -7,10 +7,20 @@ export type LearningPhase = "unseen" | "acquiring" | "scheduled";
 /**
  * Os exercícios que o aplicativo de fato gera.
  *
- * Não existe um exercício de "bandeiras parecidas": a semelhança visual é
- * política de escolha dos distratores (ver domain/distractors.ts), aplicada
- * aos exercícios de alternativa. Um exercício à parte seria um segundo jeito
- * de fazer a mesma coisa.
+ * Falta aqui o contraste entre bandeiras parecidas. Este comentário registrava
+ * a recusa dele, com o argumento de que a semelhança visual já é política de
+ * escolha dos distratores (ver domain/distractors.ts) e de que um exercício à
+ * parte seria um segundo jeito de fazer a mesma coisa.
+ *
+ * Esse argumento foi revertido pela ADR-0006: acertar entre quatro opções
+ * é evidência de recuperação; distinguir um par é evidência de discriminação,
+ * e é essa segunda que o critério de domínio precisa consumir. Some-se que a
+ * confundibilidade calculada não enxerga tom nem disposição — ela empata Chade
+ * e Romênia sem ter como distingui-los —, de modo que os pares que importam
+ * precisam ser curados, não inferidos.
+ *
+ * `contrastChoice` entra quando o currículo editorial existir; até lá, a
+ * ausência é lacuna conhecida, não decisão.
  */
 export type ExerciseKind =
   "diagnostic" | "flagToNameChoice" | "nameToFlagChoice" | "flagToNameInput";

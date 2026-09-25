@@ -1,1078 +1,572 @@
+/* ---------------------------------------------------------------------------
+   Brunanki: tokens e base. Tailwind v4 é CSS-first: não existe
+   tailwind.config.ts, e tudo o que o compilador precisa saber está neste
+   arquivo.
+
+   O preflight entra pelo `@import "tailwindcss"` completo. Ele zera
+   list-style de ol/ul, font-size e font-weight de h1..h6 e text-decoration de
+   a (preflight.css:84-85, 94-95, 205). O bloco @layer base adiante devolve,
+   um a um, o que ele tira e o app tomava emprestado do agente do usuário.
+
+   Duas mudanças visuais ele traz de propósito, e ambas são melhorias que
+   valem registrar porque aparecem em qualquer comparação de tela:
+
+   1. `img, svg, video… { display: block }` (preflight.css:214-223) elimina o
+      vão de linha-base que elementos substituídos inline reservam para as
+      descendentes. Os ícones dos cartões da home carregavam 7,5px de espaço
+      fantasma cada um.
+   2. Os links de texto passam a ter sublinhado com deslocamento e espessura
+      derivados da fonte, em lugar do padrão do navegador, que corta as
+      descendentes da Atkinson Hyperlegible.
+
+   Existiu aqui uma quinta camada, `legacy`, entre `components` e `utilities`.
+   Era ela que permitia migrar um elemento por vez sem !important: as 74
+   classes da folha antiga venciam o preflight e as classes-assinatura, mas
+   perdiam de qualquer utilitário, propriedade por propriedade. As 74 saíram,
+   `src/app/legacy.css` foi apagado, e a camada com ele.
+--------------------------------------------------------------------------- */
+@layer theme, base, components, utilities;
+
+@import "tailwindcss";
+
+/* O detector de classes do Tailwind varre todo arquivo versionado do projeto,
+   e os artefatos do catálogo somam meio megabyte de JSON. Qualquer número
+   solto ali vira um falso positivo: sem esta exclusão o CSS emitido ganha
+   utilitários inexistentes no código (.m-817, .m-2541 e outros catorze),
+   gerados a partir de dimensões de bandeira e códigos de licença. */
+@source not "../data/*.json";
+
 :root {
-  --ink: #153236;
-  --ink-soft: #526568;
+  /* — superfícies e tinta ------------------------------------------------- */
   --paper: #f7f3e9;
   --paper-deep: #eee8da;
   --surface: #fffdf7;
-  --line: #d8d4c7;
-  --teal: #197b75;
-  --teal-dark: #0f5f5b;
-  --coral: #b94a37;
-  --yellow: #f4c650;
-  --green-soft: #dcebe2;
-  --coral-soft: #f7dfd9;
-  --yellow-soft: #fbefc8;
-  --shadow: 0 16px 40px rgb(21 50 54 / 8%);
-  --radius-sm: 10px;
-  --radius-md: 18px;
-  --radius-lg: 28px;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  background: var(--paper);
-  color: var(--ink);
-}
-
-body {
-  min-height: 100vh;
-  margin: 0;
-  background:
-    linear-gradient(rgb(21 50 54 / 3%) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(21 50 54 / 3%) 1px, transparent 1px),
-    var(--paper);
-  background-size: 32px 32px;
-  font-family: var(--font-body), sans-serif;
-  font-size: 17px;
-  line-height: 1.5;
-}
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
-}
-
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
-}
-
-a {
-  color: inherit;
-}
-
-:focus-visible {
-  outline: 3px solid var(--coral);
-  outline-offset: 3px;
-}
-
-.skip-link {
-  position: fixed;
-  z-index: 100;
-  top: 12px;
-  left: 12px;
-  padding: 10px 16px;
-  border-radius: 8px;
-  background: var(--ink);
-  color: white;
-  transform: translateY(-150%);
-}
-
-.skip-link:focus {
-  transform: translateY(0);
-}
-
-.app-frame {
-  min-height: 100vh;
-}
-
-.sidebar {
-  position: fixed;
-  z-index: 20;
-  inset: 0 auto 0 0;
-  display: flex;
-  width: 254px;
-  padding: 34px 24px 24px;
-  flex-direction: column;
-  background: var(--ink);
-  color: #fffdf7;
-}
-
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  color: inherit;
-  font-family: var(--font-display), sans-serif;
-  font-size: 28px;
-  letter-spacing: -0.04em;
-  text-decoration: none;
-}
-
-.brand-mark {
-  display: grid;
-  width: 36px;
-  height: 30px;
-  overflow: hidden;
-  border: 2px solid currentColor;
-  border-radius: 7px;
-}
-
-.brand-mark span:nth-child(1) {
-  background: var(--yellow);
-}
-
-.brand-mark span:nth-child(2) {
-  background: var(--surface);
-}
-
-.brand-mark span:nth-child(3) {
-  background: var(--coral);
-}
-
-.sidebar-kicker {
-  margin: 8px 0 38px 49px;
-  color: #bed0d0;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.sidebar nav {
-  display: grid;
-  gap: 7px;
-}
-
-.nav-link {
-  display: flex;
-  min-height: 48px;
-  padding: 12px 14px;
-  align-items: center;
-  gap: 12px;
-  border-radius: 12px;
-  color: #d7e0df;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.nav-link:hover {
-  background: rgb(255 255 255 / 8%);
-  color: white;
-}
-
-.nav-link-active {
-  background: var(--yellow);
-  color: var(--ink);
-}
-
-.nav-link-active:hover {
-  background: #ffda72;
-  color: var(--ink);
-}
-
-.sidebar-note {
-  margin-top: auto;
-  padding: 16px;
-  border: 1px solid rgb(255 255 255 / 18%);
-  border-radius: 14px;
-  background: rgb(255 255 255 / 7%);
-}
-
-.sidebar-note strong {
-  display: block;
-  margin: 4px 0;
-  font-size: 14px;
-}
-
-.sidebar-note p {
-  margin: 0;
-  color: #c2d0cf;
-  font-size: 13px;
-}
-
-.sidebar-footer {
-  margin-top: 18px;
-  color: #c2d0cf;
-  font-size: 14px;
-}
-
-.mobile-header {
-  display: none;
-}
-
-.main-content {
-  min-height: 100vh;
-  margin-left: 254px;
-  padding: 48px clamp(28px, 5vw, 80px) 80px;
-}
-
-.page {
-  width: min(1120px, 100%);
-  margin: 0 auto;
-}
-
-.page-narrow {
-  width: min(820px, 100%);
-}
-
-.page-header {
-  display: flex;
-  margin-bottom: 30px;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-.page-header h1,
-.hero h1,
-.study-title {
-  margin: 0;
-  font-family: var(--font-display), sans-serif;
-  font-weight: 700;
-  letter-spacing: -0.045em;
-  line-height: 1.04;
-}
-
-.page-header h1 {
-  font-size: clamp(38px, 5vw, 62px);
-}
-
-.page-header p {
-  max-width: 620px;
-  margin: 10px 0 0;
-  color: var(--ink-soft);
-}
-
-.eyebrow {
-  color: var(--teal-dark);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.sidebar .eyebrow {
-  color: var(--yellow);
-}
-
-.button {
-  display: inline-flex;
-  min-height: 48px;
-  padding: 12px 19px;
-  border: 2px solid transparent;
-  border-radius: 12px;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  background: var(--teal);
-  color: white;
-  cursor: pointer;
-  font-weight: 700;
-  text-decoration: none;
-  transition:
-    transform 160ms ease,
-    background 160ms ease;
-}
-
-.button:hover {
-  background: var(--teal-dark);
-  transform: translateY(-1px);
-}
-
-.button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-  transform: none;
-}
-
-.button-secondary {
-  border-color: var(--line);
-  background: var(--surface);
-  color: var(--ink);
-}
-
-.button-secondary:hover {
-  border-color: var(--ink-soft);
-  background: white;
-}
-
-.button-coral {
-  background: var(--coral);
-}
-
-.button-coral:hover {
-  background: #963625;
-}
-
-.button-ghost {
-  background: transparent;
-  color: var(--ink);
-}
-
-.button-ghost:hover {
-  background: var(--paper-deep);
-}
-
-.icon-button {
-  display: inline-grid;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  place-items: center;
-  background: var(--surface);
-  color: var(--ink);
-}
-
-.hero {
-  position: relative;
-  display: grid;
-  min-height: 430px;
-  overflow: hidden;
-  margin-bottom: 34px;
-  padding: clamp(30px, 5vw, 62px);
-  border-radius: var(--radius-lg);
-  grid-template-columns: 1.1fr 0.9fr;
-  align-items: center;
-  background: var(--ink);
-  box-shadow: var(--shadow);
-  color: white;
-}
-
-.hero::after {
-  position: absolute;
-  right: -90px;
-  bottom: -130px;
-  width: 380px;
-  height: 380px;
-  border: 80px solid rgb(244 198 80 / 14%);
-  border-radius: 50%;
-  content: "";
-}
-
-.hero h1 {
-  max-width: 700px;
-  margin: 12px 0 20px;
-  font-size: clamp(43px, 6vw, 78px);
-}
-
-.hero p {
-  max-width: 580px;
-  margin: 0 0 28px;
-  color: #d9e4e3;
-  font-size: 19px;
-}
-
-.hero .eyebrow {
-  color: var(--yellow);
-}
-
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.hero-visual {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  min-height: 280px;
-  place-items: center;
-}
-
-.hero-stack {
-  position: relative;
-  width: 270px;
-  height: 230px;
-}
-
-.mini-flag {
-  position: absolute;
-  display: grid;
-  width: 190px;
-  height: 128px;
-  overflow: hidden;
-  border: 9px solid white;
-  border-radius: 16px;
-  box-shadow: 0 24px 45px rgb(0 0 0 / 25%);
-}
-
-.mini-flag:nth-child(1) {
-  top: 4px;
-  left: 8px;
-  background: linear-gradient(#009b3a 0 33%, #fedf00 33% 66%, #002776 66%);
-  transform: rotate(-11deg);
-}
-
-.mini-flag:nth-child(2) {
-  top: 52px;
-  right: 0;
-  background: linear-gradient(90deg, #002395 0 33%, white 33% 66%, #ed2939 66%);
-  transform: rotate(8deg);
-}
-
-.mini-flag:nth-child(3) {
-  bottom: 0;
-  left: 30px;
-  background: linear-gradient(#000 0 33%, #dd0000 33% 66%, #ffce00 66%);
-  transform: rotate(-2deg);
-}
-
-.stats-grid {
-  display: grid;
-  margin-bottom: 34px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 15px;
-}
-
-.stat-card,
-.card {
-  border: 1px solid var(--line);
-  background: rgb(255 253 247 / 90%);
-  box-shadow: 0 8px 24px rgb(21 50 54 / 5%);
-}
-
-.stat-card {
-  padding: 20px;
-  border-radius: var(--radius-md);
-}
-
-.stat-card span {
-  color: var(--ink-soft);
-  font-size: 14px;
-}
-
-.stat-card strong {
-  display: block;
-  margin-top: 4px;
-  font-family: var(--font-display), sans-serif;
-  font-size: 34px;
-  letter-spacing: -0.04em;
-}
-
-.card {
-  padding: 24px;
-  border-radius: var(--radius-md);
-}
-
-.section-heading {
-  display: flex;
-  margin: 0 0 16px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.section-heading h2 {
-  margin: 0;
-  font-family: var(--font-display), sans-serif;
-  font-size: 28px;
-  letter-spacing: -0.03em;
-}
-
-.section-heading a {
-  color: var(--teal-dark);
-  font-weight: 700;
-}
-
-.two-column {
-  display: grid;
-  grid-template-columns: 1.35fr 0.65fr;
-  gap: 18px;
-}
-
-.daily-card {
-  display: grid;
-  min-height: 200px;
-  padding: 30px;
-  border-radius: var(--radius-lg);
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 24px;
-  background: var(--yellow-soft);
-  border: 1px solid #e7d57f;
-}
-
-.daily-card h2 {
-  margin: 5px 0 8px;
-  font-family: var(--font-display), sans-serif;
-  font-size: 34px;
-  letter-spacing: -0.04em;
-}
-
-.daily-card p {
-  max-width: 600px;
-  margin: 0 0 20px;
-  color: #4e5b59;
-}
-
-.daily-number {
-  display: grid;
-  width: 132px;
-  height: 132px;
-  border: 10px solid var(--yellow);
-  border-radius: 50%;
-  place-items: center;
-  background: var(--surface);
-  text-align: center;
-}
-
-.daily-number strong {
-  display: block;
-  font-family: var(--font-display), sans-serif;
-  font-size: 40px;
-  line-height: 0.8;
-}
-
-.daily-number span {
-  font-size: 12px;
-}
-
-.progress-block {
-  display: grid;
-  gap: 8px;
-}
-
-.progress-label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  color: var(--ink-soft);
-  font-size: 14px;
-}
-
-.progress-label strong {
-  color: var(--ink);
-}
-
-.progress-track {
-  height: 12px;
-  overflow: hidden;
-  border: 1px solid #c6c5bc;
-  border-radius: 999px;
-  background: white;
-}
-
-.progress-track span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--teal);
-}
-
-.flag-frame {
-  position: relative;
-  display: grid;
-  overflow: hidden;
-  border: 1px solid #a8ada8;
-  border-radius: 9px;
-  place-items: center;
-  background:
-    linear-gradient(45deg, #e8e8e3 25%, transparent 25% 75%, #e8e8e3 75%),
-    linear-gradient(45deg, #e8e8e3 25%, #fff 25% 75%, #e8e8e3 75%);
-  background-position:
-    0 0,
-    6px 6px;
-  background-size: 12px 12px;
-}
-
-/* Posicionamento absoluto preso ao frame, e não dimensões percentuais num
-   item de grid: como a faixa do grid cresce até caber o conteúdo, a altura da
-   imagem se resolvia pela proporção intrínseca do arquivo e ultrapassava o
-   frame — que tem proporção 3/2 e recorta o excedente. A bandeira do Brasil,
-   de proporção 10/7, aparecia cortada no catálogo. Com `inset: 0`, o limite é
-   o próprio frame, e `object-fit: contain` preserva a proporção do arquivo
-   dentro dele.
-
-   Todos os usos de .flag-frame definem altura (aspect-ratio em .flag-card,
-   .choice-flag e .detail-flag; height em .quiz-flag), então o frame nunca
-   colapsa ao tirar a imagem do fluxo. */
-.flag-frame img {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.catalog-toolbar {
-  display: flex;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.search-field,
-.field {
-  display: grid;
-  gap: 7px;
-}
-
-.search-field {
-  position: relative;
-  min-width: min(360px, 100%);
-  flex: 1;
-}
-
-.search-field svg {
-  position: absolute;
-  top: 14px;
-  left: 15px;
-  color: var(--ink-soft);
-}
-
-.search-field input,
-.field input,
-.field select {
-  width: 100%;
-  min-height: 50px;
-  padding: 11px 14px;
-  border: 1px solid #a7aaa4;
-  border-radius: 12px;
-  background: var(--surface);
-  color: var(--ink);
-}
-
-.search-field input {
-  padding-left: 46px;
-}
-
-.field label {
-  font-weight: 700;
-}
-
-.field-hint {
-  margin: 0;
-  color: var(--ink-soft);
-  font-size: 14px;
-}
-
-.catalog-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.flag-card {
-  display: grid;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: var(--surface);
-  box-shadow: 0 7px 20px rgb(21 50 54 / 5%);
-  color: inherit;
-  text-decoration: none;
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease;
-}
-
-.flag-card:hover {
-  box-shadow: 0 14px 30px rgb(21 50 54 / 12%);
-  transform: translateY(-3px);
-}
-
-.flag-card .flag-frame {
-  width: 100%;
-  aspect-ratio: 3 / 2;
-  border: 0;
-  border-bottom: 1px solid var(--line);
-  border-radius: 0;
-}
-
-.flag-card-body {
-  padding: 15px;
-}
-
-.flag-card-body strong {
-  display: block;
-  line-height: 1.25;
-}
-
-.flag-card-body span {
-  color: var(--ink-soft);
-  font-size: 13px;
-}
-
-.pill {
-  display: inline-flex;
-  min-height: 28px;
-  padding: 4px 10px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  align-items: center;
-  gap: 5px;
-  background: var(--surface);
-  color: var(--ink-soft);
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.study-shell {
-  display: grid;
-  gap: 18px;
-}
-
-.study-topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.study-card {
-  min-height: 580px;
-  padding: clamp(22px, 4vw, 46px);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  box-shadow: var(--shadow);
-}
-
-.study-prompt {
-  margin: 6px 0 22px;
-  font-family: var(--font-display), sans-serif;
-  font-size: clamp(28px, 4vw, 42px);
-  letter-spacing: -0.035em;
-  line-height: 1.1;
-}
-
-.quiz-flag {
-  width: min(520px, 100%);
-  height: min(330px, 44vw);
-  min-height: 210px;
-  margin: 0 auto 28px;
-}
-
-.answer-form {
-  display: grid;
-  max-width: 620px;
-  margin: 0 auto;
-  gap: 12px;
-}
-
-.answer-form input {
-  width: 100%;
-  height: 58px;
-  padding: 13px 16px;
-  border: 2px solid #899795;
-  border-radius: 13px;
-  background: white;
-  color: var(--ink);
-  font-size: 19px;
-}
-
-.answer-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.choice-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.choice {
-  min-height: 70px;
-  padding: 14px 16px;
-  border: 2px solid var(--line);
-  border-radius: 14px;
-  background: white;
-  color: var(--ink);
-  cursor: pointer;
-  font-weight: 700;
-  text-align: left;
-}
-
-.choice:hover {
-  border-color: var(--teal);
-}
-
-.choice-flag {
-  display: grid;
-  gap: 10px;
-  text-align: center;
-}
-
-.choice-flag .flag-frame {
-  width: 100%;
-  aspect-ratio: 3 / 2;
-}
-
-.feedback {
-  display: grid;
-  margin-top: 20px;
-  padding: 18px;
-  border: 2px solid var(--line);
-  border-radius: 14px;
-  gap: 5px;
-}
-
-.feedback-correct {
-  border-color: #58946f;
-  background: var(--green-soft);
-}
-
-.feedback-partial {
-  border-color: #b98e2d;
-  background: var(--yellow-soft);
-}
-
-.feedback-incorrect {
-  border-color: #bf5b48;
-  background: var(--coral-soft);
-}
-
-.feedback strong {
-  font-size: 20px;
-}
-
-.notice {
-  padding: 14px 16px;
-  border-left: 5px solid var(--yellow);
-  border-radius: 0 10px 10px 0;
-  background: var(--yellow-soft);
-}
-
-.empty-state {
-  padding: 44px;
-  border: 1px dashed #9ba5a2;
-  border-radius: var(--radius-md);
-  color: var(--ink-soft);
-  text-align: center;
-}
-
-.settings-stack {
-  display: grid;
-  gap: 18px;
-}
-
-.settings-card {
-  display: grid;
-  padding: 24px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 24px;
-  background: var(--surface);
-}
-
-.settings-card h2 {
-  margin: 0 0 5px;
-  font-size: 21px;
-}
-
-.settings-card p {
-  max-width: 640px;
-  margin: 0;
-  color: var(--ink-soft);
-}
-
-.detail-grid {
-  display: grid;
-  grid-template-columns: minmax(300px, 1fr) 1fr;
-  gap: 34px;
-}
-
-.detail-flag {
-  width: 100%;
-  aspect-ratio: 3 / 2;
-}
-
-.detail-meta {
-  display: grid;
-  margin: 0;
-  gap: 0;
-}
-
-.detail-meta div {
-  padding: 14px 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.detail-meta dt {
-  color: var(--ink-soft);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.detail-meta dd {
-  margin: 4px 0 0;
-  font-weight: 700;
-}
-
-.credits-list {
-  display: grid;
-  gap: 10px;
-}
-
-.credit-row {
-  display: grid;
-  padding: 13px 0;
-  border-bottom: 1px solid var(--line);
-  grid-template-columns: 1.1fr 1.4fr auto;
-  gap: 20px;
-  align-items: center;
-  font-size: 14px;
-}
-
-.muted {
-  color: var(--ink-soft);
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  padding: 0;
-  border: 0;
-  margin: -1px;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-}
-
-@media (max-width: 1040px) {
-  .stats-grid,
-  .catalog-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .hero {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-visual {
-    display: none;
+  --ink: #153236;
+  --ink-soft: #526568; /* 5,54:1 sobre --paper */
+  --line: #d8d4c7; /* separador decorativo — 1,46:1, NÃO delimita controle */
+
+  /* — o acento, em quatro papéis -----------------------------------------
+       --brand      preenchimento (barra de progresso, botão primário)
+       --brand-ui   borda, anel, ícone — piso de 3:1 (WCAG 1.4.11)
+       --brand-deep TEXTO pequeno sobre papel, e hover — piso de 4,5:1
+       --brand-on   texto sobre --brand
+
+     Acento fixo: nada da maquinaria de OKLCH do projeto de referência, onde a
+     cor muda por adversário em tempo de execução. A estrutura de papéis fica
+     porque é ela que impede que alguém use o tom claro sob texto branco, ou em
+     texto de 12px sobre papel.
+
+     --brand e --brand-ui colapsam no mesmo valor; --brand-deep não. Medido
+     contra o papel real (#f7f3e9, e não contra o creme do projeto de
+     referência): #197b75 dá 4,59:1, que passa o piso de 4,5 por 0,09 — margem
+     nula para os consumidores reais, que são texto de 12px (.eyebrow, em dez
+     arquivos) e link de seção. #0f5f5b dá 6,75:1 e já existe na paleta. */
+  --brand: #197b75; /* 5,00:1 sobre --surface */
+  --brand-ui: #197b75; /* 4,59:1 sobre --paper — folga sobre os 3:1 */
+  --brand-deep: #0f5f5b; /* 6,75:1 sobre --paper */
+  --brand-on: #fff; /* 5,08:1 sobre --brand */
+
+  /* — destaque quente: meta do dia, navegação ativa, marca ---------------- */
+  --highlight: #f4c650; /* 8,46:1 com --ink por cima */
+  --highlight-soft: #fbefc8;
+  --highlight-edge: #e7d57f;
+
+  /* — alerta: ação destrutiva e anel de foco ------------------------------ */
+  --alert: #b94a37; /* 4,63:1 sobre --paper; 5,13:1 com branco por cima */
+  --alert-soft: #f7dfd9;
+  --alert-on: #fff;
+
+  /* — desfecho da tentativa ----------------------------------------------
+     Nomes de AttemptOutcome (src/types/learning.ts:4), e não de placar: o
+     Brunanki corrige uma tentativa, não julga um duelo.
+
+     As linhas mudaram de valor porque a cor da borda É o sinal de estado, e as
+     antigas não alcançavam 3:1 contra o próprio preenchimento — não contra o
+     papel, que era onde eu estava medindo: #58946f sobre #dcebe2 dá 2,90:1 e
+     #b98e2d sobre #fbefc8 dá 2,62:1. A de erro (3,44:1) já passava.
+
+     Os pares `-on` existem para que o preenchimento total de uma alternativa
+     nunca precise de um #fff fixo sobre cor crua. */
+  --outcome-correct: #dcebe2;
+  --outcome-correct-line: #2f7d54; /* 4,07:1 (era #58946f, 2,90:1) */
+  --outcome-correct-on: #fff;
+  --outcome-partial: #fbefc8;
+  --outcome-partial-line: #8a6a12; /* 4,40:1 (era #b98e2d, 2,62:1) */
+  --outcome-partial-on: #fff;
+  --outcome-incorrect: #f7dfd9;
+  --outcome-incorrect-line: #bf5b48; /* 3,44:1 — já passava, preservado */
+  --outcome-incorrect-on: #fff;
+
+  /* — texto sobre superfície escura --------------------------------------
+     Colapsa quatro cinzas quase idênticos e escolhidos a olho (#bed0d0,
+     #d7e0df, #c2d0cf, #d9e4e3, medidos entre 8,51 e 10,48 sobre --ink) em dois
+     valores com número conhecido. Um valor, um lugar para mudar. */
+  --on-ink: #fffdf7; /* 13,39:1 */
+  --on-ink-soft: #c2d0cf; /* 8,57:1 */
+
+  /* — papéis canônicos do shadcn -----------------------------------------
+     Precisam existir com estes nomes, senão todo componente vindo do CLI nasce
+     sem cor. Cada um aponta para um token do Brunanki declarado acima. */
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--brand);
+  --primary-foreground: var(--brand-on);
+  --secondary: var(--surface);
+  --secondary-foreground: var(--ink);
+  --muted: var(--paper-deep);
+  --muted-foreground: var(--ink-soft);
+  /* ATENÇÃO: em shadcn, --accent é a superfície de HOVER de ghost/outline, e
+     não o acento da marca — é o que o `.button-ghost:hover` legado fazia. Pôr
+     o teal aqui pintaria todo hover fantasma de teal sólido. A marca vive só
+     nos --brand*. */
+  --accent: var(--paper-deep);
+  --accent-foreground: var(--ink);
+  --destructive: var(--alert);
+  --destructive-foreground: var(--alert-on);
+  --border: var(--line);
+  /* Delimita controle, então o piso é 3:1 e não 1,46:1. O #a7aaa4 que os
+     campos usavam media 2,31:1. */
+  --input: #7c8a88; /* 3,53:1 sobre --surface; 3,24:1 sobre --paper */
+  --ring: var(--alert);
+
+  /* — barra lateral ------------------------------------------------------- */
+  --sidebar: var(--ink);
+  --sidebar-foreground: var(--on-ink);
+  --sidebar-muted: var(--on-ink-soft);
+  --sidebar-accent: var(--highlight);
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: rgb(255 255 255 / 18%);
+
+  /* — quadro da bandeira -------------------------------------------------
+     Mesmo piso de 3:1 do --input, e pelo mesmo motivo: em bandeira que tem
+     branco (Japão, Coreia do Sul) a borda é a única coisa que informa onde a
+     bandeira termina e o cartão começa. O #a8ada8 de hoje mede 2,24:1. */
+  --flag-line: var(--input);
+  --flag-checker: #e8e8e3;
+  --flag-checker-alt: #fff;
+
+  /* — papel milimetrado do fundo ----------------------------------------- */
+  --paper-grid-line: rgb(21 50 54 / 3%);
+  --paper-grid-step: 32px;
+
+  /* — raio ---------------------------------------------------------------
+     Nomes de papel, e não o ramo sm/md/lg/xl do Tailwind: sobrescrever aquele
+     ramo pela metade produziria uma escala mentirosa, com o rounded-sm de 4px
+     do Tailwind ao lado de um rounded-md de 18px nosso. O --radius-sm de 10px
+     que existia não entra: zero consumidores. --radius existe apenas para os
+     componentes de shadcn que o leem diretamente. */
+  --radius-control: 12px; /* botão, campo, item de navegação */
+  --radius-card: 18px;
+  --radius-panel: 28px;
+  --radius: var(--radius-control);
+
+  /* — sombra ------------------------------------------------------------- */
+  --shadow-card: 0 8px 24px rgb(21 50 54 / 5%);
+  --shadow-card-lifted: 0 14px 30px rgb(21 50 54 / 12%);
+  --shadow-panel: 0 16px 40px rgb(21 50 54 / 8%);
+  --shadow-float: 0 24px 45px rgb(0 0 0 / 25%);
+
+  /* — escala tipográfica -------------------------------------------------
+     Não existia nenhuma: os tamanhos estavam espalhados por 24 declarações e
+     por style inline (app/page.tsx tem quatro fontSize:22). Dez degraus que
+     CONTÊM os valores atuais, mais quatro tamanhos fluidos com papel
+     explícito.
+
+     Em px, e não em rem, porque a raiz do documento é 16px e o corpo do app é
+     17px: um --text-base em rem encolheria o corpo para 16.
+
+     O que se ganha é escala com intenção — 20, 21 e 22px não coexistem a 1px
+     de distância; colapsam em --type-xl. */
+  --type-2xs: 12px; /* .eyebrow, .sidebar-kicker */
+  --type-xs: 13px; /* .pill, .detail-meta dt */
+  --type-sm: 14px; /* .stat-card span, .field-hint */
+  --type-body: 17px;
+  --type-lg: 19px; /* .hero p, campo de resposta */
+  --type-xl: 21px; /* colapsa 20, 21 e 22 */
+  --type-2xl: 24px;
+  --type-3xl: 28px; /* .brand, .section-heading h2 */
+  --type-4xl: 34px; /* .stat-card strong, .daily-card h2 */
+  --type-5xl: 40px; /* .daily-number strong */
+  --type-page: clamp(38px, 5vw, 62px); /* h1 de página */
+  --type-hero: clamp(43px, 6vw, 78px); /* h1 da home */
+  --type-prompt: clamp(28px, 4vw, 42px); /* a pergunta do exercício */
+  --type-figure: clamp(48px, 10vw, 88px); /* o número do resumo de sessão */
+
+  --lead-body: 1.5;
+  --lead-label: 1.35;
+  --lead-name: 1.25; /* .flag-card-body strong */
+  --lead-prompt: 1.1;
+  --lead-page: 1.04;
+  --lead-figure: 0.85;
+
+  /* Colapsa -0,045/-0,04/-0,035em em dois passos com papel definido, e
+     0,14/0,12em num só: variação de 0,005em não é decisão, é ruído. */
+  --track-page: -0.045em;
+  --track-title: -0.04em;
+  --track-heading: -0.03em;
+  --track-label: 0.12em;
+  --track-label-sm: 0.08em; /* .detail-meta dt */
+
+  /* — medidas -----------------------------------------------------------
+     A largura de 254px da barra lateral NÃO está aqui: ela passa a existir uma
+     única vez, no grid-template-columns do AppShell. Um token para um
+     consumidor só é indireção. */
+  --measure-page: 1120px;
+  --measure-narrow: 820px;
+  --measure-copy: 620px; /* colapsa 580/600/620/640 de largura de texto */
+  --gutter: clamp(28px, 5vw, 80px);
+}
+
+/* O corpo cai um degrau no layout de coluna única. Como o @theme inline
+   abaixo mapeia --text-base para var(--type-body), esta única linha desloca
+   junto o utilitário text-base e o corpo do documento.
+
+   O 761px repete o `--breakpoint-md` declarado adiante, e a repetição é
+   forçada: um @media precisa do número em tempo de build, e uma var() aqui
+   não resolveria. Mudar um exige mudar o outro. */
+@media (width < 761px) {
+  :root {
+    --type-body: 16px;
   }
 }
 
-@media (max-width: 760px) {
+/* ---------------------------------------------------------------------------
+   MAPA PARA OS NAMESPACES DE UTILITÁRIO.
+
+   `inline` porque o valor de cada chave é um var(): o utilitário sai como
+   `color: var(--ink-soft)` em vez de `color: var(--color-muted-foreground)`, o
+   que mantém o :root acima como fonte única e deixa um futuro bloco de
+   @media (prefers-color-scheme: dark) funcionar sem tocar aqui.
+--------------------------------------------------------------------------- */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-paper: var(--paper);
+  --color-paper-deep: var(--paper-deep);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-brand-ui: var(--brand-ui);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-on: var(--brand-on);
+  --color-highlight: var(--highlight);
+  --color-highlight-soft: var(--highlight-soft);
+  --color-highlight-edge: var(--highlight-edge);
+  --color-alert: var(--alert);
+  --color-alert-soft: var(--alert-soft);
+  --color-alert-on: var(--alert-on);
+  --color-outcome-correct: var(--outcome-correct);
+  --color-outcome-correct-line: var(--outcome-correct-line);
+  --color-outcome-correct-on: var(--outcome-correct-on);
+  --color-outcome-partial: var(--outcome-partial);
+  --color-outcome-partial-line: var(--outcome-partial-line);
+  --color-outcome-partial-on: var(--outcome-partial-on);
+  --color-outcome-incorrect: var(--outcome-incorrect);
+  --color-outcome-incorrect-line: var(--outcome-incorrect-line);
+  --color-outcome-incorrect-on: var(--outcome-incorrect-on);
+  --color-on-ink: var(--on-ink);
+  --color-on-ink-soft: var(--on-ink-soft);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-muted: var(--sidebar-muted);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-flag-line: var(--flag-line);
+
+  /* As duas faces vêm do next/font em src/app/layout.tsx, que declara
+     --font-body e --font-display no elemento.
+
+     O rosto de título é --font-title, e não --font-display, de propósito:
+     `--font-display: var(--font-display)` seria uma referência circular no
+     :root emitido pelo tema. */
+  --font-sans: var(--font-body);
+  --font-title: var(--font-display);
+
+  --text-2xs: var(--type-2xs);
+  --text-2xs--line-height: var(--lead-label);
+  --text-xs: var(--type-xs);
+  --text-xs--line-height: var(--lead-label);
+  --text-sm: var(--type-sm);
+  --text-sm--line-height: var(--lead-body);
+  --text-base: var(--type-body);
+  --text-base--line-height: var(--lead-body);
+  --text-lg: var(--type-lg);
+  --text-lg--line-height: var(--lead-body);
+  --text-xl: var(--type-xl);
+  --text-xl--line-height: var(--lead-name);
+  --text-2xl: var(--type-2xl);
+  --text-2xl--line-height: var(--lead-name);
+  --text-3xl: var(--type-3xl);
+  --text-3xl--line-height: var(--lead-name);
+  --text-4xl: var(--type-4xl);
+  --text-4xl--line-height: var(--lead-page);
+  --text-5xl: var(--type-5xl);
+  --text-5xl--line-height: var(--lead-page);
+  --text-page: var(--type-page);
+  --text-page--line-height: var(--lead-page);
+  --text-hero: var(--type-hero);
+  --text-hero--line-height: var(--lead-page);
+  --text-prompt: var(--type-prompt);
+  --text-prompt--line-height: var(--lead-prompt);
+  --text-figure: var(--type-figure);
+  --text-figure--line-height: var(--lead-figure);
+
+  --tracking-page: var(--track-page);
+  --tracking-title: var(--track-title);
+  --tracking-heading: var(--track-heading);
+  --tracking-label: var(--track-label);
+  --tracking-label-sm: var(--track-label-sm);
+
+  --leading-body: var(--lead-body);
+  --leading-label: var(--lead-label);
+  --leading-name: var(--lead-name);
+  --leading-prompt: var(--lead-prompt);
+  --leading-page: var(--lead-page);
+
+  --radius-control: var(--radius-control);
+  --radius-card: var(--radius-card);
+  --radius-panel: var(--radius-panel);
+  --shadow-card: var(--shadow-card);
+  --shadow-card-lifted: var(--shadow-card-lifted);
+  --shadow-panel: var(--shadow-panel);
+  --shadow-float: var(--shadow-float);
+  --container-page: var(--measure-page);
+  --container-narrow: var(--measure-narrow);
+  --container-copy: var(--measure-copy);
+  --spacing-gutter: var(--gutter);
+}
+
+/* ---------------------------------------------------------------------------
+   Chaves que o compilador precisa ler em tempo de build, e que por isso NÃO
+   podem ser var(): um breakpoint entra dentro de @media, onde o Tailwind
+   precisa do número, não de uma referência a resolver no browser.
+--------------------------------------------------------------------------- */
+@theme {
+  /* Estes dois nasceram como complemento exato dos @media do CSS legado, para
+     que não existisse faixa de viewport em que o utilitário se dissesse
+     desktop e a classe legada se dissesse mobile. O legado morreu, e o TODO
+     registrado no commit 1 dizia devolvê-los a 48rem/64rem.
+
+     Ficam, e o motivo mudou de lugar: os dois números deixaram de descrever
+     uma folha que não existe mais e passaram a ser as quebras do desenho —
+     todas as telas convertidas os consomem por `max-md:` e `max-lg:`, e o
+     `DESKTOP` de AppShell.tsx repete o 761 em matchMedia. Voltar aos padrões
+     moveria dezenas de quebras de layout de uma vez, sem que teste nenhum
+     visse: o e2e mede 412px e 1280px, e as fronteiras estão em 760 e 1040.
+     Isso é decisão de design, e não higiene de fim de migração. */
+  --breakpoint-md: 761px;
+  --breakpoint-lg: 1041px;
+
+  /* Transição curta e uniforme. 160ms/ease é o que `.button` e o cartão do
+     catálogo já usavam; virando padrão, todo utilitário `transition` sai com
+     o tempo do app, sem repetir duration-* em cada call site. */
+  --default-transition-duration: 160ms;
+  --default-transition-timing-function: ease;
+}
+
+/* ---------------------------------------------------------------------------
+   BASE. Só o que é do elemento, e sobretudo o que o preflight tira e nada
+   repõe.
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    /* Light-first declarado. Nada declarava color-scheme, e por isso o
+       <select> do catálogo (CatalogClient.tsx:55) renderiza com a paleta
+       escura do sistema dentro de um cartão claro. O par disso é
+       colorScheme: "light" no viewport, em src/app/layout.tsx. */
+    color-scheme: light;
+    background: var(--color-background);
+    color: var(--color-foreground);
+  }
+
   body {
-    font-size: 16px;
+    /* 100dvh, e não 100vh: no mobile a barra de URL do navegador fazia o
+       min-height render maior que a área visível. */
+    min-height: 100dvh;
+    background:
+      linear-gradient(var(--paper-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--paper-grid-line) 1px, transparent 1px),
+      var(--color-background);
+    background-size: var(--paper-grid-step) var(--paper-grid-step);
+    font-family: var(--font-sans), sans-serif;
+    font-size: var(--text-base);
+    line-height: var(--leading-body);
   }
 
-  .mobile-header {
-    position: sticky;
-    z-index: 18;
-    top: 0;
-    display: flex;
-    min-height: 70px;
-    padding: 10px 18px;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--line);
-    background: rgb(247 243 233 / 94%);
-    backdrop-filter: blur(10px);
+  /* O preflight remove o sublinhado de todo <a> (preflight.css:94-95). Devolvê-lo
+     não é preferência: sem ele, um link dentro de um parágrafo passa a se
+     distinguir só pela cor, o que é a falha que a WCAG 1.4.1 descreve. Que o
+     legado desligue text-decoration explicitamente em .brand, .nav-link,
+     .button e .flag-card prova que o sublinhado do restante era intencional.
+
+     Deslocamento e espessura vêm da fonte porque o sublinhado padrão corta as
+     descendentes da Atkinson Hyperlegible. Quem não é link de texto desliga
+     com `no-underline`. */
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    text-decoration-thickness: from-font;
   }
 
-  .mobile-header .brand {
-    font-size: 24px;
+  /* O preflight zera list-style de ol/ul/menu (preflight.css:205), e a lista
+     de regras da abertura do diagnóstico (DiagnosticSession.tsx:165-172)
+     depende da numeração para fazer sentido: "1. Não há alternativas" só é
+     lido como regra numerada se o número estiver lá. */
+  ol {
+    list-style: decimal;
+    padding-inline-start: 1.4em;
   }
 
-  .sidebar {
-    width: min(310px, 86vw);
-    transform: translateX(-105%);
-    transition: transform 180ms ease;
+  /* Devolve o que o app tomava emprestado do agente do usuário.
+     O preflight zera margem de tudo e faz h1..h6 herdarem tamanho e peso
+     (preflight.css:13, 84-85). O CSS legado declara `font-size` em alguns
+     títulos — .settings-card h2 em 21px, .section-heading h2 em 28px — mas
+     nunca declara `font-weight`, porque o negrito vinha de graça. Sem estas
+     regras, seis títulos ficam em peso normal e dois deles caem para o tamanho
+     do corpo.
+
+     Ficam mesmo com as telas todas em utilitários, e é deliberado: o dano é do
+     elemento, não do componente, e há títulos no app que não têm — nem devem
+     ter — tamanho próprio. Os dois <h2> da tela de progresso e o "Como
+     funciona" da abertura do diagnóstico dependem destas regras, e o
+     `<h1>` de EmptyState e da abertura de sessão herda daqui o seu 2em.
+     Espalhar `text-[2em]` por eles seria trocar uma regra de elemento por
+     cinco cópias de um número. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 700;
   }
 
-  .sidebar-open {
-    transform: translateX(0);
+  h1 {
+    font-size: 2em;
   }
 
-  .desktop-brand {
-    display: none;
+  h2 {
+    font-size: 1.5em;
   }
 
-  .sidebar-kicker {
-    margin: 8px 0 28px;
+  h3 {
+    font-size: 1.17em;
   }
 
-  .sidebar-backdrop {
-    position: fixed;
-    z-index: 19;
-    inset: 0;
-    border: 0;
-    background: rgb(10 25 28 / 55%);
+  p {
+    margin-block: 1em;
   }
 
-  .main-content {
-    margin-left: 0;
-    padding: 28px 18px 60px;
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
   }
 
-  .page-header,
-  .study-topbar {
-    align-items: flex-start;
-    flex-direction: column;
+  /* Foco visível, e caro de perder. Três pixels de coral com três de folga
+     (4,63:1 contra o papel, acima dos 3:1 que a WCAG 1.4.11 pede de um
+     indicador), e :focus-visible em vez de :focus para não punir quem clica
+     com o mouse. */
+  :focus-visible {
+    outline: 3px solid var(--color-ring);
+    outline-offset: 3px;
   }
 
-  .hero {
-    min-height: 0;
-    padding: 30px 24px;
-  }
-
-  .hero h1 {
-    font-size: 45px;
-  }
-
-  .stats-grid,
-  .catalog-grid,
-  .two-column,
-  .detail-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .daily-card {
-    grid-template-columns: 1fr;
-  }
-
-  .daily-number {
-    width: 110px;
-    height: 110px;
-    grid-row: 1;
-  }
-
-  .choice-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .study-card {
-    min-height: 520px;
-    padding: 22px 18px;
-  }
-
-  .quiz-flag {
-    height: 230px;
-  }
-
-  .answer-actions,
-  .settings-card {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .settings-card {
-    grid-template-columns: 1fr;
-  }
-
-  .credit-row {
-    grid-template-columns: 1fr;
-    gap: 4px;
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
+/* ---------------------------------------------------------------------------
+   CLASSES-ASSINATURA. Só o que utilitário não expressa de forma legível, e
+   nada sem consumidor.
+--------------------------------------------------------------------------- */
+@layer components {
+  /* O xadrez de transparência atrás da bandeira. Bandeira é SVG com fundo
+     transparente, e sem o xadrez não se distingue o branco da bandeira do
+     vazio do cartão — em Japão e Coreia do Sul isso é a diferença entre ver a
+     bandeira e ver nada. Dois gradientes a 45° deslocados de meio passo não
+     têm tradução legível em utilitário.
+
+     `aspect-ratio` é padrão da classe AGORA, e essa é a correção. Antes a
+     altura era herdada de cada uso, com um comentário afirmando que "todos os
+     usos definem altura" — invariante confiada a cada chamador, e falsa: as
+     três bandeiras de exemplo da abertura do diagnóstico não definiam
+     nenhuma, e como a imagem é `position: absolute` o quadro ficava sem filho
+     em fluxo e desabava para os 2px da borda. Com o padrão aqui, o estado
+     ruim deixa de ser construível. */
+  .flag-frame {
+    position: relative;
+    display: grid;
+    overflow: hidden;
+    aspect-ratio: 3 / 2;
+    border: 1px solid var(--flag-line);
+    border-radius: 9px;
+    place-items: center;
+    background:
+      linear-gradient(
+        45deg,
+        var(--flag-checker) 25%,
+        transparent 25% 75%,
+        var(--flag-checker) 75%
+      ),
+      linear-gradient(
+        45deg,
+        var(--flag-checker) 25%,
+        var(--flag-checker-alt) 25% 75%,
+        var(--flag-checker) 75%
+      );
+    background-position:
+      0 0,
+      6px 6px;
+    background-size: 12px 12px;
+  }
+
+  /* Posicionamento absoluto preso ao quadro, e não dimensão percentual num
+     item de grid: como a faixa do grid cresce até caber o conteúdo, a altura
+     da imagem se resolvia pela proporção do arquivo e ultrapassava o quadro,
+     que tem proporção 3/2 e recorta o excedente — a bandeira do Brasil, de
+     10/7, aparecia cortada no catálogo. Com `inset: 0` o limite é o quadro, e
+     `object-fit: contain` preserva a proporção do arquivo dentro dele. É o
+     que permite servir 30 razões distintas, do Nepal a 0,82 ao Catar a 2,545,
+     sem cortar nenhuma. */
+  .flag-frame img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 }
