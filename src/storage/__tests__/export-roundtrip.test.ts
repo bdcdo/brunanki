@@ -138,6 +138,10 @@ describe("backup de ida e volta", () => {
       now
     );
 
+    // As quatro tabelas do destino têm conteúdo antes da importação. O caso
+    // real é o de appSettings: quem restaura um backup quase sempre já tem
+    // configurações gravadas, e sem o clear() dela o add() falharia por chave
+    // duplicada.
     const destination = freshDatabase();
     await destination.attempts.add({
       id: "antiga",
@@ -149,6 +153,27 @@ describe("backup de ida e volta", () => {
       responseMs: 4000,
       createdAt: "2026-09-01T12:00:00.000Z"
     });
+    await destination.skillStates.add({
+      id: "chl::flagToNameRecall",
+      entityId: "chl",
+      skill: "flagToNameRecall",
+      phase: "acquiring",
+      distinctSuccessDays: [],
+      updatedAt: "2026-09-01T12:00:00.000Z"
+    });
+    await destination.diagnostics.add({
+      id: SINGLETON_KEY,
+      state: {
+        entityOrder: ["chl", "bra"],
+        currentIndex: 1,
+        startedAt: "2026-09-01T12:00:00.000Z"
+      }
+    });
+    await destination.appSettings.add({
+      id: SINGLETON_KEY,
+      settings: { desiredRetention: 0.95, timeZone: "Europe/Lisbon" }
+    });
+
     await applyPreparedImport(
       destination,
       await prepareImport(destination, exported, target, now)
@@ -157,5 +182,12 @@ describe("backup de ida e volta", () => {
     expect((await destination.attempts.toArray()).map((a) => a.id)).toEqual([
       "a1"
     ]);
+    expect(
+      (await destination.skillStates.toArray()).map((s) => s.id).sort()
+    ).toEqual(["bra::flagToNameRecall", "chl::nameToFlagRecognition"]);
+    expect(await destination.diagnostics.count()).toBe(0);
+    expect(
+      (await destination.appSettings.get(SINGLETON_KEY))?.settings
+    ).toEqual({ desiredRetention: 0.85, timeZone: "America/Sao_Paulo" });
   });
 });
