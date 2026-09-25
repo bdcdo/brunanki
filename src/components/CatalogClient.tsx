@@ -10,7 +10,8 @@ import {
   countStages,
   type StageCounts
 } from "@/components/ui/stage-legend";
-import { albumPages } from "@/data/curriculum";
+import { useApp } from "@/components/AppProvider";
+import { albumPages, type AlbumPage } from "@/data/curriculum";
 import { entities, entityById } from "@/data/runtime-catalog";
 import { entityStage, type EntityStage } from "@/domain/mastery";
 import { normalizeCountryName } from "@/domain/text";
@@ -23,9 +24,20 @@ import type { RuntimeEntity } from "@/types/runtime-catalog";
  * A busca fica fora do portão do armazenamento: ela leva à página de licença
  * e atribuição de cada bandeira, que não depende de progresso nenhum, e com o
  * IndexedDB indisponível o álbum some, mas a busca continua funcionando.
+ *
+ * O cabeçalho lê o snapshot direto do provider, e não de dentro do
+ * `AppReady`, para ficar acima da busca: a página abre pelo título do álbum.
+ * As telas de carregamento e de erro continuam sendo as do `AppReady`, em
+ * volta só das páginas, para aparecerem uma vez.
  */
 export function CatalogClient() {
   const [query, setQuery] = useState("");
+  const { state } = useApp();
+  const snapshot = state.kind === "ready" ? state.snapshot : undefined;
+  const album = useMemo(
+    () => (snapshot ? albumOf(snapshot) : undefined),
+    [snapshot]
+  );
   const results = useMemo(() => {
     const normalized = normalizeCountryName(query);
     if (!normalized) return undefined;
@@ -38,6 +50,11 @@ export function CatalogClient() {
 
   return (
     <div className="mx-auto w-full max-w-page">
+      {album ? (
+        <AlbumHeader album={album} />
+      ) : (
+        <h1 className="sr-only">Álbum</h1>
+      )}
       <label className="relative mb-6 grid gap-[7px]">
         <span className="sr-only">Buscar qualquer bandeira</span>
         {/* O ícone é irmão do campo, não filho: posicioná-lo por cima e
@@ -64,13 +81,10 @@ export function CatalogClient() {
           : ""}
       </p>
       {results ? (
-        <>
-          <h1 className="sr-only">Busca no catálogo</h1>
-          <SearchResults results={results} />
-        </>
+        <SearchResults results={results} />
       ) : (
         <AppReady loadingLabel="Abrindo o álbum.">
-          {({ snapshot }) => <AlbumReady snapshot={snapshot} />}
+          {() => (album ? <AlbumPages album={album} /> : null)}
         </AppReady>
       )}
     </div>
@@ -84,80 +98,95 @@ const STAGE_LABEL: Record<EntityStage, string> = {
   unseen: "vazia"
 };
 
-function AlbumReady({ snapshot }: { snapshot: LearningSnapshot }) {
+interface Album {
+  readonly continent: LearningSnapshot["settings"]["activeContinent"];
+  readonly pages: readonly AlbumPage[];
+  readonly stageOf: ReadonlyMap<string, EntityStage>;
+  readonly counts: StageCounts;
+}
+
+function albumOf(snapshot: LearningSnapshot): Album {
   const continent = snapshot.settings.activeContinent;
-  const pages = useMemo(() => albumPages(continent), [continent]);
-  const stageOf = useMemo(() => {
-    const stages = new Map<string, EntityStage>();
-    for (const { slots } of pages) {
-      for (const { entityId } of slots) {
-        stages.set(entityId, entityStage(entityId, snapshot.skills));
-      }
+  const pages = albumPages(continent);
+  const stageOf = new Map<string, EntityStage>();
+  for (const { slots } of pages) {
+    for (const { entityId } of slots) {
+      stageOf.set(entityId, entityStage(entityId, snapshot.skills));
     }
-    return stages;
-  }, [pages, snapshot.skills]);
-  const counts = countStages([...stageOf.values()]);
+  }
+  return {
+    continent,
+    pages,
+    stageOf,
+    counts: countStages([...stageOf.values()])
+  };
+}
 
+function AlbumHeader({ album }: { album: Album }) {
+  const { continent, stageOf, counts } = album;
   return (
-    <>
-      <header className="mb-6 overflow-hidden rounded-card bg-surface shadow-card">
-        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 bg-brand px-7 py-5 text-brand-on max-md:px-5 max-md:py-4">
-          <h1 className="m-0 font-title text-5xl leading-page font-extrabold tracking-title max-md:text-4xl">
-            Álbum {CONTINENT_OF_PT_BR[continent]}
-          </h1>
-          <span className="text-base">
-            {counts.mastered} de {stageOf.size} coladas
-          </span>
-        </div>
-        <div className="grid gap-4 px-7 py-5 max-md:px-5">
-          <StageLegend counts={counts} />
-          <p className="m-0 text-sm text-ink-soft">
-            O número é a ordem sugerida em que as bandeiras novas chegam. A
-            figurinha é colada quando a bandeira fica dominada.
-          </p>
-        </div>
-      </header>
-
-      <div className="grid gap-6">
-        {pages.map(({ subregion, slots }) => {
-          const pageCounts = countStages(
-            slots.map(({ entityId }) => stageOf.get(entityId) ?? "unseen")
-          );
-          return (
-            <section
-              key={subregion}
-              aria-labelledby={`page-${subregion}`}
-              className="rounded-card bg-surface p-6 shadow-card max-md:p-4"
-            >
-              <div className="mb-4 flex flex-wrap items-baseline justify-between gap-x-4">
-                <h2
-                  id={`page-${subregion}`}
-                  className="m-0 font-title text-3xl font-extrabold tracking-title"
-                >
-                  {SUBREGION[subregion].labelPtBr}
-                </h2>
-                <PageCount counts={pageCounts} total={slots.length} />
-              </div>
-              <ul className="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4 p-0 max-md:grid-cols-2 max-md:gap-3">
-                {slots.map(({ entityId, number }) => {
-                  const entity = entityById.get(entityId);
-                  if (!entity) return null;
-                  return (
-                    <li key={entityId}>
-                      <AlbumSlot
-                        entity={entity}
-                        number={number}
-                        stage={stageOf.get(entityId) ?? "unseen"}
-                      />
-                    </li>
-                  );
-                })}
-              </ul>
-            </section>
-          );
-        })}
+    <header className="mb-6 overflow-hidden rounded-card bg-surface shadow-card">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 bg-brand px-7 py-5 text-brand-on max-md:px-5 max-md:py-4">
+        <h1 className="m-0 font-title text-5xl leading-page font-extrabold tracking-title max-md:text-4xl">
+          Álbum {CONTINENT_OF_PT_BR[continent]}
+        </h1>
+        <span className="text-base">
+          {counts.mastered} de {stageOf.size} coladas
+        </span>
       </div>
-    </>
+      <div className="grid gap-4 px-7 py-5 max-md:px-5">
+        <StageLegend counts={counts} />
+        <p className="m-0 text-sm text-ink-soft">
+          O número é a ordem sugerida em que as bandeiras novas chegam. A
+          figurinha é colada quando a bandeira fica dominada.
+        </p>
+      </div>
+    </header>
+  );
+}
+
+function AlbumPages({ album }: { album: Album }) {
+  const { pages, stageOf } = album;
+  return (
+    <div className="grid gap-6">
+      {pages.map(({ subregion, slots }) => {
+        const pageCounts = countStages(
+          slots.map(({ entityId }) => stageOf.get(entityId) ?? "unseen")
+        );
+        return (
+          <section
+            key={subregion}
+            aria-labelledby={`page-${subregion}`}
+            className="rounded-card bg-surface p-6 shadow-card max-md:p-4"
+          >
+            <div className="mb-4 flex flex-wrap items-baseline justify-between gap-x-4">
+              <h2
+                id={`page-${subregion}`}
+                className="m-0 font-title text-3xl font-extrabold tracking-title"
+              >
+                {SUBREGION[subregion].labelPtBr}
+              </h2>
+              <PageCount counts={pageCounts} total={slots.length} />
+            </div>
+            <ul className="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4 p-0 max-md:grid-cols-2 max-md:gap-3">
+              {slots.map(({ entityId, number }) => {
+                const entity = entityById.get(entityId);
+                if (!entity) return null;
+                return (
+                  <li key={entityId}>
+                    <AlbumSlot
+                      entity={entity}
+                      number={number}
+                      stage={stageOf.get(entityId) ?? "unseen"}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        );
+      })}
+    </div>
   );
 }
 

@@ -100,8 +100,7 @@ function ProgressPageReady({ snapshot }: { snapshot: LearningSnapshot }) {
           <p className="text-ink-soft">
             Vazia enquanto a bandeira não apareceu; em andamento enquanto ela
             volta nas revisões; colada quando fica dominada. Colar não encerra
-            as revisões, e um erro numa figurinha colada a devolve para em
-            andamento.
+            as revisões, e uma figurinha colada pode voltar para em andamento.
           </p>
         </article>
         <article className={cardVariants()}>
