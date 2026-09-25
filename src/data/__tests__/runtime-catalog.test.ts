@@ -6,6 +6,7 @@ import m49Json from "../../../scripts/sources/m49.json";
 import type { M49Snapshot } from "@/data/m49";
 import {
   CONTINENT_IDS,
+  CONTINENT_LABEL_PT_BR,
   SUBREGION,
   SUBREGION_IDS,
   type SubregionId
@@ -68,7 +69,19 @@ describe("runtime-catalog.json", () => {
         entity.continent
       );
     }
-    expect(JSON.stringify(runtimeJson)).not.toContain("América Setentrional");
+    // Nenhum rótulo de continente ou sub-região aparece como valor dos dois
+    // campos de geografia.
+    const values = new Set(
+      runtimeJson.entities.flatMap((entity) => [
+        entity.continent,
+        entity.subregion
+      ])
+    );
+    const labels = [
+      ...Object.values(CONTINENT_LABEL_PT_BR),
+      ...Object.values(SUBREGION).map(({ labelPtBr }) => labelPtBr)
+    ];
+    for (const label of labels) expect(values.has(label)).toBe(false);
   });
 
   it("é bem menor que o catálogo completo", () => {

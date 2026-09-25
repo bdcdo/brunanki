@@ -36,7 +36,6 @@ interface RestCountry {
   cca2?: string;
   cca3: string;
   ccn3?: string;
-  region?: string;
   translations?: { por?: { common: string; official: string } };
   altSpellings?: string[];
   unMember?: boolean;

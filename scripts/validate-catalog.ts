@@ -192,15 +192,18 @@ async function main(): Promise<void> {
   const m49Index = indexM49(m49Json as M49Snapshot);
   const subregionCount = new Map<string, number>();
   for (const entity of catalog.entities) {
-    const { subregion } = geographyFor(
-      entity.id,
-      entity.identifiers.unM49,
-      m49Index
-    );
+    // O cruzamento vem antes da tradução: um código trocado que caia numa
+    // área sem região, como a Antártida, falharia na tradução com uma
+    // mensagem que não diz que o código está errado.
     const area = m49Index.get(entity.identifiers.unM49 ?? "");
     assert(
       area?.iso3 === entity.identifiers.isoAlpha3,
       `Código M49 de ${entity.id} aponta para ${area?.iso3 ?? "nada"}, não para ${entity.identifiers.isoAlpha3 ?? "?"}`
+    );
+    const { subregion } = geographyFor(
+      entity.id,
+      entity.identifiers.unM49,
+      m49Index
     );
     subregionCount.set(subregion, (subregionCount.get(subregion) ?? 0) + 1);
   }

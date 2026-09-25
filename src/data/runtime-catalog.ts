@@ -5,7 +5,8 @@ import runtimeJson from "./runtime-catalog.json";
 /**
  * O catálogo como o navegador o vê.
  *
- * Gerado por `pnpm data:runtime` a partir de `catalog.json`, com a projeção de
+ * Gerado por `pnpm data:runtime` a partir de `catalog.json` e do snapshot M49
+ * em `scripts/sources/m49.json`, com a projeção de
  * `project-runtime-catalog.ts`. Toda tela de cliente deve importar daqui; o
  * catálogo completo é `@/data/catalog`, marcado com `server-only`.
  */

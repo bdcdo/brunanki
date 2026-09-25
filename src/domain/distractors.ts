@@ -1,10 +1,12 @@
+import type { ContinentId } from "@/types/geography";
+
 import type { ColorNamePtBr } from "./palette";
 import { paletteSimilarity } from "./palette";
 import { shuffle, weightedSample, type RandomSource } from "./shuffle";
 
 export interface DistractorCandidate {
   readonly id: string;
-  readonly continent: string;
+  readonly continent: ContinentId;
   readonly palette: readonly ColorNamePtBr[];
 }
 
