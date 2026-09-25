@@ -414,10 +414,9 @@
     text-decoration-thickness: from-font;
   }
 
-  /* O preflight zera list-style de ol/ul/menu (preflight.css:205), e a lista
-     de regras da abertura do diagnóstico (DiagnosticSession.tsx:165-172)
-     depende da numeração para fazer sentido: "1. Não há alternativas" só é
-     lido como regra numerada se o número estiver lá. */
+  /* O preflight zera list-style de ol/ul/menu (preflight.css:205). Uma lista
+     numerada escrita como <ol> depende do número para ser lida como sequência,
+     e sem esta regra ela chegaria à tela como parágrafos soltos. */
   ol {
     list-style: decimal;
     padding-inline-start: 1.4em;
@@ -433,9 +432,9 @@
 
      Ficam mesmo com as telas todas em utilitários, e é deliberado: o dano é do
      elemento, não do componente, e há títulos no app que não têm — nem devem
-     ter — tamanho próprio. Os dois <h2> da tela de progresso e o "Como
-     funciona" da abertura do diagnóstico dependem destas regras, e o
-     `<h1>` de EmptyState e da abertura de sessão herda daqui o seu 2em.
+     ter — tamanho próprio. Os dois <h2> da tela de progresso dependem destas
+     regras, e o `<h1>` de EmptyState e da abertura de sessão herda daqui o
+     seu 2em.
      Espalhar `text-[2em]` por eles seria trocar uma regra de elemento por
      cinco cópias de um número. */
   h1,
@@ -516,10 +515,9 @@
 
      `aspect-ratio` é padrão da classe AGORA, e essa é a correção. Antes a
      altura era herdada de cada uso, com um comentário afirmando que "todos os
-     usos definem altura" — invariante confiada a cada chamador, e falsa: as
-     três bandeiras de exemplo da abertura do diagnóstico não definiam
-     nenhuma, e como a imagem é `position: absolute` o quadro ficava sem filho
-     em fluxo e desabava para os 2px da borda. Com o padrão aqui, o estado
+     usos definem altura" — invariante confiada a cada chamador, e falsa: um
+     uso sem altura, como a imagem é `position: absolute`, deixava o quadro
+     sem filho em fluxo, e ele desabava para os 2px da borda. Com o padrão aqui, o estado
      ruim deixa de ser construível. */
   .flag-frame {
     position: relative;

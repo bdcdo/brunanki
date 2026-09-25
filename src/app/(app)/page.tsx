@@ -1,39 +1,21 @@
 "use client";
 
-import { ArrowRight, Brain, CalendarClock, CheckCircle2 } from "lucide-react";
+import { ArrowRight, Lock } from "lucide-react";
 import Link from "next/link";
+import { useMemo } from "react";
+
 import { AppReady } from "@/components/AppReady";
 import { buttonVariants } from "@/components/ui/button";
-import { CardHeader, CardTitle, cardVariants } from "@/components/ui/card";
-import { Eyebrow } from "@/components/ui/eyebrow";
-import { Meter } from "@/components/ui/meter";
-import { PageHeader } from "@/components/ui/page-header";
-import { StatCard } from "@/components/ui/stat-card";
 import { entities } from "@/data/runtime-catalog";
+import { buildDailyQueue, newEntityOrder } from "@/domain/daily-queue";
+import { entityStage, type EntityStage } from "@/domain/mastery";
+import { cn } from "@/lib/utils";
+import {
+  CONTINENT_IDS,
+  CONTINENT_LABEL_PT_BR,
+  CONTINENT_OF_PT_BR
+} from "@/types/geography";
 import type { LearningSnapshot } from "@/types/learning";
-
-const METHOD = [
-  {
-    icon: Brain,
-    claim: "Tente antes de ver",
-    detail: "Recuperar a resposta fortalece mais do que reler."
-  },
-  {
-    icon: CalendarClock,
-    claim: "Reveja na hora certa",
-    detail: "O intervalo cresce conforme a lembrança se estabiliza."
-  },
-  {
-    icon: CheckCircle2,
-    claim: "Avance com evidência",
-    detail: "Digitar o nome faz parte do domínio, sem atalhos."
-  },
-  {
-    icon: ArrowRight,
-    claim: "Alternativas parecidas",
-    detail: "As opções erradas são bandeiras fáceis de confundir."
-  }
-];
 
 export default function HomePage() {
   return (
@@ -43,195 +25,184 @@ export default function HomePage() {
   );
 }
 
+/**
+ * O que a fila pede agora, dito em uma frase.
+ *
+ * Os números vêm da mesma `buildDailyQueue` que a sessão usa, com a mesma
+ * ordem de novidades do continente ativo. Se a home fizesse a conta por
+ * conta própria, ela poderia prometer uma sessão diferente da que abre.
+ */
+function nextActivity(snapshot: LearningSnapshot): {
+  headline: string;
+  hasWork: boolean;
+} {
+  const plan = buildDailyQueue({
+    entityOrder: newEntityOrder(entities, snapshot.settings.activeContinent),
+    states: snapshot.skills,
+    recentAttempts: snapshot.attempts,
+    baseNewLimit: 5
+  });
+  const reviews = plan.dueCount + plan.correctionCount;
+  const hasNew = plan.items.some(({ reason }) => reason === "new");
+  const reviewText =
+    reviews === 1 ? "1 revisão pendente" : `${reviews} revisões pendentes`;
+
+  if (reviews > 0 && hasNew) {
+    return { headline: `${reviewText}, depois bandeira nova`, hasWork: true };
+  }
+  if (reviews > 0) return { headline: reviewText, hasWork: true };
+  if (hasNew) {
+    return {
+      headline:
+        snapshot.skills.length === 0
+          ? "Sua primeira bandeira está pronta"
+          : "Próxima bandeira nova",
+      hasWork: true
+    };
+  }
+  return { headline: "Nada pendente agora", hasWork: false };
+}
+
+// Os três estados se separam pela forma, e não pela cor: cheia, meio cheia e
+// só o contorno tracejado do espaço do álbum. Um verde claro para "em
+// andamento" mediria pouco mais de 1:1 contra o branco e não diria nada.
+const HALF_FILLED =
+  "border-[1.5px] border-dashed border-input bg-[linear-gradient(to_top,var(--brand)_50%,transparent_50%)]";
+const SLOT_CLASS: Record<EntityStage, string> = {
+  mastered: "bg-brand",
+  reviewing: HALF_FILLED,
+  acquiring: HALF_FILLED,
+  unseen: "border-[1.5px] border-dashed border-input"
+};
+
 function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
-  const { diagnostic, skills, attempts } = snapshot;
-  const completedDiagnostic = Boolean(diagnostic?.completedAt);
-  const diagnosed = diagnostic?.currentIndex ?? 0;
-  const scheduled = skills.filter(
-    (skill) => skill.phase === "scheduled"
-  ).length;
-  const acquiring = skills.filter(
-    (skill) => skill.phase === "acquiring"
-  ).length;
-  const correct = attempts.filter(
-    (attempt) => attempt.outcome === "correct"
-  ).length;
-  const accuracy =
-    attempts.length === 0 ? 0 : Math.round((correct / attempts.length) * 100);
+  const continent = snapshot.settings.activeContinent;
+  const activity = nextActivity(snapshot);
+
+  const stages = useMemo(
+    () =>
+      entities
+        .filter((entity) => entity.continent === continent)
+        .map(({ id }) => entityStage(id, snapshot.skills)),
+    [continent, snapshot.skills]
+  );
+  const mastered = stages.filter((stage) => stage === "mastered").length;
+  const unseen = stages.filter((stage) => stage === "unseen").length;
+  const inProgress = stages.length - mastered - unseen;
+  const stageSummary = `${mastered} ${mastered === 1 ? "colada" : "coladas"}, ${inProgress} em andamento, ${unseen} ${unseen === 1 ? "vazia" : "vazias"}`;
+  const others = CONTINENT_IDS.filter((id) => id !== continent);
 
   return (
-    <div className="mx-auto w-full max-w-page">
-      {!completedDiagnostic ? (
-        <>
-          <section className="relative mb-[34px] grid min-h-[430px] items-center overflow-hidden on-ink rounded-panel bg-ink p-[clamp(30px,5vw,62px)] text-on-ink shadow-panel max-md:min-h-0 max-md:px-6 max-md:py-[30px] lg:grid-cols-[1.1fr_0.9fr]">
-            {/* Era `.hero::after`. Vira elemento porque um pseudo não se
-                escreve em utilitário — e o `aria-hidden` explícito diz o que o
-                `::after` só implicava. */}
-            <span
-              aria-hidden="true"
-              className="absolute -right-[90px] -bottom-[130px] size-[380px] rounded-full border-[80px] border-highlight/14"
-            />
-            {/* Sem `z-index` aqui de propósito: o anel decorativo acima é
-                posicionado e já pinta sobre conteúdo estático, e promover este
-                bloco a camada própria troca o antialiasing subpixel do título
-                por grayscale. */}
-            <div>
-              <Eyebrow className="text-highlight">
-                {entities.length} bandeiras · um plano só seu
-              </Eyebrow>
-              <h1 className="mt-3 mb-5 max-w-[700px] font-title text-hero font-bold tracking-title max-md:text-[45px]">
-                Reconheça o mundo inteiro.
-              </h1>
-              <p className="mb-7 max-w-[580px] text-lg text-on-ink-soft">
-                Descubra o que você já sabe, aprenda no seu ritmo e reveja cada
-                bandeira antes de esquecer.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                {/* `highlight` porque o painel é de tinta, e o `default`, que
-                    também é tinta, sumiria contra ele. A cor de alerta fica
-                    no que não tem volta: hoje, só "Apagar progresso". */}
-                <Link
-                  href="/diagnostico"
-                  className={buttonVariants({ variant: "highlight" })}
-                >
-                  {diagnosed > 0
-                    ? "Continuar diagnóstico"
-                    : "Começar diagnóstico"}
-                  <ArrowRight size={19} aria-hidden="true" />
-                </Link>
-                <Link
-                  href="/catalogo"
-                  className={buttonVariants({ variant: "secondary" })}
-                >
-                  Abrir o álbum
-                </Link>
-              </div>
-            </div>
-            <div
-              className="relative z-[1] grid min-h-[280px] place-items-center max-lg:hidden"
-              aria-hidden="true"
-            >
-              <div className="relative h-[230px] w-[270px]">
-                {/* As três são decorativas e não saem do catálogo: são
-                    gradientes, não bandeiras de verdade. Por isso o bloco
-                    inteiro é `aria-hidden` e as cores ficam literais. */}
-                <span className="absolute top-1 left-2 h-32 w-[190px] -rotate-[11deg] rounded-2xl border-[9px] border-white bg-[linear-gradient(#009b3a_0_33%,#fedf00_33%_66%,#002776_66%)] shadow-float" />
-                <span className="absolute top-[52px] right-0 h-32 w-[190px] rotate-[8deg] rounded-2xl border-[9px] border-white bg-[linear-gradient(90deg,#002395_0_33%,white_33%_66%,#ed2939_66%)] shadow-float" />
-                <span className="absolute bottom-0 left-[30px] h-32 w-[190px] -rotate-2 rounded-2xl border-[9px] border-white bg-[linear-gradient(#000_0_33%,#dd0000_33%_66%,#ffce00_66%)] shadow-float" />
-              </div>
-            </div>
-          </section>
-
-          <div
-            className="mb-[34px] grid grid-cols-4 gap-[15px] max-lg:grid-cols-2 max-md:grid-cols-1"
-            aria-label="O que você vai aprender"
+    <div className="mx-auto grid w-full max-w-page grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] gap-8 max-lg:grid-cols-1 max-md:gap-5">
+      <section
+        aria-labelledby="album-title"
+        className="overflow-hidden rounded-card bg-surface shadow-card max-lg:order-2"
+      >
+        <div className="flex items-baseline justify-between gap-4 bg-brand px-7 py-5 text-brand-on max-md:px-5 max-md:py-4">
+          <h1
+            id="album-title"
+            className="font-title text-5xl leading-page font-extrabold tracking-title max-md:text-4xl"
           >
-            <StatCard
-              label="Entidades"
-              value={entities.length}
-              note="reconhecidas pela ONU"
-            />
-            <StatCard
-              label="Diagnóstico"
-              value={diagnosed}
-              note="já respondidas"
-            />
-            <StatCard
-              label="Tipos de prática"
-              value={4}
-              note="dificuldade crescente"
-            />
-            <StatCard
-              label="Conta necessária"
-              value="Não"
-              note="progresso local"
-            />
-          </div>
-
-          {diagnostic && diagnosed > 0 && (
-            <section
-              className={cardVariants()}
-              aria-labelledby="diagnostic-progress-title"
-            >
-              <CardHeader>
-                <CardTitle id="diagnostic-progress-title">
-                  Seu diagnóstico
-                </CardTitle>
-                <Link href="/diagnostico" className="font-bold text-brand-deep">
-                  Retomar
-                </Link>
-              </CardHeader>
-              <Meter
-                value={diagnosed}
-                max={entities.length}
-                label="Bandeiras avaliadas"
+            Álbum {CONTINENT_OF_PT_BR[continent]}
+          </h1>
+          <span className="text-base">{stages.length} figurinhas</span>
+        </div>
+        <div className="px-7 pt-6 pb-7 max-md:px-5 max-md:pt-5 max-md:pb-6">
+          <p className="m-0 flex items-baseline gap-2">
+            <strong className="font-title text-figure leading-figure font-extrabold">
+              {mastered}
+            </strong>
+            <span className="text-lg text-ink-soft">
+              de {stages.length} coladas
+            </span>
+          </p>
+          {/* Uma casa por bandeira, na ordem do catálogo. É imagem para o
+              leitor de tela, com a contagem no rótulo, porque ler as casas uma
+              a uma não informa nada que a frase abaixo não diga. */}
+          <div
+            role="img"
+            aria-label={stageSummary}
+            className="mt-5 grid grid-cols-[repeat(auto-fill,minmax(18px,1fr))] gap-1.5"
+          >
+            {stages.map((stage, index) => (
+              <span
+                key={index}
+                className={cn("h-5 rounded-[4px]", SLOT_CLASS[stage])}
               />
-            </section>
-          )}
-        </>
-      ) : (
-        <>
-          <PageHeader
-            eyebrow="Sua sessão"
-            title="Hoje"
-            description="Revisões vencidas primeiro. Novas bandeiras entram quando há espaço."
-          />
-
-          <section className="grid min-h-[200px] grid-cols-[1fr_auto] items-center gap-6 rounded-panel border border-highlight-edge bg-outcome-partial p-[30px] max-md:grid-cols-1">
-            <div>
-              <Eyebrow>Meta adaptativa</Eyebrow>
-              <h2 className="mt-[5px] mb-2 font-title text-4xl leading-body tracking-title">
-                Pronto para reforçar a memória?
-              </h2>
-              <p className="mb-5 max-w-[600px] text-ink-soft">
-                A sessão mistura recordação digitada e reconhecimento, com
-                alternativas fáceis de confundir com a resposta certa.
-              </p>
-              <Link href="/estudar" className={buttonVariants()}>
-                Começar sessão <ArrowRight size={19} aria-hidden="true" />
-              </Link>
-            </div>
-            <div
-              className="grid size-[132px] place-items-center rounded-full border-[10px] border-highlight bg-surface text-center max-md:row-start-1 max-md:size-[110px]"
-              aria-label={`${Math.max(5, acquiring)} exercícios previstos`}
-            >
-              <div>
-                <strong className="block font-title text-5xl leading-[0.8]">
-                  {Math.max(5, acquiring)}
-                </strong>
-                <span className="text-2xs leading-body">exercícios</span>
-              </div>
-            </div>
-          </section>
-
-          <div className="mt-6 mb-[34px] grid grid-cols-4 gap-[15px] max-lg:grid-cols-2 max-md:grid-cols-1">
-            <StatCard label="Em revisão" value={scheduled} />
-            <StatCard label="Em aprendizagem" value={acquiring} />
-            <StatCard label="Precisão geral" value={`${accuracy}%`} />
-            <StatCard label="Bandeiras no atlas" value={entities.length} />
+            ))}
           </div>
-        </>
-      )}
-
-      <section className="mt-[34px]" aria-labelledby="method-title">
-        <CardHeader>
-          <CardTitle id="method-title">Como o Brunanki ensina</CardTitle>
-        </CardHeader>
-        {/* Não são `StatCard`: aqui o cartão não tem número, e a ordem é
-            ícone → afirmação → explicação, não rótulo → valor → nota. Mesma
-            moldura, papéis diferentes. */}
-        <div className="mb-[34px] grid grid-cols-4 gap-[15px] max-lg:grid-cols-2 max-md:grid-cols-1">
-          {METHOD.map(({ icon: Icon, claim, detail }) => (
-            <article key={claim} className={cardVariants({ padding: "sm" })}>
-              <Icon size={24} aria-hidden="true" />
-              <strong className="mt-1 block font-title text-xl leading-body tracking-title">
-                {claim}
-              </strong>
-              <span className="text-sm text-ink-soft">{detail}</span>
-            </article>
-          ))}
+          {/* A legenda diz qual forma é qual estado, e as contagens vão em
+              texto: a faixa sozinha seria só forma. */}
+          <ul className="mt-4 mb-0 flex list-none flex-wrap gap-x-5 gap-y-1.5 p-0 text-base text-ink-soft">
+            <li className="flex items-center gap-2">
+              <span
+                className={cn("h-4 w-5 rounded-[4px]", SLOT_CLASS.mastered)}
+              />
+              {mastered} {mastered === 1 ? "colada" : "coladas"}
+            </li>
+            <li className="flex items-center gap-2">
+              <span
+                className={cn("h-4 w-5 rounded-[4px]", SLOT_CLASS.acquiring)}
+              />
+              {inProgress} em andamento
+            </li>
+            <li className="flex items-center gap-2">
+              <span
+                className={cn("h-4 w-5 rounded-[4px]", SLOT_CLASS.unseen)}
+              />
+              {unseen} {unseen === 1 ? "vazia" : "vazias"}
+            </li>
+          </ul>
+          <p className="mt-3 mb-0 text-sm text-ink-soft">
+            A figurinha é colada quando a bandeira fica dominada.
+          </p>
         </div>
       </section>
+
+      <div className="flex flex-col gap-5 max-lg:order-1">
+        <section
+          aria-labelledby="activity-title"
+          className="on-ink rounded-card bg-ink p-7 text-on-ink max-md:p-5"
+        >
+          <p className="m-0 text-base text-on-ink-soft">Agora</p>
+          <h2
+            id="activity-title"
+            className="mt-1 mb-6 font-title text-4xl leading-name font-extrabold tracking-title"
+          >
+            {activity.headline}
+          </h2>
+          {activity.hasWork ? (
+            <Link
+              href="/estudar"
+              className={cn(buttonVariants({ variant: "highlight" }), "w-full")}
+            >
+              Estudar agora <ArrowRight size={19} aria-hidden="true" />
+            </Link>
+          ) : (
+            <p className="m-0 text-on-ink-soft">
+              A próxima revisão chega quando a memória estiver para esquecer.
+              Enquanto isso, o álbum mostra o que já está colado.
+            </p>
+          )}
+        </section>
+
+        <section aria-labelledby="others-title">
+          <h2 id="others-title" className="mb-2.5 text-base font-bold">
+            Outros álbuns
+          </h2>
+          <ul className="m-0 grid list-none grid-cols-2 gap-2.5 p-0">
+            {others.map((id) => (
+              <li
+                key={id}
+                className="flex items-center gap-2 rounded-control border-[1.5px] border-dashed border-input bg-surface px-3.5 py-3 text-ink-soft"
+              >
+                <Lock size={16} aria-hidden="true" />
+                {CONTINENT_LABEL_PT_BR[id]}, fechado
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import {
   expectNoHorizontalOverflow,
   expectNoSeriousAccessibilityViolations
 } from "./helpers";
-import { catalogEntities } from "./seed";
+import { americasEntities, catalogEntities } from "./seed";
 
 /** O tamanho do catálogo aparece em seis asserções, e fixá-lo faria toda
  *  mudança no conjunto de entidades quebrar testes que nada têm a ver com
@@ -19,21 +19,23 @@ test.beforeEach(async ({ page }) => {
   await openFreshApp(page);
 });
 
-test("home apresenta a proposta e a entrada do diagnóstico sem overflow", async ({
+test("home diz o que fazer agora e mostra o álbum do continente", async ({
   page
 }) => {
+  const americas = americasEntities.length;
   await expect(
-    page.getByRole("heading", { name: "Reconheça o mundo inteiro." })
+    page.getByRole("heading", { name: "Álbum das Américas" })
+  ).toBeVisible();
+  await expect(page.getByText(`de ${americas} coladas`)).toBeVisible();
+  await expect(
+    page.getByRole("img", {
+      name: `0 coladas, 0 em andamento, ${americas} vazias`
+    })
   ).toBeVisible();
   await expect(
-    page.getByText(`${ENTITY_COUNT} bandeiras · um plano só seu`)
+    page.getByRole("heading", { name: "Sua primeira bandeira está pronta" })
   ).toBeVisible();
-  await expect(
-    page.getByRole("link", { name: /Começar diagnóstico/ })
-  ).toBeVisible();
-  await expect(page.getByText("Conta necessária").locator("..")).toContainText(
-    "Não"
-  );
+  await expect(page.getByRole("link", { name: /Estudar agora/ })).toBeVisible();
 
   await expectNoHorizontalOverflow(page);
   await expectNoSeriousAccessibilityViolations(page);
@@ -51,8 +53,8 @@ test("navegação principal funciona em desktop e mobile", async ({ page }) => {
     "page"
   );
 
-  // Escopo na navegação: "Álbum" também casa com "Abrir o álbum", do hero da
-  // home, e o seletor solto viola o modo estrito do Playwright.
+  // Escopo na navegação: a home tem outros textos com "Álbum", e o seletor
+  // solto violaria o modo estrito do Playwright.
   await navigation.getByRole("link", { name: "Álbum" }).click();
   await expect(page).toHaveURL(/\/catalogo$/);
   await expect(page.getByRole("heading", { name: "Álbum" })).toBeVisible();
@@ -107,56 +109,17 @@ test("catálogo filtra nomes, abre detalhes e mantém bandeiras inteiras", async
   await expectNoSeriousAccessibilityViolations(page);
 });
 
-test("diagnóstico registra feedback e persiste o avanço após reload", async ({
+test("perfil zerado entra direto em /estudar pela primeira bandeira das Américas", async ({
   page
 }) => {
-  await page.goto("/diagnostico");
-  await page.getByRole("button", { name: /Começar diagnóstico/ }).click();
-
-  await expect(
-    page.getByRole("heading", { name: "De onde é esta bandeira?" })
-  ).toBeVisible();
-  await expect(page.getByText(`Bandeira 1 de ${ENTITY_COUNT}`)).toBeVisible();
-  // A bandeira do diagnóstico é descrita pelas cores, e não com um texto
-  // genérico igual para todas: descreve sem entregar a resposta.
-  await expect(page.getByRole("img", { name: /^Bandeira com / })).toBeVisible();
-
-  await page
-    .getByRole("textbox", { name: "Nome da entidade" })
-    .fill("resposta deliberadamente incorreta");
-  await page.getByRole("button", { name: /Responder/ }).click();
-
-  await expect(page.getByText("Resposta", { exact: true })).toBeVisible();
-  await expect(
-    page.getByText("Você escreveu: resposta deliberadamente incorreta")
-  ).toBeVisible();
-  await expect(
-    page.getByText("Esta bandeira entrará na etapa de aprendizagem.")
-  ).toBeVisible();
-  await expect(page.getByRole("img", { name: /^Bandeira de / })).toBeVisible();
-
-  await page.reload();
-  await expect(page.getByText(`Bandeira 2 de ${ENTITY_COUNT}`)).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "De onde é esta bandeira?" })
-  ).toBeVisible();
-
-  await expectNoHorizontalOverflow(page);
-  await expectNoSeriousAccessibilityViolations(page);
-});
-
-test("sessão de estudo permanece bloqueada antes do diagnóstico completo", async ({
-  page
-}) => {
+  // Não há diagnóstico nem trava: o estudo abre sem nenhum estado semeado, e
+  // a primeira novidade é do continente ativo, e não do catálogo inteiro.
   await page.goto("/estudar");
-
+  await page.getByRole("button", { name: /Começar sessão/ }).click();
   await expect(
     page.getByRole("heading", {
-      name: "Faça o diagnóstico antes de estudar."
+      name: `Esta é a bandeira de ${americasEntities[0]!.displayNamePtBr}.`
     })
-  ).toBeVisible();
-  await expect(
-    page.getByRole("link", { name: /Ir ao diagnóstico/ })
   ).toBeVisible();
 
   await expectNoHorizontalOverflow(page);

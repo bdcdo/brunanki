@@ -73,6 +73,8 @@ function attempt(overrides: Partial<ReviewAttempt> = {}): ReviewAttempt {
     exercise: "flagToNameInput",
     outcome: "correct",
     isImmediateCorrection: false,
+    mode: "scheduled",
+    awardedXp: 1,
     responseMs: 800,
     createdAt: "2026-07-25T12:00:00.000Z",
     ...overrides

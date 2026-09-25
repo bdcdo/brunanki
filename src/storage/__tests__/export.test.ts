@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   EXPORT_FORMAT,
   EXPORT_SCHEMA_VERSION,
+  IncompatibleBackupError,
   UnknownEntitiesError,
   parseExportJson,
   prepareImport,
@@ -16,7 +17,11 @@ function validExport() {
     schemaVersion: EXPORT_SCHEMA_VERSION,
     catalogVersion: "2026.07.25",
     exportedAt: "2026-07-25T12:00:00.000Z",
-    settings: { desiredRetention: 0.9, timeZone: "America/Sao_Paulo" },
+    settings: {
+      desiredRetention: 0.9,
+      timeZone: "America/Sao_Paulo",
+      activeContinent: "americas"
+    },
     skillStates: [
       {
         id: "brasil::flagToNameRecall",
@@ -27,7 +32,13 @@ function validExport() {
         updatedAt: "2026-07-25T12:00:00.000Z"
       }
     ],
-    attempts: []
+    attempts: [],
+    pairStates: [] as {
+      id: string;
+      entityIds: [string, string];
+      distinctSuccessDays: string[];
+      updatedAt: string;
+    }[]
   };
 }
 
@@ -42,6 +53,8 @@ function exportWithAttempt(exercise: string) {
         exercise,
         outcome: "correct",
         isImmediateCorrection: false,
+        mode: "scheduled",
+        awardedXp: 1,
         responseMs: 900,
         createdAt: "2026-07-25T12:00:00.000Z"
       }
@@ -53,7 +66,7 @@ describe("parseExportJson", () => {
   it("aceita um backup versionado e bem formado", () => {
     expect(parseExportJson(JSON.stringify(validExport()))).toMatchObject({
       format: "brunanki-export",
-      schemaVersion: 2,
+      schemaVersion: 3,
       catalogVersion: "2026.07.25"
     });
   });
@@ -71,17 +84,91 @@ describe("parseExportJson", () => {
     expect(() => parseExportJson(JSON.stringify(data))).toThrow();
   });
 
-  it("rejeita diagnóstico concluído antes de percorrer todas as entidades", () => {
+  it("aceita par na forma canônica e recusa o mesmo par invertido", () => {
+    const pair = {
+      id: "brasil|chile",
+      entityIds: ["brasil", "chile"] as [string, string],
+      distinctSuccessDays: [],
+      updatedAt: "2026-07-25T12:00:00.000Z"
+    };
+    const ok = { ...validExport(), pairStates: [pair] };
+    expect(parseExportJson(JSON.stringify(ok)).pairStates).toHaveLength(1);
+
+    const inverted = {
+      ...validExport(),
+      pairStates: [
+        { ...pair, id: "chile|brasil", entityIds: ["chile", "brasil"] }
+      ]
+    };
+    expect(() => parseExportJson(JSON.stringify(inverted))).toThrow(
+      /forma canônica/
+    );
+  });
+
+  it.each([
+    [
+      "chave certa com entidades invertidas",
+      "brasil|chile",
+      ["chile", "brasil"]
+    ],
+    ["chave que não é das entidades", "brasil|xyz", ["brasil", "chile"]]
+  ])("recusa par com %s", (_caso, id, entityIds) => {
     const data = {
       ...validExport(),
-      diagnosticState: {
-        entityOrder: ["brasil", "chile"],
-        currentIndex: 1,
-        startedAt: "2026-07-25T10:00:00.000Z",
-        completedAt: "2026-07-25T11:00:00.000Z"
-      }
+      pairStates: [
+        {
+          id,
+          entityIds: entityIds as [string, string],
+          distinctSuccessDays: [],
+          updatedAt: "2026-07-25T12:00:00.000Z"
+        }
+      ]
     };
-    expect(() => parseExportJson(JSON.stringify(data))).toThrow();
+    expect(() => parseExportJson(JSON.stringify(data))).toThrow(
+      /forma canônica/
+    );
+  });
+
+  it("recusa XP que a regra não daria", () => {
+    const data = exportWithAttempt("flagToNameInput");
+    const inflated = {
+      ...data,
+      attempts: [{ ...data.attempts[0]!, outcome: "incorrect" }]
+    };
+    expect(() => parseExportJson(JSON.stringify(inflated))).toThrow(
+      /regra não pontua/
+    );
+  });
+
+  it("recusa preferências sem continente ativo", () => {
+    const data = validExport();
+    const settings: Record<string, unknown> = { ...data.settings };
+    delete settings.activeContinent;
+    expect(() =>
+      parseExportJson(JSON.stringify({ ...data, settings }))
+    ).toThrow();
+  });
+
+  it.each([1, 2])(
+    "recusa backup de antes do piloto (formato %i) dizendo por quê",
+    (schemaVersion) => {
+      const data = { ...validExport(), schemaVersion };
+      expect(() => parseExportJson(JSON.stringify(data))).toThrow(
+        IncompatibleBackupError
+      );
+      expect(() => parseExportJson(JSON.stringify(data))).toThrow(
+        /versão anterior do Brunanki/
+      );
+    }
+  );
+
+  it("recusa tentativa sem modalidade ou XP", () => {
+    const data = exportWithAttempt("flagToNameInput");
+    const withoutMode: Record<string, unknown> = { ...data.attempts[0]! };
+    delete withoutMode.mode;
+    expect(() =>
+      parseExportJson(JSON.stringify({ ...data, attempts: [withoutMode] }))
+    ).toThrow();
   });
 
   it("rejeita backup emitido sob o nome anterior do produto", () => {
@@ -92,8 +179,13 @@ describe("parseExportJson", () => {
   });
 
   it("rejeita backup de versão de esquema desconhecida", () => {
+    // Versão futura não é "anterior": falha pela validação, e não pela
+    // mensagem de incompatibilidade, que falaria de progresso antigo.
     const data = { ...validExport(), schemaVersion: 99 };
     expect(() => parseExportJson(JSON.stringify(data))).toThrow();
+    expect(() => parseExportJson(JSON.stringify(data))).not.toThrow(
+      IncompatibleBackupError
+    );
   });
 
   it("rejeita exercício que nenhum código jamais gerou", () => {
@@ -121,7 +213,7 @@ function emptyDatabase() {
   return {
     skillStates: emptyTable,
     attempts: emptyTable,
-    diagnostics: singleton,
+    pairStates: emptyTable,
     appSettings: singleton
   } as unknown as BrunankiDatabase;
 }
@@ -153,14 +245,17 @@ describe("prepareImport", () => {
     ).rejects.toThrow(UnknownEntitiesError);
   });
 
-  it("lista as entidades desconhecidas encontradas", async () => {
+  it("lista as entidades desconhecidas, inclusive as que só aparecem em par", async () => {
     const data = {
       ...validExport(),
-      diagnosticState: {
-        entityOrder: ["brasil", "lemuria"],
-        currentIndex: 0,
-        startedAt: "2026-07-25T10:00:00.000Z"
-      }
+      pairStates: [
+        {
+          id: "brasil|lemuria",
+          entityIds: ["brasil", "lemuria"] as [string, string],
+          distinctSuccessDays: [],
+          updatedAt: "2026-07-25T12:00:00.000Z"
+        }
+      ]
     };
 
     await expect(

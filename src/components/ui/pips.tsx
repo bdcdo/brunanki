@@ -27,9 +27,9 @@ export function pipStateFor(outcome: AttemptOutcome): PipState {
       return "partial";
     case "incorrect":
       return "missed";
-    // Improduzível em /estudar — só o diagnóstico oferece "Pular" —, mas o
-    // tipo o inclui e o compilador exige tratá-lo. Um item pulado é um item
-    // que não se sabe, que é o mesmo desfecho prático de um errado.
+    // Nenhum exercício atual produz "pulado"; o tipo o inclui para o "Não
+    // sei" do primeiro contato. Um item pulado é um item que não se sabe, que
+    // é o mesmo desfecho prático de um errado.
     case "skipped":
       return "missed";
   }

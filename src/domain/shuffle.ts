@@ -11,8 +11,8 @@ function nextIndex(random: RandomSource, upperBound: number): number {
 /**
  * Embaralhamento de Fisher-Yates com fonte aleatória injetável.
  *
- * Estava embutido em `shuffledEntityOrder`, do diagnóstico, e a sessão de
- * estudo tinha o seu próprio "embaralhamento" que ordenava por
+ * Estava embutido numa função de ordem de entidades, e a sessão de estudo
+ * tinha o seu próprio "embaralhamento" que ordenava por
  * `JSON.stringify` — caro e, pior, estável: a mesma entrada produzia sempre a
  * mesma ordem.
  */

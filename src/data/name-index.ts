@@ -7,10 +7,10 @@ let resolver: CountryNameResolver | undefined;
 /**
  * Instância única do resolvedor de nomes, construída sob demanda.
  *
- * O índice cobre os nomes e apelidos de todas as entidades, e era construído duas
- * vezes — uma no escopo de módulo do StudySession e outra no do
- * DiagnosticSession —, no momento do import de cada um. Memoizar aqui garante
- * um índice só, montado apenas quando alguma tela de fato classifica um nome.
+ * O índice cobre os nomes e apelidos de todas as entidades. Construído no
+ * escopo de módulo de cada tela que classifica nomes, ele existia uma vez por
+ * tela, no momento do import. Memoizar aqui garante um índice só, montado
+ * apenas quando alguma tela de fato classifica um nome.
  */
 export function getNameResolver(): CountryNameResolver {
   resolver ??= new CountryNameResolver(entities);

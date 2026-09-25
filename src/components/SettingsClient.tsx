@@ -48,7 +48,7 @@ export function SettingsClient() {
 
   async function handleReset() {
     const confirmed = window.confirm(
-      "Apagar diagnóstico, revisões e histórico deste navegador? Um backup será baixado antes."
+      "Apagar revisões e histórico deste navegador? Um backup será baixado antes."
     );
     if (!confirmed) return;
     const storage = await import("@/storage");
@@ -73,8 +73,8 @@ export function SettingsClient() {
               Exportar progresso
             </h2>
             <p className="m-0 max-w-[640px] text-ink-soft">
-              Baixe diagnóstico, revisões, preferências e histórico em um
-              arquivo JSON versionado.
+              Baixe revisões, preferências e histórico em um arquivo JSON
+              versionado.
             </p>
           </div>
           <Button type="button" onClick={handleExport}>
@@ -129,9 +129,8 @@ export function SettingsClient() {
               segurança.
             </p>
           </div>
-          {/* O único `destructive` do app. O CSS legado dava este coral também
-              ao convite de entrada do diagnóstico; aqui ele fica no que não
-              tem volta. */}
+          {/* O único `destructive` do app: a cor de alerta fica no que não tem
+              volta. */}
           <Button variant="destructive" type="button" onClick={handleReset}>
             <RotateCcw size={18} aria-hidden="true" /> Apagar progresso
           </Button>

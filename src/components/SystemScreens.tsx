@@ -37,7 +37,7 @@ export function LoadingScreen({ label }: { label: string }) {
  * Exibida quando o IndexedDB não pôde ser aberto — janela anônima, cota
  * esgotada, armazenamento bloqueado pelo navegador.
  *
- * Deliberadamente não oferece refazer o diagnóstico nem apagar dados: o
+ * Deliberadamente não oferece apagar dados: o
  * progresso provavelmente continua lá, apenas inacessível agora, e a ação
  * mais destrutiva não pode ser a mais à mão. O catálogo é estático e
  * funciona sem armazenamento, então é um destino útil.
@@ -80,17 +80,14 @@ export function StorageUnavailableScreen({ error }: { error: Error }) {
 }
 
 /**
- * Tela inteira para quando não há o que fazer agora — o diagnóstico ainda não
- * foi feito, ou não há revisão vencida.
+ * Tela inteira para quando não há o que fazer agora: nenhuma revisão vencida
+ * e nenhuma bandeira nova a introduzir.
  *
  * É de página, com `h1` próprio, e não um aviso embutido numa lista. A caixa
  * tracejada de "nenhum resultado" do catálogo continua onde está de propósito:
  * ali o vazio é do filtro, a página tem título e conteúdo em volta, e dar um
  * `h1` àquele trecho quebraria a hierarquia de cabeçalhos que o axe verifica.
  * São dois conceitos, não duas cópias do mesmo.
- *
- * O que ela deliberadamente NÃO absorve é a landing de quem ainda não fez o
- * diagnóstico: aquilo não é ausência de conteúdo, é a apresentação do produto.
  */
 export function EmptyState({
   icon,

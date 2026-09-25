@@ -4,7 +4,7 @@ import Link from "next/link";
 import { SkipLink } from "@/components/SkipLink";
 
 /**
- * Casca das rotas de sessão: `/estudar` e `/diagnostico`.
+ * Casca da rota de sessão, `/estudar`.
  *
  * Sem navegação. Durante um exercício a bandeira é o objeto de exame, e cinco
  * destinos à vista convidam a sair no meio de uma sessão de repetição

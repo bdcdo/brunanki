@@ -3,7 +3,7 @@ import "fake-indexeddb/auto";
 import { afterEach, describe, expect, it } from "vitest";
 import { createEmptyCard, fsrs, Rating, type Card } from "ts-fsrs";
 
-import type { ReviewAttempt, SkillState } from "@/types/learning";
+import type { PairState, ReviewAttempt, SkillState } from "@/types/learning";
 
 import { BrunankiDatabase, SINGLETON_KEY } from "../database";
 import {
@@ -72,14 +72,46 @@ async function seed(db: BrunankiDatabase): Promise<void> {
     exercise: "flagToNameInput",
     outcome: "correct",
     isImmediateCorrection: false,
+    mode: "scheduled",
+    awardedXp: 1,
     responseMs: 1800,
+    firstInputMs: 640,
     createdAt: "2026-09-22T12:00:00.000Z"
   };
+  // Tentativa livre com chute: o backup tem de devolvê-la como livre e sem
+  // XP, e não recalcular nada nem promovê-la a evidência agendada.
+  const free: ReviewAttempt = {
+    id: "a2",
+    entityId: "chl",
+    skill: "nameToFlagRecognition",
+    exercise: "nameToFlagChoice",
+    outcome: "correct",
+    isImmediateCorrection: false,
+    mode: "free",
+    guessed: true,
+    awardedXp: 0,
+    responseMs: 2100,
+    firstInputMs: 2100,
+    createdAt: "2026-09-22T12:01:00.000Z"
+  };
+  const pair: PairState = {
+    id: "bra|chl",
+    entityIds: ["bra", "chl"],
+    card: reviewedCard(),
+    distinctSuccessDays: ["2026-09-22"],
+    lastOutcome: "correct",
+    updatedAt: "2026-09-22T12:02:00.000Z"
+  };
   await db.skillStates.bulkAdd([reviewed, unseen]);
-  await db.attempts.add(attempt);
+  await db.attempts.bulkAdd([attempt, free]);
+  await db.pairStates.add(pair);
   await db.appSettings.add({
     id: SINGLETON_KEY,
-    settings: { desiredRetention: 0.85, timeZone: "America/Sao_Paulo" }
+    settings: {
+      desiredRetention: 0.85,
+      timeZone: "America/Sao_Paulo",
+      activeContinent: "europe"
+    }
   });
 }
 
@@ -125,6 +157,8 @@ describe("backup de ida e volta", () => {
     const restored = await destination.skillStates.get("bra::flagToNameRecall");
     expect(restored?.card?.due).toBeInstanceOf(Date);
     expect(restored?.card?.last_review).toBeInstanceOf(Date);
+    const restoredPair = await destination.pairStates.get("bra|chl");
+    expect(restoredPair?.card?.due).toBeInstanceOf(Date);
     const original = reviewedCard();
     expect(restored?.card?.due.getTime()).toBe(original.due.getTime());
   });
@@ -150,6 +184,8 @@ describe("backup de ida e volta", () => {
       exercise: "nameToFlagChoice",
       outcome: "incorrect",
       isImmediateCorrection: false,
+      mode: "scheduled",
+      awardedXp: 0,
       responseMs: 4000,
       createdAt: "2026-09-01T12:00:00.000Z"
     });
@@ -161,17 +197,19 @@ describe("backup de ida e volta", () => {
       distinctSuccessDays: [],
       updatedAt: "2026-09-01T12:00:00.000Z"
     });
-    await destination.diagnostics.add({
-      id: SINGLETON_KEY,
-      state: {
-        entityOrder: ["chl", "bra"],
-        currentIndex: 1,
-        startedAt: "2026-09-01T12:00:00.000Z"
-      }
+    await destination.pairStates.add({
+      id: "chl|xyz",
+      entityIds: ["chl", "xyz"],
+      distinctSuccessDays: [],
+      updatedAt: "2026-09-01T12:00:00.000Z"
     });
     await destination.appSettings.add({
       id: SINGLETON_KEY,
-      settings: { desiredRetention: 0.95, timeZone: "Europe/Lisbon" }
+      settings: {
+        desiredRetention: 0.95,
+        timeZone: "Europe/Lisbon",
+        activeContinent: "americas"
+      }
     });
 
     await applyPreparedImport(
@@ -179,15 +217,21 @@ describe("backup de ida e volta", () => {
       await prepareImport(destination, exported, target, now)
     );
 
-    expect((await destination.attempts.toArray()).map((a) => a.id)).toEqual([
-      "a1"
-    ]);
+    expect(
+      (await destination.attempts.toArray()).map((a) => a.id).sort()
+    ).toEqual(["a1", "a2"]);
     expect(
       (await destination.skillStates.toArray()).map((s) => s.id).sort()
     ).toEqual(["bra::flagToNameRecall", "chl::nameToFlagRecognition"]);
-    expect(await destination.diagnostics.count()).toBe(0);
+    expect(
+      (await destination.pairStates.toArray()).map(({ id }) => id)
+    ).toEqual(["bra|chl"]);
     expect(
       (await destination.appSettings.get(SINGLETON_KEY))?.settings
-    ).toEqual({ desiredRetention: 0.85, timeZone: "America/Sao_Paulo" });
+    ).toEqual({
+      desiredRetention: 0.85,
+      timeZone: "America/Sao_Paulo",
+      activeContinent: "europe"
+    });
   });
 });

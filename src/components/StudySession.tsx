@@ -22,10 +22,15 @@ import {
 import { entities, entityById } from "@/data/runtime-catalog";
 import { getNameResolver } from "@/data/name-index";
 import { newAttemptId } from "@/domain/ids";
+import { awardedXpFor } from "@/domain/xp";
 import { buildChoiceRound } from "@/domain/distractors";
 import { describePalette } from "@/domain/palette";
 import { mulberry32 } from "@/domain/shuffle";
-import { buildDailyQueue, type DailyQueueItem } from "@/domain/daily-queue";
+import {
+  buildDailyQueue,
+  newEntityOrder,
+  type DailyQueueItem
+} from "@/domain/daily-queue";
 import {
   createSkillState,
   scheduleAttempt,
@@ -58,7 +63,8 @@ function newAttempt(
   outcome: AttemptOutcome,
   responseMs: number,
   exercise: ReviewAttempt["exercise"],
-  answer?: string
+  answer: string | undefined,
+  followsTeaching: boolean
 ): ReviewAttempt {
   return {
     id: newAttemptId(),
@@ -70,7 +76,16 @@ function newAttempt(
     // tentativa, e não só no argumento do agendador: assim o histórico
     // distingue uma recuperação genuína de uma segunda chance.
     isImmediateCorrection: item.immediate ?? false,
+    mode: "scheduled",
+    awardedXp: awardedXpFor({
+      outcome,
+      isImmediateCorrection: item.immediate ?? false,
+      followsTeaching
+    }),
     responseMs,
+    // Na escolha, o clique é a própria resposta. Na digitação, a primeira
+    // tecla só passa a ser medida com o primeiro contato graduado.
+    ...(exercise === "flagToNameInput" ? {} : { firstInputMs: responseMs }),
     ...(answer ? { answer } : {}),
     createdAt: new Date().toISOString()
   };
@@ -106,7 +121,13 @@ function StudySessionReady({
   snapshot: LearningSnapshot;
   refresh: () => Promise<void>;
 }) {
-  const { diagnostic, skills, attempts, settings } = snapshot;
+  const { skills, attempts, settings } = snapshot;
+  // Novidade só do continente em estudo; revisão vencida de qualquer um,
+  // porque a fila tira as revisões dos estados guardados, e não desta ordem.
+  const newEntityOrderForSession = useMemo(
+    () => newEntityOrder(entities, settings.activeContinent),
+    [settings.activeContinent]
+  );
   const [queue, setQueue] = useState<SessionItem[]>([]);
   const [index, setIndex] = useState(0);
   const [step, setStep] = useState<StudyStep>("teach");
@@ -139,9 +160,9 @@ function StudySessionReady({
   );
 
   function beginSession() {
-    if (initialized || !diagnostic?.completedAt) return;
+    if (initialized) return;
     const plan = buildDailyQueue({
-      entityOrder: entities.map(({ id }) => id),
+      entityOrder: newEntityOrderForSession,
       states: skills,
       recentAttempts: attempts,
       baseNewLimit: 5
@@ -246,7 +267,10 @@ function StudySessionReady({
         outcome,
         Math.max(0, Math.round(performance.now() - startedAt.current)),
         exercise,
-        typedAnswer
+        typedAnswer,
+        // Só a escolha que segue a apresentação deixa de agendar; ver
+        // `followsTeaching` em awardedXpFor.
+        !schedule
       );
       const nextState = schedule
         ? scheduleAttempt(current, attempt, settings)
@@ -337,24 +361,9 @@ function StudySessionReady({
     setFeedback({ outcome, answer: answer.trim() });
   }
 
-  if (!diagnostic?.completedAt) {
-    return (
-      <EmptyState
-        eyebrow="Primeiro passo"
-        title="Faça o diagnóstico antes de estudar."
-        description="Assim a primeira sessão começa no que você ainda não reconhece."
-        action={
-          <Link href="/diagnostico" className={buttonVariants()}>
-            Ir ao diagnóstico <ArrowRight size={18} aria-hidden="true" />
-          </Link>
-        }
-      />
-    );
-  }
-
   if (!initialized) {
     const preview = buildDailyQueue({
-      entityOrder: entities.map(({ id }) => id),
+      entityOrder: newEntityOrderForSession,
       states: skills,
       recentAttempts: attempts,
       baseNewLimit: 5

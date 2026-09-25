@@ -1,5 +1,7 @@
 import type { Card } from "ts-fsrs";
 
+import type { ContinentId } from "@/types/geography";
+
 export type SkillKind = "flagToNameRecall" | "nameToFlagRecognition";
 export type AttemptOutcome = "correct" | "partial" | "incorrect" | "skipped";
 export type LearningPhase = "unseen" | "acquiring" | "scheduled";
@@ -23,7 +25,17 @@ export type LearningPhase = "unseen" | "acquiring" | "scheduled";
  * ausência é lacuna conhecida, não decisão.
  */
 export type ExerciseKind =
-  "diagnostic" | "flagToNameChoice" | "nameToFlagChoice" | "flagToNameInput";
+  "flagToNameChoice" | "nameToFlagChoice" | "flagToNameInput";
+
+/**
+ * Agendada é a tentativa que a fila pediu. Quase todas movem o FSRS; a
+ * exceção é a escolha logo depois da apresentação de uma bandeira nova, que
+ * faz parte da sessão agendada mas não é recuperação. Livre é a prática sem
+ * trabalho vencido: dá feedback e XP, mas não pode virar evidência de
+ * domínio, e a marca na própria tentativa é o que impede o histórico de
+ * guardar uma sem distinguir da outra.
+ */
+export type AttemptMode = "scheduled" | "free";
 
 export interface SkillState {
   id: string;
@@ -50,16 +62,37 @@ export interface ReviewAttempt {
    * primeira.
    */
   isImmediateCorrection: boolean;
+  mode: AttemptMode;
   responseMs: number;
+  /**
+   * Milissegundos até a primeira tecla, na digitação, ou até o clique, na
+   * escolha. Mede reconhecimento sem medir digitação: o tempo total pune nome
+   * longo e teclado de celular, e por isso é este campo, e não `responseMs`,
+   * que a nota por velocidade vai ler. Na digitação ele ainda não é medido.
+   */
+  firstInputMs?: number;
+  /** Marcada por quem respondeu, depois de um acerto em escolha. */
+  guessed?: boolean;
+  /** 1 só para acerto integral de primeira; a regra é `awardedXpFor`. */
+  awardedXp: 0 | 1;
   answer?: string;
   createdAt: string;
 }
 
-export interface DiagnosticState {
-  entityOrder: string[];
-  currentIndex: number;
-  startedAt: string;
-  completedAt?: string;
+/**
+ * Discriminação de um par de bandeiras confundíveis, com cartão FSRS próprio.
+ *
+ * O par não pertence a nenhuma das duas entidades, e por isso não cabe em
+ * `SkillState`: o ID é a chave canônica do par (ver `pairStateId`), igual
+ * qualquer que seja a ordem em que as duas bandeiras aparecem.
+ */
+export interface PairState {
+  id: string;
+  entityIds: readonly [string, string];
+  card?: Card;
+  distinctSuccessDays: string[];
+  lastOutcome?: AttemptOutcome;
+  updatedAt: string;
 }
 
 /**
@@ -75,7 +108,14 @@ export interface SchedulingPreferences {
   timeZone: string;
 }
 
-export type AppSettings = SchedulingPreferences;
+/**
+ * Preferências de agendamento mais o continente em estudo. O continente
+ * governa só a introdução de bandeiras novas e o conjunto das alternativas:
+ * revisão vencida de outro continente continua aparecendo.
+ */
+export interface AppSettings extends SchedulingPreferences {
+  activeContinent: ContinentId;
+}
 
 /**
  * Tudo o que foi lido do armazenamento local numa leitura.
@@ -88,6 +128,6 @@ export type AppSettings = SchedulingPreferences;
 export interface LearningSnapshot {
   skills: SkillState[];
   attempts: ReviewAttempt[];
+  pairs: PairState[];
   settings: AppSettings;
-  diagnostic?: DiagnosticState;
 }

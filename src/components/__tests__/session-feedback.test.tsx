@@ -15,7 +15,7 @@ describe("pipStateFor", () => {
   });
 
   it("trata pulado como perdido", () => {
-    // "Pular" só existe no diagnóstico, mas o tipo inclui o desfecho e o
+    // Nenhum exercício atual produz "pulado", mas o tipo o inclui e o
     // compilador exige tratá-lo. Um item pulado é um item que não se sabe.
     expect(pipStateFor("incorrect")).toBe("missed");
     expect(pipStateFor("skipped")).toBe("missed");

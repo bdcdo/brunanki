@@ -21,9 +21,8 @@ export type FlagAltText =
 /**
  * Como o quadro ocupa espaço. Obrigatório e sem valor padrão, pelo mesmo
  * argumento que o `alt` acima já usava: um padrão silencioso foi o que deixou
- * o defeito passar. Ali era o texto alternativo; aqui era a altura — as três
- * bandeiras da abertura do diagnóstico não declaravam nenhuma e renderizavam
- * como traços de 2px.
+ * o defeito passar. Ali era o texto alternativo; aqui era a altura: bandeiras
+ * de exemplo sem altura declarada renderizavam como traços de 2px.
  *
  * São três, e não um nome por chamador, porque só existem três comportamentos:
  * o quadro grande e centrado do exercício, o que se encaixa na moldura de um

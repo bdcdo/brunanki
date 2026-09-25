@@ -62,8 +62,8 @@ describe("AppProvider", () => {
 
   it("expõe a falha do armazenamento em vez de fingir primeiro acesso", async () => {
     // É o caso de janela anônima ou cota esgotada: antes o catch devolvia
-    // listas vazias e a interface convidava a refazer o diagnóstico sobre um
-    // progresso que continuava salvo.
+    // listas vazias e a interface convidava a recomeçar sobre um progresso
+    // que continuava salvo.
     readLearningSnapshot.mockRejectedValue(
       new Error("IndexedDB indisponível neste contexto")
     );
