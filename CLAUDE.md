@@ -1,16 +1,16 @@
 # brunanki
 
-Aplicativo web em pt-BR para conquistar domínios delimitados de conhecimento. A primeira e única coleção é a das 220 bandeiras de membros da ONU, associações da FIFA e a Santa Sé. Nenhum outro domínio entra antes de bandeiras funcionar muito bem.
+Aplicativo web em pt-BR para conquistar domínios delimitados de conhecimento. A primeira e única coleção é a das bandeiras dos Estados-membros e dos observadores permanentes da ONU; a contagem sai do catálogo, e nenhum texto a fixa. Nenhum outro domínio entra antes de bandeiras funcionar muito bem.
 
-Três documentos respondem o que este arquivo não responde: [`docs/SPEC.md`](docs/SPEC.md) diz por que o produto existe e o que ele recusa ser; [`docs/HARNESS-VISUAL.md`](docs/HARNESS-VISUAL.md) diz como se ensina uma bandeira e o que conta como aprender; [`docs/adr/`](docs/adr/) diz por que cada decisão estrutural é o que é. O plano de trabalho vive em [`docs/MVP-BACKLOG.md`](docs/MVP-BACKLOG.md).
+A razão de cada decisão estrutural fica no comentário do código que ela governa, com o número da decisão (ADR-000N) quando há uma. Os documentos originais de especificação e de decisão foram retirados da árvore e continuam recuperáveis no histórico do git.
 
 ## Comandos
 
 Node 20 ou mais recente e pnpm. `pnpm install`, `pnpm dev`.
 
-Antes de commitar, rode os gates na ordem em que o CI os roda: `data:validate` → `typecheck` → `lint` → `test` → `build` → `test:e2e`. A lista canônica é `.github/workflows/fly-deploy.yml`; se este arquivo divergir dele, o workflow vence.
+Antes de commitar, rode os gates nesta ordem: `data:validate` → `typecheck` → `lint` → `test:coverage` → `build` → `test:e2e`. Os quatro primeiros são os que o CI roda, e a lista canônica deles é `.github/workflows/ci.yml`; se este arquivo divergir dele, o workflow vence.
 
-Dois cuidados que já custaram uma sessão de depuração cada. O `build` não pode rodar com um `next start` de pé — o e2e falha imitando uma regressão de CSS. E os testes visuais precisam forçar o carregamento das 220 bandeiras antes de capturar a tela, porque a carga é preguiçosa.
+Dois cuidados que já custaram uma sessão de depuração cada. O `build` não pode rodar com um `next start` de pé, porque o e2e falha imitando uma regressão de CSS. E os testes visuais precisam forçar o carregamento de todas as bandeiras antes de capturar a tela, porque a carga é preguiçosa.
 
 ## Fronteiras que não se cruzam
 
@@ -50,7 +50,7 @@ O e2e reprova violações `serious` e `critical` do axe em toda tela, e mede tra
 
 ## Um jeito óbvio e só um
 
-O princípio proíbe caminhos redundantes para o mesmo resultado, e não atividades distintas que produzam evidências distintas. O teste operacional é a tabela _exercício → evidência produzida_ de `docs/HARNESS-VISUAL.md`: uma proposta de exercício novo preenche uma linha nova daquela tabela ou é recusada.
+O princípio proíbe caminhos redundantes para o mesmo resultado, e não atividades distintas que produzam evidências distintas. O teste operacional: um exercício novo precisa produzir uma evidência que nenhum exercício existente produz, ou é recusado.
 
 ## Nunca neste produto
 
