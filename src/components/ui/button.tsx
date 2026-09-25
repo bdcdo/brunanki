@@ -29,7 +29,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-brand text-brand-on hover:bg-brand-deep hover:-translate-y-px",
+          "bg-action text-action-on hover:bg-action-hover hover:-translate-y-px",
+        // O convite dentro de painel de tinta, onde o `default` desapareceria
+        // contra o próprio fundo. É o amarelo do XP, e só aparece ali.
+        highlight:
+          "bg-highlight text-ink hover:bg-highlight-hover hover:-translate-y-px",
         secondary:
           "border-line bg-surface text-ink hover:border-ink-soft hover:bg-white hover:-translate-y-px",
         // Exclusiva da ação irreversível. O CSS legado usa `.button-coral`
@@ -38,7 +42,7 @@ const buttonVariants = cva(
         // tratamento visual. Aqui os dois se separam: os convites são
         // `default`, e o coral fica reservado ao que não tem volta.
         destructive:
-          "bg-alert text-alert-on hover:bg-[#963625] hover:-translate-y-px",
+          "bg-alert text-alert-on hover:bg-alert-hover hover:-translate-y-px",
         ghost: "bg-transparent text-ink hover:bg-accent"
       },
       size: {

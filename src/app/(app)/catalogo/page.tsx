@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { CatalogClient } from "@/components/CatalogClient";
 
 export const metadata: Metadata = {
-  title: "Bandeiras"
+  title: "Álbum"
 };
 
 export default function CatalogPage() {

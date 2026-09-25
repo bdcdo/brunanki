@@ -24,8 +24,8 @@ export function CatalogClient() {
   return (
     <div className="mx-auto w-full max-w-page">
       <PageHeader
-        eyebrow="Atlas completo"
-        title="Bandeiras"
+        eyebrow="Todas as bandeiras"
+        title="Álbum"
         description={`${entities.length} Estados reconhecidos pela ONU, com nomes comuns em português e a origem de cada imagem.`}
       />
 
@@ -63,7 +63,7 @@ export function CatalogClient() {
           {filtered.map((entity) => (
             <Link
               href={`/catalogo/${entity.id}`}
-              className="grid overflow-hidden rounded-card border border-line bg-surface text-inherit no-underline shadow-[0_7px_20px_rgb(21_50_54_/_5%)] transition-[transform,box-shadow] duration-[160ms] ease-[ease] hover:-translate-y-[3px] hover:shadow-card-lifted"
+              className="grid overflow-hidden rounded-card border border-line bg-surface text-inherit no-underline shadow-card transition-[transform,box-shadow] hover:-translate-y-[2px] hover:shadow-card-lifted"
               key={entity.id}
             >
               <FlagImage entity={entity} alt={{ kind: "named" }} size="card" />

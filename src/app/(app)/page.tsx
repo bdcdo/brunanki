@@ -87,12 +87,13 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
                 bandeira antes de esquecer.
               </p>
               <div className="flex flex-wrap gap-3">
-                {/* `default`, e não o coral que o CSS legado dava aqui. O
-                    mesmo convite já saiu do coral na abertura do diagnóstico
-                    (DiagnosticSession), e ter a mesma ação em duas cores em
-                    duas telas é incoerência, não ênfase. O coral fica no que
-                    não tem volta — hoje, só "Apagar progresso". */}
-                <Link href="/diagnostico" className={buttonVariants()}>
+                {/* `highlight` porque o painel é de tinta, e o `default`, que
+                    também é tinta, sumiria contra ele. A cor de alerta fica
+                    no que não tem volta: hoje, só "Apagar progresso". */}
+                <Link
+                  href="/diagnostico"
+                  className={buttonVariants({ variant: "highlight" })}
+                >
                   {diagnosed > 0
                     ? "Continuar diagnóstico"
                     : "Começar diagnóstico"}
@@ -102,7 +103,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
                   href="/catalogo"
                   className={buttonVariants({ variant: "secondary" })}
                 >
-                  Explorar bandeiras
+                  Abrir o álbum
                 </Link>
               </div>
             </div>

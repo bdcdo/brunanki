@@ -391,7 +391,7 @@ function StudySessionReady({
             href="/catalogo"
             className={buttonVariants({ variant: "secondary" })}
           >
-            Explorar o atlas
+            Abrir o álbum
           </Link>
         }
       />

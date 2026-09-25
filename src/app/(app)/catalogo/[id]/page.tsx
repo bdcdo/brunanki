@@ -38,7 +38,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
   return (
     <div className="mx-auto w-full max-w-narrow">
       <Link href="/catalogo" className={buttonVariants({ variant: "ghost" })}>
-        <ArrowLeft size={18} aria-hidden="true" /> Voltar ao atlas
+        <ArrowLeft size={18} aria-hidden="true" /> Voltar ao álbum
       </Link>
       <PageHeader
         className="mt-5"
@@ -67,7 +67,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
           </div>
           <dl className="m-0 grid gap-0">
             <div className="border-b border-line py-[14px]">
-              <dt className="text-xs leading-body font-bold tracking-label-sm text-ink-soft uppercase">
+              <dt className="text-sm leading-body font-bold text-ink-soft">
                 Nomes aceitos
               </dt>
               <dd className="mt-1 mb-0 font-bold">
@@ -75,7 +75,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
               </dd>
             </div>
             <div className="border-b border-line py-[14px]">
-              <dt className="text-xs leading-body font-bold tracking-label-sm text-ink-soft uppercase">
+              <dt className="text-sm leading-body font-bold text-ink-soft">
                 Representação
               </dt>
               <dd className="mt-1 mb-0 font-bold">
@@ -85,7 +85,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
               </dd>
             </div>
             <div className="border-b border-line py-[14px]">
-              <dt className="text-xs leading-body font-bold tracking-label-sm text-ink-soft uppercase">
+              <dt className="text-sm leading-body font-bold text-ink-soft">
                 Arquivo
               </dt>
               <dd className="mt-1 mb-0 font-bold">
@@ -93,7 +93,7 @@ export default async function DetailPage({ params }: DetailPageProps) {
               </dd>
             </div>
             <div className="border-b border-line py-[14px]">
-              <dt className="text-xs leading-body font-bold tracking-label-sm text-ink-soft uppercase">
+              <dt className="text-sm leading-body font-bold text-ink-soft">
                 Licença
               </dt>
               <dd className="mt-1 mb-0 font-bold">{flag.license.shortName}</dd>

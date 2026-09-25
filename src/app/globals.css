@@ -37,72 +37,70 @@
 @source not "../data/*.json";
 
 :root {
-  /* — superfícies e tinta ------------------------------------------------- */
-  --paper: #f7f3e9;
-  --paper-deep: #eee8da;
-  --surface: #fffdf7;
-  --ink: #153236;
-  --ink-soft: #526568; /* 5,54:1 sobre --paper */
-  --line: #d8d4c7; /* separador decorativo — 1,46:1, NÃO delimita controle */
+  /* — superfícies e tinta ------------------------------------------------
+     Papel de álbum, frio e liso: sem o milimetrado, porque é a figurinha que
+     dá textura à página, e um padrão de fundo competiria com ela. Os números
+     são contraste medido, não estimado. */
+  --paper: #e9edf3;
+  --paper-deep: #dce2eb;
+  --surface: #fff;
+  --ink: #1b2447; /* 12,86:1 sobre --paper; 15,11:1 sobre --surface */
+  --ink-soft: #4a5570; /* 6,33:1 sobre --paper; 5,71:1 sobre --paper-deep */
+  --line: #c9d0dc; /* separador decorativo, 1,55:1: NÃO delimita controle */
 
-  /* — o acento, em quatro papéis -----------------------------------------
-       --brand      preenchimento (barra de progresso, botão primário)
-       --brand-ui   borda, anel, ícone — piso de 3:1 (WCAG 1.4.11)
-       --brand-deep TEXTO pequeno sobre papel, e hover — piso de 4,5:1
+  /* — a ação principal ----------------------------------------------------
+     Tinta sólida com texto branco. A cor de continente não serve de botão:
+     ela identifica a página do álbum, e um botão verde numa página verde
+     sumiria. --action-hover clareia em vez de escurecer, porque o azul-marinho
+     já está perto do preto e escurecer não seria percebido. */
+  --action: var(--ink);
+  --action-hover: #2a3666; /* 11,6:1 com branco por cima */
+  --action-on: #fff;
+
+  /* — a cor do continente, em quatro papéis --------------------------------
+       --brand      preenchimento: cabeçalho da página, barra de progresso
+       --brand-ui   borda, anel, ícone, piso de 3:1 (WCAG 1.4.11)
+       --brand-deep TEXTO pequeno sobre papel, piso de 4,5:1
        --brand-on   texto sobre --brand
 
-     Acento fixo: nada da maquinaria de OKLCH do projeto de referência, onde a
-     cor muda por adversário em tempo de execução. A estrutura de papéis fica
-     porque é ela que impede que alguém use o tom claro sob texto branco, ou em
-     texto de 12px sobre papel.
+     Um valor só por enquanto, o das Américas, que é o único continente
+     liberado. A estrutura de papéis é o que impede alguém de pôr o tom claro
+     sob texto branco quando os outros continentes ganharem cor. */
+  --brand: #0e6e4b; /* 6,27:1 com branco por cima */
+  --brand-ui: #0e6e4b; /* 5,33:1 sobre --paper */
+  --brand-deep: #0a5a3d; /* 7,03:1 sobre --paper */
+  --brand-on: #fff;
 
-     --brand e --brand-ui colapsam no mesmo valor; --brand-deep não. Medido
-     contra o papel real (#f7f3e9, e não contra o creme do projeto de
-     referência): #197b75 dá 4,59:1, que passa o piso de 4,5 por 0,09 — margem
-     nula para os consumidores reais, que são texto de 12px (.eyebrow, em dez
-     arquivos) e link de seção. #0f5f5b dá 6,75:1 e já existe na paleta. */
-  --brand: #197b75; /* 5,00:1 sobre --surface */
-  --brand-ui: #197b75; /* 4,59:1 sobre --paper — folga sobre os 3:1 */
-  --brand-deep: #0f5f5b; /* 6,75:1 sobre --paper */
-  --brand-on: #fff; /* 5,08:1 sobre --brand */
+  /* — destaque quente: XP e o convite dentro de painel escuro -------------- */
+  --highlight: #ffc83d; /* 9,77:1 com --ink por cima */
+  --highlight-hover: #ffd466;
+  --highlight-soft: #fff1c7;
+  --highlight-edge: #e5b233;
 
-  /* — destaque quente: meta do dia, navegação ativa, marca ---------------- */
-  --highlight: #f4c650; /* 8,46:1 com --ink por cima */
-  --highlight-soft: #fbefc8;
-  --highlight-edge: #e7d57f;
-
-  /* — alerta: ação destrutiva e anel de foco ------------------------------ */
-  --alert: #b94a37; /* 4,63:1 sobre --paper; 5,13:1 com branco por cima */
-  --alert-soft: #f7dfd9;
+  /* — alerta: ação destrutiva e erro -------------------------------------- */
+  --alert: #b42318; /* 5,60:1 sobre --paper; 6,57:1 com branco por cima */
+  --alert-hover: #8f1b12;
+  --alert-soft: #fdecea;
   --alert-on: #fff;
 
   /* — desfecho da tentativa ----------------------------------------------
      Nomes de AttemptOutcome (src/types/learning.ts:4), e não de placar: o
-     Brunanki corrige uma tentativa, não julga um duelo.
-
-     As linhas mudaram de valor porque a cor da borda É o sinal de estado, e as
-     antigas não alcançavam 3:1 contra o próprio preenchimento — não contra o
-     papel, que era onde eu estava medindo: #58946f sobre #dcebe2 dá 2,90:1 e
-     #b98e2d sobre #fbefc8 dá 2,62:1. A de erro (3,44:1) já passava.
-
-     Os pares `-on` existem para que o preenchimento total de uma alternativa
-     nunca precise de um #fff fixo sobre cor crua. */
-  --outcome-correct: #dcebe2;
-  --outcome-correct-line: #2f7d54; /* 4,07:1 (era #58946f, 2,90:1) */
+     Brunanki corrige uma tentativa, não julga um duelo. A borda É o sinal de
+     estado, então ela se mede contra o próprio preenchimento, e não contra o
+     papel: 5,42:1, 4,50:1 e 5,75:1. A tinta sobre os três passa de 13:1. */
+  --outcome-correct: #e3f2ea;
+  --outcome-correct-line: #0e6e4b;
   --outcome-correct-on: #fff;
-  --outcome-partial: #fbefc8;
-  --outcome-partial-line: #8a6a12; /* 4,40:1 (era #b98e2d, 2,62:1) */
+  --outcome-partial: #fff1c7;
+  --outcome-partial-line: #8a6a12;
   --outcome-partial-on: #fff;
-  --outcome-incorrect: #f7dfd9;
-  --outcome-incorrect-line: #bf5b48; /* 3,44:1 — já passava, preservado */
+  --outcome-incorrect: #fdecea;
+  --outcome-incorrect-line: #b42318;
   --outcome-incorrect-on: #fff;
 
-  /* — texto sobre superfície escura --------------------------------------
-     Colapsa quatro cinzas quase idênticos e escolhidos a olho (#bed0d0,
-     #d7e0df, #c2d0cf, #d9e4e3, medidos entre 8,51 e 10,48 sobre --ink) em dois
-     valores com número conhecido. Um valor, um lugar para mudar. */
-  --on-ink: #fffdf7; /* 13,39:1 */
-  --on-ink-soft: #c2d0cf; /* 8,57:1 */
+  /* — texto sobre superfície escura --------------------------------------- */
+  --on-ink: #fff; /* 15,11:1 */
+  --on-ink-soft: #c9d0dc; /* 9,74:1 */
 
   /* — papéis canônicos do shadcn -----------------------------------------
      Precisam existir com estes nomes, senão todo componente vindo do CLI nasce
@@ -113,112 +111,98 @@
   --card-foreground: var(--ink);
   --popover: var(--surface);
   --popover-foreground: var(--ink);
-  --primary: var(--brand);
-  --primary-foreground: var(--brand-on);
+  --primary: var(--action);
+  --primary-foreground: var(--action-on);
   --secondary: var(--surface);
   --secondary-foreground: var(--ink);
   --muted: var(--paper-deep);
   --muted-foreground: var(--ink-soft);
   /* ATENÇÃO: em shadcn, --accent é a superfície de HOVER de ghost/outline, e
-     não o acento da marca — é o que o `.button-ghost:hover` legado fazia. Pôr
-     o teal aqui pintaria todo hover fantasma de teal sólido. A marca vive só
-     nos --brand*. */
+     não o acento da marca. Pôr a cor do continente aqui pintaria todo hover
+     fantasma de verde sólido. */
   --accent: var(--paper-deep);
   --accent-foreground: var(--ink);
   --destructive: var(--alert);
   --destructive-foreground: var(--alert-on);
   --border: var(--line);
-  /* Delimita controle, então o piso é 3:1 e não 1,46:1. O #a7aaa4 que os
-     campos usavam media 2,31:1. */
-  --input: #7c8a88; /* 3,53:1 sobre --surface; 3,24:1 sobre --paper */
-  --ring: var(--alert);
-
-  /* — barra lateral ------------------------------------------------------- */
-  --sidebar: var(--ink);
-  --sidebar-foreground: var(--on-ink);
-  --sidebar-muted: var(--on-ink-soft);
-  --sidebar-accent: var(--highlight);
-  --sidebar-accent-foreground: var(--ink);
-  --sidebar-border: rgb(255 255 255 / 18%);
+  /* Delimita controle e é a borda do espaço vazio do álbum, então o piso é
+     3:1: 3,62:1 sobre --surface, 3,08:1 sobre --paper. */
+  --input: #7c879c;
+  --ring: var(--ink);
 
   /* — quadro da bandeira -------------------------------------------------
      Mesmo piso de 3:1 do --input, e pelo mesmo motivo: em bandeira que tem
      branco (Japão, Coreia do Sul) a borda é a única coisa que informa onde a
-     bandeira termina e o cartão começa. O #a8ada8 de hoje mede 2,24:1. */
+     bandeira termina e o cartão começa. */
   --flag-line: var(--input);
   --flag-checker: #e8e8e3;
   --flag-checker-alt: #fff;
 
-  /* — papel milimetrado do fundo ----------------------------------------- */
-  --paper-grid-line: rgb(21 50 54 / 3%);
-  --paper-grid-step: 32px;
-
   /* — raio ---------------------------------------------------------------
      Nomes de papel, e não o ramo sm/md/lg/xl do Tailwind: sobrescrever aquele
-     ramo pela metade produziria uma escala mentirosa, com o rounded-sm de 4px
-     do Tailwind ao lado de um rounded-md de 18px nosso. O --radius-sm de 10px
-     que existia não entra: zero consumidores. --radius existe apenas para os
-     componentes de shadcn que o leem diretamente. */
+     ramo pela metade produziria uma escala mentirosa. --radius existe apenas
+     para os componentes de shadcn que o leem diretamente. */
   --radius-control: 12px; /* botão, campo, item de navegação */
-  --radius-card: 18px;
-  --radius-panel: 28px;
+  --radius-card: 14px;
+  --radius-panel: 18px;
   --radius: var(--radius-control);
 
-  /* — sombra ------------------------------------------------------------- */
-  --shadow-card: 0 8px 24px rgb(21 50 54 / 5%);
-  --shadow-card-lifted: 0 14px 30px rgb(21 50 54 / 12%);
-  --shadow-panel: 0 16px 40px rgb(21 50 54 / 8%);
-  --shadow-float: 0 24px 45px rgb(0 0 0 / 25%);
+  /* — sombra -------------------------------------------------------------
+     Sombra dura e curta, de papel colado sobre papel, e não o esfumado que
+     flutua o cartão. --shadow-sticker é a da figurinha: dois pixels de
+     espessura, o suficiente para ler "colada" sem cor nenhuma. */
+  --shadow-card: 0 2px 0 rgb(27 36 71 / 12%);
+  --shadow-card-lifted: 0 4px 0 rgb(27 36 71 / 16%);
+  --shadow-panel: 0 2px 0 rgb(27 36 71 / 12%);
+  --shadow-float: 0 12px 30px rgb(27 36 71 / 18%);
+  --shadow-sticker: 0 2px 0 rgb(27 36 71 / 28%);
 
   /* — escala tipográfica -------------------------------------------------
-     Não existia nenhuma: os tamanhos estavam espalhados por 24 declarações e
-     por style inline (app/page.tsx tem quatro fontSize:22). Dez degraus que
-     CONTÊM os valores atuais, mais quatro tamanhos fluidos com papel
-     explícito.
-
      Em px, e não em rem, porque a raiz do documento é 16px e o corpo do app é
-     17px: um --text-base em rem encolheria o corpo para 16.
-
-     O que se ganha é escala com intenção — 20, 21 e 22px não coexistem a 1px
-     de distância; colapsam em --type-xl. */
-  --type-2xs: 12px; /* .eyebrow, .sidebar-kicker */
-  --type-xs: 13px; /* .pill, .detail-meta dt */
-  --type-sm: 14px; /* .stat-card span, .field-hint */
+     17px: um --text-base em rem encolheria o corpo para 16. */
+  --type-2xs: 12px;
+  --type-xs: 13px;
+  --type-sm: 14px;
   --type-body: 17px;
-  --type-lg: 19px; /* .hero p, campo de resposta */
-  --type-xl: 21px; /* colapsa 20, 21 e 22 */
+  --type-lg: 19px;
+  --type-xl: 21px;
   --type-2xl: 24px;
-  --type-3xl: 28px; /* .brand, .section-heading h2 */
-  --type-4xl: 34px; /* .stat-card strong, .daily-card h2 */
-  --type-5xl: 40px; /* .daily-number strong */
-  --type-page: clamp(38px, 5vw, 62px); /* h1 de página */
-  --type-hero: clamp(43px, 6vw, 78px); /* h1 da home */
-  --type-prompt: clamp(28px, 4vw, 42px); /* a pergunta do exercício */
-  --type-figure: clamp(48px, 10vw, 88px); /* o número do resumo de sessão */
+  --type-3xl: 28px;
+  --type-4xl: 34px;
+  --type-5xl: 40px;
+  /* Os fluidos crescem mais que antes porque a Big Shoulders é condensada:
+     no mesmo corpo ela ocupa menos da metade da largura da Bricolage, e o
+     título precisava de altura para continuar sendo o elemento da tela. */
+  --type-page: clamp(40px, 6vw, 72px);
+  --type-hero: clamp(48px, 8vw, 96px);
+  --type-prompt: clamp(34px, 5vw, 52px);
+  --type-figure: clamp(56px, 12vw, 104px);
 
   --lead-body: 1.5;
   --lead-label: 1.35;
-  --lead-name: 1.25; /* .flag-card-body strong */
-  --lead-prompt: 1.1;
-  --lead-page: 1.04;
+  --lead-name: 1.25;
+  --lead-prompt: 1;
+  --lead-page: 0.95;
   --lead-figure: 0.85;
 
-  /* Colapsa -0,045/-0,04/-0,035em em dois passos com papel definido, e
-     0,14/0,12em num só: variação de 0,005em não é decisão, é ruído. */
-  --track-page: -0.045em;
-  --track-title: -0.04em;
-  --track-heading: -0.03em;
-  --track-label: 0.12em;
-  --track-label-sm: 0.08em; /* .detail-meta dt */
+  /* Face condensada não aceita o aperto que a grotesca pedia: com -0,04em as
+     letras da Big Shoulders se tocam. O título fica no zero, e o rótulo
+     também, porque o app não usa rótulo em caixa alta. */
+  --track-page: 0;
+  --track-title: 0.005em;
+  --track-heading: 0;
+  --track-label: 0;
+  --track-label-sm: 0;
 
   /* — medidas -----------------------------------------------------------
-     A largura de 254px da barra lateral NÃO está aqui: ela passa a existir uma
-     única vez, no grid-template-columns do AppShell. Um token para um
-     consumidor só é indireção. */
+     A altura da navegação inferior mora aqui porque dois consumidores
+     precisam concordar: a própria barra e o respiro no fim do conteúdo, que
+     sem ele ficaria escondido atrás dela. */
   --measure-page: 1120px;
   --measure-narrow: 820px;
-  --measure-copy: 620px; /* colapsa 580/600/620/640 de largura de texto */
+  --measure-copy: 620px;
   --gutter: clamp(28px, 5vw, 80px);
+  --bottom-nav: 72px;
 }
 
 /* O corpo cai um degrau no layout de coluna única. Como o @theme inline
@@ -290,12 +274,11 @@
   --color-outcome-incorrect-on: var(--outcome-incorrect-on);
   --color-on-ink: var(--on-ink);
   --color-on-ink-soft: var(--on-ink-soft);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-muted: var(--sidebar-muted);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
+  --color-action: var(--action);
+  --color-action-hover: var(--action-hover);
+  --color-action-on: var(--action-on);
+  --color-highlight-hover: var(--highlight-hover);
+  --color-alert-hover: var(--alert-hover);
   --color-flag-line: var(--flag-line);
 
   /* As duas faces vêm do next/font em src/app/layout.tsx, que declara
@@ -355,10 +338,12 @@
   --shadow-card-lifted: var(--shadow-card-lifted);
   --shadow-panel: var(--shadow-panel);
   --shadow-float: var(--shadow-float);
+  --shadow-sticker: var(--shadow-sticker);
   --container-page: var(--measure-page);
   --container-narrow: var(--measure-narrow);
   --container-copy: var(--measure-copy);
   --spacing-gutter: var(--gutter);
+  --spacing-bottom-nav: var(--bottom-nav);
 }
 
 /* ---------------------------------------------------------------------------
@@ -395,9 +380,8 @@
 --------------------------------------------------------------------------- */
 @layer base {
   html {
-    /* Light-first declarado. Nada declarava color-scheme, e por isso o
-       <select> do catálogo (CatalogClient.tsx:55) renderiza com a paleta
-       escura do sistema dentro de um cartão claro. O par disso é
+    /* Light-first declarado: sem color-scheme, os controles nativos saem com
+       a paleta escura do sistema dentro de um cartão claro. O par disso é
        colorScheme: "light" no viewport, em src/app/layout.tsx. */
     color-scheme: light;
     background: var(--color-background);
@@ -408,11 +392,7 @@
     /* 100dvh, e não 100vh: no mobile a barra de URL do navegador fazia o
        min-height render maior que a área visível. */
     min-height: 100dvh;
-    background:
-      linear-gradient(var(--paper-grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--paper-grid-line) 1px, transparent 1px),
-      var(--color-background);
-    background-size: var(--paper-grid-step) var(--paper-grid-step);
+    background: var(--color-background);
     font-family: var(--font-sans), sans-serif;
     font-size: var(--text-base);
     line-height: var(--leading-body);
@@ -488,13 +468,17 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Foco visível, e caro de perder. Três pixels de coral com três de folga
-     (4,63:1 contra o papel, acima dos 3:1 que a WCAG 1.4.11 pede de um
-     indicador), e :focus-visible em vez de :focus para não punir quem clica
+  /* Foco visível, e caro de perder. O anel tem duas cores porque o app tem
+     fundo claro e painel escuro: tinta sozinha some sobre o painel de tinta,
+     e branco sozinho some sobre o papel. O box-shadow branco preenche a folga
+     de 2px entre o controle e o contorno de tinta, então um dos dois sempre
+     contrasta com o que está atrás, com 12,86:1 e 15,11:1, acima dos 3:1 da
+     WCAG 1.4.11. :focus-visible em vez de :focus para não punir quem clica
      com o mouse. */
   :focus-visible {
     outline: 3px solid var(--color-ring);
-    outline-offset: 3px;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--color-surface);
   }
 
   @media (prefers-reduced-motion: reduce) {
