@@ -366,10 +366,15 @@ function StudySessionReady({
       // A escolha do nome não move o FSRS, porque não é recuperação, e fica
       // fora do resumo.
       if (exercise !== "flagToNameChoice") {
-        const pip = attempt.isImmediateCorrection
-          ? amendedPipState(outcome)
-          : pipStateFor(outcome);
+        // "Corrigido" é a resposta que segue outra na mesma bandeira: um
+        // passo do pacote ou a correção pedida pela fila. A primeira resposta
+        // de uma atividade conta pelo que foi, mesmo quando é gravada como
+        // correção por outro motivo, como a bandeira puxada do álbum.
         const replace = activityHasPip.current;
+        const pip =
+          replace || item.reason === "correction"
+            ? amendedPipState(outcome)
+            : pipStateFor(outcome);
         activityHasPip.current = true;
         setHistory((pips) =>
           replace ? [...pips.slice(0, -1), pip] : [...pips, pip]
@@ -388,7 +393,7 @@ function StudySessionReady({
    * nota sem volta.
    */
   async function toggleGuess() {
-    if (!graded) return;
+    if (!graded || busy) return;
     const guessed = !graded.guessed;
     const attempt = guessed ? markedAsGuess(graded.original) : graded.original;
     setBusy(true);
@@ -833,7 +838,10 @@ function StudySessionReady({
                     type="button"
                     variant="secondary"
                     aria-pressed={graded.guessed}
-                    disabled={busy}
+                    // aria-disabled, e não disabled: o disabled nativo tira o
+                    // foco do botão enquanto a marca é gravada, e quem usa
+                    // teclado ficava sem lugar para continuar.
+                    aria-disabled={busy}
                     onClick={() => void toggleGuess()}
                   >
                     {graded.guessed && <Check size={18} aria-hidden="true" />}

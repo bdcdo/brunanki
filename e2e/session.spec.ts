@@ -196,8 +196,11 @@ test("Foi chute tira o XP do acerto em escolha, e desmarcar o devolve", async ({
   await expect(page.getByText("1 XP hoje, 1 no total")).toBeVisible();
 
   const guess = page.getByRole("button", { name: "Foi chute" });
-  await guess.click();
+  await guess.focus();
+  await page.keyboard.press("Enter");
   await expect(guess).toHaveAttribute("aria-pressed", "true");
+  // O foco fica no botão enquanto e depois que a marca é gravada.
+  await expect(guess).toBeFocused();
   await expect(page.getByText("0 XP hoje, 0 no total")).toBeVisible();
   await expectNoSeriousAccessibilityViolations(page);
 
