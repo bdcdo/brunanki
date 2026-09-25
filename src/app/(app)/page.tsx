@@ -87,7 +87,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
     <div className="mx-auto grid w-full max-w-page grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] gap-8 max-lg:grid-cols-1 max-md:gap-5">
       <section
         aria-labelledby="album-title"
-        className="overflow-hidden rounded-card bg-surface shadow-card max-lg:order-2"
+        className="overflow-hidden rounded-card bg-surface shadow-card max-lg:order-3"
       >
         <div className="flex items-baseline justify-between gap-4 bg-brand px-7 py-5 text-brand-on max-md:px-5 max-md:py-4">
           <h1
@@ -129,10 +129,13 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
         </div>
       </section>
 
-      <div className="flex flex-col gap-5 max-lg:order-1">
+      {/* Numa coluna só, a coluna lateral se desfaz em itens do grid, para
+          que o álbum ativo venha antes dos álbuns fechados: o que se estuda
+          agora, o XP, o álbum, e só então o que ainda não abriu. */}
+      <div className="flex flex-col gap-5 max-lg:contents">
         <section
           aria-labelledby="activity-title"
-          className="on-ink rounded-card bg-ink p-7 text-on-ink max-md:p-5"
+          className="on-ink rounded-card bg-ink p-7 text-on-ink max-lg:order-1 max-md:p-5"
         >
           <p className="m-0 text-base text-on-ink-soft">Agora</p>
           <h2
@@ -159,7 +162,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
         {/* O que pontua é regra do domínio, em awardedXpFor; a tela só mostra
             a soma. O número vem antes do rótulo na tela, mas não na leitura:
             o leitor de tela ouve o que o número mede antes de ouvi-lo. */}
-        <section aria-labelledby="xp-title">
+        <section aria-labelledby="xp-title" className="max-lg:order-2">
           <h2 id="xp-title" className="sr-only">
             Experiência
           </h2>
@@ -183,7 +186,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
           </dl>
         </section>
 
-        <section aria-labelledby="others-title">
+        <section aria-labelledby="others-title" className="max-lg:order-4">
           <h2 id="others-title" className="mb-2.5 text-base font-bold">
             Outros álbuns
           </h2>
