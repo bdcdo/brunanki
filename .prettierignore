@@ -7,7 +7,7 @@ src/data/runtime-catalog.json
 # arquivo em disco byte a byte com a saída de `buildAttributionMarkdown`. Se o
 # Prettier reformatar a tabela de 195 linhas, o gate passa a acusar drift que
 # não existe.
-docs/atribuicao-de-bandeiras.md
+ATRIBUICOES.md
 
 # Diretórios de build e relatórios
 .next/

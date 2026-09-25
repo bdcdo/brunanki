@@ -6,7 +6,7 @@ O Brunanki é um webapp em pt-BR para aprender e revisar as bandeiras dos Estado
 
 O primeiro acesso oferece um diagnóstico retomável e sem alternativas: a pessoa digita o nome da entidade ou pula. Depois, as sessões combinam recordação digitada, reconhecimento na direção inversa e revisão espaçada por FSRS, com alternativas escolhidas entre as bandeiras mais fáceis de confundir com a correta — não sorteadas ao acaso.
 
-Domínio não é sinônimo de acerto: exige as duas direções, recuperações em ocasiões separadas e evidência de retenção ao longo do tempo. Os critérios exatos, e a razão de cada um, estão em [`docs/HARNESS-VISUAL.md`](docs/HARNESS-VISUAL.md).
+Domínio não é sinônimo de acerto: exige as duas direções, recuperações em ocasiões separadas e evidência de retenção ao longo do tempo. Os critérios exatos, e a razão de cada um, vivem em `src/domain/mastery.ts`.
 
 O progresso fica no IndexedDB do navegador. Não há conta, backend, rastreamento nem sincronização automática. A tela de ajustes exporta e restaura um backup JSON versionado, que é o único jeito de levar o progresso para outro dispositivo.
 
@@ -19,7 +19,7 @@ pnpm install
 pnpm dev
 ```
 
-Validações, na ordem em que o CI as roda:
+Validações. O CI roda as quatro primeiras em todo pull request, com cobertura; `build` e `test:e2e` rodam localmente:
 
 ```bash
 pnpm data:validate
@@ -34,7 +34,7 @@ As convenções do repositório e as fronteiras que o código não cruza estão 
 
 ## Catálogo e licenças
 
-A procedência e a licença de cada imagem estão em [`docs/atribuicao-de-bandeiras.md`](docs/atribuicao-de-bandeiras.md), gerado do catálogo por `pnpm data:attribution` e conferido por `pnpm data:validate` — editar à mão falha o gate. A atribuição que a licença exige também aparece no produto, na página de detalhe de cada bandeira.
+A procedência e a licença de cada imagem estão em [`ATRIBUICOES.md`](ATRIBUICOES.md), gerado do catálogo por `pnpm data:attribution` e conferido por `pnpm data:validate`; editar à mão falha o gate. A atribuição que a licença exige também aparece no produto, na página de detalhe de cada bandeira.
 
 A ONU define a elegibilidade, e a regra vive em `scripts/catalog-rules.ts` — o mesmo módulo que o gerador aplica, o validador cobra e os testes exercitam contra o artefato commitado. Wikidata é usado para localizar os arquivos e o Wikimedia Commons fornece as imagens e metadados de licença. Os arquivos são fixados em `public/flags`; o app não faz hotlink em runtime. `src/data/catalog.json` e `src/data/runtime-catalog.json` são artefatos versionados gerados pelo pipeline.
 

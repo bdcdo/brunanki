@@ -5,7 +5,7 @@ import catalogJson from "../src/data/catalog.json";
 import type { Catalog } from "../src/types/catalog";
 
 /**
- * Gera `docs/atribuicao-de-bandeiras.md` a partir do catálogo.
+ * Gera `ATRIBUICOES.md` a partir do catálogo.
  *
  * A procedência das imagens saiu do site quando a página `/creditos` foi
  * removida, mas ela não podia virar um markdown escrito à mão: o catálogo é
@@ -18,11 +18,7 @@ import type { Catalog } from "../src/types/catalog";
  * de detalhe de cada bandeira exibe licença e link para o Commons.
  */
 
-export const ATTRIBUTION_PATH = join(
-  process.cwd(),
-  "docs",
-  "atribuicao-de-bandeiras.md"
-);
+export const ATTRIBUTION_PATH = join(process.cwd(), "ATRIBUICOES.md");
 
 const UN_MEMBERS_URL = "https://www.un.org/en/about-us/member-states";
 const UN_OBSERVERS_URL = "https://www.un.org/en/about-us/non-member-states";
@@ -115,7 +111,7 @@ async function main(): Promise<void> {
   const markdown = buildAttributionMarkdown(catalogJson as Catalog);
   await writeFile(ATTRIBUTION_PATH, markdown);
   console.log(
-    `docs/atribuicao-de-bandeiras.md gerado com ${(catalogJson as Catalog).entities.length} bandeiras.`
+    `ATRIBUICOES.md gerado com ${(catalogJson as Catalog).entities.length} bandeiras.`
   );
 }
 

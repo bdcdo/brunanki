@@ -179,7 +179,7 @@ async function main(): Promise<void> {
   );
   assert(
     attribution === buildAttributionMarkdown(catalog),
-    "docs/atribuicao-de-bandeiras.md está fora de sincronia com o catálogo; rode `pnpm data:attribution`"
+    "ATRIBUICOES.md está fora de sincronia com o catálogo; rode `pnpm data:attribution`"
   );
 
   console.log(
