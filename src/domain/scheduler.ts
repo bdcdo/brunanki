@@ -55,13 +55,28 @@ export function createSkillState(
   };
 }
 
+// Um formatador por fuso, criado uma vez: construir um `Intl.DateTimeFormat`
+// custa ordens de grandeza mais do que usá-lo, e a soma do XP chama
+// `calendarDay` uma vez por tentativa a cada renderização da sessão, o que com
+// alguns milhares de tentativas travava a digitação.
+const dayFormatters = new Map<string, Intl.DateTimeFormat>();
+
+function dayFormatter(timeZone: string): Intl.DateTimeFormat {
+  let formatter = dayFormatters.get(timeZone);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat("en-CA", {
+      timeZone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    });
+    dayFormatters.set(timeZone, formatter);
+  }
+  return formatter;
+}
+
 export function calendarDay(date: Date, timeZone: string): string {
-  const parts = new Intl.DateTimeFormat("en-CA", {
-    timeZone,
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit"
-  }).formatToParts(date);
+  const parts = dayFormatter(timeZone).formatToParts(date);
   const get = (type: Intl.DateTimeFormatPartTypes) =>
     parts.find((part) => part.type === type)?.value;
   return `${get("year")}-${get("month")}-${get("day")}`;

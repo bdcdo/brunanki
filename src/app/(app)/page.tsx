@@ -10,6 +10,7 @@ import { introductionOrder } from "@/data/curriculum";
 import { entities } from "@/data/runtime-catalog";
 import { dueCount, nextActivity } from "@/domain/next-activity";
 import { entityStage, type EntityStage } from "@/domain/mastery";
+import { xpTotals } from "@/domain/xp";
 import { cn } from "@/lib/utils";
 import {
   CONTINENT_IDS,
@@ -76,6 +77,7 @@ const SLOT_CLASS: Record<EntityStage, string> = {
 function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
   const continent = snapshot.settings.activeContinent;
   const activity = nextActivityHeadline(snapshot);
+  const xp = xpTotals(snapshot.attempts, snapshot.settings.timeZone);
 
   const stages = useMemo(
     () =>
@@ -182,6 +184,33 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
               Enquanto isso, o álbum mostra o que já está colado.
             </p>
           )}
+        </section>
+
+        {/* O que pontua é regra do domínio, em awardedXpFor; a tela só mostra
+            a soma. O número vem antes do rótulo na tela, mas não na leitura:
+            o leitor de tela ouve o que o número mede antes de ouvi-lo. */}
+        <section aria-labelledby="xp-title">
+          <h2 id="xp-title" className="sr-only">
+            Experiência
+          </h2>
+          <dl className="m-0 grid grid-cols-2 gap-2.5">
+            {(
+              [
+                ["XP hoje", xp.today],
+                ["XP no total", xp.total]
+              ] as const
+            ).map(([label, value]) => (
+              <div
+                key={label}
+                className="flex flex-col-reverse rounded-control bg-surface px-4 py-3 shadow-card"
+              >
+                <dt className="text-base text-ink-soft">{label}</dt>
+                <dd className="m-0 font-title text-4xl leading-figure font-extrabold">
+                  {value}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </section>
 
         <section aria-labelledby="others-title">

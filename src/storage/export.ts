@@ -162,9 +162,27 @@ const serializedPairStateSchema = z
     }
   });
 
+/**
+ * O fuso tem de ser um que este navegador conhece. Um backup editado à mão, ou
+ * vindo de um navegador com base de fusos mais nova, traria um nome que
+ * `Intl` recusa, e a Hoje e a sessão, que contam o dia nesse fuso, cairiam
+ * já ao abrir.
+ */
+function isKnownTimeZone(timeZone: string): boolean {
+  try {
+    new Intl.DateTimeFormat("en-CA", { timeZone });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 const settingsSchema = z.object({
   desiredRetention: z.number().positive().max(1),
-  timeZone: z.string().min(1),
+  timeZone: z
+    .string()
+    .min(1)
+    .refine(isKnownTimeZone, "Fuso horário desconhecido neste navegador"),
   activeContinent: z.enum(CONTINENT_IDS)
 });
 

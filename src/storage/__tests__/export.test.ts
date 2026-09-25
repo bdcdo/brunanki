@@ -71,6 +71,17 @@ describe("parseExportJson", () => {
     });
   });
 
+  it.each(["Foo/Bar", "UTC+3"])(
+    "rejeita fuso que o navegador não conhece: %s",
+    (timeZone) => {
+      const data = validExport();
+      data.settings.timeZone = timeZone;
+      expect(() => parseExportJson(JSON.stringify(data))).toThrow(
+        /Fuso horário desconhecido/
+      );
+    }
+  );
+
   it("rejeita versão de catálogo fora do formato AAAA.MM.DD", () => {
     // O catálogo real grava "2026.07.25"; a forma com hífen não é aceita para
     // que um backup de outra origem não passe como string opaca.

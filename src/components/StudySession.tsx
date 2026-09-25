@@ -24,7 +24,7 @@ import { CONTINENT_OF_PT_BR, SUBREGION } from "@/types/geography";
 import { CURRICULUM, introductionOrder } from "@/data/curriculum";
 import { verdictExplanation } from "@/domain/feedback";
 import { newAttemptId } from "@/domain/ids";
-import { awardedXpFor } from "@/domain/xp";
+import { awardedXpFor, xpTotals } from "@/domain/xp";
 import { buildChoiceRound } from "@/domain/distractors";
 import { describePalette } from "@/domain/palette";
 import { mulberry32 } from "@/domain/shuffle";
@@ -166,6 +166,13 @@ function StudySessionReady({
   // alternativas estáveis enquanto a questão está na tela — nada de
   // reembaralhar a cada re-render — e diferentes a cada nova sessão.
   const [sessionSeed] = useState(() => Math.floor(Math.random() * 2 ** 32));
+
+  // Refeita a cada snapshot novo, que chega a cada resposta, e não a cada
+  // tecla do campo de digitação.
+  const xp = useMemo(
+    () => xpTotals(attempts, settings.timeZone),
+    [attempts, settings.timeZone]
+  );
 
   const stateById = useMemo(
     () => new Map(skills.map((state) => [state.id, state])),
@@ -437,6 +444,9 @@ function StudySessionReady({
               {dueCount(skills) === 1
                 ? "1 revisão vencida agora"
                 : `${dueCount(skills)} revisões vencidas agora`}
+            </p>
+            <p className="m-0 font-bold">
+              {xp.today} XP hoje, {xp.total} no total
             </p>
           </div>
           {/* Com respostas, encerrar mostra o resumo, que só existe aqui:
