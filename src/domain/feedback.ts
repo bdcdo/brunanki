@@ -30,9 +30,7 @@ function findPair(
 // sub-região pede o próprio artigo ("no Caribe", "no Sul da Ásia"), e uma
 // tabela de artigos seria mais uma coisa para desatualizar.
 function whereIs(entity: FeedbackEntity): string {
-  const subregion = SUBREGION[entity.subregion].labelPtBr;
-  const continent = CONTINENT_LABEL_PT_BR[entity.continent];
-  return subregion === continent ? subregion : `${subregion}, ${continent}`;
+  return `${SUBREGION[entity.subregion].labelPtBr}, ${CONTINENT_LABEL_PT_BR[entity.continent]}`;
 }
 
 /**
