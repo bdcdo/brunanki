@@ -13,6 +13,7 @@ import { AppReady } from "@/components/AppReady";
 import { EmptyState } from "@/components/SystemScreens";
 import { FlagImage } from "@/components/FlagImage";
 import { SessionSummary } from "@/components/SessionSummary";
+import { StickerMoment } from "@/components/ui/sticker-moment";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { sessionCard } from "@/components/ui/card";
 import { Eyebrow } from "@/components/ui/eyebrow";
@@ -43,6 +44,7 @@ import {
 import { awardedXpFor, xpTotals } from "@/domain/xp";
 import { buildChoiceRound } from "@/domain/distractors";
 import { describePalette } from "@/domain/palette";
+import { isEntityMastered } from "@/domain/mastery";
 import { mulberry32 } from "@/domain/shuffle";
 import {
   dueCount,
@@ -82,6 +84,8 @@ interface GradedAttempt {
   stateBefore: SkillState;
   historyBefore: readonly ReviewAttempt[];
   guessed: boolean;
+  /** Se a bandeira já estava dominada antes desta resposta. */
+  masteredBefore: boolean;
 }
 
 const CHOICE_COUNT = 4;
@@ -361,7 +365,8 @@ function StudySessionReady({
         original: attempt,
         stateBefore: current,
         historyBefore: attempts,
-        guessed: false
+        guessed: false,
+        masteredBefore: isEntityMastered(item.entityId, skills)
       });
       // A escolha do nome não move o FSRS, porque não é recuperação, e fica
       // fora do resumo.
@@ -829,7 +834,17 @@ function StudySessionReady({
                     : undefined,
                   CURRICULUM[entity.continent]?.pairs ?? []
                 )}
-              />
+              >
+                {/* Derivada a cada renderização, e não guardada: "Foi chute"
+                    reescreve a resposta e pode desfazer o domínio, e a
+                    figurinha precisa sumir junto. Quem decide é o domínio; a
+                    sessão só compara o antes desta resposta com o agora. */}
+                {graded &&
+                  !graded.masteredBefore &&
+                  isEntityMastered(entity.id, skills) && (
+                    <StickerMoment entity={entity} />
+                  )}
+              </FeedbackPanel>
               <div className="mt-[18px] flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
                 {/* Só depois de acerto em escolha: é o único caso em que o
                     acerto pode ter vindo da sorte, uma em quatro. */}

@@ -1,3 +1,4 @@
+import type React from "react";
 import { cva } from "class-variance-authority";
 import { Check, CircleAlert, X } from "lucide-react";
 
@@ -46,6 +47,8 @@ interface FeedbackPanelProps {
   submittedLabel?: string;
   /** Sem explicação, o veredito fica só com a resposta. */
   explanation?: string;
+  /** O que mais o veredito anuncia, dentro da mesma região viva. */
+  children?: React.ReactNode;
   className?: string;
 }
 
@@ -72,7 +75,8 @@ export function FeedbackPanel({
   submitted,
   submittedLabel = "Sua resposta",
   explanation,
-  className
+  className,
+  children
 }: FeedbackPanelProps) {
   const Icon = toneIcon[tone];
 
@@ -94,6 +98,7 @@ export function FeedbackPanel({
         </span>
       )}
       {explanation && <span>{explanation}</span>}
+      {children}
     </div>
   );
 }

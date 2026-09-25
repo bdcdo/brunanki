@@ -24,6 +24,11 @@ export interface DueSkillState {
   entityId: string;
   skill: Skill;
   dueAt: Date;
+  /** Padrão 3,2 dias, longe do domínio; `MASTERY_STABILITY_DAYS` ou mais,
+   *  com dois dias de sucesso, semeia uma habilidade que conta para dominar
+   *  a bandeira. */
+  stability?: number;
+  successDays?: readonly string[];
 }
 
 export interface SeedOptions {
@@ -65,31 +70,35 @@ function buildBackup({ dueStates = [] }: SeedOptions) {
       timeZone: "America/Sao_Paulo",
       activeContinent: "americas"
     },
-    skillStates: dueStates.map(({ entityId, skill, dueAt }) => ({
-      // O schema exige esta composição exata; um id livre é rejeitado com
-      // "ID do estado não corresponde à entidade e habilidade".
-      id: `${entityId}::${skill}`,
-      entityId,
-      skill,
-      phase: "scheduled",
-      card: {
-        due: dueAt.toISOString(),
-        stability: 3.2,
-        difficulty: 5.1,
-        elapsed_days: 5,
-        scheduled_days: 3,
-        learning_steps: 0,
-        reps: 2,
-        lapses: 0,
-        state: 2,
-        last_review: lastReview.toISOString()
-      },
-      distinctSuccessDays: [isoDay(lastReview)],
-      // "correct" de propósito: com outro desfecho o estado entraria também
-      // como correção, e a composição da fila deixaria de ser previsível.
-      lastOutcome: "correct",
-      updatedAt: lastReview.toISOString()
-    })),
+    skillStates: dueStates.map(
+      ({ entityId, skill, dueAt, stability = 3.2, successDays }) => ({
+        // O schema exige esta composição exata; um id livre é rejeitado com
+        // "ID do estado não corresponde à entidade e habilidade".
+        id: `${entityId}::${skill}`,
+        entityId,
+        skill,
+        phase: "scheduled",
+        card: {
+          due: dueAt.toISOString(),
+          stability,
+          difficulty: 5.1,
+          elapsed_days: 5,
+          scheduled_days: 3,
+          learning_steps: 0,
+          reps: 2,
+          lapses: 0,
+          state: 2,
+          last_review: lastReview.toISOString()
+        },
+        distinctSuccessDays: successDays
+          ? [...successDays]
+          : [isoDay(lastReview)],
+        // "correct" de propósito: com outro desfecho o estado entraria também
+        // como correção, e a composição da fila deixaria de ser previsível.
+        lastOutcome: "correct",
+        updatedAt: lastReview.toISOString()
+      })
+    ),
     attempts: [],
     pairStates: []
   };

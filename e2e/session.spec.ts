@@ -290,7 +290,7 @@ test("progresso resume o estado guardado sem overflow", async ({ page }) => {
 
   await expect(page.getByRole("heading", { name: "Progresso" })).toBeVisible();
   await expect(
-    page.getByRole("progressbar", { name: "Entidades dominadas" })
+    page.getByRole("progressbar", { name: "Figurinhas coladas" })
   ).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "0 tentativas" })

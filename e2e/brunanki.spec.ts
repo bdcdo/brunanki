@@ -61,7 +61,9 @@ test("navegação principal funciona em desktop e mobile", async ({ page }) => {
   // solto violaria o modo estrito do Playwright.
   await navigation.getByRole("link", { name: "Álbum" }).click();
   await expect(page).toHaveURL(/\/catalogo$/);
-  await expect(page.getByRole("heading", { name: "Álbum" })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { level: 1, name: "Álbum das Américas" })
+  ).toBeVisible();
   await expect(navigation.getByRole("link", { name: "Álbum" })).toHaveAttribute(
     "aria-current",
     "page"
@@ -74,8 +76,13 @@ test("catálogo filtra nomes, abre detalhes e mantém bandeiras inteiras", async
 }) => {
   await page.goto("/catalogo");
 
-  await expect(page.getByText(`${ENTITY_COUNT} resultados`)).toBeVisible();
-  await page.getByRole("searchbox", { name: "Buscar por nome" }).fill("Brasil");
+  // A busca cobre o catálogo inteiro, e não só o continente em estudo.
+  await expect(
+    page.getByRole("searchbox", { name: "Buscar qualquer bandeira" })
+  ).toHaveAttribute("placeholder", `Buscar entre as ${ENTITY_COUNT} bandeiras`);
+  await page
+    .getByRole("searchbox", { name: "Buscar qualquer bandeira" })
+    .fill("Brasil");
   await expect(page.getByText("1 resultado")).toBeVisible();
 
   const brazilCard = page.getByRole("link", { name: /Bandeira de Brasil/ });
@@ -157,6 +164,10 @@ test("ajustes expõem backup, restauração e reset com status acessível", asyn
   await page.goto("/configuracoes");
 
   await expect(page.getByRole("heading", { name: "Ajustes" })).toBeVisible();
+  // Sem conta, o progresso não viaja sozinho, e a tela diz isso.
+  await expect(
+    page.getByRole("heading", { name: "Seu progresso mora neste navegador" })
+  ).toBeVisible();
   await expect(
     page.getByRole("button", { name: /Baixar backup/ })
   ).toBeVisible();

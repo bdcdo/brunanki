@@ -1,7 +1,8 @@
 import { confusability, type DistractorCandidate } from "@/domain/distractors";
 import { pairStateId } from "@/domain/pairs";
+import { entityById } from "@/data/runtime-catalog";
 import type { CuratedPair } from "@/types/curriculum";
-import type { ContinentId } from "@/types/geography";
+import type { ContinentId, SubregionId } from "@/types/geography";
 
 export type { CuratedPair };
 
@@ -305,4 +306,38 @@ export function undecidedConfusablePairs(
     }
   }
   return undecided.sort();
+}
+
+/** Uma página do álbum: uma sub-região, com as figurinhas numeradas. */
+export interface AlbumPage {
+  readonly subregion: SubregionId;
+  readonly slots: readonly {
+    readonly entityId: string;
+    readonly number: number;
+  }[];
+}
+
+/**
+ * As páginas do álbum de um continente, uma por sub-região, na ordem do
+ * currículo.
+ *
+ * O número de cada figurinha é a posição dela na ordem sugerida, e não a
+ * ordem alfabética: é a mesma sequência em que as novidades chegam, então a
+ * pessoa vê o álbum se preencher do começo para o fim. A ordem do currículo
+ * já vem agrupada por sub-região, e a página muda quando a sub-região muda.
+ */
+export function albumPages(continent: ContinentId): AlbumPage[] {
+  const pages: {
+    subregion: SubregionId;
+    slots: { entityId: string; number: number }[];
+  }[] = [];
+  for (const [index, entityId] of introductionOrder(continent).entries()) {
+    const subregion = entityById.get(entityId)?.subregion;
+    if (subregion === undefined) continue;
+    const current = pages.at(-1);
+    const slot = { entityId, number: index + 1 };
+    if (current?.subregion === subregion) current.slots.push(slot);
+    else pages.push({ subregion, slots: [slot] });
+  }
+  return pages;
 }

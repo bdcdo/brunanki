@@ -6,6 +6,7 @@ import { CONTINENT_IDS } from "@/types/geography";
 import { nextActivity } from "@/domain/next-activity";
 
 import {
+  albumPages,
   CURRICULUM,
   introductionOrder,
   isContinentAvailable,
@@ -135,5 +136,37 @@ describe("disponibilidade", () => {
       expect(isContinentAvailable(id)).toBe(false);
       expect(introductionOrder(id)).toEqual([]);
     }
+  });
+});
+
+describe("albumPages", () => {
+  it("abre as Américas em quatro páginas, uma por sub-região, numeradas de 1 a 35", () => {
+    const pages = albumPages("americas");
+    expect(
+      pages.map(({ subregion, slots }) => [subregion, slots.length])
+    ).toEqual([
+      ["northern-america", 2],
+      ["south-america", 12],
+      ["central-america", 8],
+      ["caribbean", 13]
+    ]);
+    expect(
+      pages.flatMap(({ slots }) => slots.map(({ number }) => number))
+    ).toEqual(Array.from({ length: 35 }, (_, index) => index + 1));
+  });
+
+  it("não repete sub-região: a ordem do currículo vem agrupada", () => {
+    // Se a ordem intercalasse sub-regiões, o álbum ganharia duas páginas com
+    // o mesmo título, e a figurinha ficaria na página errada.
+    for (const continent of CONTINENT_IDS.filter(isContinentAvailable)) {
+      const subregions = albumPages(continent).map(
+        ({ subregion }) => subregion
+      );
+      expect(new Set(subregions).size).toBe(subregions.length);
+    }
+  });
+
+  it("continente sem currículo não tem álbum", () => {
+    expect(albumPages("europe")).toEqual([]);
   });
 });

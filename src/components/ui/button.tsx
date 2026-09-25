@@ -22,6 +22,9 @@ const buttonVariants = cva(
     // app passaria a apontar a seta de texto, o que nenhuma captura pega.
     "cursor-pointer font-bold no-underline transition",
     "disabled:cursor-not-allowed disabled:opacity-50 disabled:translate-y-0",
+    // O mesmo aspecto para aria-disabled, que o botão usa quando precisa
+    // continuar focável enquanto espera, como o Foi chute durante a gravação.
+    "aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:translate-y-0",
     "[&_svg]:shrink-0"
   ),
   {

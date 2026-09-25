@@ -9,7 +9,13 @@ import { buttonVariants } from "@/components/ui/button";
 import { introductionOrder } from "@/data/curriculum";
 import { entities } from "@/data/runtime-catalog";
 import { dueCount, nextActivity } from "@/domain/next-activity";
-import { entityStage, type EntityStage } from "@/domain/mastery";
+import { entityStage } from "@/domain/mastery";
+import {
+  STAGE_SHAPE,
+  StageLegend,
+  countStages,
+  stageSummary
+} from "@/components/ui/stage-legend";
 import { xpTotals } from "@/domain/xp";
 import { cn } from "@/lib/utils";
 import {
@@ -62,18 +68,6 @@ function nextActivityHeadline(snapshot: LearningSnapshot): {
   };
 }
 
-// Os três estados se separam pela forma, e não pela cor: cheia, meio cheia e
-// só o contorno tracejado do espaço do álbum. Um verde claro para "em
-// andamento" mediria pouco mais de 1:1 contra o branco e não diria nada.
-const HALF_FILLED =
-  "border-[1.5px] border-dashed border-input bg-[linear-gradient(to_top,var(--brand)_50%,transparent_50%)]";
-const SLOT_CLASS: Record<EntityStage, string> = {
-  mastered: "bg-brand",
-  reviewing: HALF_FILLED,
-  acquiring: HALF_FILLED,
-  unseen: "border-[1.5px] border-dashed border-input"
-};
-
 function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
   const continent = snapshot.settings.activeContinent;
   const activity = nextActivityHeadline(snapshot);
@@ -86,17 +80,14 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
         .map(({ id }) => entityStage(id, snapshot.skills)),
     [continent, snapshot.skills]
   );
-  const mastered = stages.filter((stage) => stage === "mastered").length;
-  const unseen = stages.filter((stage) => stage === "unseen").length;
-  const inProgress = stages.length - mastered - unseen;
-  const stageSummary = `${mastered} ${mastered === 1 ? "colada" : "coladas"}, ${inProgress} em andamento, ${unseen} ${unseen === 1 ? "vazia" : "vazias"}`;
+  const counts = countStages(stages);
   const others = CONTINENT_IDS.filter((id) => id !== continent);
 
   return (
     <div className="mx-auto grid w-full max-w-page grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] gap-8 max-lg:grid-cols-1 max-md:gap-5">
       <section
         aria-labelledby="album-title"
-        className="overflow-hidden rounded-card bg-surface shadow-card max-lg:order-2"
+        className="overflow-hidden rounded-card bg-surface shadow-card max-lg:order-3"
       >
         <div className="flex items-baseline justify-between gap-4 bg-brand px-7 py-5 text-brand-on max-md:px-5 max-md:py-4">
           <h1
@@ -110,7 +101,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
         <div className="px-7 pt-6 pb-7 max-md:px-5 max-md:pt-5 max-md:pb-6">
           <p className="m-0 flex items-baseline gap-2">
             <strong className="font-title text-figure leading-figure font-extrabold">
-              {mastered}
+              {counts.mastered}
             </strong>
             <span className="text-lg text-ink-soft">
               de {stages.length} coladas
@@ -121,48 +112,30 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
               a uma não informa nada que a frase abaixo não diga. */}
           <div
             role="img"
-            aria-label={stageSummary}
+            aria-label={stageSummary(counts)}
             className="mt-5 grid grid-cols-[repeat(auto-fill,minmax(18px,1fr))] gap-1.5"
           >
             {stages.map((stage, index) => (
               <span
                 key={index}
-                className={cn("h-5 rounded-[4px]", SLOT_CLASS[stage])}
+                className={cn("h-5 rounded-[4px]", STAGE_SHAPE[stage])}
               />
             ))}
           </div>
-          {/* A legenda diz qual forma é qual estado, e as contagens vão em
-              texto: a faixa sozinha seria só forma. */}
-          <ul className="mt-4 mb-0 flex list-none flex-wrap gap-x-5 gap-y-1.5 p-0 text-base text-ink-soft">
-            <li className="flex items-center gap-2">
-              <span
-                className={cn("h-4 w-5 rounded-[4px]", SLOT_CLASS.mastered)}
-              />
-              {mastered} {mastered === 1 ? "colada" : "coladas"}
-            </li>
-            <li className="flex items-center gap-2">
-              <span
-                className={cn("h-4 w-5 rounded-[4px]", SLOT_CLASS.acquiring)}
-              />
-              {inProgress} em andamento
-            </li>
-            <li className="flex items-center gap-2">
-              <span
-                className={cn("h-4 w-5 rounded-[4px]", SLOT_CLASS.unseen)}
-              />
-              {unseen} {unseen === 1 ? "vazia" : "vazias"}
-            </li>
-          </ul>
+          <StageLegend counts={counts} className="mt-4" />
           <p className="mt-3 mb-0 text-sm text-ink-soft">
             A figurinha é colada quando a bandeira fica dominada.
           </p>
         </div>
       </section>
 
-      <div className="flex flex-col gap-5 max-lg:order-1">
+      {/* Numa coluna só, a coluna lateral se desfaz em itens do grid, para
+          que o álbum ativo venha antes dos álbuns fechados: o que se estuda
+          agora, o XP, o álbum, e só então o que ainda não abriu. */}
+      <div className="flex flex-col gap-5 max-lg:contents">
         <section
           aria-labelledby="activity-title"
-          className="on-ink rounded-card bg-ink p-7 text-on-ink max-md:p-5"
+          className="on-ink rounded-card bg-ink p-7 text-on-ink max-lg:order-1 max-md:p-5"
         >
           <p className="m-0 text-base text-on-ink-soft">Agora</p>
           <h2
@@ -189,7 +162,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
         {/* O que pontua é regra do domínio, em awardedXpFor; a tela só mostra
             a soma. O número vem antes do rótulo na tela, mas não na leitura:
             o leitor de tela ouve o que o número mede antes de ouvi-lo. */}
-        <section aria-labelledby="xp-title">
+        <section aria-labelledby="xp-title" className="max-lg:order-2">
           <h2 id="xp-title" className="sr-only">
             Experiência
           </h2>
@@ -213,7 +186,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
           </dl>
         </section>
 
-        <section aria-labelledby="others-title">
+        <section aria-labelledby="others-title" className="max-lg:order-4">
           <h2 id="others-title" className="mb-2.5 text-base font-bold">
             Outros álbuns
           </h2>

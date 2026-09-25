@@ -373,6 +373,36 @@
      o tempo do app, sem repetir duration-* em cada call site. */
   --default-transition-duration: 160ms;
   --default-transition-timing-function: ease;
+
+  /* O único movimento que não responde a um toque: a figurinha que desce,
+     passa um pouco do ponto e assenta, como papel pressionado com o polegar.
+     Usada só com `motion-safe:`, para que com movimento reduzido a classe nem
+     seja aplicada, em vez de apenas encurtada pela regra geral da base.
+
+     Anima `translate`, `rotate` e `scale`, e não `transform` nem a sombra: no
+     Tailwind 4 o `-rotate-2` da figurinha é a propriedade `rotate`, que se
+     somaria a um `transform` animado, e a sombra carrega o anel da moldura,
+     que sumiria durante a animação. */
+  --animate-sticker-press: sticker-press 650ms cubic-bezier(0.2, 0.9, 0.3, 1.25)
+    both;
+
+  @keyframes sticker-press {
+    0% {
+      translate: 0 -22px;
+      rotate: -9deg;
+      scale: 1.08;
+    }
+    70% {
+      translate: 0 0;
+      rotate: -1deg;
+      scale: 0.97;
+    }
+    100% {
+      translate: 0 0;
+      rotate: -2deg;
+      scale: 1;
+    }
+  }
 }
 
 /* ---------------------------------------------------------------------------
