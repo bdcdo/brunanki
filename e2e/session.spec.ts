@@ -4,7 +4,7 @@ import {
   expectNoHorizontalOverflow,
   expectNoSeriousAccessibilityViolations
 } from "./helpers";
-import { americasEntities, catalogEntities, seedProgress } from "./seed";
+import { americasIntroduction, catalogEntities, seedProgress } from "./seed";
 
 /**
  * A sessão de estudo, com estado semeado.
@@ -16,9 +16,9 @@ import { americasEntities, catalogEntities, seedProgress } from "./seed";
  * quase todo o CSS novo da migração visual.
  */
 
-/** A fila de itens novos segue a ordem do catálogo dentro do continente
- *  ativo, então a primeira questão de uma sessão sem estado é sempre esta. */
-const firstNew = americasEntities[0]!;
+/** A fila de itens novos segue a ordem do currículo do continente ativo,
+ *  então a primeira questão de uma sessão sem estado é sempre esta. */
+const firstNew = americasIntroduction[0]!;
 const brazil = catalogEntities.find(({ id }) => id === "bra")!;
 
 /** `buildDailyQueue` recebe `baseNewLimit: 5`, e sem nenhuma tentativa recente

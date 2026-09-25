@@ -1,6 +1,7 @@
 import { expect, type Page } from "@playwright/test";
 
 import runtimeCatalog from "../src/data/runtime-catalog.json";
+import { introductionOrder } from "../src/data/curriculum";
 
 /**
  * Semeadura de progresso para o e2e.
@@ -36,6 +37,12 @@ export const catalogEntities = runtimeCatalog.entities;
 /** As novidades vêm só do continente ativo, e o padrão são as Américas. */
 export const americasEntities = catalogEntities.filter(
   ({ continent }) => continent === "americas"
+);
+
+/** A ordem em que a sessão introduz as Américas: a do currículo, lida da
+ *  mesma fonte que o app usa, para que a primeira questão seja previsível. */
+export const americasIntroduction = introductionOrder("americas").map((id) =>
+  catalogEntities.find((entity) => entity.id === id)!
 );
 
 function isoDay(date: Date): string {

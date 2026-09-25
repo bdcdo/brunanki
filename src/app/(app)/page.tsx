@@ -6,8 +6,9 @@ import { useMemo } from "react";
 
 import { AppReady } from "@/components/AppReady";
 import { buttonVariants } from "@/components/ui/button";
+import { introductionOrder } from "@/data/curriculum";
 import { entities } from "@/data/runtime-catalog";
-import { buildDailyQueue, newEntityOrder } from "@/domain/daily-queue";
+import { buildDailyQueue } from "@/domain/daily-queue";
 import { entityStage, type EntityStage } from "@/domain/mastery";
 import { cn } from "@/lib/utils";
 import {
@@ -37,7 +38,7 @@ function nextActivity(snapshot: LearningSnapshot): {
   hasWork: boolean;
 } {
   const plan = buildDailyQueue({
-    entityOrder: newEntityOrder(entities, snapshot.settings.activeContinent),
+    entityOrder: introductionOrder(snapshot.settings.activeContinent),
     states: snapshot.skills,
     recentAttempts: snapshot.attempts,
     baseNewLimit: 5
