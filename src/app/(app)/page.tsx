@@ -63,7 +63,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
     <div className="mx-auto w-full max-w-page">
       {!completedDiagnostic ? (
         <>
-          <section className="relative mb-[34px] grid min-h-[430px] items-center overflow-hidden rounded-panel bg-ink p-[clamp(30px,5vw,62px)] text-on-ink shadow-panel max-md:min-h-0 max-md:px-6 max-md:py-[30px] lg:grid-cols-[1.1fr_0.9fr]">
+          <section className="relative mb-[34px] grid min-h-[430px] items-center overflow-hidden on-ink rounded-panel bg-ink p-[clamp(30px,5vw,62px)] text-on-ink shadow-panel max-md:min-h-0 max-md:px-6 max-md:py-[30px] lg:grid-cols-[1.1fr_0.9fr]">
             {/* Era `.hero::after`. Vira elemento porque um pseudo não se
                 escreve em utilitário — e o `aria-hidden` explícito diz o que o
                 `::after` só implicava. */}
@@ -79,7 +79,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
               <Eyebrow className="text-highlight">
                 {entities.length} bandeiras · um plano só seu
               </Eyebrow>
-              <h1 className="mt-3 mb-5 max-w-[700px] font-title text-hero font-bold tracking-[-0.045em] max-md:text-[45px]">
+              <h1 className="mt-3 mb-5 max-w-[700px] font-title text-hero font-bold tracking-title max-md:text-[45px]">
                 Reconheça o mundo inteiro.
               </h1>
               <p className="mb-7 max-w-[580px] text-lg text-on-ink-soft">
@@ -87,12 +87,13 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
                 bandeira antes de esquecer.
               </p>
               <div className="flex flex-wrap gap-3">
-                {/* `default`, e não o coral que o CSS legado dava aqui. O
-                    mesmo convite já saiu do coral na abertura do diagnóstico
-                    (DiagnosticSession), e ter a mesma ação em duas cores em
-                    duas telas é incoerência, não ênfase. O coral fica no que
-                    não tem volta — hoje, só "Apagar progresso". */}
-                <Link href="/diagnostico" className={buttonVariants()}>
+                {/* `highlight` porque o painel é de tinta, e o `default`, que
+                    também é tinta, sumiria contra ele. A cor de alerta fica
+                    no que não tem volta: hoje, só "Apagar progresso". */}
+                <Link
+                  href="/diagnostico"
+                  className={buttonVariants({ variant: "highlight" })}
+                >
                   {diagnosed > 0
                     ? "Continuar diagnóstico"
                     : "Começar diagnóstico"}
@@ -102,7 +103,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
                   href="/catalogo"
                   className={buttonVariants({ variant: "secondary" })}
                 >
-                  Explorar bandeiras
+                  Abrir o álbum
                 </Link>
               </div>
             </div>
@@ -179,7 +180,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
           <section className="grid min-h-[200px] grid-cols-[1fr_auto] items-center gap-6 rounded-panel border border-highlight-edge bg-outcome-partial p-[30px] max-md:grid-cols-1">
             <div>
               <Eyebrow>Meta adaptativa</Eyebrow>
-              <h2 className="mt-[5px] mb-2 font-title text-4xl leading-body tracking-[-0.04em]">
+              <h2 className="mt-[5px] mb-2 font-title text-4xl leading-body tracking-title">
                 Pronto para reforçar a memória?
               </h2>
               <p className="mb-5 max-w-[600px] text-ink-soft">

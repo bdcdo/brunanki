@@ -391,7 +391,7 @@ function StudySessionReady({
             href="/catalogo"
             className={buttonVariants({ variant: "secondary" })}
           >
-            Explorar o atlas
+            Abrir o álbum
           </Link>
         }
       />
@@ -449,7 +449,7 @@ function StudySessionReady({
           {step === "teach" ? (
             <>
               <Eyebrow>Primeiro contato</Eyebrow>
-              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
+              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-title">
                 Esta é a bandeira de {entity.displayNamePtBr}.
               </h1>
               <FlagImage
@@ -481,7 +481,7 @@ function StudySessionReady({
           ) : step === "forwardChoice" ? (
             <>
               <Eyebrow>Reconhecimento com apoio</Eyebrow>
-              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
+              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-title">
                 De onde é esta bandeira?
               </h1>
               <FlagImage
@@ -510,7 +510,7 @@ function StudySessionReady({
           ) : step === "reverseChoice" ? (
             <>
               <Eyebrow>Associação inversa</Eyebrow>
-              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
+              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-title">
                 Qual é a bandeira de {entity.displayNamePtBr}?
               </h1>
               <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
@@ -543,7 +543,7 @@ function StudySessionReady({
           ) : (
             <>
               <Eyebrow>Recordação sem pista</Eyebrow>
-              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
+              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-title">
                 Digite o nome desta entidade.
               </h1>
               <FlagImage

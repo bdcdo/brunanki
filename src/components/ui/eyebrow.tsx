@@ -1,20 +1,17 @@
 import { cn } from "@/lib/utils";
 
 /**
- * O rótulo curto em caixa alta que abre uma seção, um cartão ou um passo de
- * exercício. Onze arquivos o usam, e é por isso que ele é um componente e não
- * seis utilitários repetidos em cada chamada: a cor é a única decisão de
- * contraste do app que se mede em texto de 12px, e ela precisa de um lugar só.
+ * O rótulo curto que abre uma seção, um cartão ou um passo de exercício. Em
+ * caixa de frase, e não em caixa alta espaçada: no álbum ele é uma legenda
+ * que se lê, não um carimbo.
  *
- * `--brand-deep` (6,75:1 sobre o papel), e não `--brand`: este mede 4,59:1,
- * que passa o piso de 4,5 por 0,09 — margem nula para o consumidor real, que é
- * exatamente texto pequeno sobre papel.
+ * É componente porque a cor é a decisão de contraste do app que se mede em
+ * texto pequeno, e ela precisa de um lugar só: `--brand-deep` (7,03:1 sobre o
+ * papel), e não `--brand` (5,33:1), pela folga barata.
  *
- * `leading-body` explícito porque `text-2xs` traz o 1,35 de `--lead-label`
- * junto com o tamanho, e a regra legada não declarava entrelinha nenhuma:
- * herdava o 1,5 do corpo. Num `<span>` inline a diferença não aparece — o
- * strut do bloco pai é maior que as duas —, mas no `<dt>` do resumo de sessão
- * aparece, e preservar é mais barato do que descobrir onde.
+ * `leading-body` explícito porque `text-sm` traz o 1,5 do corpo só por
+ * coincidência de token; no `<dt>` do resumo de sessão a entrelinha decide a
+ * altura da linha, e fixá-la aqui evita descobrir onde ela mudou.
  */
 export function Eyebrow({
   as: Tag = "span",
@@ -24,7 +21,7 @@ export function Eyebrow({
   return (
     <Tag
       className={cn(
-        "text-2xs leading-body font-bold tracking-label text-brand-deep uppercase",
+        "text-sm leading-body font-bold text-brand-deep",
         className
       )}
       {...props}

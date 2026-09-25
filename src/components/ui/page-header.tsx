@@ -40,7 +40,7 @@ export function PageHeader({
     >
       <div>
         <Eyebrow>{eyebrow}</Eyebrow>
-        <h1 className="font-title text-page font-bold tracking-page">
+        <h1 className="font-title text-page font-extrabold tracking-page">
           {title}
         </h1>
         {description && (

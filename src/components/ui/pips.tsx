@@ -97,7 +97,7 @@ export function SessionPips({ states, position, label }: SessionPipsProps) {
           className={cn(
             pipVariants({ state }),
             // `outline`, e não `ring`: o anel do Tailwind com deslocamento
-            // pinta a cor de fundo no vão, e aqui o fundo é o papel creme da
+            // pinta a cor de fundo no vão, e aqui o fundo é o papel frio da
             // página, não branco. O contorno deixa passar o que estiver atrás.
             index === current &&
               "outline-2 outline-offset-2 outline-brand-ui/55"

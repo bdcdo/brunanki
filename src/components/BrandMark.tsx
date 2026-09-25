@@ -3,25 +3,19 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 /**
- * A marca: três faixas horizontais numa moldura arredondada.
+ * A marca: uma figurinha colada, levemente torta, com a página verde das
+ * Américas dentro. É o mesmo objeto que o álbum mostra para uma bandeira
+ * dominada, e por isso ela usa a sombra de figurinha, e não uma borda.
  *
- * Vive fora do AppShell porque a casca de sessão também precisa dela — lá ela
- * é, além da identidade, a única saída da tela.
- *
- * As três faixas eram `:nth-child(1|2|3)` no CSS legado. Como classe em cada
- * `<span>`, a cor de cada faixa fica dita onde ela está, em vez de depender da
- * ordem: acrescentar uma quarta faixa deixa de recolorir a terceira em
- * silêncio.
+ * Vive fora do AppShell porque a casca de sessão também precisa dela.
  */
 export function BrandMark() {
   return (
     <span
-      className="grid h-[30px] w-9 overflow-hidden rounded-[7px] border-2 border-current"
+      className="grid h-[34px] w-7 -rotate-[4deg] place-items-center rounded-[4px] bg-surface shadow-sticker ring-1 ring-line"
       aria-hidden="true"
     >
-      <span className="bg-highlight" />
-      <span className="bg-surface" />
-      <span className="bg-alert" />
+      <span className="h-[13px] w-5 rounded-[2px] bg-brand" />
     </span>
   );
 }
@@ -32,10 +26,9 @@ export function BrandLink({ className }: { className?: string }) {
       href="/"
       className={cn(
         // `leading-body` porque `text-3xl` traz o 1,25 de `--lead-name` junto
-        // com os 28px, e a regra legada herdava o 1,5 do corpo. Aqui a
-        // entrelinha do `<strong>` é o que decide a altura do inline-flex, e
-        // com ela a altura inteira do cabeçalho móvel.
-        "inline-flex items-center gap-3 font-title text-3xl leading-body tracking-title text-inherit no-underline",
+        // com os 28px; aqui a entrelinha do `<strong>` decide a altura do
+        // inline-flex, e com ela a do cabeçalho.
+        "inline-flex items-center gap-2.5 font-title text-3xl leading-body font-extrabold tracking-title text-inherit no-underline",
         className
       )}
       aria-label="Brunanki, página inicial"
