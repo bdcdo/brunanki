@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { pairStateId } from "@/domain/pairs";
 import { CONTINENT_IDS } from "@/types/geography";
 
-import { buildDailyQueue } from "@/domain/daily-queue";
+import { nextActivity } from "@/domain/next-activity";
 
 import {
   CURRICULUM,
@@ -82,19 +82,10 @@ describe("pares confundíveis sem decisão", () => {
 });
 
 describe("fila de um perfil zerado", () => {
-  it("começa pelas primeiras bandeiras da ordem sugerida", () => {
-    const queue = buildDailyQueue({
-      entityOrder: introductionOrder("americas"),
-      states: [],
-      baseNewLimit: 5
-    });
-    expect(queue.items.map(({ entityId }) => entityId)).toEqual([
-      "usa",
-      "can",
-      "bra",
-      "arg",
-      "chl"
-    ]);
+  it("começa pela primeira bandeira da ordem sugerida", () => {
+    expect(
+      nextActivity({ states: [], entityOrder: introductionOrder("americas") })
+    ).toEqual({ entityId: "usa", skill: "flagToNameRecall", reason: "new" });
   });
 });
 

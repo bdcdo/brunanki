@@ -21,12 +21,14 @@ import { americasIntroduction, catalogEntities, seedProgress } from "./seed";
 const firstNew = americasIntroduction[0]!;
 const brazil = catalogEntities.find(({ id }) => id === "bra")!;
 
-/** `buildDailyQueue` recebe `baseNewLimit: 5`, e sem nenhuma tentativa recente
- *  o limite não é reduzido: cinco itens novos, um por entidade. */
-const NEW_ITEMS = 5;
-
-function sessionProgress(page: Page) {
-  return page.getByRole("progressbar", { name: "Sessão de hoje" });
+/** A linha que conta o que já foi respondido nesta sessão. A sessão não tem
+ *  tamanho fixo, então é contagem, e não progresso de x em N. */
+function sessionCount(page: Page, answered: number) {
+  return page.getByText(
+    answered === 1
+      ? "1 respondida nesta sessão"
+      : `${answered} respondidas nesta sessão`
+  );
 }
 
 test("a sessão atravessa apresentação, alternativas e digitação", async ({
@@ -36,10 +38,7 @@ test("a sessão atravessa apresentação, alternativas e digitação", async ({
   await page.goto("/estudar");
   await page.getByRole("button", { name: /Começar sessão/ }).click();
 
-  await expect(sessionProgress(page)).toHaveAttribute(
-    "aria-valuemax",
-    String(NEW_ITEMS)
-  );
+  await expect(sessionCount(page, 0)).toBeVisible();
 
   await expect(
     page.getByRole("heading", {
@@ -74,17 +73,23 @@ test("a sessão atravessa apresentação, alternativas e digitação", async ({
   await page.getByRole("button", { name: /Responder/ }).click();
 
   await expect(page.getByText("Acerto de primeira")).toBeVisible();
-  // Um acerto não agenda repetição imediata, então a fila não cresce.
-  await expect(sessionProgress(page)).toHaveAttribute(
-    "aria-valuemax",
-    String(NEW_ITEMS)
-  );
+  await expect(sessionCount(page, 2)).toBeVisible();
+
+  // A fila é recalculada depois de cada resposta: com a recordação dos
+  // Estados Unidos feita, a próxima novidade é o reconhecimento da mesma
+  // bandeira, antes de a ordem passar para a seguinte.
+  await page.getByRole("button", { name: /Continuar/ }).click();
+  await expect(
+    page.getByRole("heading", {
+      name: `Qual é a bandeira de ${firstNew.displayNamePtBr}?`
+    })
+  ).toBeVisible();
 
   await expectNoHorizontalOverflow(page);
   await expectNoSeriousAccessibilityViolations(page);
 });
 
-test("o exercício inverso registra o erro e agenda a repetição imediata", async ({
+test("o exercício inverso registra o erro e traz a correção antes da novidade", async ({
   page
 }) => {
   await seedProgress(page, {
@@ -106,10 +111,7 @@ test("o exercício inverso registra o erro e agenda a repetição imediata", asy
       name: `Qual é a bandeira de ${brazil.displayNamePtBr}?`
     })
   ).toBeVisible();
-  await expect(sessionProgress(page)).toHaveAttribute(
-    "aria-valuemax",
-    String(NEW_ITEMS + 1)
-  );
+  await expect(page.getByText("1 revisão vencida agora")).toBeVisible();
   await expectNoHorizontalOverflow(page);
   await expectNoSeriousAccessibilityViolations(page);
 
@@ -145,15 +147,16 @@ test("o exercício inverso registra o erro e agenda a repetição imediata", asy
     page.getByRole("button", { name: /^Opção \d+: bandeira com / }).first()
   ).toBeVisible();
 
-  // O erro insere o item de novo na fila, quatro posições à frente. O
-  // denominador anunciado NÃO acompanha: as bolinhas são indexadas por item, e
-  // a repetição reescreve a do item que corrige em vez de criar outra. Antes
-  // deste commit o total saltava de seis para sete no meio da sessão, e o
-  // progresso andava para trás sob os pés de quem estudava.
-  await expect(sessionProgress(page)).toHaveAttribute(
-    "aria-valuemax",
-    String(NEW_ITEMS + 1)
-  );
+  // O erro volta como correção antes de qualquer novidade: o FSRS o agenda
+  // para daqui a um minuto, e a fila viva o traz na frente da bandeira nova
+  // seguinte, mesmo sem outra revisão para intercalar.
+  await page.getByRole("button", { name: /Continuar/ }).click();
+  await expect(
+    page.getByRole("heading", {
+      name: `Qual é a bandeira de ${brazil.displayNamePtBr}?`
+    })
+  ).toBeVisible();
+  await expect(sessionCount(page, 1)).toBeVisible();
 
   await expectNoHorizontalOverflow(page);
   await expectNoSeriousAccessibilityViolations(page);

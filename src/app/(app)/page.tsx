@@ -8,7 +8,7 @@ import { AppReady } from "@/components/AppReady";
 import { buttonVariants } from "@/components/ui/button";
 import { introductionOrder } from "@/data/curriculum";
 import { entities } from "@/data/runtime-catalog";
-import { buildDailyQueue } from "@/domain/daily-queue";
+import { dueCount, nextActivity } from "@/domain/next-activity";
 import { entityStage, type EntityStage } from "@/domain/mastery";
 import { cn } from "@/lib/utils";
 import {
@@ -27,41 +27,38 @@ export default function HomePage() {
 }
 
 /**
- * O que a fila pede agora, dito em uma frase.
+ * O que a sessão vai pedir agora, dito em uma frase.
  *
- * Os números vêm da mesma `buildDailyQueue` que a sessão usa, com a mesma
- * ordem de novidades do continente ativo. Se a home fizesse a conta por
- * conta própria, ela poderia prometer uma sessão diferente da que abre.
+ * Sai da mesma `nextActivity` que a sessão chama, com a mesma ordem de
+ * novidades do continente ativo. Se a home fizesse a conta por conta
+ * própria, ela poderia prometer uma sessão diferente da que abre.
  */
-function nextActivity(snapshot: LearningSnapshot): {
+function nextActivityHeadline(snapshot: LearningSnapshot): {
   headline: string;
   hasWork: boolean;
 } {
-  const plan = buildDailyQueue({
-    entityOrder: introductionOrder(snapshot.settings.activeContinent),
+  const next = nextActivity({
     states: snapshot.skills,
-    recentAttempts: snapshot.attempts,
-    baseNewLimit: 5
+    entityOrder: introductionOrder(snapshot.settings.activeContinent)
   });
-  const reviews = plan.dueCount + plan.correctionCount;
-  const hasNew = plan.items.some(({ reason }) => reason === "new");
-  const reviewText =
-    reviews === 1 ? "1 revisão pendente" : `${reviews} revisões pendentes`;
-
-  if (reviews > 0 && hasNew) {
-    return { headline: `${reviewText}, depois bandeira nova`, hasWork: true };
-  }
-  if (reviews > 0) return { headline: reviewText, hasWork: true };
-  if (hasNew) {
+  if (!next) return { headline: "Nada pendente agora", hasWork: false };
+  const due = dueCount(snapshot.skills);
+  if (due > 0) {
     return {
-      headline:
-        snapshot.skills.length === 0
-          ? "Sua primeira bandeira está pronta"
-          : "Próxima bandeira nova",
+      headline: due === 1 ? "1 revisão vencida" : `${due} revisões vencidas`,
       hasWork: true
     };
   }
-  return { headline: "Nada pendente agora", hasWork: false };
+  if (next.reason === "correction") {
+    return { headline: "Uma correção pendente", hasWork: true };
+  }
+  return {
+    headline:
+      snapshot.skills.length === 0
+        ? "Sua primeira bandeira está pronta"
+        : "Próxima bandeira nova",
+    hasWork: true
+  };
 }
 
 // Os três estados se separam pela forma, e não pela cor: cheia, meio cheia e
@@ -78,7 +75,7 @@ const SLOT_CLASS: Record<EntityStage, string> = {
 
 function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
   const continent = snapshot.settings.activeContinent;
-  const activity = nextActivity(snapshot);
+  const activity = nextActivityHeadline(snapshot);
 
   const stages = useMemo(
     () =>
