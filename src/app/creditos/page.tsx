@@ -62,7 +62,7 @@ export default function CreditsPage() {
           A progressão adapta ao domínio de fatos os princípios de recuperação
           ativa, feedback imediato, prática intercalada e revisão espaçada
           apresentados pelo Math Academy. Bandeiras são itens em grande parte
-          independentes; por isso o Ptanki não presume um grafo de
+          independentes; por isso o Brunanki não presume um grafo de
           pré-requisitos geográficos.
         </p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>

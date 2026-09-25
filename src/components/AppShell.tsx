@@ -41,9 +41,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         Pular para o conteúdo
       </a>
       <header className="mobile-header">
-        <Link href="/" className="brand" aria-label="Ptanki — início">
+        <Link href="/" className="brand" aria-label="Brunanki — início">
           <Mark />
-          <strong>ptanki</strong>
+          <strong>brunanki</strong>
         </Link>
         <button
           className="icon-button"
@@ -61,10 +61,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <Link
           href="/"
           className="brand desktop-brand"
-          aria-label="Ptanki — início"
+          aria-label="Brunanki — início"
         >
           <Mark />
-          <strong>ptanki</strong>
+          <strong>brunanki</strong>
         </Link>
         <p className="sidebar-kicker">Atlas de memória</p>
         <nav id="primary-navigation" aria-label="Navegação principal">

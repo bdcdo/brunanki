@@ -1,7 +1,7 @@
 # Artefatos gerados pelo pipeline de catálogo: reformatá-los produziria um diff
 # gigante a cada `pnpm data:refresh` e esconderia a mudança real de dados.
 src/data/catalog.json
-src/data/credits.json
+src/data/runtime-catalog.json
 
 # Diretórios de build e relatórios
 .next/

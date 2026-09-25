@@ -108,14 +108,14 @@ describe("SettingsClient", () => {
 
   it("baixa o backup ao exportar", async () => {
     const user = userEvent.setup();
-    exportProgress.mockResolvedValue('{"format":"ptanki-export"}');
+    exportProgress.mockResolvedValue('{"format":"brunanki-export"}');
     renderSettings();
 
     await user.click(screen.getByRole("button", { name: /Baixar backup/ }));
 
     await waitFor(() =>
       expect(downloadBackupFile).toHaveBeenCalledWith(
-        '{"format":"ptanki-export"}'
+        '{"format":"brunanki-export"}'
       )
     );
   });

@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-# Imagem do Ptanki (Next.js com output standalone) para o Fly.io.
+# Imagem do Brunanki (Next.js com output standalone) para o Fly.io.
 # O app não tem backend, banco nem variável de ambiente: todo o estado do
 # usuário vive no IndexedDB do navegador. Por isso não há ARG/ENV de build —
 # nada precisa ser embutido no bundle de browser.

@@ -8,15 +8,13 @@ import type {
   SkillState
 } from "@/types/learning";
 
-import { resolveTimeZone } from "@/domain/scheduler";
-
 import {
   defaultAppSettings,
   SINGLETON_KEY,
-  type PtankiDatabase
+  type BrunankiDatabase
 } from "./database";
 
-export const EXPORT_FORMAT = "ptanki-export" as const;
+export const EXPORT_FORMAT = "brunanki-export" as const;
 export const EXPORT_SCHEMA_VERSION = 2 as const;
 
 const isoDateTimeSchema = z.string().datetime({ offset: true });
@@ -104,21 +102,6 @@ const reviewAttemptSchema = z.object({
   createdAt: isoDateTimeSchema
 });
 
-/**
- * Forma das tentativas na v1: sem `isImmediateCorrection`, e com dois
- * exercícios que nunca chegaram a ser gerados por nenhum código.
- */
-const legacyReviewAttemptSchema = z.object({
-  id: z.string().min(1),
-  entityId: z.string().min(1),
-  skill: skillSchema,
-  exercise: exerciseSchema,
-  outcome: outcomeSchema,
-  responseMs: z.number().int().nonnegative(),
-  answer: z.string().optional(),
-  createdAt: isoDateTimeSchema
-});
-
 const diagnosticStateSchema = z
   .object({
     entityOrder: z.array(z.string().min(1)).min(1),
@@ -158,12 +141,6 @@ const settingsSchema = z.object({
   timeZone: z.string().min(1)
 });
 
-/** Na v1 havia `reduceMotion`, que nenhum código lia, e não havia fuso. */
-const legacySettingsSchema = z.object({
-  desiredRetention: z.number().positive().max(1),
-  reduceMotion: z.boolean()
-});
-
 function uniqueIds<T extends { id: string }>(
   values: readonly T[],
   path: string,
@@ -189,67 +166,33 @@ const exportV2Schema = z.object({
   diagnosticState: diagnosticStateSchema.optional()
 });
 
-const exportV1Schema = z.object({
-  format: z.literal(EXPORT_FORMAT),
-  schemaVersion: z.literal(1),
-  catalogVersion: catalogVersionSchema,
-  exportedAt: isoDateTimeSchema,
-  settings: legacySettingsSchema,
-  skillStates: z.array(serializedSkillStateSchema),
-  attempts: z.array(legacyReviewAttemptSchema),
-  diagnosticState: diagnosticStateSchema.optional()
-});
-
-type ExportV1 = z.infer<typeof exportV1Schema>;
 type ExportV2 = z.infer<typeof exportV2Schema>;
 
 /**
- * Traz um backup v1 para a forma atual.
+ * Há uma única forma legível, e nenhum caminho de migração.
  *
- * `reduceMotion` é descartado: nada o lia, e a media query de sistema já
- * cobre o caso. O fuso não existia na v1, então é resolvido do dispositivo
- * que está importando — é a melhor informação disponível. Tentativas antigas
- * ganham `isImmediateCorrection: false`, que é o que a v1 assumia
- * implicitamente ao gravar toda tentativa sem distinção.
+ * O formato foi renomeado junto com o produto (ver
+ * `docs/adr/0001-renomear-para-brunanki.md`), de modo que todo backup emitido
+ * antes traz `format: "ptanki-export"` e é recusado já no primeiro campo.
+ * Manter o esquema anterior aqui só descreveria um arquivo que nunca existiu —
+ * `format` atual combinado com `schemaVersion` antigo.
+ *
+ * `schemaVersion` continua sendo um literal, e não um número qualquer, para
+ * que um backup de versão futura falhe de forma explícita em vez de ser
+ * aceito como atual e perder campos em silêncio.
  */
-function migrateToLatest(data: ExportV1 | ExportV2): ExportV2 {
-  if (data.schemaVersion === 2) return data;
-  return {
-    format: data.format,
-    schemaVersion: 2,
-    catalogVersion: data.catalogVersion,
-    exportedAt: data.exportedAt,
-    settings: {
-      desiredRetention: data.settings.desiredRetention,
-      timeZone: resolveTimeZone()
-    },
-    skillStates: data.skillStates,
-    attempts: data.attempts.map((attempt) => ({
-      ...attempt,
-      isImmediateCorrection: false
-    })),
-    ...(data.diagnosticState ? { diagnosticState: data.diagnosticState } : {})
-  };
-}
-
-/**
- * Um backup de versão desconhecida não pode ser confundido com um atual: o
- * union é discriminado por `schemaVersion`, e o parse sempre devolve a forma
- * mais recente, de modo que nenhum chamador precise lidar com a v1.
- */
-export const ptankiExportSchema = z
-  .discriminatedUnion("schemaVersion", [exportV1Schema, exportV2Schema])
-  .transform(migrateToLatest)
-  .superRefine((data, context) => {
+export const brunankiExportSchema = exportV2Schema.superRefine(
+  (data, context) => {
     uniqueIds(data.skillStates, "skillStates", context);
     uniqueIds(data.attempts, "attempts", context);
-  });
+  }
+);
 
 export type SerializedCard = z.infer<typeof serializedCardSchema>;
-export type PtankiExport = ExportV2;
+export type BrunankiExport = ExportV2;
 
 export interface PreparedImport {
-  data: PtankiExport;
+  data: BrunankiExport;
   backupJson: string;
 }
 
@@ -300,7 +243,7 @@ function serializeCard(card: Card): SerializedCard {
 
 function serializeSkillState(
   state: SkillState
-): PtankiExport["skillStates"][number] {
+): BrunankiExport["skillStates"][number] {
   return {
     id: state.id,
     entityId: state.entityId,
@@ -314,7 +257,7 @@ function serializeSkillState(
 }
 
 function deserializeSkillState(
-  state: PtankiExport["skillStates"][number]
+  state: BrunankiExport["skillStates"][number]
 ): SkillState {
   const card: Card | undefined = state.card
     ? ({
@@ -338,10 +281,10 @@ function deserializeSkillState(
 }
 
 export async function createExport(
-  db: PtankiDatabase,
+  db: BrunankiDatabase,
   catalogVersion: string,
   now: Date = new Date()
-): Promise<PtankiExport> {
+): Promise<BrunankiExport> {
   const [skillStates, attempts, diagnosticRecord, settingsRecord] =
     await Promise.all([
       db.skillStates.toArray(),
@@ -352,7 +295,7 @@ export async function createExport(
   const settings: AppSettings =
     settingsRecord?.settings ?? defaultAppSettings();
 
-  return ptankiExportSchema.parse({
+  return brunankiExportSchema.parse({
     format: EXPORT_FORMAT,
     schemaVersion: EXPORT_SCHEMA_VERSION,
     catalogVersion,
@@ -365,25 +308,25 @@ export async function createExport(
 }
 
 export async function serializeDatabaseExport(
-  db: PtankiDatabase,
+  db: BrunankiDatabase,
   catalogVersion: string,
   now: Date = new Date()
 ): Promise<string> {
   return JSON.stringify(await createExport(db, catalogVersion, now), null, 2);
 }
 
-export function parseExportJson(json: string): PtankiExport {
+export function parseExportJson(json: string): BrunankiExport {
   let raw: unknown;
   try {
     raw = JSON.parse(json);
   } catch {
     throw new Error("O arquivo não contém JSON válido");
   }
-  return ptankiExportSchema.parse(raw);
+  return brunankiExportSchema.parse(raw);
 }
 
 export async function prepareImport(
-  db: PtankiDatabase,
+  db: BrunankiDatabase,
   json: string,
   target: ImportTarget,
   now: Date = new Date()
@@ -409,10 +352,10 @@ export async function prepareImport(
 }
 
 export async function applyPreparedImport(
-  db: PtankiDatabase,
+  db: BrunankiDatabase,
   prepared: PreparedImport
 ): Promise<void> {
-  const data = ptankiExportSchema.parse(prepared.data);
+  const data = brunankiExportSchema.parse(prepared.data);
   const states = data.skillStates.map(deserializeSkillState);
 
   await db.transaction(

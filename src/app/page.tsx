@@ -166,7 +166,7 @@ export default function HomePage() {
 
       <section style={{ marginTop: 34 }} aria-labelledby="method-title">
         <div className="section-heading">
-          <h2 id="method-title">Como o Ptanki ensina</h2>
+          <h2 id="method-title">Como o Brunanki ensina</h2>
         </div>
         <div className="stats-grid">
           <article className="stat-card">

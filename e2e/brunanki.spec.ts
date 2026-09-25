@@ -196,7 +196,7 @@ test("ajustes expõem backup, restauração e reset com status acessível", asyn
   await page.getByRole("button", { name: /Baixar backup/ }).click();
   const download = await downloadPromise;
   expect(download.suggestedFilename()).toMatch(
-    /^ptanki-backup-\d{4}-\d{2}-\d{2}\.json$/
+    /^brunanki-backup-\d{4}-\d{2}-\d{2}\.json$/
   );
   await expect(page.getByRole("status")).toHaveText("Backup baixado.");
 

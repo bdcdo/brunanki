@@ -16,7 +16,7 @@ import type {
 const VERIFIED_AT = "2026-07-25";
 const CATALOG_VERSION = "2026.07.25";
 const USER_AGENT =
-  "Ptanki/0.1 (educational flag catalog; contact: local development)";
+  "Brunanki/0.1 (educational flag catalog; contact: local development)";
 const execFileAsync = promisify(execFile);
 
 const UN_SOURCE_URL = "https://www.un.org/en/about-us/member-states";
