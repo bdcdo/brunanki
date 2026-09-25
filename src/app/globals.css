@@ -330,6 +330,7 @@
   --leading-name: var(--lead-name);
   --leading-prompt: var(--lead-prompt);
   --leading-page: var(--lead-page);
+  --leading-figure: var(--lead-figure);
 
   --radius-control: var(--radius-control);
   --radius-card: var(--radius-card);
