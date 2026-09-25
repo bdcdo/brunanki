@@ -281,6 +281,27 @@ describe("nextActivity", () => {
     ).toMatchObject({ entityId: "usa", reason: "correction" });
   });
 
+  it("a exceção da correção vale só para a habilidade que errou", () => {
+    // A recordação do Chile acabou de ser respondida, e o reconhecimento dele
+    // tem um erro recente. Ele seria a mesma bandeira na tela seguinte, e não
+    // a correção do que acabou de acontecer: a novidade passa na frente.
+    const states = [
+      scheduled("chl", "nameToFlagRecognition", minutes(3), "incorrect", now)
+    ];
+    expect(
+      nextActivity({
+        states,
+        entityOrder: ["bra"],
+        now,
+        justAnswered: {
+          entityId: "chl",
+          skill: "flagToNameRecall",
+          reason: "due"
+        }
+      })
+    ).toMatchObject({ entityId: "bra", reason: "new" });
+  });
+
   it("introduz as 35 bandeiras das Américas sem teto", () => {
     // Acerta cada novidade de primeira, com o relógio parado: nenhuma revisão
     // vence no caminho, e o que decide é só a ordem, sem limite de sessão.
