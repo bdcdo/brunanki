@@ -6,22 +6,28 @@ import { promisify } from "node:util";
 
 import { normalizeCountryName as normalizeAlias } from "../src/domain/text";
 import { projectRuntimeCatalog } from "../src/data/project-runtime-catalog";
+import { belongsToCatalog, UN_OBSERVER_ISO3 } from "./catalog-rules";
 import { readPalettes } from "./extract-palette";
 import type {
   Catalog,
   FlagRevision,
   LearningEntity
 } from "../src/types/catalog";
+import type { Region } from "../src/types/region";
 
 const VERIFIED_AT = "2026-07-25";
-const CATALOG_VERSION = "2026.07.25";
+// A versão sobe porque o conjunto de entidades mudou, ainda que as fontes não
+// tenham sido reconferidas (daí `VERIFIED_AT` parado). Sem isso, dois
+// catálogos com conteúdos diferentes carregariam o mesmo rótulo, e um backup
+// exportado antes do corte seria indistinguível de um posterior.
+const CATALOG_VERSION = "2026.07.26";
 const USER_AGENT =
   "Brunanki/0.1 (educational flag catalog; contact: local development)";
 const execFileAsync = promisify(execFile);
 
 const UN_SOURCE_URL = "https://www.un.org/en/about-us/member-states";
-const FIFA_SOURCE_URL = "https://inside.fifa.com/en/about-fifa/associations";
-const FIFA_CODES_PAGE = "List_of_FIFA_country_codes";
+const UN_OBSERVER_SOURCE_URL =
+  "https://www.un.org/en/about-us/non-member-states";
 const REST_COUNTRIES_DATA_URL =
   "https://gitlab.com/restcountries/restcountries/-/raw/master/src/main/resources/countriesV3.1.json";
 
@@ -30,16 +36,10 @@ interface RestCountry {
   cca2?: string;
   cca3: string;
   ccn3?: string;
-  fifa?: string;
   region?: string;
   translations?: { por?: { common: string; official: string } };
   altSpellings?: string[];
   unMember?: boolean;
-}
-
-interface FifaAssociation {
-  name: string;
-  code: string;
 }
 
 interface WikidataCountry {
@@ -58,102 +58,59 @@ interface CommonsMetadata {
   license: FlagRevision["license"];
 }
 
-interface SpecialEntity {
-  id: string;
-  displayNamePtBr: string;
-  aliasesPtBr: string[];
-  qid: `Q${number}`;
-  fifaCode: string;
-  fifaName: string;
-  region: string;
-  flagTitle: `File:${string}`;
-  isoAlpha2?: string;
-  isoAlpha3?: string;
-  editorialNote?: string;
-  representationKind?: FlagRevision["representationKind"];
-  officialStatus?: FlagRevision["officialStatus"];
-}
-
-const SPECIAL_FIFA_ENTITIES: Record<string, SpecialEntity> = {
-  ENG: {
-    id: "england",
-    displayNamePtBr: "Inglaterra",
-    aliasesPtBr: ["England"],
-    qid: "Q21",
-    fifaCode: "ENG",
-    fifaName: "England",
-    region: "Europe",
-    flagTitle: "File:Flag of England.svg",
-    representationKind: "territorial"
-  },
-  NIR: {
-    id: "northern-ireland",
-    displayNamePtBr: "Irlanda do Norte",
-    aliasesPtBr: ["Northern Ireland", "Ulster"],
-    qid: "Q26",
-    fifaCode: "NIR",
-    fifaName: "Northern Ireland",
-    region: "Europe",
-    flagTitle: "File:Ulster Banner.svg",
-    editorialNote:
-      "A FIFA representa a Irlanda do Norte separadamente. O Ulster Banner é ensinado por ser a bandeira mais reconhecida no contexto esportivo, embora não seja uma bandeira oficial vigente.",
-    representationKind: "commonly-used",
-    officialStatus: "commonly-used"
-  },
-  SCO: {
-    id: "scotland",
-    displayNamePtBr: "Escócia",
-    aliasesPtBr: ["Scotland"],
-    qid: "Q22",
-    fifaCode: "SCO",
-    fifaName: "Scotland",
-    region: "Europe",
-    flagTitle: "File:Flag of Scotland.svg",
-    representationKind: "territorial"
-  },
-  WAL: {
-    id: "wales",
-    displayNamePtBr: "País de Gales",
-    aliasesPtBr: ["Wales", "Gales"],
-    qid: "Q25",
-    fifaCode: "WAL",
-    fifaName: "Wales",
-    region: "Europe",
-    flagTitle: "File:Flag of Wales.svg",
-    representationKind: "territorial"
-  }
+/**
+ * Traduz a região na fronteira com o restcountries, que é o único ponto do
+ * sistema onde o inglês entra. O tipo `Region` fecha o conjunto do outro lado.
+ *
+ * O que havia aqui era `country.region ?? "Other"`: um fallback silencioso que
+ * inventava uma sexta região para um campo ausente e deixava as cinco em
+ * inglês atravessarem até a tela. `regionPtBr` faz o oposto — um valor
+ * inesperado derruba a atualização do catálogo, nomeando a entidade.
+ */
+const REGION_PT_BR: Record<string, Region> = {
+  Africa: "África",
+  Americas: "Américas",
+  Asia: "Ásia",
+  Europe: "Europa",
+  Oceania: "Oceania"
 };
 
-const REST_COUNTRY_BY_FIFA_OVERRIDE: Record<string, string> = {
-  KOS: "UNK",
-  SGP: "SGP",
-  TAH: "PYF"
+function regionPtBr(region: string | undefined, iso3: string): Region {
+  assert(region, `Região ausente na fonte: ${iso3}`);
+  const translated = REGION_PT_BR[region];
+  assert(translated, `Região sem tradução: ${region} (${iso3})`);
+  return translated;
+}
+
+/**
+ * Rótulos de licença que se traduzem. A chave é o valor cru do Commons em
+ * caixa baixa; o que não está aqui passa intacto, e isso é o padrão certo:
+ * quase toda licença é nome próprio internacional — `CC BY-SA 4.0`,
+ * `OGL-om 1.0` —, e traduzi-las seria descrever errado o instrumento legal.
+ * "Public domain" é a exceção porque é substantivo comum, não sigla.
+ */
+const LICENSE_LABEL_PT_BR: Record<string, string> = {
+  "public domain": "Domínio público"
 };
 
 const QID_OVERRIDE_BY_ISO3: Record<string, `Q${number}`> = {
   PSE: "Q219060",
-  UNK: "Q1246",
   VAT: "Q237"
 };
 
 const FLAG_OVERRIDE_BY_ISO3: Record<string, `File:${string}`> = {
-  UNK: "File:Flag of Kosovo.svg",
-  PRY: "File:Flag of Paraguay.svg",
-  TWN: "File:Flag of the Republic of China.svg"
+  PRY: "File:Flag of Paraguay.svg"
 };
 
 const DISPLAY_NAME_OVERRIDE_BY_ISO3: Record<string, string> = {
   ARM: "Armênia",
   AZE: "Azerbaijão",
   BWA: "Botsuana",
-  CYM: "Ilhas Cayman",
   COD: "República Democrática do Congo",
   COG: "República do Congo",
-  CUW: "Curaçao",
   CZE: "Chéquia",
   DJI: "Djibuti",
   EST: "Estônia",
-  FRO: "Ilhas Faroé",
   GMB: "Gâmbia",
   GBR: "Reino Unido",
   IRN: "Irã",
@@ -163,7 +120,6 @@ const DISPLAY_NAME_OVERRIDE_BY_ISO3: Record<string, string> = {
   LAO: "Laos",
   MCO: "Mônaco",
   MKD: "Macedônia do Norte",
-  NCL: "Nova Caledônia",
   NLD: "Países Baixos",
   PER: "Peru",
   POL: "Polônia",
@@ -172,13 +128,10 @@ const DISPLAY_NAME_OVERRIDE_BY_ISO3: Record<string, string> = {
   ROU: "Romênia",
   SVN: "Eslovênia",
   SWZ: "Essuatíni",
-  TCA: "Ilhas Turcas e Caicos",
   TLS: "Timor-Leste",
-  TWN: "Taiwan",
   USA: "Estados Unidos",
   VAT: "Vaticano",
   VCT: "São Vicente e Granadinas",
-  VGB: "Ilhas Virgens Britânicas",
   VNM: "Vietnã",
   YEM: "Iêmen",
   ZWE: "Zimbábue"
@@ -186,7 +139,6 @@ const DISPLAY_NAME_OVERRIDE_BY_ISO3: Record<string, string> = {
 
 const EDITORIAL_NOTE_BY_ISO3: Record<string, string> = {
   PRY: "O exercício usa o anverso da bandeira do Paraguai.",
-  TWN: "A entidade aparece como Taiwan; Chinese Taipei é preservado como nome institucional da FIFA e alias aceito.",
   VAT: "A Santa Sé é Estado observador permanente da ONU; a bandeira exibida é a do Estado da Cidade do Vaticano."
 };
 
@@ -246,35 +198,6 @@ function decodeHtml(value: string): string {
     .replaceAll("&nbsp;", " ")
     .replace(/\s+/g, " ")
     .trim();
-}
-
-async function fetchFifaAssociations(): Promise<FifaAssociation[]> {
-  const url =
-    "https://en.wikipedia.org/w/api.php?action=parse&prop=text&format=json&formatversion=2&page=" +
-    FIFA_CODES_PAGE;
-  const result = await fetchJson<{ parse: { text: string } }>(url);
-  const tables = [
-    ...result.parse.text.matchAll(/<table[^>]*wikitable[\s\S]*?<\/table>/g)
-  ].slice(0, 4);
-  const associations = tables.flatMap(([table]) =>
-    [...table.matchAll(/<tr>([\s\S]*?)<\/tr>/g)].flatMap(([, row]) => {
-      const cells = [...row.matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/g)].map(
-        ([, cell]) => decodeHtml(cell)
-      );
-      return cells.length === 2 && /^[A-Z]{3}$/.test(cells[1])
-        ? [{ name: cells[0], code: cells[1] }]
-        : [];
-    })
-  );
-  assert(
-    associations.length === 211,
-    `Expected 211 FIFA members, found ${associations.length}`
-  );
-  assert(
-    new Set(associations.map(({ code }) => code)).size === 211,
-    "FIFA codes are not unique"
-  );
-  return associations;
 }
 
 async function fetchWikidataCountries(): Promise<Map<string, WikidataCountry>> {
@@ -368,10 +291,17 @@ async function fetchCommonsMetadata(
         `Unsupported flag MIME ${info.mime}: ${page.title}`
       );
       const ext = info.extmetadata ?? {};
-      const shortName =
+      // O rótulo cru do Commons, e o traduzido, são coisas distintas de
+      // propósito: `attributionRequired` abaixo decide por casamento textual
+      // sobre este valor, e traduzi-lo antes faria as 194 bandeiras de domínio
+      // público passarem a exigir atribuição — em silêncio, e com a obrigação
+      // legal invertida de lado.
+      const sourceShortName =
         stripMarkup(ext.LicenseShortName?.value) ??
         stripMarkup(ext.UsageTerms?.value) ??
         "Public domain";
+      const shortName =
+        LICENSE_LABEL_PT_BR[sourceShortName.toLowerCase()] ?? sourceShortName;
       metadata.set(page.title.replaceAll("_", " "), {
         title: page.title.replaceAll("_", " ") as `File:${string}`,
         descriptionUrl: info.descriptionurl,
@@ -385,7 +315,7 @@ async function fetchCommonsMetadata(
           url: stripMarkup(ext.LicenseUrl?.value),
           artist: stripMarkup(ext.Artist?.value),
           credit: stripMarkup(ext.Credit?.value),
-          attributionRequired: !/public domain|cc0/i.test(shortName)
+          attributionRequired: !/public domain|cc0/i.test(sourceShortName)
         }
       });
     }
@@ -441,23 +371,9 @@ function entityIdForCountry(country: RestCountry): string {
   return country.cca3.toLocaleLowerCase("en-US");
 }
 
-function findCountryForAssociation(
-  association: FifaAssociation,
-  countries: RestCountry[]
-): RestCountry | undefined {
-  const overrideIso3 = REST_COUNTRY_BY_FIFA_OVERRIDE[association.code];
-  if (overrideIso3) return countries.find(({ cca3 }) => cca3 === overrideIso3);
-  return (
-    countries.find(({ fifa }) => fifa === association.code) ??
-    countries.find(({ cca3 }) => cca3 === association.code) ??
-    countries.find(({ name }) => name.common === association.name)
-  );
-}
-
 async function main(): Promise<void> {
-  const [countries, fifaAssociations, wikidataByIso3] = await Promise.all([
+  const [countries, wikidataByIso3] = await Promise.all([
     fetchJson<RestCountry[]>(REST_COUNTRIES_DATA_URL),
-    fetchFifaAssociations(),
     fetchWikidataCountries()
   ]);
   assert(
@@ -476,34 +392,19 @@ async function main(): Promise<void> {
   );
   assert(unIso3.size === 193, `Expected 193 UN members, found ${unIso3.size}`);
 
-  const fifaByIso3 = new Map<string, FifaAssociation>();
-  const specialEntities: SpecialEntity[] = [];
-  for (const association of fifaAssociations) {
-    const special = SPECIAL_FIFA_ENTITIES[association.code];
-    if (special) {
-      specialEntities.push(special);
-      continue;
-    }
-    const country = findCountryForAssociation(association, countries);
-    assert(
-      country,
-      `Could not map FIFA association ${association.name} (${association.code})`
-    );
-    assert(
-      !fifaByIso3.has(country.cca3),
-      `Two FIFA associations map to ${country.cca3}`
-    );
-    fifaByIso3.set(country.cca3, association);
-  }
-
-  const includedIso3 = new Set([...unIso3, ...fifaByIso3.keys(), "VAT"]);
+  // A ONU é o único critério, e por isso a única fonte de rede que decide
+  // conteúdo. Havia aqui uma raspagem da tabela de códigos da FIFA na
+  // Wikipédia que abortava o refresh inteiro se ela não rendesse exatamente
+  // 211 linhas — uma edição naquela página bloqueava a atualização de licenças
+  // e SHA-1 das bandeiras que o app de fato usa, para sustentar um eixo que
+  // nenhuma tela lia.
+  const includedIso3 = new Set<string>([...unIso3, ...UN_OBSERVER_ISO3]);
   const entities: LearningEntity[] = [];
   const requestedFlagTitles = new Map<string, `File:${string}`>();
 
   for (const iso3 of [...includedIso3].sort()) {
     const country = countries.find(({ cca3 }) => cca3 === iso3);
     assert(country, `Country reference missing for ${iso3}`);
-    const fifa = fifaByIso3.get(iso3);
     const qid = QID_OVERRIDE_BY_ISO3[iso3] ?? wikidataByIso3.get(iso3)?.qid;
     const flagTitle =
       FLAG_OVERRIDE_BY_ISO3[iso3] ?? wikidataByIso3.get(iso3)?.flagTitle;
@@ -514,67 +415,70 @@ async function main(): Promise<void> {
       DISPLAY_NAME_OVERRIDE_BY_ISO3[iso3] ??
       country.translations?.por?.common ??
       country.name.common;
-    const isUnObserver = iso3 === "VAT" || iso3 === "PSE";
-    const memberships: LearningEntity["memberships"] = [];
-    if (unIso3.has(iso3)) {
-      memberships.push({
-        organization: "UN",
-        status: "member",
-        sourceUrl: UN_SOURCE_URL,
-        verifiedAt: VERIFIED_AT
-      });
-    } else if (isUnObserver) {
-      memberships.push({
-        organization: "UN",
-        status: "observer",
-        sourceUrl: "https://www.un.org/en/about-us/non-member-states",
-        verifiedAt: VERIFIED_AT
-      });
-    }
-    if (fifa) {
-      memberships.push({
-        organization: "FIFA",
-        status: "member",
-        sourceUrl: FIFA_SOURCE_URL,
-        verifiedAt: VERIFIED_AT
-      });
-    }
+    // O ternário é exaustivo porque `includedIso3` é a união de `unIso3` com
+    // os observadores: quem chega aqui é uma coisa ou a outra, e a lista tem
+    // sempre exatamente um elemento. Se um observador for admitido como membro
+    // pela ONU, `unIso3` passa a contê-lo e o status acompanha sozinho.
+    const memberships: LearningEntity["memberships"] = [
+      unIso3.has(iso3)
+        ? {
+            organization: "UN",
+            status: "member",
+            sourceUrl: UN_SOURCE_URL,
+            verifiedAt: VERIFIED_AT
+          }
+        : {
+            organization: "UN",
+            status: "observer",
+            sourceUrl: UN_OBSERVER_SOURCE_URL,
+            verifiedAt: VERIFIED_AT
+          }
+    ];
     entities.push({
       id,
       displayNamePtBr: displayName,
+      // Só português, mais o código ISO de duas letras. O campo se chama
+      // `aliasesPtBr` e continha `country.name.common`, `country.name.official`
+      // e os `altSpellings` inteiros — isto é, "Brazil", "Federative Republic
+      // of Brazil" e "Afġānistān" —, o que fazia duas coisas de uma vez: punha
+      // inglês na tela em 175 das 195 páginas de detalhe, sob o rótulo "Nomes
+      // aceitos", e dava por acerto quem digitasse o nome em inglês num app
+      // cujo objetivo é recordar o nome em português.
+      //
+      // A seleção é por proveniência do campo, e não por filtro sobre o
+      // conteúdo: `translations.por` é português por contrato da fonte, e
+      // `cca2` é um código. Uma heurística que tentasse reconhecer inglês nos
+      // `altSpellings` erraria em transliterações como `Afġānistān`, que não
+      // são nem uma língua nem a outra.
+      //
+      // `por.common` entra porque nem sempre é o nome exibido: 25 entidades têm
+      // `DISPLAY_NAME_OVERRIDE_BY_ISO3`, e nessas o nome da fonte continua
+      // sendo um nome português legítimo. `uniqueAliases` descarta sozinho o
+      // que coincidir com o exibido.
       aliasesPtBr: uniqueAliases(
         [
-          country.name.common,
-          country.name.official,
+          country.translations?.por?.common,
           country.translations?.por?.official,
-          ...(country.altSpellings ?? []),
-          fifa?.name,
-          iso3 === "TWN" ? "Chinese Taipei" : undefined,
+          country.cca2,
           iso3 === "VAT" ? "Santa Sé" : undefined
         ],
         displayName
       ),
       sourceNames: {
-        ...(unIso3.has(iso3) || isUnObserver
-          ? {
-              un:
-                iso3 === "VAT"
-                  ? "Holy See"
-                  : iso3 === "PSE"
-                    ? "State of Palestine"
-                    : country.name.common
-            }
-          : {}),
-        ...(fifa ? { fifa: fifa.name } : {})
+        un:
+          iso3 === "VAT"
+            ? "Holy See"
+            : iso3 === "PSE"
+              ? "State of Palestine"
+              : country.name.common
       },
       identifiers: {
         wikidataQid: qid,
-        ...(fifa ? { fifaCode: fifa.code } : {}),
         ...(country.cca2 ? { isoAlpha2: country.cca2 } : {}),
         isoAlpha3: country.cca3,
         ...(country.ccn3 ? { unM49: country.ccn3 } : {})
       },
-      region: country.region ?? "Other",
+      region: regionPtBr(country.region, iso3),
       memberships,
       primaryFlagRevisionId: `${id}-flag-2026`,
       ...(EDITORIAL_NOTE_BY_ISO3[iso3]
@@ -584,39 +488,19 @@ async function main(): Promise<void> {
     requestedFlagTitles.set(id, flagTitle);
   }
 
-  for (const special of specialEntities) {
-    entities.push({
-      id: special.id,
-      displayNamePtBr: special.displayNamePtBr,
-      aliasesPtBr: special.aliasesPtBr,
-      sourceNames: { fifa: special.fifaName },
-      identifiers: {
-        wikidataQid: special.qid,
-        fifaCode: special.fifaCode,
-        ...(special.isoAlpha2 ? { isoAlpha2: special.isoAlpha2 } : {}),
-        ...(special.isoAlpha3 ? { isoAlpha3: special.isoAlpha3 } : {})
-      },
-      region: special.region,
-      memberships: [
-        {
-          organization: "FIFA",
-          status: "member",
-          sourceUrl: FIFA_SOURCE_URL,
-          verifiedAt: VERIFIED_AT
-        }
-      ],
-      primaryFlagRevisionId: `${special.id}-flag-2026`,
-      ...(special.editorialNote ? { editorialNote: special.editorialNote } : {})
-    });
-    requestedFlagTitles.set(special.id, special.flagTitle);
-  }
-
   entities.sort((left, right) =>
     left.displayNamePtBr.localeCompare(right.displayNamePtBr, "pt-BR")
   );
+  // Sem literal: o tamanho esperado é o censo conferido acima mais os
+  // observadores nomeados. `belongsToCatalog` é a mesma regra que
+  // `validate-catalog.ts` aplica ao artefato commitado.
   assert(
-    entities.length === 220,
-    `Expected 220 entities, found ${entities.length}`
+    entities.length === unIso3.size + UN_OBSERVER_ISO3.length,
+    `Expected ${unIso3.size + UN_OBSERVER_ISO3.length} entities, found ${entities.length}`
+  );
+  assert(
+    entities.every(belongsToCatalog),
+    "Every entity must have a UN membership"
   );
 
   const commonsMetadata = await fetchCommonsMetadata([
@@ -658,12 +542,16 @@ async function main(): Promise<void> {
           join(flagsDirectory, fileName),
           entity.id === "vat"
         );
-        const special = specialEntities.find(({ id }) => id === entity.id);
         return {
           id: entity.primaryFlagRevisionId,
           entityId: entity.id,
-          representationKind: special?.representationKind ?? "national",
-          officialStatus: special?.officialStatus ?? "official",
+          // Literais, e não um `?? "national"` sobre uma tabela de exceções:
+          // as únicas revisões territoriais ou de uso corrente eram as das
+          // nações do Reino Unido e a de Taiwan, e nenhuma delas é um Estado
+          // reconhecido pela ONU. Todo Estado-membro ou observador hastea a
+          // própria bandeira oficial.
+          representationKind: "national",
+          officialStatus: "official",
           side: entity.id === "pry" ? "obverse" : "same-both-sides",
           filePath: `/flags/${fileName}`,
           commons: {

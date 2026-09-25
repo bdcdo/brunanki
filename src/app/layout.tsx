@@ -1,7 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Atkinson_Hyperlegible, Bricolage_Grotesque } from "next/font/google";
 import "@/app/globals.css";
-import { AppShell } from "@/components/AppShell";
 import { AppProvider } from "@/components/AppProvider";
 
 const bodyFont = Atkinson_Hyperlegible({
@@ -21,21 +20,41 @@ export const metadata: Metadata = {
     template: "%s · Brunanki"
   },
   description:
-    "Aprenda e revise as bandeiras dos membros da ONU e das associações da FIFA.",
+    "Aprenda e revise as bandeiras dos Estados reconhecidos pela ONU.",
   icons: {
     icon: "/favicon.svg"
   }
+};
+
+/**
+ * O tema é claro por desenho, e agora isso é dito em voz alta.
+ *
+ * Sem `colorScheme`, o navegador trata a página como indefinida e pinta os
+ * controles nativos com a paleta do sistema: em SO escuro, o <select> de
+ * organização do catálogo (CatalogClient.tsx) abria escuro dentro de um cartão
+ * creme. O par desta declaração é o `color-scheme: light` em globals.css.
+ */
+export const viewport: Viewport = {
+  colorScheme: "light",
+  themeColor: "#f7f3e9"
 };
 
 export default function RootLayout({
   children
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR">
-      <body className={`${bodyFont.variable} ${displayFont.variable}`}>
-        <AppProvider>
-          <AppShell>{children}</AppShell>
-        </AppProvider>
+    // As variáveis de fonte sobem do <body> para o <html> porque o preflight
+    // aplica `font-family` no elemento raiz, a partir de --font-sans; no
+    // <body> elas ainda não existiriam quando essa regra fosse resolvida.
+    <html
+      lang="pt-BR"
+      className={`${bodyFont.variable} ${displayFont.variable}`}
+    >
+      {/* O provider fica aqui, e não em cada grupo de rotas: as duas sessões
+          consomem `useApp()`, então ele precisa envolver os dois. A casca
+          visual é que se divide, em (app)/layout.tsx e (session)/layout.tsx. */}
+      <body>
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   );

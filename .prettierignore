@@ -3,10 +3,14 @@
 src/data/catalog.json
 src/data/runtime-catalog.json
 
+# Também gerado, e por um motivo mais duro: `pnpm data:validate` compara o
+# arquivo em disco byte a byte com a saída de `buildAttributionMarkdown`. Se o
+# Prettier reformatar a tabela de 195 linhas, o gate passa a acusar drift que
+# não existe.
+docs/atribuicao-de-bandeiras.md
+
 # Diretórios de build e relatórios
 .next/
-.open-next/
-.sites-build/
 coverage/
 playwright-report/
 test-results/

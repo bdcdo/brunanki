@@ -7,8 +7,12 @@ export default defineConfig([
   ...nextTs,
   globalIgnores([
     ".next/**",
-    ".open-next/**",
-    ".sites-build/**",
+    // O harness cria worktrees em `.claude/worktrees/<nome>`, dentro deste
+    // diretório. Cada um traz o próprio `node_modules` e o próprio
+    // `coverage`, que os globs abaixo não alcançam por serem ancorados na
+    // raiz — sem esta linha, o lint audita o repositório inteiro de outra
+    // sessão junto com o desta.
+    ".claude/**",
     "node_modules/**",
     "public/flags/**",
     "coverage/**",

@@ -10,7 +10,6 @@ const irlanda: RuntimeEntity = {
   displayNamePtBr: "Irlanda",
   aliasesPtBr: [],
   region: "Europa",
-  organizations: ["UN"],
   flagPath: "/flags/irl.svg",
   palette: ["laranja", "verde", "branco"]
 };
@@ -26,14 +25,16 @@ afterEach(cleanup);
 
 describe("FlagImage", () => {
   it("nomeia a entidade quando ela já está revelada", () => {
-    render(<FlagImage entity={irlanda} alt={{ kind: "named" }} />);
+    render(<FlagImage entity={irlanda} alt={{ kind: "named" }} size="fill" />);
     expect(
       screen.getByRole("img", { name: "Bandeira de Irlanda" })
     ).toBeVisible();
   });
 
   it("descreve pelas cores sem entregar a resposta", () => {
-    render(<FlagImage entity={irlanda} alt={{ kind: "unnamed" }} />);
+    render(
+      <FlagImage entity={irlanda} alt={{ kind: "unnamed" }} size="fill" />
+    );
     const image = screen.getByRole("img", {
       name: "Bandeira com laranja, verde e branco"
     });
@@ -44,8 +45,25 @@ describe("FlagImage", () => {
   it("some da árvore de acessibilidade quando é decorativa", () => {
     // Usada dentro de um botão que já carrega o rótulo; anunciar de novo
     // duplicaria a informação.
-    render(<FlagImage entity={irlanda} alt={{ kind: "decorative" }} />);
+    render(
+      <FlagImage entity={irlanda} alt={{ kind: "decorative" }} size="fill" />
+    );
     expect(screen.queryByRole("img")).toBeNull();
+  });
+
+  it("preserva o quadro em todos os tamanhos", () => {
+    // O quadro é o que dá altura à imagem: ela é `position: absolute`, então
+    // sem ele não sobra filho em fluxo e a caixa desaba para os 2px da borda.
+    // Foi assim que as três bandeiras da abertura do diagnóstico sumiram. Um
+    // tamanho que substituísse a classe em vez de somar a ela traria o defeito
+    // de volta, agora em três lugares.
+    for (const size of ["hero", "card", "fill"] as const) {
+      const { container } = render(
+        <FlagImage entity={irlanda} alt={{ kind: "decorative" }} size={size} />
+      );
+      expect(container.querySelector("span")).toHaveClass("flag-frame");
+      cleanup();
+    }
   });
 
   it("dá a mesma descrição a bandeiras de paleta idêntica", () => {
@@ -53,8 +71,12 @@ describe("FlagImage", () => {
     // por isso que o ordinal precisa permanecer no rótulo do botão.
     render(
       <>
-        <FlagImage entity={irlanda} alt={{ kind: "unnamed" }} />
-        <FlagImage entity={costaDoMarfim} alt={{ kind: "unnamed" }} />
+        <FlagImage entity={irlanda} alt={{ kind: "unnamed" }} size="fill" />
+        <FlagImage
+          entity={costaDoMarfim}
+          alt={{ kind: "unnamed" }}
+          size="fill"
+        />
       </>
     );
     expect(

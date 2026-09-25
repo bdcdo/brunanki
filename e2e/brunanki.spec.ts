@@ -1,34 +1,18 @@
-import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
+
+import {
+  expectNoHorizontalOverflow,
+  expectNoSeriousAccessibilityViolations
+} from "./helpers";
+import { catalogEntities } from "./seed";
+
+/** O tamanho do catálogo aparece em seis asserções, e fixá-lo faria toda
+ *  mudança no conjunto de entidades quebrar testes que nada têm a ver com
+ *  ela. Vem da mesma fonte que a UI lê. */
+const ENTITY_COUNT = catalogEntities.length;
 
 async function openFreshApp(page: Page) {
   await page.goto("/");
-}
-
-async function expectNoHorizontalOverflow(page: Page) {
-  const dimensions = await page.evaluate(() => ({
-    clientWidth: document.documentElement.clientWidth,
-    scrollWidth: document.documentElement.scrollWidth
-  }));
-
-  expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth);
-}
-
-async function expectNoSeriousAccessibilityViolations(page: Page) {
-  const results = await new AxeBuilder({ page }).analyze();
-  const seriousViolations = results.violations.filter(
-    ({ impact }) => impact === "serious" || impact === "critical"
-  );
-
-  expect(
-    seriousViolations,
-    seriousViolations
-      .map(
-        ({ id, help, nodes }) =>
-          `${id}: ${help} (${nodes.length} ocorrência(s))`
-      )
-      .join("\n")
-  ).toEqual([]);
 }
 
 test.beforeEach(async ({ page }) => {
@@ -41,7 +25,9 @@ test("home apresenta a proposta e a entrada do diagnóstico sem overflow", async
   await expect(
     page.getByRole("heading", { name: "Reconheça o mundo inteiro." })
   ).toBeVisible();
-  await expect(page.getByText("220 bandeiras · um plano só seu")).toBeVisible();
+  await expect(
+    page.getByText(`${ENTITY_COUNT} bandeiras · um plano só seu`)
+  ).toBeVisible();
   await expect(
     page.getByRole("link", { name: /Começar diagnóstico/ })
   ).toBeVisible();
@@ -80,7 +66,7 @@ test("catálogo filtra nomes, abre detalhes e mantém bandeiras inteiras", async
 }) => {
   await page.goto("/catalogo");
 
-  await expect(page.getByText("220 resultados")).toBeVisible();
+  await expect(page.getByText(`${ENTITY_COUNT} resultados`)).toBeVisible();
   await page.getByRole("searchbox", { name: "Buscar por nome" }).fill("Brasil");
   await expect(page.getByText("1 resultado")).toBeVisible();
 
@@ -128,7 +114,7 @@ test("diagnóstico registra feedback e persiste o avanço após reload", async (
   await expect(
     page.getByRole("heading", { name: "De onde é esta bandeira?" })
   ).toBeVisible();
-  await expect(page.getByText("Bandeira 1 de 220")).toBeVisible();
+  await expect(page.getByText(`Bandeira 1 de ${ENTITY_COUNT}`)).toBeVisible();
   // A bandeira do diagnóstico é descrita pelas cores, e não com um texto
   // genérico igual para todas: descreve sem entregar a resposta.
   await expect(page.getByRole("img", { name: /^Bandeira com / })).toBeVisible();
@@ -148,7 +134,7 @@ test("diagnóstico registra feedback e persiste o avanço após reload", async (
   await expect(page.getByRole("img", { name: /^Bandeira de / })).toBeVisible();
 
   await page.reload();
-  await expect(page.getByText("Bandeira 2 de 220")).toBeVisible();
+  await expect(page.getByText(`Bandeira 2 de ${ENTITY_COUNT}`)).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "De onde é esta bandeira?" })
   ).toBeVisible();
@@ -230,32 +216,50 @@ test("cancelar restauração não informa que o backup foi aplicado", async ({
   );
 });
 
-test("créditos informam fontes, método e as 220 imagens", async ({ page }) => {
-  await page.goto("/creditos");
+test("a página de detalhe atribui a licença de cada bandeira", async ({
+  page
+}) => {
+  // Substitui o teste da página `/creditos`, removida. A atribuição que a
+  // licença exige passa a viver só aqui no produto — Omã é a única bandeira do
+  // catálogo com `attributionRequired`, então é dela que a obrigação depende.
+  await page.goto("/catalogo/omn");
 
+  await expect(page.getByRole("heading", { name: "Omã" })).toBeVisible();
+  await expect(page.getByText("OGL-om 1.0")).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Fontes e créditos" })
-  ).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Fontes institucionais" })
-  ).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Método de aprendizagem" })
-  ).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Arquivos de bandeira" })
-  ).toBeVisible();
-  await expect(page.getByText("220 imagens")).toBeVisible();
-  await expect(
-    page.getByRole("link", { name: /Membros da ONU/ })
-  ).toHaveAttribute("href", "https://www.un.org/en/about-us/member-states");
-  await expect(
-    page.getByRole("link", { name: /The Math Academy Way/ })
-  ).toHaveAttribute(
-    "href",
-    "https://www.justinmath.com/files/the-math-academy-way.pdf"
-  );
+    page.getByRole("link", { name: /Ver no Wikimedia Commons/ })
+  ).toHaveAttribute("href", /^https:\/\/commons\.wikimedia\.org\/wiki\/File:/);
 
   await expectNoHorizontalOverflow(page);
+  await expectNoSeriousAccessibilityViolations(page);
+});
+
+test("a gaveta devolve o foco e não deixa links alcançáveis quando fechada", async ({
+  page,
+  isMobile
+}) => {
+  test.skip(!isMobile, "A gaveta só existe abaixo de 761px.");
+
+  // Fechada, os cinco links continuavam na ordem de tabulação, fora da tela:
+  // quem navega por teclado percorria um menu invisível antes do conteúdo.
+  const hidden = await page
+    .getByRole("navigation", { name: "Navegação principal" })
+    .isVisible();
+  expect(hidden).toBe(false);
+
+  const toggle = page.getByRole("button", { name: "Abrir menu" });
+  await toggle.click();
+  await expect(
+    page.getByRole("navigation", { name: "Navegação principal" })
+  ).toBeVisible();
+
+  await page.keyboard.press("Escape");
+  await expect(
+    page.getByRole("navigation", { name: "Navegação principal" })
+  ).toBeHidden();
+  // O foco volta para quem abriu; sem isto ele ficaria num elemento que
+  // acabou de sair da tela.
+  await expect(page.getByRole("button", { name: "Abrir menu" })).toBeFocused();
+
   await expectNoSeriousAccessibilityViolations(page);
 });

@@ -48,6 +48,29 @@ export class BrunankiDatabase extends Dexie {
       diagnostics: "id",
       appSettings: "id"
     });
+    // O catálogo encolheu de 220 para 195 entidades, e o progresso guardado
+    // referencia entidades por ID. Nada aqui filtrava esse estado contra o
+    // catálogo — `readLearningSnapshot` devolve o que o Dexie tem, cru —,
+    // então as linhas órfãs vazariam para o domínio: a fila de estudo
+    // entregaria um item cuja entidade não existe, e `StudySession` o leria
+    // como fim de sessão; pior, o diagnóstico pararia num cartão em branco,
+    // sem botão de avançar e sem saída pela interface.
+    //
+    // O reset é a correção certa aqui, e não uma poda seletiva, porque o
+    // progresso já vai ser zerado quando o backend entrar. Reconciliar item a
+    // item seria construir uma máquina para descartá-la em seguida.
+    //
+    // `appSettings` sobrevive de propósito: retenção desejada e fuso não
+    // referenciam entidade nenhuma, e perdê-los seria dano sem motivo.
+    this.version(2)
+      .stores({})
+      .upgrade((transaction) =>
+        Promise.all([
+          transaction.table("skillStates").clear(),
+          transaction.table("attempts").clear(),
+          transaction.table("diagnostics").clear()
+        ])
+      );
   }
 }
 

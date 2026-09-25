@@ -19,7 +19,10 @@ function entity(
     aliasesPtBr,
     sourceNames: {},
     identifiers: { wikidataQid: "Q1" },
-    region: "Test",
+    // Irrelevante para a resolução de nomes, mas já não é livre: `Region` é um
+    // conjunto fechado, e era com um `"Test"` solto aqui que se via que o
+    // campo aceitava qualquer coisa.
+    region: "Américas",
     memberships: [],
     primaryFlagRevisionId: `flag-${id}`
   };
@@ -105,7 +108,7 @@ describe("CountryNameResolver", () => {
 
 describe("índice de nomes", () => {
   it("devolve sempre a mesma instância", async () => {
-    // O índice cobre os nomes e apelidos das 220 entidades e era construído
+    // O índice cobre os nomes e apelidos de todas as entidades e era construído
     // duas vezes, no escopo de módulo de cada tela de sessão.
     const { getNameResolver } = await import("@/data/name-index");
     expect(getNameResolver()).toBe(getNameResolver());

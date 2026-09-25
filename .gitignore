@@ -1,4 +1,8 @@
 node_modules/
+# Worktrees do harness. Sem esta linha um `git add -A` os registra como
+# gitlink — um submódulo acidental apontando para um commit que ninguém
+# mais tem.
+.claude/worktrees/
 .next/
 .open-next/
 .sites-build/

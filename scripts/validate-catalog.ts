@@ -1,10 +1,27 @@
 import { createHash } from "node:crypto";
-import { access, readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { readdir, readFile } from "node:fs/promises";
+import { basename, join } from "node:path";
 
 import { normalizeCountryName as normalize } from "../src/domain/text";
 import catalogJson from "../src/data/catalog.json";
 import type { Catalog } from "../src/types/catalog";
+import {
+  ATTRIBUTION_PATH,
+  buildAttributionMarkdown
+} from "./build-attribution";
+import { unMembership, UN_OBSERVER_ENTITY_IDS } from "./catalog-rules";
+
+/**
+ * Censo da ONU em 26/07/2026, conferido contra
+ * https://www.un.org/en/about-us/member-states.
+ *
+ * Fica como número explícito, e não derivado do artefato, porque é justamente
+ * aqui que drift silencioso deve doer: se o gerador passar a produzir 192 ou
+ * 194 membros, alguém tem de olhar e decidir, em vez de o gate se ajustar.
+ */
+const UN_MEMBER_COUNT = 193;
+
+const FLAGS_DIRECTORY = join(process.cwd(), "public", "flags");
 
 const catalog = catalogJson as Catalog;
 
@@ -13,32 +30,38 @@ function assert(condition: unknown, message: string): asserts condition {
 }
 
 async function main(): Promise<void> {
-  assert(catalog.entities.length === 220, "Catalog must contain 220 entities");
+  // A regra de pertencimento é invariante, não contagem: toda entidade tem
+  // filiação à ONU, e o tamanho do catálogo é consequência do censo mais os
+  // observadores nomeados. Nenhum literal 195 no repositório — ele emerge.
+  const withoutUn = catalog.entities
+    .filter((entity) => unMembership(entity) === undefined)
+    .map(({ id }) => id);
   assert(
-    catalog.entities.filter(({ memberships }) =>
-      memberships.some(
-        ({ organization, status }) =>
-          organization === "UN" && status === "member"
-      )
-    ).length === 193,
-    "Catalog must contain 193 UN members"
+    withoutUn.length === 0,
+    `Entities without a UN membership: ${withoutUn.join(", ")}`
+  );
+
+  const members = catalog.entities.filter(
+    (entity) => unMembership(entity)?.status === "member"
+  );
+  const observers = catalog.entities
+    .filter((entity) => unMembership(entity)?.status === "observer")
+    .map(({ id }) => id)
+    .sort();
+  assert(
+    members.length === UN_MEMBER_COUNT,
+    `Catalog must contain ${UN_MEMBER_COUNT} UN members, found ${members.length}`
+  );
+  // Exaustivo, e não "vat existe": a Palestina chegava ao catálogo por ser
+  // associação da FIFA, e uma mudança no eixo esportivo a faria desaparecer
+  // sem que nenhum assert acusasse. Agora some daqui se sumir de lá.
+  assert(
+    observers.join(",") === [...UN_OBSERVER_ENTITY_IDS].sort().join(","),
+    `UN observers must be exactly ${UN_OBSERVER_ENTITY_IDS.join(", ")}, found ${observers.join(", ")}`
   );
   assert(
-    catalog.entities.filter(({ memberships }) =>
-      memberships.some(({ organization }) => organization === "FIFA")
-    ).length === 211,
-    "Catalog must contain 211 FIFA members"
-  );
-  assert(
-    catalog.entities.some(
-      ({ id, memberships }) =>
-        id === "vat" &&
-        memberships.some(
-          ({ organization, status }) =>
-            organization === "UN" && status === "observer"
-        )
-    ),
-    "Holy See/Vatican observer entry is missing"
+    catalog.entities.length === members.length + observers.length,
+    "Every entity is either a UN member or a UN observer"
   );
   assert(
     catalog.flagRevisions.length === catalog.entities.length,
@@ -104,7 +127,6 @@ async function main(): Promise<void> {
       "public",
       revision.filePath.replace(/^\//, "")
     );
-    await access(assetPath);
     const bytes = await readFile(assetPath);
     const sha1 = createHash("sha1").update(bytes).digest("hex");
     assert(
@@ -113,34 +135,55 @@ async function main(): Promise<void> {
     );
   }
 
-  const overrides = {
-    "northern-ireland": [
-      "Ulster Banner.svg",
-      "commonly-used",
-      "same-both-sides"
-    ],
-    pry: ["Flag of Paraguay.svg", "official", "obverse"],
-    twn: ["Flag of the Republic of China.svg", "official", "same-both-sides"],
-    vat: ["Flag of Vatican City", "official", "same-both-sides"]
-  } as const;
-  for (const [entityId, expected] of Object.entries(overrides)) {
-    const revision = catalog.flagRevisions.find(
-      ({ entityId: id }) => id === entityId
-    );
-    assert(revision, `Editorial override missing: ${entityId}`);
+  // Invertido em relação à lista de overrides que existia aqui: em vez de
+  // conferir quatro desvios lembrados à mão, afirma a regra e nomeia a única
+  // exceção. Um desvio novo passa a ser impossível de entrar sem editar isto.
+  for (const revision of catalog.flagRevisions) {
     assert(
-      revision.commons.fileTitle.includes(expected[0]),
-      `Unexpected flag override for ${entityId}: ${revision.commons.fileTitle}`
+      revision.representationKind === "national",
+      `Not a national flag: ${revision.entityId} (${revision.representationKind})`
     );
     assert(
-      revision.officialStatus === expected[1],
-      `Unexpected status for ${entityId}`
+      revision.officialStatus === "official",
+      `Not an official flag: ${revision.entityId} (${revision.officialStatus})`
     );
-    assert(revision.side === expected[2], `Unexpected side for ${entityId}`);
   }
+  const twoSided = catalog.flagRevisions
+    .filter(({ side }) => side !== "same-both-sides")
+    .map(({ entityId }) => entityId);
+  assert(
+    twoSided.join(",") === "pry",
+    `Only Paraguay has distinct sides, found: ${twoSided.join(", ")}`
+  );
+
+  // Fecha a bijeção disco↔catálogo. O laço acima cobre catálogo→disco: lê
+  // cada arquivo referenciado e confere o SHA-1, então uma entidade sem
+  // bandeira falha ali. Faltava o outro sentido — um arquivo *a mais* em
+  // `public/flags` passava despercebido, que é exatamente o resíduo que
+  // encolher o catálogo deixa.
+  const onDisk = new Set(await readdir(FLAGS_DIRECTORY));
+  const referenced = new Set(
+    catalog.flagRevisions.map(({ filePath }) => basename(filePath))
+  );
+  const orphans = [...onDisk].filter((file) => !referenced.has(file)).sort();
+  assert(
+    orphans.length === 0,
+    `Flag files with no entity: ${orphans.join(", ")}`
+  );
+
+  // A atribuição saiu do site com a página `/creditos` e virou documento no
+  // repositório. Derivado, não escrito: sem este check ele desatualizaria em
+  // silêncio no primeiro `data:refresh` que reconferisse licenças.
+  const attribution = await readFile(ATTRIBUTION_PATH, "utf8").catch(
+    () => undefined
+  );
+  assert(
+    attribution === buildAttributionMarkdown(catalog),
+    "docs/atribuicao-de-bandeiras.md está fora de sincronia com o catálogo; rode `pnpm data:attribution`"
+  );
 
   console.log(
-    `Catalog valid: ${catalog.entities.length} entities, 193 UN members, 211 FIFA members, ${catalog.flagRevisions.length} verified local assets.`
+    `Catalog valid: ${catalog.entities.length} entities (${members.length} UN members, ${observers.length} observers), ${catalog.flagRevisions.length} verified local assets.`
   );
 }
 

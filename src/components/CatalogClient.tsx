@@ -4,83 +4,76 @@ import { Search } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { FlagImage } from "@/components/FlagImage";
+import { PageHeader } from "@/components/ui/page-header";
 import { entities } from "@/data/runtime-catalog";
 import { normalizeCountryName } from "@/domain/text";
-import type { Organization } from "@/types/catalog";
 
 export function CatalogClient() {
   const [query, setQuery] = useState("");
-  const [membership, setMembership] = useState("all");
 
   const filtered = useMemo(() => {
     const normalized = normalizeCountryName(query);
 
-    return entities.filter((entity) => {
-      const names = normalizeCountryName(
+    return entities.filter((entity) =>
+      normalizeCountryName(
         [entity.displayNamePtBr, ...entity.aliasesPtBr].join(" ")
-      );
-      const organizationMatch =
-        membership === "all" ||
-        entity.organizations.includes(membership as Organization);
-      return names.includes(normalized) && organizationMatch;
-    });
-  }, [membership, query]);
+      ).includes(normalized)
+    );
+  }, [query]);
 
   return (
-    <div className="page">
-      <header className="page-header">
-        <div>
-          <span className="eyebrow">Atlas completo</span>
-          <h1>Bandeiras</h1>
-          <p>
-            {entities.length} entidades da ONU e da FIFA, com nomes comuns em
-            português e a origem de cada imagem.
-          </p>
-        </div>
-      </header>
+    <div className="mx-auto w-full max-w-page">
+      <PageHeader
+        eyebrow="Atlas completo"
+        title="Bandeiras"
+        description={`${entities.length} Estados reconhecidos pela ONU, com nomes comuns em português e a origem de cada imagem.`}
+      />
 
-      <div className="catalog-toolbar">
-        <label className="search-field">
+      <div className="mb-5 flex flex-wrap gap-3">
+        <label className="relative grid min-w-[min(360px,100%)] flex-1 gap-[7px]">
           <span className="sr-only">Buscar por nome</span>
-          <Search size={20} aria-hidden="true" />
+          {/* O ícone é irmão do campo, não filho: posicioná-lo por cima e
+              abrir espaço com o `pl-[46px]` do input mantém o alvo de clique
+              do campo inteiro, que envolvê-lo numa caixa quebraria. */}
+          <Search
+            size={20}
+            aria-hidden="true"
+            className="absolute top-[14px] left-[15px] text-ink-soft"
+          />
           <input
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Buscar bandeira"
+            className="min-h-[50px] w-full rounded-control border border-input bg-surface py-[11px] pr-[14px] pl-[46px] text-ink"
           />
-        </label>
-        <label className="field">
-          <span className="sr-only">Filtrar por organização</span>
-          <select
-            value={membership}
-            onChange={(event) => setMembership(event.target.value)}
-          >
-            <option value="all">ONU e FIFA</option>
-            <option value="UN">ONU</option>
-            <option value="FIFA">FIFA</option>
-          </select>
         </label>
       </div>
 
-      <p className="muted" aria-live="polite">
+      <p className="text-ink-soft" aria-live="polite">
         {filtered.length} {filtered.length === 1 ? "resultado" : "resultados"}
       </p>
 
       {filtered.length === 0 ? (
-        <div className="empty-state">Nenhuma bandeira corresponde à busca.</div>
+        <div className="rounded-card border border-dashed border-input p-11 text-center text-ink-soft">
+          Nenhuma bandeira corresponde à busca.
+        </div>
       ) : (
-        <div className="catalog-grid">
+        <div className="grid grid-cols-4 gap-4 max-lg:grid-cols-2 max-md:grid-cols-1">
           {filtered.map((entity) => (
             <Link
               href={`/catalogo/${entity.id}`}
-              className="flag-card"
+              className="grid overflow-hidden rounded-card border border-line bg-surface text-inherit no-underline shadow-[0_7px_20px_rgb(21_50_54_/_5%)] transition-[transform,box-shadow] duration-[160ms] ease-[ease] hover:-translate-y-[3px] hover:shadow-card-lifted"
               key={entity.id}
             >
-              <FlagImage entity={entity} alt={{ kind: "named" }} />
-              <span className="flag-card-body">
-                <strong>{entity.displayNamePtBr}</strong>
-                <span>{entity.region}</span>
+              <FlagImage entity={entity} alt={{ kind: "named" }} size="card" />
+              <span className="p-[15px]">
+                <strong className="block leading-name">
+                  {entity.displayNamePtBr}
+                </strong>
+                <span className="text-xs leading-body text-ink-soft">
+                  {entity.region}
+                </span>
               </span>
             </Link>
           ))}

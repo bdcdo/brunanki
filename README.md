@@ -1,8 +1,6 @@
 # brunanki
 
-Há conhecimentos que são bons de ter mesmo sem serem úteis, que têm limite claro e que dão uma sensação nítida de completude: reconhecer todas as bandeiras nacionais, saber as capitais do mundo, identificar instrumentos pelo som. Cursos não os atendem, e baralhos genéricos de flashcards tratam todos eles como se fossem a mesma coisa. O brunanki existe para transformar esse tipo de objetivo numa conquista alcançável — com cada domínio ensinado por uma experiência desenhada para a natureza daquele conhecimento.
-
-A primeira coleção é a das bandeiras: 193 Estados-membros da ONU, 211 associações da FIFA e a Santa Sé como Estado observador, somando 220 entidades de aprendizagem. Ela é também a única, por decisão: nenhum outro domínio entra antes de bandeiras funcionar muito bem. A ideia completa, com os demais domínios previstos e aquilo que o produto recusa ser, está em [`docs/SPEC.md`](docs/SPEC.md).
+O Brunanki é um webapp em pt-BR para aprender e revisar as bandeiras dos Estados reconhecidos pela ONU. O catálogo reúne os 193 Estados-membros mais os dois observadores permanentes, a Santa Sé e a Palestina, totalizando 195 entidades de aprendizagem.
 
 ## Como funciona
 
@@ -36,7 +34,9 @@ As convenções do repositório e as fronteiras que o código não cruza estão 
 
 ## Catálogo e licenças
 
-ONU e FIFA definem a elegibilidade; os critérios de inclusão, a nomenclatura em português e o tratamento de casos disputados estão em [`docs/CONTENT-FLAGS.md`](docs/CONTENT-FLAGS.md). O Wikidata é usado para localizar os arquivos e o Wikimedia Commons fornece as imagens e os metadados de licença. Os arquivos são fixados em `public/flags`; o aplicativo não faz hotlink em runtime. `src/data/catalog.json` é o artefato versionado que o pipeline gera, com procedência, hash e licença por arquivo — a página de créditos é renderizada a partir dele.
+A procedência e a licença de cada imagem estão em [`docs/atribuicao-de-bandeiras.md`](docs/atribuicao-de-bandeiras.md), gerado do catálogo por `pnpm data:attribution` e conferido por `pnpm data:validate` — editar à mão falha o gate. A atribuição que a licença exige também aparece no produto, na página de detalhe de cada bandeira.
+
+A ONU define a elegibilidade, e a regra vive em `scripts/catalog-rules.ts` — o mesmo módulo que o gerador aplica, o validador cobra e os testes exercitam contra o artefato commitado. Wikidata é usado para localizar os arquivos e o Wikimedia Commons fornece as imagens e metadados de licença. Os arquivos são fixados em `public/flags`; o app não faz hotlink em runtime. `src/data/catalog.json` e `src/data/runtime-catalog.json` são artefatos versionados gerados pelo pipeline.
 
 Para conferir mudanças nas fontes e reconstruir os artefatos:
 

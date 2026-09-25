@@ -1,24 +1,24 @@
 "use client";
 
-import {
-  ArrowRight,
-  Check,
-  CornerDownLeft,
-  Pause,
-  SkipForward
-} from "lucide-react";
+import { ArrowRight, CornerDownLeft, Pause, SkipForward } from "lucide-react";
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
-import { useApp } from "@/components/AppProvider";
-import {
-  LoadingScreen,
-  StorageUnavailableScreen
-} from "@/components/SystemScreens";
+import { AppReady } from "@/components/AppReady";
 import { FlagImage } from "@/components/FlagImage";
-import { ProgressBar } from "@/components/ProgressBar";
+import { SessionSummary } from "@/components/SessionSummary";
+import { FeedbackPanel, feedbackTone } from "@/components/ui/feedback-panel";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cardVariants, sessionCard } from "@/components/ui/card";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { Meter } from "@/components/ui/meter";
+import { PageHeader } from "@/components/ui/page-header";
 import { entities, entityById } from "@/data/runtime-catalog";
 import { getNameResolver } from "@/data/name-index";
-import type { AttemptOutcome, DiagnosticState } from "@/types/learning";
+import type {
+  AttemptOutcome,
+  DiagnosticState,
+  LearningSnapshot
+} from "@/types/learning";
 
 interface Feedback {
   outcome: AttemptOutcome;
@@ -26,34 +26,27 @@ interface Feedback {
   answer?: string;
 }
 
-/**
- * Gate dos três estados do armazenamento. Fica separado do corpo porque o
- * estado inicial do diagnóstico é semeado a partir do snapshot, e um
- * `useState` não pode ficar atrás de um early return.
- */
 export function DiagnosticSession() {
-  const { state, refresh } = useApp();
-  if (state.kind === "loading") {
-    return <LoadingScreen label="Carregando seu diagnóstico." />;
-  }
-  if (state.kind === "unavailable") {
-    return <StorageUnavailableScreen error={state.error} />;
-  }
   return (
-    <DiagnosticSessionReady
-      savedDiagnostic={state.snapshot.diagnostic}
-      refresh={refresh}
-    />
+    <AppReady loadingLabel="Carregando seu diagnóstico.">
+      {({ snapshot, refresh }) => (
+        <DiagnosticSessionReady snapshot={snapshot} refresh={refresh} />
+      )}
+    </AppReady>
   );
 }
 
 function DiagnosticSessionReady({
-  savedDiagnostic,
+  snapshot,
   refresh
 }: {
-  savedDiagnostic?: DiagnosticState;
+  snapshot: LearningSnapshot;
   refresh: () => Promise<void>;
 }) {
+  // A prop alargou de `diagnostic` para o snapshot inteiro por causa do
+  // resumo, que conta as tentativas. `attempts` já vinha no snapshot e já era
+  // consumido por /estudar; nada em domínio ou armazenamento muda.
+  const { diagnostic: savedDiagnostic, attempts } = snapshot;
   const [diagnostic, setDiagnostic] = useState<DiagnosticState | undefined>(
     savedDiagnostic
   );
@@ -136,27 +129,22 @@ function DiagnosticSessionReady({
 
   if (!state) {
     return (
-      <div className="page page-narrow">
-        <header className="page-header">
-          <div>
-            <span className="eyebrow">Antes de ensinar, medir</span>
-            <h1>O que você já reconhece?</h1>
-            <p>
-              Você verá as 220 bandeiras uma vez. Digite o nome quando souber ou
-              pule sem chutar. O teste pode ser pausado a qualquer momento.
-            </p>
-          </div>
-        </header>
-        <section className="card">
+      <div className="mx-auto w-full max-w-narrow">
+        <PageHeader
+          eyebrow="Antes de ensinar, medir"
+          title="O que você já reconhece?"
+          description={`Você verá as ${entities.length} bandeiras uma vez. Digite o nome quando souber ou pule sem chutar. O teste pode ser pausado a qualquer momento.`}
+        />
+        <section className={cardVariants()}>
           <div
-            className="catalog-grid"
+            className="mb-6 grid grid-cols-4 gap-4 max-lg:grid-cols-2 max-md:grid-cols-1"
             aria-hidden="true"
-            style={{ marginBottom: 24 }}
           >
             {introExamples.map((entity) => (
               <FlagImage
                 entity={entity}
                 alt={{ kind: "named" }}
+                size="fill"
                 key={entity.id}
               />
             ))}
@@ -170,40 +158,42 @@ function DiagnosticSessionReady({
             </li>
             <li>Pular é melhor do que tentar adivinhar.</li>
           </ol>
-          <button
-            className="button button-coral"
-            type="button"
-            onClick={begin}
-            disabled={busy}
-          >
+          {/* Convite de entrada, não ação destrutiva. O CSS legado dava a
+              este botão e ao "Apagar progresso" o mesmo coral; aqui os dois se
+              separam, e o coral fica reservado ao que não tem volta. */}
+          <Button type="button" onClick={begin} disabled={busy}>
             Começar diagnóstico <ArrowRight size={18} aria-hidden="true" />
-          </button>
+          </Button>
         </section>
       </div>
     );
   }
 
   if (complete && !feedback) {
+    // A contagem sai do snapshot, e não de um contador local: o diagnóstico é
+    // explicitamente pausável, e uma retomada zeraria o contador — o resumo
+    // reportaria a menos, em silêncio, justamente para quem levou dias.
+    const answered = attempts.filter(
+      ({ exercise }) => exercise === "diagnostic"
+    );
+    const countOf = (outcome: AttemptOutcome) =>
+      answered.filter((attempt) => attempt.outcome === outcome).length;
     return (
-      <div className="page page-narrow">
-        <section className="study-card" style={{ textAlign: "center" }}>
-          <span className="eyebrow">Diagnóstico concluído</span>
-          <Check
-            size={54}
-            aria-hidden="true"
-            style={{ margin: "30px auto 14px" }}
-          />
-          <h1 className="study-title">Seu ponto de partida está pronto.</h1>
-          <p className="muted">
-            Agora o Brunanki vai revisar os acertos e ensinar o que foi pulado
-            ou confundido. Reconhecer a bandeira pelo nome será medido nas
-            sessões.
-          </p>
-          <Link href="/estudar" className="button" style={{ marginTop: 18 }}>
+      <SessionSummary
+        eyebrow="Diagnóstico concluído"
+        figure={countOf("correct")}
+        figureLabel={`de ${entities.length} reconhecidas de imediato`}
+        tallies={[
+          { label: "Quase", value: countOf("partial") },
+          { label: "Puladas", value: countOf("skipped") },
+          { label: "A aprender", value: countOf("incorrect") }
+        ]}
+        action={
+          <Link href="/estudar" className={buttonVariants()}>
             Começar a aprender <ArrowRight size={18} aria-hidden="true" />
           </Link>
-        </section>
-      </div>
+        }
+      />
     );
   }
 
@@ -212,83 +202,84 @@ function DiagnosticSessionReady({
     : undefined;
 
   return (
-    <div className="page page-narrow">
-      <div className="study-shell">
-        <div className="study-topbar">
-          <div style={{ flex: 1 }}>
-            <ProgressBar
-              value={measured}
-              max={entities.length}
-              label="Diagnóstico"
-            />
+    <div className="mx-auto w-full max-w-narrow">
+      <div className="grid gap-[18px]">
+        {/* Em coluna única a barra empilha: lado a lado, o medidor e o "Pausar"
+            não cabem numa Pixel 7. */}
+        <div className="flex items-center justify-between gap-5 max-md:flex-col max-md:items-start">
+          <div className="min-w-0 flex-1">
+            <Meter value={measured} max={entities.length} label="Diagnóstico" />
           </div>
-          <Link href="/" className="button button-secondary">
+          <Link href="/" className={buttonVariants({ variant: "secondary" })}>
             <Pause size={17} aria-hidden="true" /> Pausar
           </Link>
         </div>
 
-        <section className="study-card" aria-live="polite">
+        {/* A região viva não fica mais no cartão inteiro. Aqui, diferente da
+            sessão de estudo, o veredito de fato substitui a pergunta — a
+            bandeira respondida não é mais a da vez —, mas anunciar o cartão
+            todo relia enunciado, texto alternativo e dica a cada bandeira. O
+            veredito é anunciado pelo próprio painel; a pergunta seguinte se
+            anuncia sozinha, porque o foco vai para o campo. */}
+        <section className={sessionCard}>
           {feedback && feedbackEntity ? (
             <>
-              <span className="eyebrow">
-                {feedback.outcome === "correct"
-                  ? "Você reconheceu"
-                  : feedback.outcome === "partial"
-                    ? "Quase"
-                    : "Resposta"}
-              </span>
               <FlagImage
                 entity={feedbackEntity}
                 alt={{ kind: "named" }}
                 eager
-                className="quiz-flag"
+                size="hero"
               />
-              <div
-                className={`feedback ${
+              <FeedbackPanel
+                tone={feedbackTone(feedback.outcome)}
+                eyebrow={
                   feedback.outcome === "correct"
-                    ? "feedback-correct"
+                    ? "Você reconheceu"
                     : feedback.outcome === "partial"
-                      ? "feedback-partial"
-                      : "feedback-incorrect"
-                }`}
-              >
-                <strong>{feedbackEntity.displayNamePtBr}</strong>
-                {feedback.answer && feedback.outcome !== "correct" && (
-                  <span>Você escreveu: {feedback.answer}</span>
-                )}
-                <span>
-                  {feedback.outcome === "partial"
+                      ? "Quase"
+                      : "Resposta"
+                }
+                answer={feedbackEntity.displayNamePtBr}
+                submitted={
+                  feedback.outcome === "correct" ? undefined : feedback.answer
+                }
+                submittedLabel="Você escreveu"
+                explanation={
+                  feedback.outcome === "partial"
                     ? "O nome estava inequívoco, mas esta bandeira voltará mais cedo."
                     : feedback.outcome === "correct"
                       ? "Este acerto inicia a primeira revisão; ainda não significa domínio."
-                      : "Esta bandeira entrará na etapa de aprendizagem."}
-                </span>
-              </div>
-              <div className="answer-actions" style={{ marginTop: 18 }}>
-                <button className="button" type="button" onClick={next}>
+                      : "Esta bandeira entrará na etapa de aprendizagem."
+                }
+              />
+              <div className="mt-[18px] flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
+                <Button type="button" onClick={next}>
                   {complete ? "Ver resultado" : "Próxima bandeira"}
                   <ArrowRight size={18} aria-hidden="true" />
-                </button>
+                </Button>
               </div>
             </>
           ) : current ? (
             <>
-              <span className="eyebrow">
+              <Eyebrow>
                 Bandeira {measured + 1} de {entities.length}
-              </span>
-              <h1 className="study-prompt">De onde é esta bandeira?</h1>
+              </Eyebrow>
+              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
+                De onde é esta bandeira?
+              </h1>
               <FlagImage
                 entity={current}
                 alt={{ kind: "unnamed" }}
                 eager
-                className="quiz-flag"
+                size="hero"
               />
-              <form className="answer-form" onSubmit={submit}>
+              <form className="mx-auto grid max-w-copy gap-3" onSubmit={submit}>
                 <label htmlFor="country-answer" className="sr-only">
                   Nome da entidade
                 </label>
                 <input
                   id="country-answer"
+                  className="h-[58px] w-full rounded-[13px] border-2 border-input bg-white px-4 py-[13px] text-lg text-ink"
                   value={answer}
                   onChange={(event) => setAnswer(event.target.value)}
                   placeholder="Digite o nome em português"
@@ -297,25 +288,21 @@ function DiagnosticSessionReady({
                   autoFocus
                   disabled={busy}
                 />
-                <span className="field-hint">
+                <span className="text-sm text-ink-soft">
                   Pressione Enter para responder. Acentos são opcionais.
                 </span>
-                <div className="answer-actions">
-                  <button
-                    className="button button-ghost"
+                <div className="flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
+                  <Button
+                    variant="ghost"
                     type="button"
                     onClick={() => void record("skipped")}
                     disabled={busy}
                   >
                     <SkipForward size={18} aria-hidden="true" /> Pular
-                  </button>
-                  <button
-                    className="button"
-                    type="submit"
-                    disabled={!answer.trim() || busy}
-                  >
+                  </Button>
+                  <Button type="submit" disabled={!answer.trim() || busy}>
                     Responder <CornerDownLeft size={18} aria-hidden="true" />
-                  </button>
+                  </Button>
                 </div>
               </form>
             </>
