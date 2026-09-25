@@ -270,12 +270,16 @@ function StudySessionReady({
         ? scheduleAttempt(current, attempt, settings)
         : current;
       await storage.saveReview(nextState, attempt);
-      setHistory((current) => [
-        ...current,
-        item.reason === "correction"
-          ? amendedPipState(outcome)
-          : pipStateFor(outcome)
-      ]);
+      // A escolha com o nome recém-mostrado não é recuperação, e contá-la
+      // poria no resumo "2 de 2 na primeira tentativa" para uma bandeira só.
+      if (schedule) {
+        setHistory((current) => [
+          ...current,
+          item.reason === "correction"
+            ? amendedPipState(outcome)
+            : pipStateFor(outcome)
+        ]);
+      }
       // A leitura nova é o que a próxima escolha de atividade consulta.
       await refresh();
     } finally {

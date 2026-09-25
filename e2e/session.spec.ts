@@ -73,7 +73,8 @@ test("a sessão atravessa apresentação, alternativas e digitação", async ({
   await page.getByRole("button", { name: /Responder/ }).click();
 
   await expect(page.getByText("Acerto de primeira")).toBeVisible();
-  await expect(sessionCount(page, 2)).toBeVisible();
+  // A escolha assistida não conta: só a digitação é resposta de memória.
+  await expect(sessionCount(page, 1)).toBeVisible();
 
   // A fila é recalculada depois de cada resposta. O reconhecimento dos
   // Estados Unidos seria a mesma bandeira na tela seguinte, então ele espera,
@@ -91,7 +92,7 @@ test("a sessão atravessa apresentação, alternativas e digitação", async ({
   // A sessão não tem fim marcado, e encerrar é o caminho para o resumo.
   await page.getByRole("button", { name: /Encerrar/ }).click();
   await expect(page.getByText("Sessão encerrada")).toBeVisible();
-  await expect(page.getByText("de 2 na primeira tentativa")).toBeVisible();
+  await expect(page.getByText("de 1 na primeira tentativa")).toBeVisible();
   await expectNoSeriousAccessibilityViolations(page);
 });
 
