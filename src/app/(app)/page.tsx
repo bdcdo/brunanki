@@ -10,7 +10,11 @@ import { entities } from "@/data/runtime-catalog";
 import { buildDailyQueue, newEntityOrder } from "@/domain/daily-queue";
 import { entityStage, type EntityStage } from "@/domain/mastery";
 import { cn } from "@/lib/utils";
-import { CONTINENT_IDS, CONTINENT_LABEL_PT_BR } from "@/types/geography";
+import {
+  CONTINENT_IDS,
+  CONTINENT_LABEL_PT_BR,
+  CONTINENT_OF_PT_BR
+} from "@/types/geography";
 import type { LearningSnapshot } from "@/types/learning";
 
 export default function HomePage() {
@@ -85,6 +89,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
   const mastered = stages.filter((stage) => stage === "mastered").length;
   const unseen = stages.filter((stage) => stage === "unseen").length;
   const inProgress = stages.length - mastered - unseen;
+  const stageSummary = `${mastered} ${mastered === 1 ? "colada" : "coladas"}, ${inProgress} em andamento, ${unseen} ${unseen === 1 ? "vazia" : "vazias"}`;
   const others = CONTINENT_IDS.filter((id) => id !== continent);
 
   return (
@@ -98,7 +103,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
             id="album-title"
             className="font-title text-5xl leading-page font-extrabold tracking-title max-md:text-4xl"
           >
-            Álbum das {CONTINENT_LABEL_PT_BR[continent]}
+            Álbum {CONTINENT_OF_PT_BR[continent]}
           </h1>
           <span className="text-base">{stages.length} figurinhas</span>
         </div>
@@ -116,7 +121,7 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
               a uma não informa nada que a frase abaixo não diga. */}
           <div
             role="img"
-            aria-label={`${mastered} coladas, ${inProgress} em andamento, ${unseen} vazias`}
+            aria-label={stageSummary}
             className="mt-5 grid grid-cols-[repeat(auto-fill,minmax(18px,1fr))] gap-1.5"
           >
             {stages.map((stage, index) => (
@@ -126,9 +131,30 @@ function HomePageReady({ snapshot }: { snapshot: LearningSnapshot }) {
               />
             ))}
           </div>
-          <p className="mt-4 mb-0 text-base text-ink-soft">
-            {inProgress} em andamento, {unseen} vazias. A figurinha é colada
-            quando a bandeira fica dominada.
+          {/* A legenda diz qual forma é qual estado, e as contagens vão em
+              texto: a faixa sozinha seria só forma. */}
+          <ul className="mt-4 mb-0 flex list-none flex-wrap gap-x-5 gap-y-1.5 p-0 text-base text-ink-soft">
+            <li className="flex items-center gap-2">
+              <span
+                className={cn("h-4 w-5 rounded-[4px]", SLOT_CLASS.mastered)}
+              />
+              {mastered} {mastered === 1 ? "colada" : "coladas"}
+            </li>
+            <li className="flex items-center gap-2">
+              <span
+                className={cn("h-4 w-5 rounded-[4px]", SLOT_CLASS.acquiring)}
+              />
+              {inProgress} em andamento
+            </li>
+            <li className="flex items-center gap-2">
+              <span
+                className={cn("h-4 w-5 rounded-[4px]", SLOT_CLASS.unseen)}
+              />
+              {unseen} {unseen === 1 ? "vazia" : "vazias"}
+            </li>
+          </ul>
+          <p className="mt-3 mb-0 text-sm text-ink-soft">
+            A figurinha é colada quando a bandeira fica dominada.
           </p>
         </div>
       </section>

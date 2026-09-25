@@ -31,6 +31,19 @@ export const CONTINENT_LABEL_PT_BR: Record<ContinentId, string> = {
   oceania: "Oceania"
 };
 
+/**
+ * O continente com a preposição e o artigo, para títulos como "Álbum das
+ * Américas". Mora ao lado do rótulo porque o artigo muda de um para outro, e
+ * um "das" fixo só concorda com as Américas.
+ */
+export const CONTINENT_OF_PT_BR: Record<ContinentId, string> = {
+  americas: "das Américas",
+  africa: "da África",
+  asia: "da Ásia",
+  europe: "da Europa",
+  oceania: "da Oceania"
+};
+
 export const SUBREGION_IDS = [
   "caribbean",
   "central-america",
