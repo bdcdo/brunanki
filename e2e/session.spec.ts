@@ -39,6 +39,7 @@ test("a sessão atravessa apresentação, alternativas e digitação", async ({
   await page.getByRole("button", { name: /Começar sessão/ }).click();
 
   await expect(sessionCount(page, 0)).toBeVisible();
+  await expect(page.getByText("0 XP hoje, 0 no total")).toBeVisible();
 
   await expect(
     page.getByRole("heading", {
@@ -59,6 +60,8 @@ test("a sessão atravessa apresentação, alternativas e digitação", async ({
     .getByRole("button", { name: firstNew.displayNamePtBr, exact: true })
     .click();
   await expect(page.getByText("Acerto de primeira")).toBeVisible();
+  // O nome acabou de ser mostrado, então a escolha não pontua.
+  await expect(page.getByText("0 XP hoje, 0 no total")).toBeVisible();
 
   await page
     .getByRole("button", { name: /Agora, lembre sem alternativas/ })
@@ -75,6 +78,7 @@ test("a sessão atravessa apresentação, alternativas e digitação", async ({
   await expect(page.getByText("Acerto de primeira")).toBeVisible();
   // A escolha assistida não conta: só a digitação é resposta de memória.
   await expect(sessionCount(page, 1)).toBeVisible();
+  await expect(page.getByText("1 XP hoje, 1 no total")).toBeVisible();
 
   // A fila é recalculada depois de cada resposta. O reconhecimento dos
   // Estados Unidos seria a mesma bandeira na tela seguinte, então ele espera,
@@ -94,6 +98,12 @@ test("a sessão atravessa apresentação, alternativas e digitação", async ({
   await expect(page.getByText("Sessão encerrada")).toBeVisible();
   await expect(page.getByText("de 1 na primeira tentativa")).toBeVisible();
   await expectNoSeriousAccessibilityViolations(page);
+
+  // A tela Hoje soma as mesmas tentativas que a sessão acabou de gravar.
+  await page.getByRole("link", { name: /Voltar para Hoje/ }).click();
+  const xp = page.getByRole("region", { name: "Experiência" });
+  await expect(xp.getByRole("definition")).toHaveText(["1", "1"]);
+  await expect(xp.getByRole("term")).toHaveText(["XP hoje", "XP no total"]);
 });
 
 test("o exercício inverso registra o erro e traz a correção antes da novidade", async ({

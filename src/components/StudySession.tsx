@@ -24,7 +24,7 @@ import { CONTINENT_OF_PT_BR, SUBREGION } from "@/types/geography";
 import { CURRICULUM, introductionOrder } from "@/data/curriculum";
 import { verdictExplanation } from "@/domain/feedback";
 import { newAttemptId } from "@/domain/ids";
-import { awardedXpFor } from "@/domain/xp";
+import { awardedXpFor, xpTotals } from "@/domain/xp";
 import { buildChoiceRound } from "@/domain/distractors";
 import { describePalette } from "@/domain/palette";
 import { mulberry32 } from "@/domain/shuffle";
@@ -422,6 +422,8 @@ function StudySessionReady({
 
   if (!item || !entity) return null;
 
+  const xp = xpTotals(attempts, settings.timeZone);
+
   return (
     <div className="mx-auto w-full max-w-narrow">
       <div className="grid gap-[18px]">
@@ -437,6 +439,9 @@ function StudySessionReady({
               {dueCount(skills) === 1
                 ? "1 revisão vencida agora"
                 : `${dueCount(skills)} revisões vencidas agora`}
+            </p>
+            <p className="m-0 font-bold">
+              {xp.today} XP hoje, {xp.total} no total
             </p>
           </div>
           {/* Com respostas, encerrar mostra o resumo, que só existe aqui:
