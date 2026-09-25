@@ -7,6 +7,7 @@ import { FlagImage } from "@/components/FlagImage";
 import { PageHeader } from "@/components/ui/page-header";
 import { entities } from "@/data/runtime-catalog";
 import { normalizeCountryName } from "@/domain/text";
+import { SUBREGION } from "@/types/geography";
 
 export function CatalogClient() {
   const [query, setQuery] = useState("");
@@ -72,7 +73,7 @@ export function CatalogClient() {
                   {entity.displayNamePtBr}
                 </strong>
                 <span className="text-xs leading-body text-ink-soft">
-                  {entity.region}
+                  {SUBREGION[entity.subregion].labelPtBr}
                 </span>
               </span>
             </Link>

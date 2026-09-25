@@ -1,9 +1,15 @@
 import type { ColorNamePtBr } from "@/domain/palette";
+import { geographyFor, indexM49, type M49Snapshot } from "@/data/m49";
 import type { Catalog } from "@/types/catalog";
 import type { RuntimeCatalog, RuntimeEntity } from "@/types/runtime-catalog";
 
 /**
  * Projeta o catálogo completo no subconjunto que vai para o navegador.
+ *
+ * A geografia entra aqui, pelo código M49 que o catálogo já guarda, e não
+ * pelo campo `region` do catálogo completo: aquele vinha do restcountries,
+ * que discorda da ONU em casos como Chipre (Europa lá, Ásia Ocidental aqui) e
+ * não tem as regiões intermediárias que partem as Américas.
  *
  * Função pura e sem I/O de propósito: o artefato versionado
  * `runtime-catalog.json` é gerado por ela, e um teste compara os dois para
@@ -12,8 +18,10 @@ import type { RuntimeCatalog, RuntimeEntity } from "@/types/runtime-catalog";
  */
 export function projectRuntimeCatalog(
   catalog: Catalog,
-  paletteByEntityId: ReadonlyMap<string, readonly ColorNamePtBr[]>
+  paletteByEntityId: ReadonlyMap<string, readonly ColorNamePtBr[]>,
+  m49: M49Snapshot
 ): RuntimeCatalog {
+  const m49Index = indexM49(m49);
   const flagByEntityId = new Map(
     catalog.flagRevisions.map((flag) => [flag.entityId, flag])
   );
@@ -31,7 +39,7 @@ export function projectRuntimeCatalog(
       id: entity.id,
       displayNamePtBr: entity.displayNamePtBr,
       aliasesPtBr: entity.aliasesPtBr,
-      region: entity.region,
+      ...geographyFor(entity.id, entity.identifiers.unM49, m49Index),
       flagPath: flag.filePath,
       palette,
       ...(entity.editorialNote ? { editorialNote: entity.editorialNote } : {})

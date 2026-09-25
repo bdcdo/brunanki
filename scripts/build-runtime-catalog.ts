@@ -8,6 +8,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
 import type { Catalog } from "../src/types/catalog";
+import type { M49Snapshot } from "../src/data/m49";
 import { projectRuntimeCatalog } from "../src/data/project-runtime-catalog";
 import { readPalettes } from "./extract-palette";
 
@@ -22,7 +23,10 @@ async function main(): Promise<void> {
     join(import.meta.dirname, ".."),
     new Map(catalog.flagRevisions.map((f) => [f.entityId, f.filePath]))
   );
-  const runtime = projectRuntimeCatalog(catalog, palettes);
+  const m49 = JSON.parse(
+    await readFile(join(import.meta.dirname, "sources", "m49.json"), "utf8")
+  ) as M49Snapshot;
+  const runtime = projectRuntimeCatalog(catalog, palettes, m49);
   await writeFile(
     join(dataDir, "runtime-catalog.json"),
     `${JSON.stringify(runtime, null, 2)}\n`,

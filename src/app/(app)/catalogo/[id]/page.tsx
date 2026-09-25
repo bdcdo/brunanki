@@ -7,8 +7,10 @@ import { buttonVariants } from "@/components/ui/button";
 import { PageHeader } from "@/components/ui/page-header";
 import { entities, entityById, flagByEntityId } from "@/data/catalog";
 // Server Component: consome o catálogo completo para procedência e licença, e
-// o de runtime só para o que o FlagImage precisa.
+// o de runtime para o que o FlagImage precisa e para a geografia, que só
+// existe lá porque vem do snapshot M49 na projeção.
 import { entityById as runtimeEntityById } from "@/data/runtime-catalog";
+import { CONTINENT_LABEL_PT_BR, SUBREGION } from "@/types/geography";
 
 interface DetailPageProps {
   params: Promise<{ id: string }>;
@@ -30,8 +32,9 @@ export default async function DetailPage({ params }: DetailPageProps) {
   const { id } = await params;
   const entity = entityById.get(id);
   const flag = flagByEntityId.get(id);
+  const runtimeEntity = runtimeEntityById.get(id);
 
-  if (!entity || !flag) {
+  if (!entity || !flag || !runtimeEntity) {
     notFound();
   }
 
@@ -42,14 +45,14 @@ export default async function DetailPage({ params }: DetailPageProps) {
       </Link>
       <PageHeader
         className="mt-5"
-        eyebrow={entity.region}
+        eyebrow={`${SUBREGION[runtimeEntity.subregion].labelPtBr}, ${CONTINENT_LABEL_PT_BR[runtimeEntity.continent]}`}
         title={entity.displayNamePtBr}
         description={entity.editorialNote}
       />
 
       <div className="grid grid-cols-[minmax(300px,1fr)_1fr] gap-[34px] max-md:grid-cols-1">
         <FlagImage
-          entity={runtimeEntityById.get(entity.id)!}
+          entity={runtimeEntity}
           alt={{ kind: "named" }}
           eager
           size="fill"

@@ -8,7 +8,8 @@
         "República Islâmica do Afeganistão",
         "AF"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "southern-asia",
       "flagPath": "/flags/afg.svg",
       "palette": [
         "preto",
@@ -22,7 +23,8 @@
         "República da África do Sul",
         "ZA"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "southern-africa",
       "flagPath": "/flags/zaf.svg",
       "palette": [
         "vermelho",
@@ -40,7 +42,8 @@
         "República da Albânia",
         "AL"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "southern-europe",
       "flagPath": "/flags/alb.svg",
       "palette": [
         "vermelho",
@@ -54,7 +57,8 @@
         "República Federal da Alemanha",
         "DE"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "western-europe",
       "flagPath": "/flags/deu.svg",
       "palette": [
         "vermelho",
@@ -69,7 +73,8 @@
         "Principado de Andorra",
         "AD"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "southern-europe",
       "flagPath": "/flags/and.svg",
       "palette": [
         "vermelho",
@@ -87,7 +92,8 @@
         "República de Angola",
         "AO"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "middle-africa",
       "flagPath": "/flags/ago.svg",
       "palette": [
         "vermelho",
@@ -100,7 +106,8 @@
       "aliasesPtBr": [
         "AG"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "caribbean",
       "flagPath": "/flags/atg.svg",
       "palette": [
         "vermelho",
@@ -116,7 +123,8 @@
         "Reino da Arábia Saudita",
         "SA"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/sau.svg",
       "palette": [
         "verde",
@@ -130,7 +138,8 @@
         "República Argelina Democrática e Popular",
         "DZ"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "northern-africa",
       "flagPath": "/flags/dza.svg",
       "palette": [
         "vermelho",
@@ -145,7 +154,8 @@
         "República Argentina",
         "AR"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "south-america",
       "flagPath": "/flags/arg.svg",
       "palette": [
         "laranja",
@@ -161,7 +171,8 @@
         "República da Arménia",
         "AM"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/arm.svg",
       "palette": [
         "vermelho",
@@ -176,7 +187,8 @@
         "Comunidade da Austrália",
         "AU"
       ],
-      "region": "Oceania",
+      "continent": "oceania",
+      "subregion": "australia-new-zealand",
       "flagPath": "/flags/aus.svg",
       "palette": [
         "vermelho",
@@ -191,7 +203,8 @@
         "República da Áustria",
         "AT"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "western-europe",
       "flagPath": "/flags/aut.svg",
       "palette": [
         "vermelho",
@@ -206,7 +219,8 @@
         "República do Azerbaijão",
         "AZ"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/aze.svg",
       "palette": [
         "vermelho",
@@ -222,7 +236,8 @@
         "Comunidade das Bahamas",
         "BS"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "caribbean",
       "flagPath": "/flags/bhs.svg",
       "palette": [
         "laranja",
@@ -236,7 +251,8 @@
         "Reino do Bahrein",
         "BH"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/bhr.svg",
       "palette": [
         "vermelho",
@@ -250,7 +266,8 @@
         "República Popular do Bangladesh",
         "BD"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "southern-asia",
       "flagPath": "/flags/bgd.svg",
       "palette": [
         "vermelho",
@@ -263,7 +280,8 @@
       "aliasesPtBr": [
         "BB"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "caribbean",
       "flagPath": "/flags/brb.svg",
       "palette": [
         "laranja",
@@ -278,7 +296,8 @@
         "Reino da Bélgica",
         "BE"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "western-europe",
       "flagPath": "/flags/bel.svg",
       "palette": [
         "vermelho",
@@ -291,7 +310,8 @@
       "aliasesPtBr": [
         "BZ"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "central-america",
       "flagPath": "/flags/blz.svg",
       "palette": [
         "vermelho",
@@ -312,7 +332,8 @@
         "República do Benin",
         "BJ"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "western-africa",
       "flagPath": "/flags/ben.svg",
       "palette": [
         "vermelho",
@@ -327,7 +348,8 @@
         "República da Bielorrússia",
         "BY"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "eastern-europe",
       "flagPath": "/flags/blr.svg",
       "palette": [
         "vermelho",
@@ -342,7 +364,8 @@
         "Estado Plurinacional da Bolívia",
         "BO"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "south-america",
       "flagPath": "/flags/bol.svg",
       "palette": [
         "vermelho",
@@ -356,7 +379,8 @@
       "aliasesPtBr": [
         "BA"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "southern-europe",
       "flagPath": "/flags/bih.svg",
       "palette": [
         "amarelo",
@@ -372,7 +396,8 @@
         "República do Botswana",
         "BW"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "southern-africa",
       "flagPath": "/flags/bwa.svg",
       "palette": [
         "azul",
@@ -386,7 +411,8 @@
         "República Federativa do Brasil",
         "BR"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "south-america",
       "flagPath": "/flags/bra.svg",
       "palette": [
         "amarelo",
@@ -402,7 +428,8 @@
         "Nação do Brunei, Morada da Paz",
         "BN"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "south-eastern-asia",
       "flagPath": "/flags/brn.svg",
       "palette": [
         "vermelho",
@@ -417,7 +444,8 @@
         "República da Bulgária",
         "BG"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "eastern-europe",
       "flagPath": "/flags/bgr.svg",
       "palette": [
         "vermelho",
@@ -431,7 +459,8 @@
       "aliasesPtBr": [
         "BF"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "western-africa",
       "flagPath": "/flags/bfa.svg",
       "palette": [
         "vermelho",
@@ -446,7 +475,8 @@
         "República do Burundi",
         "BI"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/bdi.svg",
       "palette": [
         "vermelho",
@@ -461,7 +491,8 @@
         "Reino do Butão",
         "BT"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "southern-asia",
       "flagPath": "/flags/btn.svg",
       "palette": [
         "laranja",
@@ -477,7 +508,8 @@
         "República de Cabo Verde",
         "CV"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "western-africa",
       "flagPath": "/flags/cpv.svg",
       "palette": [
         "vermelho",
@@ -493,7 +525,8 @@
         "República dos Camarões",
         "CM"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "middle-africa",
       "flagPath": "/flags/cmr.svg",
       "palette": [
         "vermelho",
@@ -508,7 +541,8 @@
         "Reino do Camboja",
         "KH"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "south-eastern-asia",
       "flagPath": "/flags/khm.svg",
       "palette": [
         "vermelho",
@@ -523,7 +557,8 @@
       "aliasesPtBr": [
         "CA"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "northern-america",
       "flagPath": "/flags/can.svg",
       "palette": [
         "vermelho",
@@ -537,7 +572,8 @@
         "Estado do Qatar",
         "QA"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/qat.svg",
       "palette": [
         "roxo",
@@ -551,7 +587,8 @@
         "República do Cazaquistão",
         "KZ"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "central-asia",
       "flagPath": "/flags/kaz.svg",
       "palette": [
         "amarelo",
@@ -565,7 +602,8 @@
         "República do Chade",
         "TD"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "middle-africa",
       "flagPath": "/flags/tcd.svg",
       "palette": [
         "vermelho",
@@ -580,7 +618,8 @@
         "República Checa",
         "CZ"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "eastern-europe",
       "flagPath": "/flags/cze.svg",
       "palette": [
         "vermelho",
@@ -595,7 +634,8 @@
         "República do Chile",
         "CL"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "south-america",
       "flagPath": "/flags/chl.svg",
       "palette": [
         "vermelho",
@@ -610,7 +650,8 @@
         "República Popular da China",
         "CN"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "eastern-asia",
       "flagPath": "/flags/chn.svg",
       "palette": [
         "vermelho",
@@ -624,7 +665,8 @@
         "República de Chipre",
         "CY"
       ],
-      "region": "Europa",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/cyp.svg",
       "palette": [
         "laranja",
@@ -639,7 +681,8 @@
         "República da Colômbia",
         "CO"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "south-america",
       "flagPath": "/flags/col.svg",
       "palette": [
         "vermelho",
@@ -654,7 +697,8 @@
         "União das Comores",
         "KM"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/com.svg",
       "palette": [
         "vermelho",
@@ -671,7 +715,8 @@
         "República Popular Democrática da Coreia",
         "KP"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "eastern-asia",
       "flagPath": "/flags/prk.svg",
       "palette": [
         "vermelho",
@@ -686,7 +731,8 @@
         "República da Coreia",
         "KR"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "eastern-asia",
       "flagPath": "/flags/kor.svg",
       "palette": [
         "vermelho",
@@ -702,7 +748,8 @@
         "República da Côte d'Ivoire",
         "CI"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "western-africa",
       "flagPath": "/flags/civ.svg",
       "palette": [
         "laranja",
@@ -717,7 +764,8 @@
         "República da Costa Rica",
         "CR"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "central-america",
       "flagPath": "/flags/cri.svg",
       "palette": [
         "vermelho",
@@ -732,7 +780,8 @@
         "República da Croácia",
         "HR"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "southern-europe",
       "flagPath": "/flags/hrv.svg",
       "palette": [
         "vermelho",
@@ -749,7 +798,8 @@
         "República de Cuba",
         "CU"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "caribbean",
       "flagPath": "/flags/cub.svg",
       "palette": [
         "vermelho",
@@ -764,7 +814,8 @@
         "Reino da Dinamarca",
         "DK"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "northern-europe",
       "flagPath": "/flags/dnk.svg",
       "palette": [
         "vermelho",
@@ -779,7 +830,8 @@
         "República do Djibouti",
         "DJ"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/dji.svg",
       "palette": [
         "vermelho",
@@ -795,7 +847,8 @@
         "Comunidade da Dominica",
         "DM"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "caribbean",
       "flagPath": "/flags/dma.svg",
       "palette": [
         "vermelho",
@@ -814,7 +867,8 @@
         "República Árabe do Egipto",
         "EG"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "northern-africa",
       "flagPath": "/flags/egy.svg",
       "palette": [
         "vermelho",
@@ -829,7 +883,8 @@
         "República de El Salvador",
         "SV"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "central-america",
       "flagPath": "/flags/slv.svg",
       "palette": [
         "vermelho",
@@ -847,7 +902,8 @@
       "aliasesPtBr": [
         "AE"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/are.svg",
       "palette": [
         "vermelho",
@@ -862,7 +918,8 @@
         "República do Equador",
         "EC"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "south-america",
       "flagPath": "/flags/ecu.svg",
       "palette": [
         "vermelho",
@@ -883,7 +940,8 @@
         "Estado da Eritreia",
         "ER"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/eri.svg",
       "palette": [
         "vermelho",
@@ -899,7 +957,8 @@
         "República Eslovaca",
         "SK"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "eastern-europe",
       "flagPath": "/flags/svk.svg",
       "palette": [
         "vermelho",
@@ -914,7 +973,8 @@
         "República da Eslovénia",
         "SI"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "southern-europe",
       "flagPath": "/flags/svn.svg",
       "palette": [
         "vermelho",
@@ -930,7 +990,8 @@
         "Reino de Espanha",
         "ES"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "southern-europe",
       "flagPath": "/flags/esp.svg",
       "palette": [
         "vermelho",
@@ -952,7 +1013,8 @@
         "Reino de eSwatini",
         "SZ"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "southern-africa",
       "flagPath": "/flags/swz.svg",
       "palette": [
         "vermelho",
@@ -969,7 +1031,8 @@
         "Estados Unidos da América",
         "US"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "northern-america",
       "flagPath": "/flags/usa.svg",
       "palette": [
         "vermelho",
@@ -984,7 +1047,8 @@
         "República da Estónia",
         "EE"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "northern-europe",
       "flagPath": "/flags/est.svg",
       "palette": [
         "azul",
@@ -998,7 +1062,8 @@
         "República Federal Democrática da Etiópia",
         "ET"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/eth.svg",
       "palette": [
         "vermelho",
@@ -1014,7 +1079,8 @@
         "República de Fiji",
         "FJ"
       ],
-      "region": "Oceania",
+      "continent": "oceania",
+      "subregion": "melanesia",
       "flagPath": "/flags/fji.svg",
       "palette": [
         "vermelho",
@@ -1032,7 +1098,8 @@
         "República das Filipinas",
         "PH"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "south-eastern-asia",
       "flagPath": "/flags/phl.svg",
       "palette": [
         "vermelho",
@@ -1048,7 +1115,8 @@
         "República da Finlândia",
         "FI"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "northern-europe",
       "flagPath": "/flags/fin.svg",
       "palette": [
         "azul",
@@ -1062,7 +1130,8 @@
         "República Francesa",
         "FR"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "western-europe",
       "flagPath": "/flags/fra.svg",
       "palette": [
         "vermelho",
@@ -1077,7 +1146,8 @@
         "República do Gabão",
         "GA"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "middle-africa",
       "flagPath": "/flags/gab.svg",
       "palette": [
         "amarelo",
@@ -1092,7 +1162,8 @@
         "República da Gâmbia",
         "GM"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "western-africa",
       "flagPath": "/flags/gmb.svg",
       "palette": [
         "vermelho",
@@ -1108,7 +1179,8 @@
         "República do Gana",
         "GH"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "western-africa",
       "flagPath": "/flags/gha.svg",
       "palette": [
         "vermelho",
@@ -1122,7 +1194,8 @@
       "aliasesPtBr": [
         "GE"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/geo.svg",
       "palette": [
         "vermelho",
@@ -1136,7 +1209,8 @@
         "Grenada",
         "GD"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "caribbean",
       "flagPath": "/flags/grd.svg",
       "palette": [
         "vermelho",
@@ -1151,7 +1225,8 @@
         "República Helénica",
         "GR"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "southern-europe",
       "flagPath": "/flags/grc.svg",
       "palette": [
         "azul",
@@ -1165,7 +1240,8 @@
         "República da Guatemala",
         "GT"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "central-america",
       "flagPath": "/flags/gtm.svg",
       "palette": [
         "vermelho",
@@ -1186,7 +1262,8 @@
         "Co -operative República da Guiana",
         "GY"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "south-america",
       "flagPath": "/flags/guy.svg",
       "palette": [
         "vermelho",
@@ -1203,7 +1280,8 @@
         "República da Guiné",
         "GN"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "western-africa",
       "flagPath": "/flags/gin.svg",
       "palette": [
         "vermelho",
@@ -1218,7 +1296,8 @@
         "República da Guiné Equatorial",
         "GQ"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "middle-africa",
       "flagPath": "/flags/gnq.svg",
       "palette": [
         "vermelho",
@@ -1238,7 +1317,8 @@
         "República da Guiné-Bissau",
         "GW"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "western-africa",
       "flagPath": "/flags/gnb.svg",
       "palette": [
         "vermelho",
@@ -1254,7 +1334,8 @@
         "República do Haiti",
         "HT"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "caribbean",
       "flagPath": "/flags/hti.svg",
       "palette": [
         "vermelho",
@@ -1273,7 +1354,8 @@
         "República de Honduras",
         "HN"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "central-america",
       "flagPath": "/flags/hnd.svg",
       "palette": [
         "azul",
@@ -1286,7 +1368,8 @@
       "aliasesPtBr": [
         "HU"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "eastern-europe",
       "flagPath": "/flags/hun.svg",
       "palette": [
         "vermelho",
@@ -1301,7 +1384,8 @@
         "República do Iêmen",
         "YE"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/yem.svg",
       "palette": [
         "vermelho",
@@ -1315,7 +1399,8 @@
         "República das Ilhas Marshall",
         "MH"
       ],
-      "region": "Oceania",
+      "continent": "oceania",
+      "subregion": "micronesia",
       "flagPath": "/flags/mhl.svg",
       "palette": [
         "laranja",
@@ -1329,7 +1414,8 @@
       "aliasesPtBr": [
         "SB"
       ],
-      "region": "Oceania",
+      "continent": "oceania",
+      "subregion": "melanesia",
       "flagPath": "/flags/slb.svg",
       "palette": [
         "amarelo",
@@ -1345,7 +1431,8 @@
         "República da Índia",
         "IN"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "southern-asia",
       "flagPath": "/flags/ind.svg",
       "palette": [
         "laranja",
@@ -1361,7 +1448,8 @@
         "República da Indonésia",
         "ID"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "south-eastern-asia",
       "flagPath": "/flags/idn.svg",
       "palette": [
         "vermelho",
@@ -1376,7 +1464,8 @@
         "República Islâmica do Irã",
         "IR"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "southern-asia",
       "flagPath": "/flags/irn.svg",
       "palette": [
         "vermelho",
@@ -1391,7 +1480,8 @@
         "República do Iraque",
         "IQ"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/irq.svg",
       "palette": [
         "vermelho",
@@ -1406,7 +1496,8 @@
         "República da Irlanda",
         "IE"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "northern-europe",
       "flagPath": "/flags/irl.svg",
       "palette": [
         "laranja",
@@ -1420,7 +1511,8 @@
       "aliasesPtBr": [
         "IS"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "northern-europe",
       "flagPath": "/flags/isl.svg",
       "palette": [
         "vermelho",
@@ -1435,7 +1527,8 @@
         "Estado de Israel",
         "IL"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/isr.svg",
       "palette": [
         "azul",
@@ -1449,7 +1542,8 @@
         "República Italiana",
         "IT"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "southern-europe",
       "flagPath": "/flags/ita.svg",
       "palette": [
         "vermelho",
@@ -1463,7 +1557,8 @@
       "aliasesPtBr": [
         "JM"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "caribbean",
       "flagPath": "/flags/jam.svg",
       "palette": [
         "laranja",
@@ -1477,7 +1572,8 @@
       "aliasesPtBr": [
         "JP"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "eastern-asia",
       "flagPath": "/flags/jpn.svg",
       "palette": [
         "vermelho",
@@ -1491,7 +1587,8 @@
         "Reino Hachemita da Jordânia",
         "JO"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/jor.svg",
       "palette": [
         "vermelho",
@@ -1506,7 +1603,8 @@
         "Independente e soberano República de Kiribati",
         "KI"
       ],
-      "region": "Oceania",
+      "continent": "oceania",
+      "subregion": "micronesia",
       "flagPath": "/flags/kir.svg",
       "palette": [
         "vermelho",
@@ -1523,7 +1621,8 @@
         "Estado do Kuwait",
         "KW"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/kwt.svg",
       "palette": [
         "vermelho",
@@ -1538,7 +1637,8 @@
         "Laos, República Democrática",
         "LA"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "south-eastern-asia",
       "flagPath": "/flags/lao.svg",
       "palette": [
         "vermelho",
@@ -1553,7 +1653,8 @@
         "Reino do Lesoto",
         "LS"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "southern-africa",
       "flagPath": "/flags/lso.svg",
       "palette": [
         "verde",
@@ -1568,7 +1669,8 @@
         "República da Letónia",
         "LV"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "northern-europe",
       "flagPath": "/flags/lva.svg",
       "palette": [
         "vermelho",
@@ -1582,7 +1684,8 @@
         "República Libanesa",
         "LB"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/lbn.svg",
       "palette": [
         "vermelho",
@@ -1597,7 +1700,8 @@
         "República da Libéria",
         "LR"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "western-africa",
       "flagPath": "/flags/lbr.svg",
       "palette": [
         "vermelho",
@@ -1612,7 +1716,8 @@
         "Estado da Líbia",
         "LY"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "northern-africa",
       "flagPath": "/flags/lby.svg",
       "palette": [
         "vermelho",
@@ -1628,7 +1733,8 @@
         "Principado de Liechtenstein",
         "LI"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "western-europe",
       "flagPath": "/flags/lie.svg",
       "palette": [
         "vermelho",
@@ -1644,7 +1750,8 @@
         "República da Lituânia",
         "LT"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "northern-europe",
       "flagPath": "/flags/ltu.svg",
       "palette": [
         "vermelho",
@@ -1659,7 +1766,8 @@
         "Grão-Ducado do Luxemburgo",
         "LU"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "western-europe",
       "flagPath": "/flags/lux.svg",
       "palette": [
         "vermelho",
@@ -1674,7 +1782,8 @@
         "República da Macedônia do Norte",
         "MK"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "southern-europe",
       "flagPath": "/flags/mkd.svg",
       "palette": [
         "vermelho",
@@ -1688,7 +1797,8 @@
         "República de Madagáscar",
         "MG"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/mdg.svg",
       "palette": [
         "vermelho",
@@ -1702,7 +1812,8 @@
       "aliasesPtBr": [
         "MY"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "south-eastern-asia",
       "flagPath": "/flags/mys.svg",
       "palette": [
         "vermelho",
@@ -1718,7 +1829,8 @@
         "República do Malawi",
         "MW"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/mwi.svg",
       "palette": [
         "vermelho",
@@ -1732,7 +1844,8 @@
         "República das Maldivas",
         "MV"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "southern-asia",
       "flagPath": "/flags/mdv.svg",
       "palette": [
         "vermelho",
@@ -1747,7 +1860,8 @@
         "República do Mali",
         "ML"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "western-africa",
       "flagPath": "/flags/mli.svg",
       "palette": [
         "vermelho",
@@ -1762,7 +1876,8 @@
         "República de Malta",
         "MT"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "southern-europe",
       "flagPath": "/flags/mlt.svg",
       "palette": [
         "vermelho",
@@ -1777,7 +1892,8 @@
         "Reino de Marrocos",
         "MA"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "northern-africa",
       "flagPath": "/flags/mar.svg",
       "palette": [
         "vermelho",
@@ -1791,7 +1907,8 @@
         "República das Maurícias",
         "MU"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/mus.svg",
       "palette": [
         "vermelho",
@@ -1807,7 +1924,8 @@
         "República Islâmica da Mauritânia",
         "MR"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "western-africa",
       "flagPath": "/flags/mrt.svg",
       "palette": [
         "vermelho",
@@ -1822,7 +1940,8 @@
         "Estados Unidos Mexicanos",
         "MX"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "central-america",
       "flagPath": "/flags/mex.svg",
       "palette": [
         "vermelho",
@@ -1843,7 +1962,8 @@
         "Estados Federados da Micronésia",
         "FM"
       ],
-      "region": "Oceania",
+      "continent": "oceania",
+      "subregion": "micronesia",
       "flagPath": "/flags/fsm.svg",
       "palette": [
         "azul",
@@ -1857,7 +1977,8 @@
         "República de Moçambique",
         "MZ"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/moz.svg",
       "palette": [
         "vermelho",
@@ -1875,7 +1996,8 @@
         "República da Moldávia",
         "MD"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "eastern-europe",
       "flagPath": "/flags/mda.svg",
       "palette": [
         "vermelho",
@@ -1892,7 +2014,8 @@
         "Principado do Mónaco",
         "MC"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "western-europe",
       "flagPath": "/flags/mco.svg",
       "palette": [
         "vermelho",
@@ -1905,7 +2028,8 @@
       "aliasesPtBr": [
         "MN"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "eastern-asia",
       "flagPath": "/flags/mng.svg",
       "palette": [
         "vermelho",
@@ -1919,7 +2043,8 @@
       "aliasesPtBr": [
         "ME"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "southern-europe",
       "flagPath": "/flags/mne.svg",
       "palette": [
         "vermelho",
@@ -1936,7 +2061,8 @@
         "República da União de Myanmar",
         "MM"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "south-eastern-asia",
       "flagPath": "/flags/mmr.svg",
       "palette": [
         "vermelho",
@@ -1952,7 +2078,8 @@
         "República da Namíbia",
         "NA"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "southern-africa",
       "flagPath": "/flags/nam.svg",
       "palette": [
         "vermelho",
@@ -1969,7 +2096,8 @@
         "República de Nauru",
         "NR"
       ],
-      "region": "Oceania",
+      "continent": "oceania",
+      "subregion": "micronesia",
       "flagPath": "/flags/nru.svg",
       "palette": [
         "laranja",
@@ -1984,7 +2112,8 @@
         "República Democrática Federal do Nepal",
         "NP"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "southern-asia",
       "flagPath": "/flags/npl.svg",
       "palette": [
         "vermelho",
@@ -1999,7 +2128,8 @@
         "República da Nicarágua",
         "NI"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "central-america",
       "flagPath": "/flags/nic.svg",
       "palette": [
         "vermelho",
@@ -2018,7 +2148,8 @@
         "República do Níger",
         "NE"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "western-africa",
       "flagPath": "/flags/ner.svg",
       "palette": [
         "laranja",
@@ -2033,7 +2164,8 @@
         "República Federal da Nigéria",
         "NG"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "western-africa",
       "flagPath": "/flags/nga.svg",
       "palette": [
         "verde",
@@ -2047,7 +2179,8 @@
         "Reino da Noruega",
         "NO"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "northern-europe",
       "flagPath": "/flags/nor.svg",
       "palette": [
         "vermelho",
@@ -2061,7 +2194,8 @@
       "aliasesPtBr": [
         "NZ"
       ],
-      "region": "Oceania",
+      "continent": "oceania",
+      "subregion": "australia-new-zealand",
       "flagPath": "/flags/nzl.svg",
       "palette": [
         "vermelho",
@@ -2076,7 +2210,8 @@
         "Sultanato de Omã",
         "OM"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/omn.svg",
       "palette": [
         "vermelho",
@@ -2091,7 +2226,8 @@
         "Holanda",
         "NL"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "western-europe",
       "flagPath": "/flags/nld.svg",
       "palette": [
         "vermelho",
@@ -2106,7 +2242,8 @@
         "República de Palau",
         "PW"
       ],
-      "region": "Oceania",
+      "continent": "oceania",
+      "subregion": "micronesia",
       "flagPath": "/flags/plw.svg",
       "palette": [
         "amarelo",
@@ -2120,7 +2257,8 @@
         "Estado da Palestina",
         "PS"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/pse.svg",
       "palette": [
         "vermelho",
@@ -2135,7 +2273,8 @@
         "República do Panamá",
         "PA"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "central-america",
       "flagPath": "/flags/pan.svg",
       "palette": [
         "vermelho",
@@ -2150,7 +2289,8 @@
         "Estado Independente da Papua Nova Guiné",
         "PG"
       ],
-      "region": "Oceania",
+      "continent": "oceania",
+      "subregion": "melanesia",
       "flagPath": "/flags/png.svg",
       "palette": [
         "vermelho",
@@ -2165,7 +2305,8 @@
         "República Islâmica do Paquistão",
         "PK"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "southern-asia",
       "flagPath": "/flags/pak.svg",
       "palette": [
         "verde",
@@ -2179,7 +2320,8 @@
         "República do Paraguai",
         "PY"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "south-america",
       "flagPath": "/flags/pry.svg",
       "palette": [
         "vermelho",
@@ -2198,7 +2340,8 @@
         "República do Peru",
         "PE"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "south-america",
       "flagPath": "/flags/per.svg",
       "palette": [
         "vermelho",
@@ -2212,7 +2355,8 @@
         "República da Polónia",
         "PL"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "eastern-europe",
       "flagPath": "/flags/pol.svg",
       "palette": [
         "vermelho",
@@ -2226,7 +2370,8 @@
         "República português",
         "PT"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "southern-europe",
       "flagPath": "/flags/prt.svg",
       "palette": [
         "vermelho",
@@ -2244,7 +2389,8 @@
         "República do Quénia",
         "KE"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/ken.svg",
       "palette": [
         "vermelho",
@@ -2260,7 +2406,8 @@
         "República do Quirguistão",
         "KG"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "central-asia",
       "flagPath": "/flags/kgz.svg",
       "palette": [
         "vermelho",
@@ -2274,7 +2421,8 @@
         "Reino Unido da Grã-Bretanha e Irlanda do Norte",
         "GB"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "northern-europe",
       "flagPath": "/flags/gbr.svg",
       "palette": [
         "vermelho",
@@ -2289,7 +2437,8 @@
         "República Centro-Africano",
         "CF"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "middle-africa",
       "flagPath": "/flags/caf.svg",
       "palette": [
         "vermelho",
@@ -2305,7 +2454,8 @@
       "aliasesPtBr": [
         "CD"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "middle-africa",
       "flagPath": "/flags/cod.svg",
       "palette": [
         "vermelho",
@@ -2320,7 +2470,8 @@
         "Congo",
         "CG"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "middle-africa",
       "flagPath": "/flags/cog.svg",
       "palette": [
         "vermelho",
@@ -2334,7 +2485,8 @@
       "aliasesPtBr": [
         "DO"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "caribbean",
       "flagPath": "/flags/dom.svg",
       "palette": [
         "vermelho",
@@ -2351,7 +2503,8 @@
       "aliasesPtBr": [
         "RO"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "eastern-europe",
       "flagPath": "/flags/rou.svg",
       "palette": [
         "vermelho",
@@ -2366,7 +2519,8 @@
         "República do Ruanda",
         "RW"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/rwa.svg",
       "palette": [
         "amarelo",
@@ -2381,7 +2535,8 @@
         "Federação Russa",
         "RU"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "eastern-europe",
       "flagPath": "/flags/rus.svg",
       "palette": [
         "vermelho",
@@ -2396,7 +2551,8 @@
         "Estado Independente de Samoa",
         "WS"
       ],
-      "region": "Oceania",
+      "continent": "oceania",
+      "subregion": "polynesia",
       "flagPath": "/flags/wsm.svg",
       "palette": [
         "vermelho",
@@ -2411,7 +2567,8 @@
         "Sereníssima República de San Marino",
         "SM"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "southern-europe",
       "flagPath": "/flags/smr.svg",
       "palette": [
         "laranja",
@@ -2428,7 +2585,8 @@
       "aliasesPtBr": [
         "LC"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "caribbean",
       "flagPath": "/flags/lca.svg",
       "palette": [
         "amarelo",
@@ -2443,7 +2601,8 @@
         "Federação de São Cristóvão e Nevis",
         "KN"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "caribbean",
       "flagPath": "/flags/kna.svg",
       "palette": [
         "vermelho",
@@ -2460,7 +2619,8 @@
         "República Democrática de São Tomé e Príncipe",
         "ST"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "middle-africa",
       "flagPath": "/flags/stp.svg",
       "palette": [
         "vermelho",
@@ -2475,7 +2635,8 @@
         "São Vincente e Granadinas",
         "VC"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "caribbean",
       "flagPath": "/flags/vct.svg",
       "palette": [
         "amarelo",
@@ -2490,7 +2651,8 @@
         "República das Seychelles",
         "SC"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/syc.svg",
       "palette": [
         "vermelho",
@@ -2507,7 +2669,8 @@
         "República do Senegal",
         "SN"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "western-africa",
       "flagPath": "/flags/sen.svg",
       "palette": [
         "vermelho",
@@ -2522,7 +2685,8 @@
         "República da Serra Leoa",
         "SL"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "western-africa",
       "flagPath": "/flags/sle.svg",
       "palette": [
         "verde",
@@ -2537,7 +2701,8 @@
         "República da Sérvia",
         "RS"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "southern-europe",
       "flagPath": "/flags/srb.svg",
       "palette": [
         "vermelho",
@@ -2554,7 +2719,8 @@
         "República de Singapura",
         "SG"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "south-eastern-asia",
       "flagPath": "/flags/sgp.svg",
       "palette": [
         "vermelho",
@@ -2568,7 +2734,8 @@
         "República Árabe Síria",
         "SY"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/syr.svg",
       "palette": [
         "vermelho",
@@ -2583,7 +2750,8 @@
         "República Federal da Somália",
         "SO"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/som.svg",
       "palette": [
         "azul",
@@ -2597,7 +2765,8 @@
         "República Democrática Socialista do Sri Lanka",
         "LK"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "southern-asia",
       "flagPath": "/flags/lka.svg",
       "palette": [
         "laranja",
@@ -2613,7 +2782,8 @@
         "República do Sudão",
         "SD"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "northern-africa",
       "flagPath": "/flags/sdn.svg",
       "palette": [
         "vermelho",
@@ -2628,7 +2798,8 @@
         "República do Sudão do Sul",
         "SS"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/ssd.svg",
       "palette": [
         "vermelho",
@@ -2645,7 +2816,8 @@
         "Reino da Suécia",
         "SE"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "northern-europe",
       "flagPath": "/flags/swe.svg",
       "palette": [
         "amarelo",
@@ -2659,7 +2831,8 @@
         "Confederação Suíça",
         "CH"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "western-europe",
       "flagPath": "/flags/che.svg",
       "palette": [
         "vermelho",
@@ -2673,7 +2846,8 @@
         "República do Suriname",
         "SR"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "south-america",
       "flagPath": "/flags/sur.svg",
       "palette": [
         "vermelho",
@@ -2689,7 +2863,8 @@
         "Reino da Tailândia",
         "TH"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "south-eastern-asia",
       "flagPath": "/flags/tha.svg",
       "palette": [
         "vermelho",
@@ -2704,7 +2879,8 @@
         "República do Tajiquistão",
         "TJ"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "central-asia",
       "flagPath": "/flags/tjk.svg",
       "palette": [
         "vermelho",
@@ -2721,7 +2897,8 @@
         "República Unida da Tanzânia",
         "TZ"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/tza.svg",
       "palette": [
         "amarelo",
@@ -2737,7 +2914,8 @@
         "República Democrática de Timor-Leste",
         "TL"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "south-eastern-asia",
       "flagPath": "/flags/tls.svg",
       "palette": [
         "vermelho",
@@ -2752,7 +2930,8 @@
         "República do Togo",
         "TG"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "western-africa",
       "flagPath": "/flags/tgo.svg",
       "palette": [
         "vermelho",
@@ -2768,7 +2947,8 @@
         "Reino de Tonga",
         "TO"
       ],
-      "region": "Oceania",
+      "continent": "oceania",
+      "subregion": "polynesia",
       "flagPath": "/flags/ton.svg",
       "palette": [
         "vermelho",
@@ -2782,7 +2962,8 @@
         "República de Trinidad e Tobago",
         "TT"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "caribbean",
       "flagPath": "/flags/tto.svg",
       "palette": [
         "vermelho",
@@ -2796,7 +2977,8 @@
         "República da Tunísia",
         "TN"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "northern-africa",
       "flagPath": "/flags/tun.svg",
       "palette": [
         "vermelho",
@@ -2810,7 +2992,8 @@
         "Turcomenistão",
         "TM"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "central-asia",
       "flagPath": "/flags/tkm.svg",
       "palette": [
         "vermelho",
@@ -2827,7 +3010,8 @@
         "República da Turquia",
         "TR"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "western-asia",
       "flagPath": "/flags/tur.svg",
       "palette": [
         "vermelho",
@@ -2840,7 +3024,8 @@
       "aliasesPtBr": [
         "TV"
       ],
-      "region": "Oceania",
+      "continent": "oceania",
+      "subregion": "polynesia",
       "flagPath": "/flags/tuv.svg",
       "palette": [
         "vermelho",
@@ -2855,7 +3040,8 @@
       "aliasesPtBr": [
         "UA"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "eastern-europe",
       "flagPath": "/flags/ukr.svg",
       "palette": [
         "amarelo",
@@ -2869,7 +3055,8 @@
         "República do Uganda",
         "UG"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/uga.svg",
       "palette": [
         "vermelho",
@@ -2886,7 +3073,8 @@
         "República Oriental do Uruguai",
         "UY"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "south-america",
       "flagPath": "/flags/ury.svg",
       "palette": [
         "amarelo",
@@ -2902,7 +3090,8 @@
         "República do Usbequistão",
         "UZ"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "central-asia",
       "flagPath": "/flags/uzb.svg",
       "palette": [
         "vermelho",
@@ -2918,7 +3107,8 @@
         "República de Vanuatu",
         "VU"
       ],
-      "region": "Oceania",
+      "continent": "oceania",
+      "subregion": "melanesia",
       "flagPath": "/flags/vut.svg",
       "palette": [
         "vermelho",
@@ -2935,7 +3125,8 @@
         "VA",
         "Santa Sé"
       ],
-      "region": "Europa",
+      "continent": "europe",
+      "subregion": "southern-europe",
       "flagPath": "/flags/vat.png",
       "palette": [
         "amarelo",
@@ -2950,7 +3141,8 @@
         "República Bolivariana da Venezuela",
         "VE"
       ],
-      "region": "Américas",
+      "continent": "americas",
+      "subregion": "south-america",
       "flagPath": "/flags/ven.svg",
       "palette": [
         "vermelho",
@@ -2967,7 +3159,8 @@
         "República Socialista do Vietname",
         "VN"
       ],
-      "region": "Ásia",
+      "continent": "asia",
+      "subregion": "south-eastern-asia",
       "flagPath": "/flags/vnm.svg",
       "palette": [
         "vermelho",
@@ -2981,7 +3174,8 @@
         "República da Zâmbia",
         "ZM"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/zmb.svg",
       "palette": [
         "vermelho",
@@ -2998,7 +3192,8 @@
         "República do Zimbabwe",
         "ZW"
       ],
-      "region": "África",
+      "continent": "africa",
+      "subregion": "eastern-africa",
       "flagPath": "/flags/zwe.svg",
       "palette": [
         "vermelho",

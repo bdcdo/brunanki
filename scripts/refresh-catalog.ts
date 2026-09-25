@@ -5,6 +5,7 @@ import { basename, join } from "node:path";
 import { promisify } from "node:util";
 
 import { normalizeCountryName as normalizeAlias } from "../src/domain/text";
+import type { M49Snapshot } from "../src/data/m49";
 import { projectRuntimeCatalog } from "../src/data/project-runtime-catalog";
 import { belongsToCatalog, UN_OBSERVER_ISO3 } from "./catalog-rules";
 import { readPalettes } from "./extract-palette";
@@ -13,7 +14,6 @@ import type {
   FlagRevision,
   LearningEntity
 } from "../src/types/catalog";
-import type { Region } from "../src/types/region";
 
 const VERIFIED_AT = "2026-07-25";
 // A versão sobe porque o conjunto de entidades mudou, ainda que as fontes não
@@ -36,7 +36,6 @@ interface RestCountry {
   cca2?: string;
   cca3: string;
   ccn3?: string;
-  region?: string;
   translations?: { por?: { common: string; official: string } };
   altSpellings?: string[];
   unMember?: boolean;
@@ -56,30 +55,6 @@ interface CommonsMetadata {
   width: number;
   height: number;
   license: FlagRevision["license"];
-}
-
-/**
- * Traduz a região na fronteira com o restcountries, que é o único ponto do
- * sistema onde o inglês entra. O tipo `Region` fecha o conjunto do outro lado.
- *
- * O que havia aqui era `country.region ?? "Other"`: um fallback silencioso que
- * inventava uma sexta região para um campo ausente e deixava as cinco em
- * inglês atravessarem até a tela. `regionPtBr` faz o oposto — um valor
- * inesperado derruba a atualização do catálogo, nomeando a entidade.
- */
-const REGION_PT_BR: Record<string, Region> = {
-  Africa: "África",
-  Americas: "Américas",
-  Asia: "Ásia",
-  Europe: "Europa",
-  Oceania: "Oceania"
-};
-
-function regionPtBr(region: string | undefined, iso3: string): Region {
-  assert(region, `Região ausente na fonte: ${iso3}`);
-  const translated = REGION_PT_BR[region];
-  assert(translated, `Região sem tradução: ${region} (${iso3})`);
-  return translated;
 }
 
 /**
@@ -478,7 +453,6 @@ async function main(): Promise<void> {
         isoAlpha3: country.cca3,
         ...(country.ccn3 ? { unM49: country.ccn3 } : {})
       },
-      region: regionPtBr(country.region, iso3),
       memberships,
       primaryFlagRevisionId: `${id}-flag-2026`,
       ...(EDITORIAL_NOTE_BY_ISO3[iso3]
@@ -589,9 +563,18 @@ async function main(): Promise<void> {
     process.cwd(),
     new Map(flagRevisions.map((flag) => [flag.entityId, flag.filePath]))
   );
+  // A geografia vem do snapshot M49 versionado, e não do restcountries: ele
+  // não é baixado aqui porque mudar a classificação de um país é decisão a
+  // revisar, e não efeito colateral de atualizar imagens.
+  const m49 = JSON.parse(
+    await readFile(
+      join(process.cwd(), "scripts", "sources", "m49.json"),
+      "utf8"
+    )
+  ) as M49Snapshot;
   await writeFile(
     join(dataDirectory, "runtime-catalog.json"),
-    `${JSON.stringify(projectRuntimeCatalog(catalog, palettes), null, 2)}\n`
+    `${JSON.stringify(projectRuntimeCatalog(catalog, palettes, m49), null, 2)}\n`
   );
   console.log(
     `Catalog refreshed: ${entities.length} entities, ${flagRevisions.length} local flags.`
