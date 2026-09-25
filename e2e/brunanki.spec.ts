@@ -119,7 +119,9 @@ test("puxar uma bandeira do álbum faz dela a próxima novidade", async ({
   // Dominica é a última da ordem sugerida; puxada pelo detalhe, ela passa na
   // frente das outras 34.
   await page.goto("/catalogo/dma");
-  await page.getByRole("link", { name: "Estudar esta bandeira agora" }).click();
+  await page
+    .getByRole("link", { name: "Estudar como a próxima bandeira nova" })
+    .click();
   await page.getByRole("button", { name: /Começar sessão/ }).click();
   await expect(
     page.getByRole("heading", { name: "Esta é a bandeira de Dominica." })

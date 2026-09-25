@@ -52,15 +52,16 @@ export default async function DetailPage({ params }: DetailPageProps) {
         description={entity.editorialNote}
       />
       {/* Pula a ordem sugerida: a bandeira vira a próxima novidade da sessão.
-          Só em continente liberado, porque novidade de continente fechado a
-          sessão ignoraria. Se ela já estiver em estudo, a sessão começa como
-          sempre, pelas revisões. */}
+          Novidade, e não a próxima atividade: as revisões vencidas e as
+          correções continuam vindo antes, e o rótulo diz isso para não
+          prometer mais do que a sessão entrega. Só em continente liberado,
+          porque novidade de continente fechado a sessão ignoraria. */}
       {isContinentAvailable(runtimeEntity.continent) && (
         <Link
           href={`/estudar?nova=${runtimeEntity.id}`}
           className={cn(buttonVariants(), "mb-7")}
         >
-          Estudar esta bandeira agora
+          Estudar como a próxima bandeira nova
         </Link>
       )}
 

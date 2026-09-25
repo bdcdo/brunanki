@@ -32,10 +32,18 @@ export function ContinentPicker() {
   async function choose(continent: ContinentId) {
     if (continent === settings.activeContinent) return;
     setSaving(true);
-    const storage = await import("@/storage");
-    await storage.saveAppSettings({ ...settings, activeContinent: continent });
-    await refresh();
-    setSaving(false);
+    // `finally`, porque uma gravação que falhe deixaria o seletor desabilitado
+    // até a página ser recarregada.
+    try {
+      const storage = await import("@/storage");
+      await storage.saveAppSettings({
+        ...settings,
+        activeContinent: continent
+      });
+      await refresh();
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
