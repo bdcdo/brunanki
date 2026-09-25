@@ -193,7 +193,7 @@ describe("backup de ida e volta", () => {
       id: "chl::flagToNameRecall",
       entityId: "chl",
       skill: "flagToNameRecall",
-      phase: "acquiring",
+      phase: "unseen",
       distinctSuccessDays: [],
       updatedAt: "2026-09-01T12:00:00.000Z"
     });

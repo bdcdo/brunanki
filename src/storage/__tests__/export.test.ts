@@ -78,6 +78,14 @@ describe("parseExportJson", () => {
     expect(() => parseExportJson(JSON.stringify(data))).toThrow();
   });
 
+  it("rejeita habilidade já vista sem cartão, que ficaria fora da fila", () => {
+    const data = validExport();
+    data.skillStates[0].phase = "acquiring";
+    expect(() => parseExportJson(JSON.stringify(data))).toThrow(
+      /precisa de cartão/
+    );
+  });
+
   it("rejeita estado cujo ID não corresponde ao contrato entidade×habilidade", () => {
     const data = validExport();
     data.skillStates[0].id = "outro-id";
