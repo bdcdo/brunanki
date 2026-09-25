@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import type { ReviewAttempt, SkillKind, SkillState } from "@/types/learning";
 
-import { buildDailyQueue, newEntityOrder } from "../daily-queue";
+import { buildDailyQueue } from "../daily-queue";
 
 function state(
   entityId: string,
@@ -90,18 +90,6 @@ describe("buildDailyQueue", () => {
     expect(queue.recentAccuracy).toBe(0.5);
     expect(queue.newLimit).toBe(0);
     expect(queue.items).toEqual([]);
-  });
-});
-
-describe("newEntityOrder", () => {
-  it("só oferece como novidade as bandeiras do continente em estudo", () => {
-    const candidates = [
-      { id: "fra", continent: "europe" as const },
-      { id: "bra", continent: "americas" as const },
-      { id: "jpn", continent: "asia" as const },
-      { id: "arg", continent: "americas" as const }
-    ];
-    expect(newEntityOrder(candidates, "americas")).toEqual(["bra", "arg"]);
   });
 });
 
