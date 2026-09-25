@@ -7,7 +7,7 @@ import { useMemo } from "react";
 import { AppReady } from "@/components/AppReady";
 import { buttonVariants } from "@/components/ui/button";
 import { entities } from "@/data/runtime-catalog";
-import { buildDailyQueue } from "@/domain/daily-queue";
+import { buildDailyQueue, newEntityOrder } from "@/domain/daily-queue";
 import { entityStage, type EntityStage } from "@/domain/mastery";
 import { cn } from "@/lib/utils";
 import { CONTINENT_IDS, CONTINENT_LABEL_PT_BR } from "@/types/geography";
@@ -33,11 +33,7 @@ function nextActivity(snapshot: LearningSnapshot): {
   hasWork: boolean;
 } {
   const plan = buildDailyQueue({
-    entityOrder: entities
-      .filter(
-        ({ continent }) => continent === snapshot.settings.activeContinent
-      )
-      .map(({ id }) => id),
+    entityOrder: newEntityOrder(entities, snapshot.settings.activeContinent),
     states: snapshot.skills,
     recentAttempts: snapshot.attempts,
     baseNewLimit: 5

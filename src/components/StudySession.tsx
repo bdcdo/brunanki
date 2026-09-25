@@ -26,7 +26,11 @@ import { awardedXpFor } from "@/domain/xp";
 import { buildChoiceRound } from "@/domain/distractors";
 import { describePalette } from "@/domain/palette";
 import { mulberry32 } from "@/domain/shuffle";
-import { buildDailyQueue, type DailyQueueItem } from "@/domain/daily-queue";
+import {
+  buildDailyQueue,
+  newEntityOrder,
+  type DailyQueueItem
+} from "@/domain/daily-queue";
 import {
   createSkillState,
   scheduleAttempt,
@@ -118,11 +122,8 @@ function StudySessionReady({
   const { skills, attempts, settings } = snapshot;
   // Novidade só do continente em estudo; revisão vencida de qualquer um,
   // porque a fila tira as revisões dos estados guardados, e não desta ordem.
-  const newEntityOrder = useMemo(
-    () =>
-      entities
-        .filter((entity) => entity.continent === settings.activeContinent)
-        .map(({ id }) => id),
+  const newEntityOrderForSession = useMemo(
+    () => newEntityOrder(entities, settings.activeContinent),
     [settings.activeContinent]
   );
   const [queue, setQueue] = useState<SessionItem[]>([]);
@@ -159,7 +160,7 @@ function StudySessionReady({
   function beginSession() {
     if (initialized) return;
     const plan = buildDailyQueue({
-      entityOrder: newEntityOrder,
+      entityOrder: newEntityOrderForSession,
       states: skills,
       recentAttempts: attempts,
       baseNewLimit: 5
@@ -357,7 +358,7 @@ function StudySessionReady({
 
   if (!initialized) {
     const preview = buildDailyQueue({
-      entityOrder: newEntityOrder,
+      entityOrder: newEntityOrderForSession,
       states: skills,
       recentAttempts: attempts,
       baseNewLimit: 5

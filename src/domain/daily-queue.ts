@@ -1,8 +1,29 @@
+import type { ContinentId } from "@/types/geography";
 import type { ReviewAttempt, SkillKind, SkillState } from "@/types/learning";
 
 import { skillStateId } from "./scheduler";
 
 export type QueueReason = "due" | "correction" | "new";
+
+/**
+ * De onde vêm as bandeiras novas: só do continente em estudo.
+ *
+ * Mora aqui, e não em cada tela que monta a fila, porque a tela Hoje promete
+ * o que a sessão vai abrir, e as duas só concordam se lerem a mesma regra.
+ * Revisões não passam por aqui: a fila as tira dos estados guardados, de
+ * qualquer continente.
+ */
+export function newEntityOrder(
+  candidates: readonly {
+    readonly id: string;
+    readonly continent: ContinentId;
+  }[],
+  continent: ContinentId
+): string[] {
+  return candidates
+    .filter((candidate) => candidate.continent === continent)
+    .map(({ id }) => id);
+}
 
 export interface DailyQueueItem {
   entityId: string;
