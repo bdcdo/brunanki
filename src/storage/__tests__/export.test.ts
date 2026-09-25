@@ -105,6 +105,50 @@ describe("parseExportJson", () => {
     );
   });
 
+  it.each([
+    [
+      "chave certa com entidades invertidas",
+      "brasil|chile",
+      ["chile", "brasil"]
+    ],
+    ["chave que não é das entidades", "brasil|xyz", ["brasil", "chile"]]
+  ])("recusa par com %s", (_caso, id, entityIds) => {
+    const data = {
+      ...validExport(),
+      pairStates: [
+        {
+          id,
+          entityIds: entityIds as [string, string],
+          distinctSuccessDays: [],
+          updatedAt: "2026-07-25T12:00:00.000Z"
+        }
+      ]
+    };
+    expect(() => parseExportJson(JSON.stringify(data))).toThrow(
+      /forma canônica/
+    );
+  });
+
+  it("recusa XP que a regra não daria", () => {
+    const data = exportWithAttempt("flagToNameInput");
+    const inflated = {
+      ...data,
+      attempts: [{ ...data.attempts[0]!, outcome: "incorrect" }]
+    };
+    expect(() => parseExportJson(JSON.stringify(inflated))).toThrow(
+      /regra não pontua/
+    );
+  });
+
+  it("recusa preferências sem continente ativo", () => {
+    const data = validExport();
+    const settings: Record<string, unknown> = { ...data.settings };
+    delete settings.activeContinent;
+    expect(() =>
+      parseExportJson(JSON.stringify({ ...data, settings }))
+    ).toThrow();
+  });
+
   it.each([1, 2])(
     "recusa backup de antes do piloto (formato %i) dizendo por quê",
     (schemaVersion) => {

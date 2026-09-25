@@ -91,21 +91,40 @@ const serializedSkillStateSchema = z
     }
   });
 
-const reviewAttemptSchema = z.object({
-  id: z.string().min(1),
-  entityId: z.string().min(1),
-  skill: skillSchema,
-  exercise: exerciseSchema,
-  outcome: outcomeSchema,
-  isImmediateCorrection: z.boolean(),
-  mode: z.enum(["scheduled", "free"]),
-  responseMs: z.number().int().nonnegative(),
-  firstInputMs: z.number().int().nonnegative().optional(),
-  guessed: z.boolean().optional(),
-  awardedXp: z.union([z.literal(0), z.literal(1)]),
-  answer: z.string().optional(),
-  createdAt: isoDateTimeSchema
-});
+const reviewAttemptSchema = z
+  .object({
+    id: z.string().min(1),
+    entityId: z.string().min(1),
+    skill: skillSchema,
+    exercise: exerciseSchema,
+    outcome: outcomeSchema,
+    isImmediateCorrection: z.boolean(),
+    mode: z.enum(["scheduled", "free"]),
+    responseMs: z.number().int().nonnegative(),
+    firstInputMs: z.number().int().nonnegative().optional(),
+    guessed: z.boolean().optional(),
+    awardedXp: z.union([z.literal(0), z.literal(1)]),
+    answer: z.string().optional(),
+    createdAt: isoDateTimeSchema
+  })
+  .superRefine((attempt, context) => {
+    // O XP não é recalculado na importação, mas um ponto que a regra nunca
+    // daria é backup adulterado ou corrompido, e inflaria o total. O inverso,
+    // acerto com zero, é legítimo: a escolha logo depois da apresentação não
+    // pontua, e isso não fica gravado noutro campo.
+    if (
+      attempt.awardedXp === 1 &&
+      (attempt.outcome !== "correct" ||
+        attempt.isImmediateCorrection ||
+        attempt.guessed === true)
+    ) {
+      context.addIssue({
+        code: "custom",
+        path: ["awardedXp"],
+        message: "XP concedido a uma tentativa que a regra não pontua"
+      });
+    }
+  });
 
 const serializedPairStateSchema = z
   .object({
