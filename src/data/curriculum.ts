@@ -21,11 +21,13 @@ export interface CuratedPair {
  * O currículo editorial de um continente: a ordem sugerida de introdução e os
  * pares confundíveis. Escrito à mão, e não derivado do catálogo, porque a
  * confundibilidade calculada pela paleta não enxerga disposição nem emblema:
- * ela não distingue Nicarágua de El Salvador, que diferem no brasão e no tom.
+ * ela não distingue Nicarágua de El Salvador, que diferem nos detalhes do
+ * brasão e no tom do azul.
  *
- * A ordem vai por sub-região, da mais fácil à mais difícil, e dentro de cada
- * uma põe as bandeiras de desenho único antes das que têm par. É sugestão: a
- * pessoa pode puxar qualquer bandeira para a frente pelo álbum.
+ * A ordem vai por sub-região, da mais fácil à mais difícil. Dentro de cada
+ * uma, as bandeiras mais conhecidas vêm primeiro, e os membros de um par
+ * entram próximos, para que a diferença entre eles apareça cedo, e não meses
+ * depois. É sugestão: a pessoa pode puxar qualquer bandeira pelo álbum.
  */
 export interface ContinentCurriculum {
   readonly order: readonly string[];
@@ -46,9 +48,12 @@ export interface ContinentCurriculum {
  * O corte da heurística a partir do qual um par precisa de decisão editorial:
  * ou vira par curado, ou entra em `notConfusable` com justificativa.
  *
- * Medido nas Américas em 24/09/2026: abaixo de 0,84 ficam os pares que só
- * dividem cores soltas, como Chile e Venezuela; a partir dele, os que dividem
- * paleta e sub-região, que é onde a confusão real acontece.
+ * Medido nas Américas em 24/09/2026. O corte fica logo acima do patamar de
+ * 0,825, onde a heurística acumula pares da mesma sub-região que só dividem
+ * parte da paleta. Ele não é a fronteira da confusão real: pares que se
+ * confundem pelo desenho, como Honduras e Nicarágua, ficam bem abaixo dele, e
+ * é por isso que o currículo cura pares por conta própria, e não só os que a
+ * heurística aponta. O corte serve para que a heurística não passe calada.
  */
 export const CONFUSABILITY_REVIEW_THRESHOLD = 0.84;
 
@@ -129,7 +134,7 @@ export const CURRICULUM: Readonly<
           "Azul, branco e azul em faixas horizontais, com um emblema no centro.",
         traits: {
           hnd: "Honduras tem cinco estrelas azuis no centro",
-          nic: "a Nicarágua tem um brasão triangular dentro de um anel de texto"
+          nic: "a Nicarágua tem um brasão no centro"
         }
       },
       {
@@ -138,7 +143,7 @@ export const CURRICULUM: Readonly<
           "Azul, branco e azul em faixas horizontais, com um emblema no centro.",
         traits: {
           hnd: "Honduras tem cinco estrelas azuis no centro",
-          slv: "El Salvador tem um brasão redondo, com coroa de louros, no centro"
+          slv: "El Salvador tem um brasão, com coroa de louros, no centro"
         }
       },
       {
@@ -146,8 +151,8 @@ export const CURRICULUM: Readonly<
         reason:
           "Azul, branco e azul em faixas horizontais, com um brasão no centro.",
         traits: {
-          nic: "a Nicarágua tem o azul mais claro e o brasão é um triângulo dentro de um anel de texto",
-          slv: "El Salvador tem o azul mais escuro e o brasão é redondo, com coroa de louros"
+          nic: "a Nicarágua tem o azul mais claro e, no brasão, só o triângulo dentro do anel de texto, sem louros",
+          slv: "El Salvador tem o azul mais escuro e, no brasão, coroa de louros e bandeiras atrás do triângulo"
         }
       },
       {
@@ -179,8 +184,8 @@ export const CURRICULUM: Readonly<
         reason:
           "Uma faixa preta na diagonal, com bordas claras, de um canto ao outro.",
         traits: {
-          kna: "São Cristóvão e Nevis tem duas estrelas brancas na faixa e cantos verde e vermelho",
-          tto: "Trinidade e Tobago tem o fundo todo vermelho e nenhuma estrela"
+          kna: "São Cristóvão e Nevis tem duas estrelas brancas na faixa, que sobe da esquerda para a direita, e cantos verde e vermelho",
+          tto: "Trinidade e Tobago tem o fundo todo vermelho, nenhuma estrela e a faixa descendo da esquerda para a direita"
         }
       },
       {
@@ -226,7 +231,7 @@ export const CURRICULUM: Readonly<
       {
         entityIds: ["dom", "kna"],
         justification:
-          "Cores parecidas, desenho oposto: cruz com brasão contra faixa diagonal com estrelas."
+          "Dividem só o vermelho e o branco, e o desenho é oposto: cruz com brasão contra faixa diagonal com estrelas."
       },
       {
         entityIds: ["gtm", "mex"],
@@ -236,12 +241,12 @@ export const CURRICULUM: Readonly<
       {
         entityIds: ["blz", "mex"],
         justification:
-          "Belize tem fundo azul-escuro inteiro com listras vermelhas; o México tem três faixas verdes, brancas e vermelhas."
+          "Belize tem o campo azul-escuro, com uma listra vermelha em cima e outra embaixo; o México tem três faixas verticais, verde, branca e vermelha."
       },
       {
         entityIds: ["blz", "gtm"],
         justification:
-          "Belize tem fundo azul-escuro inteiro com o brasão num disco branco; a Guatemala tem faixas verticais azul-celeste e branca."
+          "Belize tem o campo azul-escuro, com listras vermelhas nas bordas e o brasão num disco branco; a Guatemala tem faixas verticais azul-celeste e branca."
       },
       {
         entityIds: ["mex", "slv"],
@@ -251,7 +256,7 @@ export const CURRICULUM: Readonly<
       {
         entityIds: ["blz", "slv"],
         justification:
-          "Belize tem fundo azul-escuro inteiro com listras vermelhas; El Salvador tem três faixas horizontais, sem vermelho."
+          "Belize tem o campo azul-escuro, com listras vermelhas nas bordas; El Salvador tem três faixas horizontais, azul, branca e azul."
       }
     ]
   }
