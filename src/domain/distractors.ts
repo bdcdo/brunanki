@@ -4,7 +4,7 @@ import { shuffle, weightedSample, type RandomSource } from "./shuffle";
 
 export interface DistractorCandidate {
   readonly id: string;
-  readonly region: string;
+  readonly continent: string;
   readonly palette: readonly ColorNamePtBr[];
 }
 
@@ -29,12 +29,12 @@ const NEIGHBOURHOOD_SIZE = 24;
  */
 const BASE_WEIGHT = 0.15;
 const PALETTE_WEIGHT = 0.7;
-const REGION_WEIGHT = 0.3;
+const CONTINENT_WEIGHT = 0.3;
 
 /**
  * O quanto duas bandeiras se confundem, em [0, 1].
  *
- * A cor domina porque é o que o olho compara primeiro; a região entra como
+ * A cor domina porque é o que o olho compara primeiro; o continente entra como
  * reforço, já que bandeiras vizinhas costumam compartilhar repertório visual.
  */
 export function confusability(
@@ -42,8 +42,8 @@ export function confusability(
   right: DistractorCandidate
 ): number {
   const byPalette = paletteSimilarity(left.palette, right.palette);
-  const byRegion = left.region === right.region ? 1 : 0;
-  return PALETTE_WEIGHT * byPalette + REGION_WEIGHT * byRegion;
+  const byContinent = left.continent === right.continent ? 1 : 0;
+  return PALETTE_WEIGHT * byPalette + CONTINENT_WEIGHT * byContinent;
 }
 
 /**

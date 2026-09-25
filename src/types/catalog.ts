@@ -30,7 +30,12 @@ export interface LearningEntity {
     isoAlpha3?: string;
     unM49?: string;
   };
-  region: Region;
+  /**
+   * Legado do restcountries, que o refresh não grava mais e que sai do
+   * artefato na próxima atualização. Nada o lê: a geografia do app vem do
+   * snapshot M49 na projeção de runtime (`src/data/m49.ts`).
+   */
+  region?: Region;
   memberships: Membership[];
   primaryFlagRevisionId: string;
   editorialNote?: string;
