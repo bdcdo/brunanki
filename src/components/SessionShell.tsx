@@ -1,34 +1,41 @@
-import { BrandLink } from "@/components/BrandMark";
+import { X } from "lucide-react";
+import Link from "next/link";
+
 import { SkipLink } from "@/components/SkipLink";
 
 /**
  * Casca das rotas de sessão: `/estudar` e `/diagnostico`.
  *
- * Sem barra lateral. Durante um exercício a sidebar rouba 254px de largura da
- * bandeira, que é exatamente o artefato que a pessoa precisa examinar — e a
- * navegação para outras cinco telas convida a sair no meio de uma sessão de
- * repetição espaçada, que é quando sair custa mais caro.
+ * Sem navegação. Durante um exercício a bandeira é o objeto de exame, e cinco
+ * destinos à vista convidam a sair no meio de uma sessão de repetição
+ * espaçada, que é quando sair custa mais caro.
  *
- * Deliberadamente sem barra de progresso própria: ela depende de quantos itens
- * a sessão tem e em qual a pessoa está, e só o componente de sessão sabe isso
- * — ele já a renderiza. Uma aqui seria a segunda na tela.
+ * Deliberadamente sem barra de progresso própria: só o componente de sessão
+ * sabe quantos itens há e em qual a pessoa está, e ele já a renderiza.
  *
- * A marca é a única saída, e é por isso que ela está aqui: sem sidebar e sem
- * navegação, uma tela de sessão sem nenhum caminho de volta seria um beco.
+ * "Pausar" é a única saída, e ela precisa existir: uma tela de sessão sem
+ * caminho de volta seria um beco. O nome diz o que acontece, porque cada
+ * resposta já foi gravada e nada se perde ao sair.
  */
 export function SessionShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-dvh">
       <SkipLink />
-      <header className="flex items-center px-4.5 pt-6 md:px-gutter md:pt-8">
-        <BrandLink />
+      <header className="mx-auto flex max-w-page items-center px-[18px] pt-4 md:px-gutter md:pt-6">
+        <Link
+          href="/"
+          className="inline-flex min-h-11 items-center gap-2 font-bold no-underline"
+        >
+          <X size={20} strokeWidth={2.4} aria-hidden="true" />
+          Pausar
+        </Link>
       </header>
       {/* min-w-0 no elemento que centraliza: sem ele, um filho que não encolhe
-          — o nome longo de uma alternativa, por exemplo — empurra a largura
+          (o nome longo de uma alternativa, por exemplo) empurra a largura
           para além da viewport e derruba o gate de overflow horizontal. */}
       <main
         id="main"
-        className="mx-auto min-w-0 max-w-narrow px-4.5 pt-7 pb-16 md:px-gutter md:pt-10 md:pb-20"
+        className="mx-auto min-w-0 max-w-narrow px-[18px] pt-4 pb-16 md:px-gutter md:pt-8 md:pb-20"
       >
         {children}
       </main>

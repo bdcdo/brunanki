@@ -39,25 +39,27 @@ test("home apresenta a proposta e a entrada do diagnóstico sem overflow", async
   await expectNoSeriousAccessibilityViolations(page);
 });
 
-test("navegação principal funciona em desktop e mobile", async ({
-  page,
-  isMobile
-}) => {
-  if (isMobile) {
-    await page.getByRole("button", { name: "Abrir menu" }).click();
-    await expect(
-      page.getByRole("navigation", { name: "Navegação principal" })
-    ).toBeVisible();
-  }
+test("navegação principal funciona em desktop e mobile", async ({ page }) => {
+  // A mesma <nav> serve às duas larguras: abas no cabeçalho do desktop e
+  // barra fixa no rodapé do celular. Não há menu a abrir em nenhuma delas.
+  const navigation = page.getByRole("navigation", {
+    name: "Navegação principal"
+  });
+  await expect(navigation).toBeVisible();
+  await expect(navigation.getByRole("link", { name: "Hoje" })).toHaveAttribute(
+    "aria-current",
+    "page"
+  );
 
-  // Escopo no menu: "Bandeiras" também casa com "Explorar bandeiras", do hero
-  // da home, e o seletor solto viola o modo estrito do Playwright.
-  await page
-    .getByRole("navigation", { name: "Navegação principal" })
-    .getByRole("link", { name: "Bandeiras" })
-    .click();
+  // Escopo na navegação: "Álbum" também casa com "Abrir o álbum", do hero da
+  // home, e o seletor solto viola o modo estrito do Playwright.
+  await navigation.getByRole("link", { name: "Álbum" }).click();
   await expect(page).toHaveURL(/\/catalogo$/);
-  await expect(page.getByRole("heading", { name: "Bandeiras" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Álbum" })).toBeVisible();
+  await expect(navigation.getByRole("link", { name: "Álbum" })).toHaveAttribute(
+    "aria-current",
+    "page"
+  );
   await expectNoHorizontalOverflow(page);
 });
 
@@ -234,32 +236,35 @@ test("a página de detalhe atribui a licença de cada bandeira", async ({
   await expectNoSeriousAccessibilityViolations(page);
 });
 
-test("a gaveta devolve o foco e não deixa links alcançáveis quando fechada", async ({
+test("a barra inferior do celular não esconde o fim do conteúdo", async ({
   page,
   isMobile
 }) => {
-  test.skip(!isMobile, "A gaveta só existe abaixo de 761px.");
+  test.skip(!isMobile, "A barra inferior só existe abaixo de 761px.");
 
-  // Fechada, os cinco links continuavam na ordem de tabulação, fora da tela:
-  // quem navega por teclado percorria um menu invisível antes do conteúdo.
-  const hidden = await page
-    .getByRole("navigation", { name: "Navegação principal" })
-    .isVisible();
-  expect(hidden).toBe(false);
+  // A barra é `fixed`, então ela cobre o que estiver por baixo dela. O que
+  // garante que o último botão da página continue alcançável é o respiro no
+  // fim do <main>, e ele precisa ser pelo menos a altura da barra.
+  const navigation = page.getByRole("navigation", {
+    name: "Navegação principal"
+  });
+  await expect(navigation).toBeVisible();
+  const navHeight = await navigation.evaluate(
+    (element) => element.getBoundingClientRect().height
+  );
+  const mainPadding = await page
+    .locator("main#main")
+    .evaluate((element) =>
+      Number.parseFloat(getComputedStyle(element).paddingBottom)
+    );
+  expect(mainPadding).toBeGreaterThanOrEqual(navHeight);
 
-  const toggle = page.getByRole("button", { name: "Abrir menu" });
-  await toggle.click();
-  await expect(
-    page.getByRole("navigation", { name: "Navegação principal" })
-  ).toBeVisible();
-
-  await page.keyboard.press("Escape");
-  await expect(
-    page.getByRole("navigation", { name: "Navegação principal" })
-  ).toBeHidden();
-  // O foco volta para quem abriu; sem isto ele ficaria num elemento que
-  // acabou de sair da tela.
-  await expect(page.getByRole("button", { name: "Abrir menu" })).toBeFocused();
+  // Os quatro destinos têm alvo de toque de pelo menos 44px.
+  for (const link of await navigation.getByRole("link").all()) {
+    const box = await link.boundingBox();
+    expect(box?.height ?? 0).toBeGreaterThanOrEqual(44);
+    expect(box?.width ?? 0).toBeGreaterThanOrEqual(44);
+  }
 
   await expectNoSeriousAccessibilityViolations(page);
 });
