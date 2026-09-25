@@ -50,7 +50,7 @@ function nextActivityHeadline(snapshot: LearningSnapshot): {
     };
   }
   if (next.reason === "correction") {
-    return { headline: "Uma correção pendente", hasWork: true };
+    return { headline: "Corrigir um erro recente", hasWork: true };
   }
   return {
     headline:

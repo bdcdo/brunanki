@@ -75,17 +75,23 @@ test("a sessão atravessa apresentação, alternativas e digitação", async ({
   await expect(page.getByText("Acerto de primeira")).toBeVisible();
   await expect(sessionCount(page, 2)).toBeVisible();
 
-  // A fila é recalculada depois de cada resposta: com a recordação dos
-  // Estados Unidos feita, a próxima novidade é o reconhecimento da mesma
-  // bandeira, antes de a ordem passar para a seguinte.
+  // A fila é recalculada depois de cada resposta. O reconhecimento dos
+  // Estados Unidos seria a mesma bandeira na tela seguinte, então ele espera,
+  // e a próxima é a novidade seguinte da ordem.
   await page.getByRole("button", { name: /Continuar/ }).click();
   await expect(
     page.getByRole("heading", {
-      name: `Qual é a bandeira de ${firstNew.displayNamePtBr}?`
+      name: `Esta é a bandeira de ${americasIntroduction[1]!.displayNamePtBr}.`
     })
   ).toBeVisible();
 
   await expectNoHorizontalOverflow(page);
+  await expectNoSeriousAccessibilityViolations(page);
+
+  // A sessão não tem fim marcado, e encerrar é o caminho para o resumo.
+  await page.getByRole("button", { name: /Encerrar/ }).click();
+  await expect(page.getByText("Sessão encerrada")).toBeVisible();
+  await expect(page.getByText("de 2 na primeira tentativa")).toBeVisible();
   await expectNoSeriousAccessibilityViolations(page);
 });
 

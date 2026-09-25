@@ -152,7 +152,9 @@ function StudySessionReady({
   const [selectedId, setSelectedId] = useState<string>();
   const [busy, setBusy] = useState(false);
   const [started, setStarted] = useState(false);
-  const [finished, setFinished] = useState(false);
+  // "exhausted" quando a fila esvaziou, "ended" quando a pessoa encerrou: o
+  // resumo é o mesmo, mas só o primeiro pode dizer que está tudo em dia.
+  const [finished, setFinished] = useState<"exhausted" | "ended">();
   // O histórico da sessão, uma bolinha por resposta. A sessão não tem tamanho
   // fixo, então não há "x de N" a mostrar durante ela; o histórico só aparece
   // no resumo do fim.
@@ -176,7 +178,7 @@ function StudySessionReady({
     setAnswer("");
     if (!next) {
       setItem(undefined);
-      setFinished(true);
+      setFinished("exhausted");
       return;
     }
     setItem(next);
@@ -358,7 +360,18 @@ function StudySessionReady({
         />
       );
     }
+    // A frase diz o que vem primeiro, lido da própria atividade escolhida, e
+    // não a ordem da fila escrita em prosa, que mentiria quando uma correção
+    // passa na frente ou quando as novidades do continente acabaram.
     const due = dueCount(skills);
+    const opening =
+      firstUp.reason === "due"
+        ? due === 1
+          ? "1 revisão vencida vem primeiro."
+          : `${due} revisões vencidas vêm primeiro.`
+        : firstUp.reason === "correction"
+          ? "Primeiro, a correção de um erro recente."
+          : `Primeiro, uma bandeira nova ${CONTINENT_OF_PT_BR[settings.activeContinent]}.`;
     return (
       <div className="mx-auto w-full max-w-narrow">
         <section className={sessionCard}>
@@ -366,14 +379,7 @@ function StudySessionReady({
             Sua sessão está pronta.
           </h1>
           <p className="text-ink-soft">
-            {due === 0
-              ? "Nenhuma revisão vencida agora. "
-              : due === 1
-                ? "1 revisão vencida vem primeiro. "
-                : `${due} revisões vencidas vêm primeiro. `}
-            Depois, bandeiras novas{" "}
-            {CONTINENT_OF_PT_BR[settings.activeContinent]}, uma de cada vez, sem
-            limite. Pare quando quiser: cada resposta já fica guardada.
+            {opening} Pare quando quiser: cada resposta já fica guardada.
           </p>
           <Button className="mt-[18px]" type="button" onClick={beginSession}>
             Começar sessão <ArrowRight size={18} aria-hidden="true" />
@@ -388,7 +394,9 @@ function StudySessionReady({
       history.filter((value) => value === state).length;
     return (
       <SessionSummary
-        eyebrow="Tudo em dia por enquanto"
+        eyebrow={
+          finished === "ended" ? "Sessão encerrada" : "Tudo em dia por enquanto"
+        }
         figure={countOf("correct")}
         figureLabel={`de ${history.length} na primeira tentativa`}
         pips={history}
@@ -425,9 +433,22 @@ function StudySessionReady({
                 : `${dueCount(skills)} revisões vencidas agora`}
             </p>
           </div>
-          <Link href="/" className={buttonVariants({ variant: "secondary" })}>
-            <Pause size={17} aria-hidden="true" /> Encerrar
-          </Link>
+          {/* Com respostas, encerrar mostra o resumo, que só existe aqui:
+              a sessão não tem tamanho, e sair direto para a Hoje o perderia.
+              Sem respostas não há o que resumir. */}
+          {history.length > 0 ? (
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => setFinished("ended")}
+            >
+              <Pause size={17} aria-hidden="true" /> Encerrar
+            </Button>
+          ) : (
+            <Link href="/" className={buttonVariants({ variant: "secondary" })}>
+              <Pause size={17} aria-hidden="true" /> Encerrar
+            </Link>
+          )}
         </div>
 
         {/* Sem aria-live aqui. Ele desceu para o painel de veredito: com a
