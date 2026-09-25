@@ -25,7 +25,7 @@ import { SUBREGION } from "@/types/geography";
 import { introductionOrder } from "@/data/curriculum";
 import { newAttemptId } from "@/domain/ids";
 import { awardedXpFor } from "@/domain/xp";
-import { buildChoiceRound, choicePool } from "@/domain/distractors";
+import { buildChoiceRound } from "@/domain/distractors";
 import { describePalette } from "@/domain/palette";
 import { mulberry32 } from "@/domain/shuffle";
 import { buildDailyQueue, type DailyQueueItem } from "@/domain/daily-queue";
@@ -223,7 +223,7 @@ function StudySessionReady({
     if (!entity) return [];
     return buildChoiceRound(
       entity,
-      choicePool(entity, entities),
+      entities,
       CHOICE_COUNT,
       mulberry32(sessionSeed + index * 2654435761)
     );

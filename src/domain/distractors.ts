@@ -40,8 +40,8 @@ const SUBREGION_WEIGHT = 0.3;
  * A cor domina porque é o que o olho compara primeiro; a sub-região entra como
  * reforço, já que bandeiras vizinhas costumam compartilhar repertório visual.
  * O reforço é da sub-região, e não do continente, porque as alternativas já
- * saem todas do mesmo continente (`choicePool`): lá o bônus seria igual para
- * todas e não distinguiria nada.
+ * saem todas do mesmo continente (ver `buildChoiceRound`): lá o bônus seria
+ * igual para todas e não distinguiria nada.
  */
 export function confusability(
   left: DistractorCandidate,
@@ -50,25 +50,6 @@ export function confusability(
   const byPalette = paletteSimilarity(left.palette, right.palette);
   const bySubregion = left.subregion === right.subregion ? 1 : 0;
   return PALETTE_WEIGHT * byPalette + SUBREGION_WEIGHT * bySubregion;
-}
-
-/**
- * De onde saem as alternativas: do continente da bandeira perguntada.
- *
- * Quem estuda as Américas e vê Kiribati e Fiji ao lado do Paraguai, que é o
- * que a paleta sozinha oferece, elimina as erradas pelo continente, sem olhar
- * para o desenho. Tirar as
- * alternativas do mesmo continente é o que obriga a comparar a bandeira. Vale
- * também para a revisão de um continente estudado antes, que continua vindo
- * com vizinhos do próprio continente.
- */
-export function choicePool<T extends DistractorCandidate>(
-  target: T,
-  candidates: readonly T[]
-): T[] {
-  return candidates.filter(
-    (candidate) => candidate.continent === target.continent
-  );
 }
 
 /**
@@ -90,7 +71,15 @@ export function buildChoiceRound<T extends DistractorCandidate>(
   if (optionCount < 2) {
     throw new RangeError("Uma questão de alternativas exige ao menos duas");
   }
-  const candidates = pool.filter((candidate) => candidate.id !== target.id);
+  // As alternativas saem só do continente da bandeira perguntada. Quem
+  // estuda as Américas e vê bandeiras de outro continente ao lado do Paraguai
+  // elimina as erradas pelo continente, sem olhar para o desenho. O filtro
+  // mora aqui, e não em quem chama, para que nenhuma rodada o esqueça; vale
+  // também para a revisão de um continente estudado antes.
+  const candidates = pool.filter(
+    (candidate) =>
+      candidate.id !== target.id && candidate.continent === target.continent
+  );
   if (candidates.length < optionCount - 1) {
     throw new Error(
       `Candidatos insuficientes para ${optionCount} alternativas de ${target.id}`
