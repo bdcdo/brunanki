@@ -4,6 +4,8 @@ import type { AttemptOutcome, ReviewAttempt } from "@/types/learning";
 
 import {
   attemptFlags,
+  canMarkAsGuess,
+  exerciseForStep,
   initialPosition,
   markedAsGuess,
   nextPosition,
@@ -11,21 +13,26 @@ import {
   type StudyPosition
 } from "../study-flow";
 
-/** Percorre a atividade até a fila retomar, respondendo sempre `outcome`. */
-function walk(
+/** Percorre a atividade até a fila retomar, respondendo na ordem dada e
+ *  "correct" depois delas; devolve as posições visitadas. */
+function positionsOf(
   start: StudyPosition,
   outcomes: readonly AttemptOutcome[]
-): string[] {
-  const steps: string[] = [];
+): StudyPosition[] {
+  const positions: StudyPosition[] = [];
   let position: StudyPosition | undefined = start;
   let index = 0;
   while (position) {
-    steps.push(position.step);
+    positions.push(position);
     const outcome =
       position.step === "teach" ? undefined : (outcomes[index++] ?? "correct");
     position = nextPosition(position, outcome);
   }
-  return steps;
+  return positions;
+}
+
+function walk(start: StudyPosition, outcomes: readonly AttemptOutcome[]) {
+  return positionsOf(start, outcomes).map(({ step }) => step);
 }
 
 describe("initialPosition", () => {
@@ -50,6 +57,36 @@ describe("initialPosition", () => {
         initialPosition({ skill: "nameToFlagRecognition", reason }).step
       ).toBe("reverseChoice");
     }
+  });
+});
+
+describe("initialPosition com a bandeira recém-vista", () => {
+  it("a bandeira puxada do álbum começa pela pergunta, já ensinada", () => {
+    expect(
+      initialPosition(
+        { skill: "flagToNameRecall", reason: "new" },
+        { justShown: true }
+      )
+    ).toEqual({ step: "firstContact", taught: true });
+  });
+
+  it("a marca não vale para revisão", () => {
+    expect(
+      initialPosition(
+        { skill: "flagToNameRecall", reason: "due" },
+        { justShown: true }
+      )
+    ).toEqual({ step: "forwardInput", taught: false });
+  });
+
+  it("acertar o nome recém-lido é correção, e errá-lo ainda abre o pacote", () => {
+    const start = initialPosition(
+      { skill: "flagToNameRecall", reason: "new" },
+      { justShown: true }
+    );
+    expect(attemptFlags(start, "new").isImmediateCorrection).toBe(true);
+    expect(walk(start, ["correct"])).toEqual(["firstContact"]);
+    expect(walk(start, ["incorrect"])).toHaveLength(5);
   });
 });
 
@@ -78,6 +115,19 @@ describe("nextPosition", () => {
       ]);
     }
   );
+
+  it("todo passo depois do ensino é gravado como correção", () => {
+    // Sem a marca, a escolha do nome recém-mostrado pontuaria, e a escolha
+    // da bandeira no fim do pacote ganharia dia de sucesso e Easy.
+    const positions = positionsOf(firstContact, ["skipped"]);
+    expect(positions.map((p) => attemptFlags(p, "new"))).toEqual([
+      { isImmediateCorrection: false },
+      { isImmediateCorrection: true },
+      { isImmediateCorrection: true },
+      { isImmediateCorrection: true },
+      { isImmediateCorrection: true }
+    ]);
+  });
 
   it("errar dentro do pacote não o encurta nem o repete", () => {
     expect(
@@ -152,6 +202,15 @@ describe("attemptFlags", () => {
   });
 });
 
+describe("exerciseForStep", () => {
+  it("dá a cada passo que grava o seu exercício", () => {
+    expect(exerciseForStep("firstContact")).toBe("flagToNameInput");
+    expect(exerciseForStep("forwardInput")).toBe("flagToNameInput");
+    expect(exerciseForStep("forwardChoice")).toBe("flagToNameChoice");
+    expect(exerciseForStep("reverseChoice")).toBe("nameToFlagChoice");
+  });
+});
+
 describe("markedAsGuess", () => {
   const attempt: ReviewAttempt = {
     id: "a",
@@ -173,6 +232,26 @@ describe("markedAsGuess", () => {
       guessed: true,
       awardedXp: 0
     });
+  });
+
+  it("só a escolha certa da bandeira admite chute", () => {
+    expect(canMarkAsGuess(attempt)).toBe(true);
+    expect(canMarkAsGuess({ ...attempt, outcome: "incorrect" })).toBe(false);
+    // A escolha do nome não move o FSRS nem pontua: a marca não mudaria nada.
+    expect(
+      canMarkAsGuess({
+        ...attempt,
+        skill: "flagToNameRecall",
+        exercise: "flagToNameChoice"
+      })
+    ).toBe(false);
+    expect(
+      canMarkAsGuess({
+        ...attempt,
+        skill: "flagToNameRecall",
+        exercise: "flagToNameInput"
+      })
+    ).toBe(false);
   });
 
   it("recusa erro e digitação", () => {

@@ -1,5 +1,6 @@
 import type {
   AttemptOutcome,
+  ExerciseKind,
   ReviewAttempt,
   SkillKind
 } from "@/types/learning";
@@ -33,22 +34,25 @@ export interface StudyPosition {
 /**
  * O primeiro passo de uma atividade que a fila escolheu.
  *
- * Só a bandeira nova começa pelo primeiro contato. Uma revisão vencida ou uma
- * correção vai direto à pergunta: o veredito do erro que a gerou já mostrou o
- * nome certo e o traço que o distingue, e ensinar de novo antes de perguntar
- * trocaria a recuperação por releitura.
+ * Só a bandeira nova começa pelo primeiro contato. A correção vai direto à
+ * pergunta porque o veredito do erro que a gerou já mostrou o nome certo e o
+ * traço que o distingue; a revisão vencida, porque perguntar é a revisão.
+ * Ensinar antes trocaria a recuperação por releitura.
+ *
+ * `justShown` é a bandeira que a pessoa acabou de ver com o nome fora da
+ * sessão, na página do álbum de onde a puxou. A pergunta continua sendo o
+ * primeiro contato, mas já ensinada: acertar o nome lido segundos antes não é
+ * evidência de que a pessoa o sabia.
  */
-export function initialPosition(item: {
-  readonly skill: SkillKind;
-  readonly reason: ActivityReason;
-}): StudyPosition {
+export function initialPosition(
+  item: { readonly skill: SkillKind; readonly reason: ActivityReason },
+  options: { readonly justShown?: boolean } = {}
+): StudyPosition {
   if (item.skill === "nameToFlagRecognition") {
     return { step: "reverseChoice", taught: false };
   }
-  return {
-    step: item.reason === "new" ? "firstContact" : "forwardInput",
-    taught: false
-  };
+  if (item.reason !== "new") return { step: "forwardInput", taught: false };
+  return { step: "firstContact", taught: options.justShown === true };
 }
 
 /**
@@ -91,6 +95,21 @@ export function skillForStep(step: StudyStep): SkillKind {
     : "flagToNameRecall";
 }
 
+/** O exercício que o passo grava. A apresentação não grava tentativa. */
+export function exerciseForStep(
+  step: Exclude<StudyStep, "teach">
+): ExerciseKind {
+  switch (step) {
+    case "firstContact":
+    case "forwardInput":
+      return "flagToNameInput";
+    case "forwardChoice":
+      return "flagToNameChoice";
+    case "reverseChoice":
+      return "nameToFlagChoice";
+  }
+}
+
 /**
  * As marcas da tentativa que dependem de onde ela aconteceu.
  *
@@ -109,15 +128,23 @@ export function attemptFlags(
 }
 
 /**
- * A tentativa reescrita depois de "Foi chute".
+ * Se a tentativa admite "Foi chute": acerto na escolha da bandeira pelo nome.
  *
- * A marca rebaixa a nota a `Hard` e tira o XP. Só vale para acerto em
- * escolha: num erro não há o que rebaixar, e na digitação não se chuta um
- * nome.
+ * Num erro não há o que rebaixar, e na digitação não se chuta um nome. A
+ * escolha do nome, que só existe depois da apresentação, fica de fora porque
+ * a marca não mudaria nada nela: ela não move o FSRS nem pontua, e um botão
+ * que não muda nada prometeria o que não acontece.
  */
+export function canMarkAsGuess(attempt: ReviewAttempt): boolean {
+  return (
+    attempt.outcome === "correct" && attempt.exercise === "nameToFlagChoice"
+  );
+}
+
+/** A tentativa reescrita depois de "Foi chute": nota `Hard` e sem XP. */
 export function markedAsGuess(attempt: ReviewAttempt): ReviewAttempt {
-  if (attempt.outcome !== "correct" || attempt.exercise === "flagToNameInput") {
-    throw new Error("Só um acerto em escolha pode ser marcado como chute");
+  if (!canMarkAsGuess(attempt)) {
+    throw new Error("Só um acerto na escolha da bandeira pode ser chute");
   }
   const guessed = { ...attempt, guessed: true };
   return { ...guessed, awardedXp: awardedXpFor(guessed) };
