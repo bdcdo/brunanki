@@ -66,7 +66,7 @@ export interface ReviewAttempt {
   responseMs: number;
   /**
    * Milissegundos até a primeira tecla, na digitação, ou até o clique, na
-   * escolha. Mede reconhecimento sem medir digitação: o tempo total pune nome
+   * escolha e no "Não sei". Mede reconhecimento sem medir digitação: o tempo total pune nome
    * longo e teclado de celular, e por isso é este campo, e não `responseMs`,
    * que a nota por velocidade lê.
    */

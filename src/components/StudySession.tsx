@@ -8,7 +8,7 @@ import {
   Pause
 } from "lucide-react";
 import Link from "next/link";
-import { FormEvent, useMemo, useRef, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { AppReady } from "@/components/AppReady";
 import { EmptyState } from "@/components/SystemScreens";
 import { FlagImage } from "@/components/FlagImage";
@@ -32,6 +32,8 @@ import { verdictExplanation } from "@/domain/feedback";
 import { newAttemptId } from "@/domain/ids";
 import {
   attemptFlags,
+  canMarkAsGuess,
+  exerciseForStep,
   initialPosition,
   markedAsGuess,
   nextPosition,
@@ -209,6 +211,17 @@ function StudySessionReady({
   // lê o tempo até ela, e não até o envio, que somaria o tempo de digitar um
   // nome longo num teclado de celular ao de reconhecer a bandeira.
   const firstInputAt = useRef<number | undefined>(undefined);
+  // Se a atividade em curso já tem bolinha no resumo. O pacote de ensino é
+  // uma atividade só, e cada passo dele reescreve a bolinha em vez de somar
+  // outra: senão uma bandeira aprendida apareceria como três respostas.
+  const activityHasPip = useRef(false);
+  // O foco acompanha a troca de passo. Sem isso ele ficava no corpo da página
+  // depois de "Não sei", de "Praticar" e do veredito, e entre dois primeiros
+  // contatos seguidos o campo, que continua montado, não recebia o foco de
+  // novo: quem usa teclado ou leitor de tela não sabia onde estava.
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const continueRef = useRef<HTMLButtonElement>(null);
   // Semente sorteada uma vez por sessão. Combinada com a posição na fila, dá
   // alternativas estáveis enquanto a questão está na tela — nada de
   // reembaralhar a cada re-render — e diferentes a cada nova sessão.
@@ -244,7 +257,15 @@ function StudySessionReady({
     }
     setItem(next);
     setPresented((count) => count + 1);
-    setPosition(initialPosition(next));
+    activityHasPip.current = false;
+    setPosition(
+      initialPosition(next, {
+        // A bandeira puxada do álbum acabou de ser vista com o nome.
+        justShown:
+          next.entityId === priorityEntityId &&
+          next.skill === "flagToNameRecall"
+      })
+    );
   }
 
   function advanceTo(next: StudyPosition) {
@@ -308,11 +329,11 @@ function StudySessionReady({
 
   async function persistAttempt(
     outcome: AttemptOutcome,
-    exercise: ReviewAttempt["exercise"],
     firstInputMs: number | undefined,
     typedAnswer?: string
   ) {
-    if (!item) return;
+    if (!item || position.step === "teach") return;
+    const exercise = exerciseForStep(position.step);
     setBusy(true);
     try {
       const storage = await import("@/storage");
@@ -342,15 +363,17 @@ function StudySessionReady({
         historyBefore: attempts,
         guessed: false
       });
-      // A escolha do nome não move o FSRS, porque não é recuperação, e
-      // contá-la poria no resumo duas respostas para uma bandeira só.
+      // A escolha do nome não move o FSRS, porque não é recuperação, e fica
+      // fora do resumo.
       if (exercise !== "flagToNameChoice") {
-        setHistory((pips) => [
-          ...pips,
-          attempt.isImmediateCorrection
-            ? amendedPipState(outcome)
-            : pipStateFor(outcome)
-        ]);
+        const pip = attempt.isImmediateCorrection
+          ? amendedPipState(outcome)
+          : pipStateFor(outcome);
+        const replace = activityHasPip.current;
+        activityHasPip.current = true;
+        setHistory((pips) =>
+          replace ? [...pips.slice(0, -1), pip] : [...pips, pip]
+        );
       }
       // A leitura nova é o que a próxima escolha de atividade consulta.
       await refresh();
@@ -380,7 +403,13 @@ function StudySessionReady({
         ),
         attempt
       );
-      setGraded({ ...graded, guessed });
+      // Funcional e conferindo a tentativa: se "Continuar" já trocou de passo
+      // enquanto a gravação corria, a marca não ressuscita o passo anterior.
+      setGraded((current) =>
+        current?.original.id === graded.original.id
+          ? { ...current, guessed }
+          : current
+      );
       await refresh();
     } finally {
       setBusy(false);
@@ -394,13 +423,8 @@ function StudySessionReady({
     const outcome: AttemptOutcome =
       chosenId === entity.id ? "correct" : "incorrect";
     const chosenName = entityById.get(chosenId)?.displayNamePtBr;
-    await persistAttempt(
-      outcome,
-      step === "reverseChoice" ? "nameToFlagChoice" : "flagToNameChoice",
-      // Na escolha, o clique é a própria resposta.
-      clickMs,
-      chosenName
-    );
+    // Na escolha, o clique é a própria resposta.
+    await persistAttempt(outcome, clickMs, chosenName);
     setFeedback({
       outcome,
       answer: chosenName,
@@ -421,7 +445,6 @@ function StudySessionReady({
           : "incorrect";
     await persistAttempt(
       outcome,
-      "flagToNameInput",
       firstInputAt.current === undefined
         ? undefined
         : elapsedSince(firstInputAt.current),
@@ -445,11 +468,24 @@ function StudySessionReady({
    */
   async function answerDontKnow() {
     const clickMs = elapsedSince(clockNow());
-    await persistAttempt("skipped", "flagToNameInput", clickMs);
+    await persistAttempt("skipped", clickMs);
     const next = nextPosition(position, "skipped");
     if (next) advanceTo(next);
     else present(upNext(item));
   }
+
+  // Cada passo novo leva o foco ao campo, quando há, ou ao enunciado; o
+  // veredito leva o foco ao botão que segue, para que Enter continue.
+  const typing = step === "firstContact" || step === "forwardInput";
+  useEffect(() => {
+    if (!started || finished) return;
+    if (typing) inputRef.current?.focus();
+    else headingRef.current?.focus();
+  }, [started, finished, presented, step, typing]);
+  const answered = feedback !== undefined;
+  useEffect(() => {
+    if (answered) continueRef.current?.focus();
+  }, [answered]);
 
   if (!started) {
     const firstUp = upNext();
@@ -576,7 +612,11 @@ function StudySessionReady({
               <Eyebrow>
                 Bandeira nova, {SUBREGION[entity.subregion].labelPtBr}
               </Eyebrow>
-              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-title">
+              <h1
+                ref={headingRef}
+                tabIndex={-1}
+                className="mt-1.5 mb-[22px] font-title text-prompt tracking-title focus:outline-none"
+              >
                 Esta é a bandeira de {entity.displayNamePtBr}.
               </h1>
               <FlagImage
@@ -608,7 +648,11 @@ function StudySessionReady({
           ) : step === "forwardChoice" ? (
             <>
               <Eyebrow>Reconhecimento com apoio</Eyebrow>
-              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-title">
+              <h1
+                ref={headingRef}
+                tabIndex={-1}
+                className="mt-1.5 mb-[22px] font-title text-prompt tracking-title focus:outline-none"
+              >
                 De onde é esta bandeira?
               </h1>
               <FlagImage
@@ -637,7 +681,11 @@ function StudySessionReady({
           ) : step === "reverseChoice" ? (
             <>
               <Eyebrow>Associação inversa</Eyebrow>
-              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-title">
+              <h1
+                ref={headingRef}
+                tabIndex={-1}
+                className="mt-1.5 mb-[22px] font-title text-prompt tracking-title focus:outline-none"
+              >
                 Qual é a bandeira de {entity.displayNamePtBr}?
               </h1>
               <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
@@ -674,7 +722,11 @@ function StudySessionReady({
                   ? "Bandeira nova"
                   : "Recordação sem pista"}
               </Eyebrow>
-              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-title">
+              <h1
+                ref={headingRef}
+                tabIndex={-1}
+                className="mt-1.5 mb-[22px] font-title text-prompt tracking-title focus:outline-none"
+              >
                 {step === "firstContact"
                   ? "De onde é esta bandeira?"
                   : "Digite o nome desta entidade."}
@@ -697,6 +749,7 @@ function StudySessionReady({
                 </label>
                 <input
                   id="study-answer"
+                  ref={inputRef}
                   className="h-[58px] w-full rounded-[13px] border-2 border-input bg-white px-4 py-[13px] text-lg text-ink"
                   value={answer}
                   onChange={(event) => {
@@ -750,9 +803,11 @@ function StudySessionReady({
                 tone={feedbackTone(feedback.outcome)}
                 eyebrow={
                   feedback.outcome === "correct"
-                    ? graded?.original.isImmediateCorrection
-                      ? "Acertou"
-                      : "Acerto de primeira"
+                    ? graded?.guessed
+                      ? "Acerto marcado como chute"
+                      : graded?.original.isImmediateCorrection
+                        ? "Acertou"
+                        : "Acerto de primeira"
                     : feedback.outcome === "partial"
                       ? "Acerto parcial"
                       : "Vamos corrigir"
@@ -773,21 +828,24 @@ function StudySessionReady({
               <div className="mt-[18px] flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
                 {/* Só depois de acerto em escolha: é o único caso em que o
                     acerto pode ter vindo da sorte, uma em quatro. */}
-                {graded &&
-                  feedback.outcome === "correct" &&
-                  graded.original.exercise !== "flagToNameInput" && (
-                    <Button
-                      type="button"
-                      variant="secondary"
-                      aria-pressed={graded.guessed}
-                      disabled={busy}
-                      onClick={() => void toggleGuess()}
-                    >
-                      {graded.guessed && <Check size={18} aria-hidden="true" />}
-                      Foi chute
-                    </Button>
-                  )}
-                <Button type="button" onClick={continueAfterFeedback}>
+                {graded && canMarkAsGuess(graded.original) && (
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    aria-pressed={graded.guessed}
+                    disabled={busy}
+                    onClick={() => void toggleGuess()}
+                  >
+                    {graded.guessed && <Check size={18} aria-hidden="true" />}
+                    Foi chute
+                  </Button>
+                )}
+                <Button
+                  ref={continueRef}
+                  type="button"
+                  disabled={busy}
+                  onClick={continueAfterFeedback}
+                >
                   {continueLabel(feedback.next)}
                   <ArrowRight size={18} aria-hidden="true" />
                 </Button>
