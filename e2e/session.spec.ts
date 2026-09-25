@@ -122,6 +122,12 @@ test("o exercício inverso registra o erro e agenda a repetição imediata", asy
     .click();
 
   await expect(page.getByText("Vamos corrigir")).toBeVisible();
+  // O veredito explica o erro pelo contrato de feedback: com par curado, o
+  // traço das duas; sem ele, onde fica cada uma. Nenhuma das formas fala de
+  // fila ou de quando a bandeira volta.
+  const verdict = page.getByRole("status");
+  await expect(verdict).toContainText(/tem |sub-região|Brasil: América do Sul/);
+  await expect(verdict).not.toContainText(/reaparec|revisão será|agend/i);
   // `exact`, porque o enunciado "Qual é a bandeira de Brasil?" continua na
   // tela durante o veredito — a grade não é mais desmontada — e o nome solto
   // casaria com os dois. A permanência é a mudança, não um efeito colateral.

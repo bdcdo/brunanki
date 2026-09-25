@@ -22,7 +22,8 @@ import {
 import { entities, entityById } from "@/data/runtime-catalog";
 import { getNameResolver } from "@/data/name-index";
 import { SUBREGION } from "@/types/geography";
-import { introductionOrder } from "@/data/curriculum";
+import { CURRICULUM, introductionOrder } from "@/data/curriculum";
+import { verdictExplanation } from "@/domain/feedback";
 import { newAttemptId } from "@/domain/ids";
 import { awardedXpFor } from "@/domain/xp";
 import { buildChoiceRound } from "@/domain/distractors";
@@ -50,6 +51,8 @@ interface SessionItem extends DailyQueueItem {
 interface StudyFeedback {
   outcome: AttemptOutcome;
   answer?: string;
+  /** A bandeira que a pessoa indicou, quando ela é identificável. */
+  chosenId?: string;
   nextStep?: StudyStep;
 }
 
@@ -337,6 +340,7 @@ function StudySessionReady({
     setFeedback({
       outcome,
       answer: entityById.get(selectedId)?.displayNamePtBr,
+      chosenId: selectedId,
       nextStep: "forwardInput"
     });
   }
@@ -353,7 +357,8 @@ function StudySessionReady({
     );
     setFeedback({
       outcome,
-      answer: entityById.get(selectedId)?.displayNamePtBr
+      answer: entityById.get(selectedId)?.displayNamePtBr,
+      chosenId: selectedId
     });
   }
 
@@ -368,7 +373,15 @@ function StudySessionReady({
           ? "partial"
           : "incorrect";
     await persistAttempt(outcome, "flagToNameInput", answer.trim());
-    setFeedback({ outcome, answer: answer.trim() });
+    setFeedback({
+      outcome,
+      answer: answer.trim(),
+      // Um nome digitado que é de outro país identifica a bandeira confundida,
+      // e o feedback pode dizer a diferença entre as duas.
+      ...(result.kind === "incorrect" && result.matchedEntityId
+        ? { chosenId: result.matchedEntityId }
+        : {})
+    });
   }
 
   if (!initialized) {
@@ -629,13 +642,14 @@ function StudySessionReady({
                 submitted={
                   feedback.outcome === "correct" ? undefined : feedback.answer
                 }
-                explanation={
-                  feedback.outcome === "correct"
-                    ? "A próxima revisão será espaçada conforme a estabilidade desta lembrança."
-                    : feedback.outcome === "partial"
-                      ? "Você sabia a entidade, mas a grafia será reforçada mais cedo."
-                      : "O item reaparecerá depois de outras bandeiras; a correção imediata não contará como retenção."
-                }
+                explanation={verdictExplanation(
+                  feedback.outcome,
+                  entity,
+                  feedback.chosenId
+                    ? entityById.get(feedback.chosenId)
+                    : undefined,
+                  CURRICULUM[entity.continent]?.pairs ?? []
+                )}
               />
               <div className="mt-[18px] flex justify-end gap-2.5 max-md:flex-col max-md:items-stretch">
                 <Button type="button" onClick={continueAfterFeedback}>
