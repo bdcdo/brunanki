@@ -58,7 +58,7 @@ export function mistakeExplanation(
     return `${capitalize(pair.traits[correct.id]!)}; ${pair.traits[chosen.id]}.`;
   }
   if (chosen.subregion === correct.subregion) {
-    return `As duas são da mesma sub-região: ${whereIs(correct)}.`;
+    return `${correct.displayNamePtBr} e ${chosen.displayNamePtBr} são da mesma sub-região: ${whereIs(correct)}.`;
   }
   return `${correct.displayNamePtBr}: ${whereIs(correct)}. ${chosen.displayNamePtBr}: ${whereIs(chosen)}.`;
 }

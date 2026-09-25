@@ -44,10 +44,10 @@ describe("mistakeExplanation", () => {
     );
   });
 
-  it("sem curadoria e na mesma sub-região, não inventa distinção", () => {
+  it("sem curadoria e na mesma sub-região, nomeia as duas sem inventar distinção", () => {
     const text = mistakeExplanation(entity("bra"), entity("sur"), []);
     expect(text).toBe(
-      "As duas são da mesma sub-região: América do Sul, Américas."
+      "Suriname e Brasil são da mesma sub-região: América do Sul, Américas."
     );
   });
 
