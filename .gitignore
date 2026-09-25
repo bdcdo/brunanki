@@ -7,6 +7,8 @@ node_modules/
 .open-next/
 .sites-build/
 .wrangler/
+# Vínculo local com o projeto da Vercel, criado pela CLI a cada máquina.
+.vercel/
 coverage/
 playwright-report/
 test-results/

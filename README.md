@@ -49,4 +49,17 @@ O refresh nunca publica mudanças por conta própria: ele produz um diff para re
 
 ## Hospedagem
 
-O deploy no Fly.io foi desativado.
+O app está publicado em <https://brunanki.vercel.app>, no projeto `brunanki` da Vercel. O progresso de cada pessoa fica no navegador dela; não há conta nem servidor de progresso, e o backup em Ajustes é o caminho entre aparelhos.
+
+A publicação é manual e sai sempre da `main`. Não há deploy automático nem integração com o repositório: a CLI publica uma exportação limpa, sem `.git`, para que a Vercel não se conecte ao GitHub. Os comandos rodam de dentro de um clone do repositório, com a CLI `vercel` instalada e logada numa conta com acesso ao projeto; se a conta tiver mais de um time, `vercel link` pede também `--scope`.
+
+```sh
+git fetch origin
+rm -rf /tmp/brunanki-deploy && mkdir /tmp/brunanki-deploy
+git archive origin/main | tar -x -C /tmp/brunanki-deploy
+cd /tmp/brunanki-deploy
+vercel link --yes --project brunanki
+vercel deploy --prod
+```
+
+Depois de publicar, confira que os cabeçalhos de segurança de `next.config.ts` chegam na resposta, e que as bandeiras chegam com o cache de um dia: `curl -sI https://brunanki.vercel.app` e `curl -sI https://brunanki.vercel.app/flags/bra.svg`.
