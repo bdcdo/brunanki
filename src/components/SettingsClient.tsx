@@ -73,8 +73,8 @@ export function SettingsClient() {
               Exportar progresso
             </h2>
             <p className="m-0 max-w-[640px] text-ink-soft">
-              Baixe revisões, preferências e histórico em um
-              arquivo JSON versionado.
+              Baixe revisões, preferências e histórico em um arquivo JSON
+              versionado.
             </p>
           </div>
           <Button type="button" onClick={handleExport}>
