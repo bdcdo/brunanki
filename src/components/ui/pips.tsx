@@ -27,9 +27,8 @@ export function pipStateFor(outcome: AttemptOutcome): PipState {
       return "partial";
     case "incorrect":
       return "missed";
-    // Nenhum exercício atual produz "pulado"; o tipo o inclui para o "Não
-    // sei" do primeiro contato. Um item pulado é um item que não se sabe, que
-    // é o mesmo desfecho prático de um errado.
+    // "Pulado" é o "Não sei" do primeiro contato. Um item pulado é um item
+    // que não se sabe, que é o mesmo desfecho prático de um errado.
     case "skipped":
       return "missed";
   }

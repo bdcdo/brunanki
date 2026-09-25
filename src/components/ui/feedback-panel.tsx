@@ -8,8 +8,8 @@ import type { AttemptOutcome } from "@/types/learning";
 export type FeedbackTone = "correct" | "partial" | "incorrect";
 
 /**
- * Acerto, parcial, e todo o resto como incorreto: "pulado", desfecho que o
- * tipo reserva para o "Não sei" do primeiro contato, cai no mesmo tom de um
+ * Acerto, parcial, e todo o resto como incorreto: "pulado", o desfecho do
+ * "Não sei" do primeiro contato, cai no mesmo tom de um
  * erro, porque na prática é uma bandeira que a pessoa não reconhece.
  */
 export function feedbackTone(outcome: AttemptOutcome): FeedbackTone {

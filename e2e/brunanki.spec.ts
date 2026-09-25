@@ -123,6 +123,8 @@ test("puxar uma bandeira do álbum faz dela a próxima novidade", async ({
     .getByRole("link", { name: "Estudar como a próxima bandeira nova" })
     .click();
   await page.getByRole("button", { name: /Começar sessão/ }).click();
+  // A pergunta esconde o nome; "Não sei" leva ao ensino, que o mostra.
+  await page.getByRole("button", { name: /Não sei/ }).click();
   await expect(
     page.getByRole("heading", { name: "Esta é a bandeira de Dominica." })
   ).toBeVisible();
@@ -135,6 +137,10 @@ test("perfil zerado entra direto em /estudar pela primeira bandeira das América
   // a primeira novidade é do continente ativo, e não do catálogo inteiro.
   await page.goto("/estudar");
   await page.getByRole("button", { name: /Começar sessão/ }).click();
+  await expect(
+    page.getByRole("heading", { name: "De onde é esta bandeira?" })
+  ).toBeVisible();
+  await page.getByRole("button", { name: /Não sei/ }).click();
   await expect(
     page.getByRole("heading", {
       name: `Esta é a bandeira de ${americasIntroduction[0]!.displayNamePtBr}.`

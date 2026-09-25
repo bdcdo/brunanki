@@ -31,7 +31,19 @@ function sessionCount(page: Page, answered: number) {
   );
 }
 
-test("a sessão atravessa apresentação, alternativas e digitação", async ({
+/** A alternativa certa na escolha da bandeira, pelo arquivo e não pela
+ *  posição: a ordem é embaralhada por uma semente sorteada a cada sessão. */
+function flagTile(page: Page, flagPath: string, correct = true) {
+  const tiles = page.getByRole("button", { name: /^Opção \d+: bandeira com / });
+  const img = page.locator(`img[src="${flagPath}"]`);
+  return (
+    correct ? tiles.filter({ has: img }) : tiles.filter({ hasNot: img })
+  ).first();
+}
+
+const secondNew = americasIntroduction[1]!;
+
+test("quem já conhece a bandeira acerta de primeira e pula o ensino", async ({
   page
 }) => {
   await seedProgress(page);
@@ -41,69 +53,160 @@ test("a sessão atravessa apresentação, alternativas e digitação", async ({
   await expect(sessionCount(page, 0)).toBeVisible();
   await expect(page.getByText("0 XP hoje, 0 no total")).toBeVisible();
 
-  await expect(
-    page.getByRole("heading", {
-      name: `Esta é a bandeira de ${firstNew.displayNamePtBr}.`
-    })
-  ).toBeVisible();
-  await expectNoHorizontalOverflow(page);
-  await expectNoSeriousAccessibilityViolations(page);
-
-  await page.getByRole("button", { name: /Praticar/ }).click();
+  // A bandeira nova começa pela pergunta, e não pela apresentação.
   await expect(
     page.getByRole("heading", { name: "De onde é esta bandeira?" })
   ).toBeVisible();
+  await expect(page.getByRole("button", { name: /Não sei/ })).toBeVisible();
   await expectNoHorizontalOverflow(page);
   await expectNoSeriousAccessibilityViolations(page);
 
-  await page
-    .getByRole("button", { name: firstNew.displayNamePtBr, exact: true })
-    .click();
+  // Pelo teclado: o campo já tem o foco, Enter responde e Enter continua.
+  const field = page.getByRole("textbox", { name: "Nome da entidade" });
+  await expect(field).toBeFocused();
+  await field.fill(firstNew.displayNamePtBr);
+  await field.press("Enter");
+
   await expect(page.getByText("Acerto de primeira")).toBeVisible();
-  // O nome acabou de ser mostrado, então a escolha não pontua.
-  await expect(page.getByText("0 XP hoje, 0 no total")).toBeVisible();
+  await expect(page.getByText("1 XP hoje, 1 no total")).toBeVisible();
+  // Digitar não é chute.
+  await expect(page.getByRole("button", { name: "Foi chute" })).toHaveCount(0);
 
-  await page
-    .getByRole("button", { name: /Agora, lembre sem alternativas/ })
-    .click();
+  // Sem ensino: a próxima tela já é a pergunta da novidade seguinte, e não a
+  // apresentação dos Estados Unidos nem o reconhecimento da mesma bandeira.
+  await expect(page.getByRole("button", { name: /Continuar/ })).toBeFocused();
+  await page.keyboard.press("Enter");
   await expect(
-    page.getByRole("heading", { name: "Digite o nome desta entidade." })
+    page.getByRole("heading", { name: "De onde é esta bandeira?" })
   ).toBeVisible();
-
+  // O campo continua montado entre dois primeiros contatos, e o foco volta
+  // para ele.
+  await expect(field).toBeFocused();
+  await expect(
+    page.getByRole("heading", { name: /^Esta é a bandeira/ })
+  ).toHaveCount(0);
   await page
     .getByRole("textbox", { name: "Nome da entidade" })
-    .fill(firstNew.displayNamePtBr);
+    .fill(secondNew.displayNamePtBr);
   await page.getByRole("button", { name: /Responder/ }).click();
-
-  await expect(page.getByText("Acerto de primeira")).toBeVisible();
-  // A escolha assistida não conta: só a digitação é resposta de memória.
-  await expect(sessionCount(page, 1)).toBeVisible();
-  await expect(page.getByText("1 XP hoje, 1 no total")).toBeVisible();
-
-  // A fila é recalculada depois de cada resposta. O reconhecimento dos
-  // Estados Unidos seria a mesma bandeira na tela seguinte, então ele espera,
-  // e a próxima é a novidade seguinte da ordem.
-  await page.getByRole("button", { name: /Continuar/ }).click();
-  await expect(
-    page.getByRole("heading", {
-      name: `Esta é a bandeira de ${americasIntroduction[1]!.displayNamePtBr}.`
-    })
-  ).toBeVisible();
-
-  await expectNoHorizontalOverflow(page);
-  await expectNoSeriousAccessibilityViolations(page);
+  await expect(page.getByText("2 XP hoje, 2 no total")).toBeVisible();
 
   // A sessão não tem fim marcado, e encerrar é o caminho para o resumo.
   await page.getByRole("button", { name: /Encerrar/ }).click();
   await expect(page.getByText("Sessão encerrada")).toBeVisible();
-  await expect(page.getByText("de 1 na primeira tentativa")).toBeVisible();
+  await expect(page.getByText("de 2 na primeira tentativa")).toBeVisible();
   await expectNoSeriousAccessibilityViolations(page);
 
   // A tela Hoje soma as mesmas tentativas que a sessão acabou de gravar.
   await page.getByRole("link", { name: /Voltar para Hoje/ }).click();
   const xp = page.getByRole("region", { name: "Experiência" });
-  await expect(xp.getByRole("definition")).toHaveText(["1", "1"]);
+  await expect(xp.getByRole("definition")).toHaveText(["2", "2"]);
   await expect(xp.getByRole("term")).toHaveText(["XP hoje", "XP no total"]);
+});
+
+test("Não sei apresenta a bandeira e percorre o pacote até a escolha da bandeira", async ({
+  page
+}) => {
+  await page.goto("/estudar");
+  await page.getByRole("button", { name: /Começar sessão/ }).click();
+  await page.getByRole("button", { name: /Não sei/ }).click();
+
+  // Direto ao ensino, sem veredito de um erro que não houve, e com o foco no
+  // enunciado, que é o que o leitor de tela lê em seguida.
+  const teachHeading = page.getByRole("heading", {
+    name: `Esta é a bandeira de ${firstNew.displayNamePtBr}.`
+  });
+  await expect(teachHeading).toBeVisible();
+  await expect(teachHeading).toBeFocused();
+  await expectNoHorizontalOverflow(page);
+  await expectNoSeriousAccessibilityViolations(page);
+
+  await page.getByRole("button", { name: /Praticar/ }).click();
+  await page
+    .getByRole("button", { name: firstNew.displayNamePtBr, exact: true })
+    .click();
+  // O nome acabou de ser mostrado: o acerto não é "de primeira" e não pontua.
+  await expect(page.getByText("Acertou")).toBeVisible();
+  // A escolha do nome não move o FSRS nem pontua: marcar chute nela não
+  // mudaria nada, e o botão não aparece.
+  await expect(page.getByRole("button", { name: "Foi chute" })).toHaveCount(0);
+  await expectNoSeriousAccessibilityViolations(page);
+
+  await page
+    .getByRole("button", { name: /Agora, lembre sem alternativas/ })
+    .click();
+  await page
+    .getByRole("textbox", { name: "Nome da entidade" })
+    .fill(firstNew.displayNamePtBr);
+  await page.getByRole("button", { name: /Responder/ }).click();
+  await expect(page.getByText("Acertou")).toBeVisible();
+
+  await page
+    .getByRole("button", { name: /Agora, ache a bandeira pelo nome/ })
+    .click();
+  await expect(
+    page.getByRole("heading", {
+      name: `Qual é a bandeira de ${firstNew.displayNamePtBr}?`
+    })
+  ).toBeVisible();
+  await flagTile(page, firstNew.flagPath).click();
+  // O pacote é uma atividade só, e o resumo conta uma bandeira.
+  await expect(sessionCount(page, 1)).toBeVisible();
+  await expect(page.getByText("0 XP hoje, 0 no total")).toBeVisible();
+
+  // Só depois do quarto passo a fila retoma, com a novidade seguinte.
+  await page.getByRole("button", { name: /Continuar/ }).click();
+  await expect(
+    page.getByRole("heading", { name: "De onde é esta bandeira?" })
+  ).toBeVisible();
+  await expect(page.getByRole("button", { name: /Não sei/ })).toBeVisible();
+});
+
+test("o nome lido no álbum não conta como acerto de primeira", async ({
+  page
+}) => {
+  await page.goto("/catalogo/dma");
+  await page
+    .getByRole("link", { name: "Estudar como a próxima bandeira nova" })
+    .click();
+  await page.getByRole("button", { name: /Começar sessão/ }).click();
+  const field = page.getByRole("textbox", { name: "Nome da entidade" });
+  await field.fill("Dominica");
+  await field.press("Enter");
+  await expect(page.getByText("Acertou")).toBeVisible();
+  await expect(page.getByText("0 XP hoje, 0 no total")).toBeVisible();
+});
+
+test("Foi chute tira o XP do acerto em escolha, e desmarcar o devolve", async ({
+  page
+}) => {
+  await seedProgress(page, {
+    dueStates: [
+      {
+        entityId: brazil.id,
+        skill: "nameToFlagRecognition",
+        dueAt: new Date(Date.now() - 24 * 60 * 60 * 1000)
+      }
+    ]
+  });
+  await page.goto("/estudar");
+  await page.getByRole("button", { name: /Começar sessão/ }).click();
+  await flagTile(page, brazil.flagPath).click();
+  await expect(page.getByText("Acerto de primeira")).toBeVisible();
+  await expect(page.getByText("1 XP hoje, 1 no total")).toBeVisible();
+
+  const guess = page.getByRole("button", { name: "Foi chute" });
+  await guess.focus();
+  await page.keyboard.press("Enter");
+  await expect(guess).toHaveAttribute("aria-pressed", "true");
+  // O foco fica no botão enquanto e depois que a marca é gravada.
+  await expect(guess).toBeFocused();
+  await expect(page.getByText("0 XP hoje, 0 no total")).toBeVisible();
+  await expectNoSeriousAccessibilityViolations(page);
+
+  await guess.click();
+  await expect(guess).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByText("1 XP hoje, 1 no total")).toBeVisible();
 });
 
 test("o exercício inverso registra o erro e traz a correção antes da novidade", async ({
@@ -132,13 +235,7 @@ test("o exercício inverso registra o erro e traz a correção antes da novidade
   await expectNoHorizontalOverflow(page);
   await expectNoSeriousAccessibilityViolations(page);
 
-  // A alternativa certa é identificada pelo arquivo da bandeira, e não pela
-  // posição: a ordem é embaralhada por uma semente sorteada a cada sessão.
-  await page
-    .getByRole("button", { name: /^Opção \d+: bandeira com / })
-    .filter({ hasNot: page.locator(`img[src="${brazil.flagPath}"]`) })
-    .first()
-    .click();
+  await flagTile(page, brazil.flagPath, false).click();
 
   await expect(page.getByText("Vamos corrigir")).toBeVisible();
   // O veredito explica o erro pelo contrato de feedback: com par curado, o
@@ -208,13 +305,6 @@ test("digitar o nome de outro país explica a diferença entre os dois", async (
 }) => {
   await page.goto("/estudar");
   await page.getByRole("button", { name: /Começar sessão/ }).click();
-  await page.getByRole("button", { name: /Praticar/ }).click();
-  await page
-    .getByRole("button", { name: firstNew.displayNamePtBr, exact: true })
-    .click();
-  await page
-    .getByRole("button", { name: /Agora, lembre sem alternativas/ })
-    .click();
 
   // Canadá é um país de verdade, então o resolvedor de nomes sabe qual
   // bandeira a pessoa tinha em mente, e o veredito compara as duas.
@@ -228,5 +318,36 @@ test("digitar o nome de outro país explica a diferença entre os dois", async (
       `${firstNew.displayNamePtBr} e Canadá são da mesma sub-região: América Setentrional, Américas.`
     )
   ).toBeVisible();
+  // O erro no primeiro contato leva ao ensino.
+  await expect(
+    page.getByRole("button", { name: /Ver a bandeira com o nome/ })
+  ).toBeVisible();
   await expectNoSeriousAccessibilityViolations(page);
+});
+
+test.describe("celular estreito", () => {
+  // O Pixel 7 do projeto mobile tem 412 px, e a bandeira em tamanho de
+  // destaque, com altura fixa no celular, tinha largura mínima maior do que a
+  // coluna de 360 px: a sessão transbordava para o lado sem que o gate de
+  // overflow do projeto notasse.
+  test.use({ viewport: { width: 360, height: 780 } });
+
+  test("os passos da sessão cabem sem rolagem lateral", async ({ page }) => {
+    await page.goto("/estudar");
+    await page.getByRole("button", { name: /Começar sessão/ }).click();
+    await expect(
+      page.getByRole("heading", { name: "De onde é esta bandeira?" })
+    ).toBeVisible();
+    await expectNoHorizontalOverflow(page);
+
+    await page.getByRole("button", { name: /Não sei/ }).click();
+    await expectNoHorizontalOverflow(page);
+
+    await page.getByRole("button", { name: /Praticar/ }).click();
+    await page
+      .getByRole("button", { name: firstNew.displayNamePtBr, exact: true })
+      .click();
+    await expect(page.getByText("Acertou")).toBeVisible();
+    await expectNoHorizontalOverflow(page);
+  });
 });
