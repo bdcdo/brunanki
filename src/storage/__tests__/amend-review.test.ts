@@ -62,6 +62,23 @@ describe("amendReview", () => {
     expect(await db.skillStates.count()).toBe(0);
   });
 
+  it("recusa reescrever a tentativa como sendo de outra bandeira", async () => {
+    const db = freshDatabase();
+    await saveReview(state, attempt, db);
+    const other = {
+      ...state,
+      id: "chl::nameToFlagRecognition",
+      entityId: "chl"
+    };
+    await expect(
+      amendReview(other, { ...attempt, entityId: "chl" }, db)
+    ).rejects.toThrow(/outra bandeira/);
+    await expect(
+      amendReview(state, { ...attempt, exercise: "flagToNameChoice" }, db)
+    ).rejects.toThrow(/outra bandeira/);
+    expect(await db.attempts.toArray()).toEqual([attempt]);
+  });
+
   it("recusa estado de outra habilidade", async () => {
     const db = freshDatabase();
     await saveReview(state, attempt, db);

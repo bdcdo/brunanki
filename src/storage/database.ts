@@ -153,8 +153,20 @@ export async function amendReview(
     throw new Error("Tentativa e estado de habilidade não correspondem");
   }
   await db.transaction("rw", db.skillStates, db.attempts, async () => {
-    if ((await db.attempts.get(attempt.id)) === undefined) {
+    const stored = await db.attempts.get(attempt.id);
+    if (stored === undefined) {
       throw new Error("Só uma tentativa já gravada pode ser reescrita");
+    }
+    // A reescrita muda a marca e o XP, e nunca de qual bandeira, direção ou
+    // exercício a tentativa é: um ID trocado por engano sobrescreveria outra.
+    if (
+      stored.entityId !== attempt.entityId ||
+      stored.skill !== attempt.skill ||
+      stored.exercise !== attempt.exercise
+    ) {
+      throw new Error(
+        "A reescrita não pode levar a tentativa para outra bandeira, direção ou exercício"
+      );
     }
     await db.skillStates.put(state);
     await db.attempts.put(attempt);
