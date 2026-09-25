@@ -11,19 +11,26 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { AppProvider } from "../AppProvider";
 import { SettingsClient } from "../SettingsClient";
 
-const { readLearningSnapshot, exportProgress, importProgress, resetAllData } =
-  vi.hoisted(() => ({
-    readLearningSnapshot: vi.fn(),
-    exportProgress: vi.fn(),
-    importProgress: vi.fn(),
-    resetAllData: vi.fn()
-  }));
+const {
+  readLearningSnapshot,
+  exportProgress,
+  importProgress,
+  resetAllData,
+  saveAppSettings
+} = vi.hoisted(() => ({
+  readLearningSnapshot: vi.fn(),
+  exportProgress: vi.fn(),
+  importProgress: vi.fn(),
+  resetAllData: vi.fn(),
+  saveAppSettings: vi.fn()
+}));
 
 vi.mock("@/storage", () => ({
   readLearningSnapshot,
   exportProgress,
   importProgress,
-  resetAllData
+  resetAllData,
+  saveAppSettings
 }));
 
 const downloadBackupFile = vi.hoisted(() => vi.fn());
@@ -47,7 +54,12 @@ function renderSettings() {
   readLearningSnapshot.mockResolvedValue({
     skills: [],
     attempts: [],
-    settings: { desiredRetention: 0.9, timeZone: "America/Sao_Paulo" }
+    pairs: [],
+    settings: {
+      desiredRetention: 0.9,
+      timeZone: "America/Sao_Paulo",
+      activeContinent: "americas"
+    }
   });
   return render(
     <AppProvider>
@@ -62,6 +74,19 @@ afterEach(() => {
 });
 
 describe("SettingsClient", () => {
+  it("mostra as Américas escolhidas e os outros continentes fechados", async () => {
+    renderSettings();
+    const americas = await screen.findByRole("radio", { name: "Américas" });
+    expect(americas).toBeChecked();
+    expect(americas).toBeEnabled();
+    for (const name of ["África", "Ásia", "Europa", "Oceania"]) {
+      const radio = screen.getByRole("radio", { name: new RegExp(name) });
+      expect(radio).toBeDisabled();
+    }
+    expect(screen.getAllByText("fechado")).toHaveLength(4);
+    expect(saveAppSettings).not.toHaveBeenCalled();
+  });
+
   it("permite reescolher o mesmo arquivo após uma restauração cancelada", async () => {
     // `false` é o retorno de importProgress quando a confirmação é recusada.
     importProgress.mockResolvedValue(false);
