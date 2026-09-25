@@ -133,7 +133,7 @@ function StudySessionReady({
   refresh: () => Promise<void>;
   priorityEntityId?: string;
 }) {
-  const { skills, settings } = snapshot;
+  const { skills, attempts, settings } = snapshot;
   // Novidade só do continente em estudo, na ordem do currículo; revisão
   // vencida de qualquer um, porque a fila tira as revisões dos estados
   // guardados, e não desta ordem.
@@ -266,8 +266,10 @@ function StudySessionReady({
         // `followsTeaching` em awardedXpFor.
         !schedule
       );
+      // O histórico dá o limiar pessoal de velocidade da nota; é o de antes
+      // desta tentativa, como a própria pessoa o tinha quando respondeu.
       const nextState = schedule
-        ? scheduleAttempt(current, attempt, settings)
+        ? scheduleAttempt(current, attempt, settings, attempts)
         : current;
       await storage.saveReview(nextState, attempt);
       // A escolha com o nome recém-mostrado não é recuperação, e contá-la

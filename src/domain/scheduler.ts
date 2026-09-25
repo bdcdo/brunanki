@@ -1,19 +1,13 @@
-import {
-  Rating,
-  State,
-  createEmptyCard,
-  fsrs,
-  type Card,
-  type Grade
-} from "ts-fsrs";
+import { State, createEmptyCard, fsrs, type Card } from "ts-fsrs";
 
 import type {
-  AttemptOutcome,
   ReviewAttempt,
   SchedulingPreferences,
   SkillKind,
   SkillState
 } from "@/types/learning";
+
+import { ratingForAttempt } from "./rating";
 
 export const DEFAULT_DESIRED_RETENTION = 0.9;
 
@@ -61,18 +55,6 @@ export function createSkillState(
   };
 }
 
-export function ratingForOutcome(outcome: AttemptOutcome): Grade {
-  switch (outcome) {
-    case "correct":
-      return Rating.Good;
-    case "partial":
-      return Rating.Hard;
-    case "incorrect":
-    case "skipped":
-      return Rating.Again;
-  }
-}
-
 export function calendarDay(date: Date, timeZone: string): string {
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone,
@@ -95,10 +77,22 @@ function phaseForCard(card: Card): SkillState["phase"] {
   return card.state === State.Review ? "scheduled" : "acquiring";
 }
 
+/**
+ * O estado de uma habilidade depois de uma tentativa.
+ *
+ * `history` são as tentativas anteriores da pessoa, que dão o limiar pessoal
+ * de velocidade da nota (ver `ratingForAttempt`).
+ *
+ * A escolha na direção bandeira→nome não muda nada: acertar entre quatro
+ * nomes não prova que a pessoa sabe escrever o nome, e só a resposta
+ * digitada conta para a recordação. A regra mora aqui, e não em quem chama,
+ * para que nenhuma tela consiga contar a escolha como domínio.
+ */
 export function scheduleAttempt(
   currentState: SkillState,
   attempt: ReviewAttempt,
-  preferences: SchedulingPreferences
+  preferences: SchedulingPreferences,
+  history: readonly ReviewAttempt[] = []
 ): SkillState {
   if (
     currentState.entityId !== attempt.entityId ||
@@ -108,6 +102,8 @@ export function scheduleAttempt(
       "A tentativa não pertence ao estado de habilidade informado"
     );
   }
+
+  if (attempt.exercise === "flagToNameChoice") return currentState;
 
   const now = new Date(attempt.createdAt);
   if (Number.isNaN(now.getTime())) {
@@ -123,11 +119,17 @@ export function scheduleAttempt(
   const { card } = scheduler.next(
     currentCard,
     now,
-    ratingForOutcome(attempt.outcome)
+    ratingForAttempt(attempt, history)
   );
 
+  // Chute declarado não é evidência de recuperação, e não conta como dia de
+  // sucesso para o domínio, mesmo tendo acertado.
   const successDays = new Set(currentState.distinctSuccessDays);
-  if (attempt.outcome === "correct" && !attempt.isImmediateCorrection) {
+  if (
+    attempt.outcome === "correct" &&
+    !attempt.isImmediateCorrection &&
+    attempt.guessed !== true
+  ) {
     successDays.add(calendarDay(now, preferences.timeZone));
   }
 

@@ -8,11 +8,7 @@ import type {
 } from "@/types/learning";
 
 import { getMasteryStatus } from "../mastery";
-import {
-  createSkillState,
-  ratingForOutcome,
-  scheduleAttempt
-} from "../scheduler";
+import { createSkillState, scheduleAttempt } from "../scheduler";
 import { awardedXpFor } from "../xp";
 
 function attempt(
@@ -40,11 +36,37 @@ const saoPaulo: SchedulingPreferences = {
 };
 
 describe("scheduleAttempt", () => {
-  it("mapeia resultados para Again, Hard e Good", () => {
-    expect(ratingForOutcome("incorrect")).toBe(1);
-    expect(ratingForOutcome("skipped")).toBe(1);
-    expect(ratingForOutcome("partial")).toBe(2);
-    expect(ratingForOutcome("correct")).toBe(3);
+  it("não deixa a escolha na direção bandeira→nome contar para a recordação", () => {
+    // Acertar entre quatro nomes não prova que a pessoa sabe escrever o nome:
+    // nem o cartão nem os dias de sucesso mudam.
+    const initial = createSkillState(
+      "brasil",
+      "flagToNameRecall",
+      new Date("2026-07-24T12:00:00Z")
+    );
+    const choice: ReviewAttempt = {
+      ...attempt("correct", "2026-07-24T12:00:00.000Z"),
+      exercise: "flagToNameChoice"
+    };
+    expect(scheduleAttempt(initial, choice, saoPaulo)).toBe(initial);
+  });
+
+  it("não conta chute declarado como dia de sucesso", () => {
+    const initial = createSkillState(
+      "brasil",
+      "nameToFlagRecognition",
+      new Date("2026-07-24T12:00:00Z")
+    );
+    const guessed: ReviewAttempt = {
+      ...attempt("correct", "2026-07-24T12:00:00.000Z"),
+      skill: "nameToFlagRecognition",
+      exercise: "nameToFlagChoice",
+      guessed: true,
+      awardedXp: 0
+    };
+    expect(
+      scheduleAttempt(initial, guessed, saoPaulo).distinctSuccessDays
+    ).toEqual([]);
   });
 
   it("cria e atualiza um cartão independente por entidade e habilidade", () => {
