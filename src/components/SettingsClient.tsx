@@ -3,6 +3,7 @@
 import { Download, RotateCcw, Upload } from "lucide-react";
 import { useRef, useState } from "react";
 import { useApp } from "@/components/AppProvider";
+import { ContinentPicker } from "@/components/ContinentPicker";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/ui/page-header";
 import { downloadBackupFile } from "@/storage/backup-file";
@@ -67,6 +68,9 @@ export function SettingsClient() {
       />
 
       <div className="grid gap-[18px]">
+        <section className="rounded-card border border-line bg-surface p-6">
+          <ContinentPicker />
+        </section>
         <section className="grid grid-cols-[1fr_auto] items-center gap-6 rounded-card border border-line bg-surface p-6 max-md:grid-cols-1 max-md:items-stretch">
           <div>
             <h2 className="mt-0 mb-[5px] text-xl leading-body">

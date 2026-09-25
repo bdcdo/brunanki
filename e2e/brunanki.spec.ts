@@ -4,7 +4,11 @@ import {
   expectNoHorizontalOverflow,
   expectNoSeriousAccessibilityViolations
 } from "./helpers";
-import { americasEntities, catalogEntities } from "./seed";
+import {
+  americasEntities,
+  americasIntroduction,
+  catalogEntities
+} from "./seed";
 
 /** O tamanho do catálogo aparece em seis asserções, e fixá-lo faria toda
  *  mudança no conjunto de entidades quebrar testes que nada têm a ver com
@@ -109,6 +113,21 @@ test("catálogo filtra nomes, abre detalhes e mantém bandeiras inteiras", async
   await expectNoSeriousAccessibilityViolations(page);
 });
 
+test("puxar uma bandeira do álbum faz dela a próxima novidade", async ({
+  page
+}) => {
+  // Dominica é a última da ordem sugerida; puxada pelo detalhe, ela passa na
+  // frente das outras 34.
+  await page.goto("/catalogo/dma");
+  await page
+    .getByRole("link", { name: "Estudar como a próxima bandeira nova" })
+    .click();
+  await page.getByRole("button", { name: /Começar sessão/ }).click();
+  await expect(
+    page.getByRole("heading", { name: "Esta é a bandeira de Dominica." })
+  ).toBeVisible();
+});
+
 test("perfil zerado entra direto em /estudar pela primeira bandeira das Américas", async ({
   page
 }) => {
@@ -118,7 +137,7 @@ test("perfil zerado entra direto em /estudar pela primeira bandeira das América
   await page.getByRole("button", { name: /Começar sessão/ }).click();
   await expect(
     page.getByRole("heading", {
-      name: `Esta é a bandeira de ${americasEntities[0]!.displayNamePtBr}.`
+      name: `Esta é a bandeira de ${americasIntroduction[0]!.displayNamePtBr}.`
     })
   ).toBeVisible();
 

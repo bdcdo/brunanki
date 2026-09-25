@@ -40,22 +40,27 @@ describe("buildChoiceRound", () => {
   });
 
   it("favorece bandeiras parecidas sem se fixar nelas", () => {
-    let comCostaDoMarfim = 0;
+    // Itália, Hungria e Bulgária têm a mesma paleta, vermelho, verde e
+    // branco. Sorteando três entre as 43 outras europeias ao acaso, uma das
+    // duas apareceria em cerca de 14% das rodadas.
+    const italia = byId.get("ita")!;
+    let comParecida = 0;
     const rodadas = 300;
     for (let rodada = 0; rodada < rodadas; rodada += 1) {
       const round = buildChoiceRound(
-        target,
+        italia,
         entities,
         4,
         mulberry32(rodada + 1)
       );
-      if (round.some((choice) => choice.id === "civ")) comCostaDoMarfim += 1;
+      if (round.some(({ id }) => id === "hun" || id === "bgr"))
+        comParecida += 1;
     }
-    const uniforme = 3 / (entities.length - 1);
-    // Bem acima do acaso — e ainda assim longe de aparecer em toda rodada,
-    // que é o que o peso base garante.
-    expect(comCostaDoMarfim / rodadas).toBeGreaterThan(uniforme * 5);
-    expect(comCostaDoMarfim / rodadas).toBeLessThan(0.9);
+    const acaso = 1 - (40 * 39) / (43 * 42);
+    // Bem acima do acaso, e ainda assim longe de aparecer em toda rodada, que
+    // é o que o peso base garante.
+    expect(comParecida / rodadas).toBeGreaterThan(acaso * 1.8);
+    expect(comParecida / rodadas).toBeLessThan(0.9);
   });
 
   it("inclui o alvo exatamente uma vez e completa as alternativas", () => {
@@ -97,5 +102,24 @@ describe("buildChoiceRound", () => {
     expect(() =>
       buildChoiceRound(target, [target, byId.get("civ")!], 4, mulberry32(1))
     ).toThrow(/insuficientes/);
+  });
+});
+
+describe("continente das alternativas", () => {
+  it("tira as alternativas só do continente da bandeira perguntada", () => {
+    // O filtro mora em buildChoiceRound, então vale mesmo com o catálogo
+    // inteiro no sorteio: nenhum chamador consegue esquecê-lo.
+    const paraguai = byId.get("pry")!;
+    for (let rodada = 0; rodada < 200; rodada += 1) {
+      const round = buildChoiceRound(
+        paraguai,
+        entities,
+        4,
+        mulberry32(rodada + 1)
+      );
+      expect(round.every(({ continent }) => continent === "americas")).toBe(
+        true
+      );
+    }
   });
 });

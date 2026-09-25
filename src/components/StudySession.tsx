@@ -21,16 +21,14 @@ import {
 } from "@/components/ui/pips";
 import { entities, entityById } from "@/data/runtime-catalog";
 import { getNameResolver } from "@/data/name-index";
+import { SUBREGION } from "@/types/geography";
+import { introductionOrder } from "@/data/curriculum";
 import { newAttemptId } from "@/domain/ids";
 import { awardedXpFor } from "@/domain/xp";
 import { buildChoiceRound } from "@/domain/distractors";
 import { describePalette } from "@/domain/palette";
 import { mulberry32 } from "@/domain/shuffle";
-import {
-  buildDailyQueue,
-  newEntityOrder,
-  type DailyQueueItem
-} from "@/domain/daily-queue";
+import { buildDailyQueue, type DailyQueueItem } from "@/domain/daily-queue";
 import {
   createSkillState,
   scheduleAttempt,
@@ -104,11 +102,20 @@ function initialStep(item: SessionItem, state?: SkillState): StudyStep {
   return "forwardInput";
 }
 
-export function StudySession() {
+export function StudySession({
+  priorityEntityId
+}: {
+  /** Bandeira puxada do álbum para ser a próxima novidade. */
+  priorityEntityId?: string;
+}) {
   return (
     <AppReady loadingLabel="Preparando sua sessão.">
       {({ snapshot, refresh }) => (
-        <StudySessionReady snapshot={snapshot} refresh={refresh} />
+        <StudySessionReady
+          snapshot={snapshot}
+          refresh={refresh}
+          priorityEntityId={priorityEntityId}
+        />
       )}
     </AppReady>
   );
@@ -116,17 +123,20 @@ export function StudySession() {
 
 function StudySessionReady({
   snapshot,
-  refresh
+  refresh,
+  priorityEntityId
 }: {
   snapshot: LearningSnapshot;
   refresh: () => Promise<void>;
+  priorityEntityId?: string;
 }) {
   const { skills, attempts, settings } = snapshot;
-  // Novidade só do continente em estudo; revisão vencida de qualquer um,
-  // porque a fila tira as revisões dos estados guardados, e não desta ordem.
+  // Novidade só do continente em estudo, na ordem do currículo; revisão
+  // vencida de qualquer um, porque a fila tira as revisões dos estados
+  // guardados, e não desta ordem.
   const newEntityOrderForSession = useMemo(
-    () => newEntityOrder(entities, settings.activeContinent),
-    [settings.activeContinent]
+    () => introductionOrder(settings.activeContinent, priorityEntityId),
+    [settings.activeContinent, priorityEntityId]
   );
   const [queue, setQueue] = useState<SessionItem[]>([]);
   const [index, setIndex] = useState(0);
@@ -457,7 +467,11 @@ function StudySessionReady({
         <section className={sessionCard}>
           {step === "teach" ? (
             <>
-              <Eyebrow>Primeiro contato</Eyebrow>
+              {/* A sub-região entra só aqui, onde a bandeira já é mostrada com
+                  o nome; numa pergunta ela seria uma dica. */}
+              <Eyebrow>
+                Bandeira nova, {SUBREGION[entity.subregion].labelPtBr}
+              </Eyebrow>
               <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-title">
                 Esta é a bandeira de {entity.displayNamePtBr}.
               </h1>

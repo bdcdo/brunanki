@@ -11,6 +11,8 @@ import { entities, entityById, flagByEntityId } from "@/data/catalog";
 // existe lá porque vem do snapshot M49 na projeção.
 import { entityById as runtimeEntityById } from "@/data/runtime-catalog";
 import { CONTINENT_LABEL_PT_BR, SUBREGION } from "@/types/geography";
+import { isContinentAvailable } from "@/data/curriculum";
+import { cn } from "@/lib/utils";
 
 interface DetailPageProps {
   params: Promise<{ id: string }>;
@@ -49,6 +51,19 @@ export default async function DetailPage({ params }: DetailPageProps) {
         title={entity.displayNamePtBr}
         description={entity.editorialNote}
       />
+      {/* Pula a ordem sugerida: a bandeira vira a próxima novidade da sessão.
+          Novidade, e não a próxima atividade: as revisões vencidas e as
+          correções continuam vindo antes, e o rótulo diz isso para não
+          prometer mais do que a sessão entrega. Só em continente liberado,
+          porque novidade de continente fechado a sessão ignoraria. */}
+      {isContinentAvailable(runtimeEntity.continent) && (
+        <Link
+          href={`/estudar?nova=${runtimeEntity.id}`}
+          className={cn(buttonVariants(), "mb-7")}
+        >
+          Estudar como a próxima bandeira nova
+        </Link>
+      )}
 
       <div className="grid grid-cols-[minmax(300px,1fr)_1fr] gap-[34px] max-md:grid-cols-1">
         <FlagImage

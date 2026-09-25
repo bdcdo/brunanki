@@ -6,6 +6,11 @@ import { normalizeCountryName as normalize } from "../src/domain/text";
 import catalogJson from "../src/data/catalog.json";
 import m49Json from "./sources/m49.json";
 import { geographyFor, indexM49, type M49Snapshot } from "../src/data/m49";
+import runtimeCatalogJson from "../src/data/runtime-catalog.json";
+import type { RuntimeCatalog } from "../src/types/runtime-catalog";
+import { CURRICULUM, undecidedConfusablePairs } from "../src/data/curriculum";
+import { pairStateId } from "../src/domain/pairs";
+import { CONTINENT_IDS } from "../src/types/geography";
 import type { Catalog } from "../src/types/catalog";
 import {
   ATTRIBUTION_PATH,
@@ -208,8 +213,81 @@ async function main(): Promise<void> {
     subregionCount.set(subregion, (subregionCount.get(subregion) ?? 0) + 1);
   }
 
+  // O currículo é escrito à mão, e por isso é aqui que ele se confere contra
+  // o catálogo: a ordem de cada continente é uma permutação das entidades
+  // dele, e todo par nomeia duas entidades que existem, com razão e os dois
+  // traços. Uma entidade esquecida na ordem nunca seria apresentada.
+  const continentById = new Map(
+    catalog.entities.map((entity) => [
+      entity.id,
+      geographyFor(entity.id, entity.identifiers.unM49, m49Index).continent
+    ])
+  );
+  let curatedPairs = 0;
+  for (const continent of CONTINENT_IDS) {
+    const curriculum = CURRICULUM[continent];
+    if (!curriculum) continue;
+    const expected = catalog.entities
+      .filter((entity) => continentById.get(entity.id) === continent)
+      .map(({ id }) => id)
+      .sort();
+    assert(
+      [...curriculum.order].sort().join(",") === expected.join(","),
+      `A ordem do currículo de ${continent} não é uma permutação das ${expected.length} entidades do continente`
+    );
+    const keys = new Set<string>();
+    for (const pair of curriculum.pairs) {
+      const [first, second] = pair.entityIds;
+      assert(
+        continentById.get(first) === continent &&
+          continentById.get(second) === continent,
+        `Par com entidade fora do catálogo ou de outro continente: ${first}, ${second}`
+      );
+      const key = pairStateId(first, second);
+      assert(!keys.has(key), `Par repetido no currículo: ${key}`);
+      keys.add(key);
+      assert(pair.reason.trim() !== "", `Par sem razão: ${key}`);
+      assert(
+        Object.keys(pair.traits).sort().join(",") ===
+          [first, second].sort().join(",") &&
+          Object.values(pair.traits).every((trait) => trait.trim() !== ""),
+        `Par sem os dois traços: ${key}`
+      );
+      curatedPairs += 1;
+    }
+    // As exceções também se conferem: uma justificativa vazia, uma exceção
+    // de outro continente ou uma que repete um par curado passariam a valer
+    // como decisão sem ser uma.
+    for (const exception of curriculum.notConfusable) {
+      const [first, second] = exception.entityIds;
+      const key = pairStateId(first, second);
+      assert(
+        continentById.get(first) === continent &&
+          continentById.get(second) === continent,
+        `Exceção com entidade fora do catálogo ou de outro continente: ${key}`
+      );
+      assert(
+        !keys.has(key),
+        `Exceção repete um par curado ou outra exceção: ${key}`
+      );
+      keys.add(key);
+      assert(
+        exception.justification.trim() !== "",
+        `Exceção sem justificativa: ${key}`
+      );
+    }
+    const undecided = undecidedConfusablePairs(
+      continent,
+      (runtimeCatalogJson as RuntimeCatalog).entities
+    );
+    assert(
+      undecided.length === 0,
+      `Pares confundíveis pela heurística sem decisão no currículo de ${continent}: ${undecided.join(", ")}. Cure o par ou registre a exceção em notConfusable.`
+    );
+  }
+
   console.log(
-    `Catalog valid: ${catalog.entities.length} entities (${members.length} UN members, ${observers.length} observers), ${catalog.flagRevisions.length} verified local assets, ${subregionCount.size} M49 subregions.`
+    `Catalog valid: ${catalog.entities.length} entities (${members.length} UN members, ${observers.length} observers), ${catalog.flagRevisions.length} verified local assets, ${subregionCount.size} M49 subregions, ${curatedPairs} curated pairs.`
   );
 }
 
