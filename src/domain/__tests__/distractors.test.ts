@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import runtimeJson from "@/data/runtime-catalog.json";
 import type { RuntimeCatalog } from "@/types/runtime-catalog";
 
-import { buildChoiceRound, confusability } from "../distractors";
+import { buildChoiceRound, choicePool, confusability } from "../distractors";
 import { mulberry32 } from "../shuffle";
 
 const entities = (runtimeJson as RuntimeCatalog).entities;
@@ -97,5 +97,22 @@ describe("buildChoiceRound", () => {
     expect(() =>
       buildChoiceRound(target, [target, byId.get("civ")!], 4, mulberry32(1))
     ).toThrow(/insuficientes/);
+  });
+});
+
+describe("choicePool", () => {
+  it("tira as alternativas só do continente da bandeira perguntada", () => {
+    const paraguai = byId.get("pry")!;
+    const pool = choicePool(paraguai, entities);
+    expect(pool.every(({ continent }) => continent === "americas")).toBe(true);
+    // No catálogo inteiro, a paleta põe Kiribati e Fiji entre os vizinhos
+    // mais frequentes do Paraguai, e quem estuda as Américas as eliminaria
+    // pelo continente, sem olhar o desenho.
+    for (let rodada = 0; rodada < 200; rodada += 1) {
+      const round = buildChoiceRound(paraguai, pool, 4, mulberry32(rodada + 1));
+      expect(round.every(({ continent }) => continent === "americas")).toBe(
+        true
+      );
+    }
   });
 });

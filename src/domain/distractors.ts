@@ -1,4 +1,4 @@
-import type { ContinentId } from "@/types/geography";
+import type { ContinentId, SubregionId } from "@/types/geography";
 
 import type { ColorNamePtBr } from "./palette";
 import { paletteSimilarity } from "./palette";
@@ -7,6 +7,7 @@ import { shuffle, weightedSample, type RandomSource } from "./shuffle";
 export interface DistractorCandidate {
   readonly id: string;
   readonly continent: ContinentId;
+  readonly subregion: SubregionId;
   readonly palette: readonly ColorNamePtBr[];
 }
 
@@ -31,21 +32,43 @@ const NEIGHBOURHOOD_SIZE = 24;
  */
 const BASE_WEIGHT = 0.15;
 const PALETTE_WEIGHT = 0.7;
-const CONTINENT_WEIGHT = 0.3;
+const SUBREGION_WEIGHT = 0.3;
 
 /**
  * O quanto duas bandeiras se confundem, em [0, 1].
  *
- * A cor domina porque é o que o olho compara primeiro; o continente entra como
+ * A cor domina porque é o que o olho compara primeiro; a sub-região entra como
  * reforço, já que bandeiras vizinhas costumam compartilhar repertório visual.
+ * O reforço é da sub-região, e não do continente, porque as alternativas já
+ * saem todas do mesmo continente (`choicePool`): lá o bônus seria igual para
+ * todas e não distinguiria nada.
  */
 export function confusability(
   left: DistractorCandidate,
   right: DistractorCandidate
 ): number {
   const byPalette = paletteSimilarity(left.palette, right.palette);
-  const byContinent = left.continent === right.continent ? 1 : 0;
-  return PALETTE_WEIGHT * byPalette + CONTINENT_WEIGHT * byContinent;
+  const bySubregion = left.subregion === right.subregion ? 1 : 0;
+  return PALETTE_WEIGHT * byPalette + SUBREGION_WEIGHT * bySubregion;
+}
+
+/**
+ * De onde saem as alternativas: do continente da bandeira perguntada.
+ *
+ * Quem estuda as Américas e vê Kiribati e Fiji ao lado do Paraguai, que é o
+ * que a paleta sozinha oferece, elimina as erradas pelo continente, sem olhar
+ * para o desenho. Tirar as
+ * alternativas do mesmo continente é o que obriga a comparar a bandeira. Vale
+ * também para a revisão de um continente estudado antes, que continua vindo
+ * com vizinhos do próprio continente.
+ */
+export function choicePool<T extends DistractorCandidate>(
+  target: T,
+  candidates: readonly T[]
+): T[] {
+  return candidates.filter(
+    (candidate) => candidate.continent === target.continent
+  );
 }
 
 /**
