@@ -264,7 +264,7 @@ function DiagnosticSessionReady({
               <Eyebrow>
                 Bandeira {measured + 1} de {entities.length}
               </Eyebrow>
-              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-[-0.035em]">
+              <h1 className="mt-1.5 mb-[22px] font-title text-prompt tracking-title">
                 De onde é esta bandeira?
               </h1>
               <FlagImage

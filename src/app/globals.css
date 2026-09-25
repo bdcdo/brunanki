@@ -128,7 +128,11 @@
   /* Delimita controle e é a borda do espaço vazio do álbum, então o piso é
      3:1: 3,62:1 sobre --surface, 3,08:1 sobre --paper. */
   --input: #7c879c;
+  /* O anel de foco em duas partes: o contorno e o respiro entre ele e o
+     controle. Superfície escura redefine as duas pela classe `.on-ink`,
+     abaixo; ver a regra de :focus-visible. */
   --ring: var(--ink);
+  --ring-gap: var(--surface);
 
   /* — quadro da bandeira -------------------------------------------------
      Mesmo piso de 3:1 do --input, e pelo mesmo motivo: em bandeira que tem
@@ -186,13 +190,11 @@
   --lead-figure: 0.85;
 
   /* Face condensada não aceita o aperto que a grotesca pedia: com -0,04em as
-     letras da Big Shoulders se tocam. O título fica no zero, e o rótulo
-     também, porque o app não usa rótulo em caixa alta. */
+     letras da Big Shoulders se tocam. Todo título fica nestes dois valores, e
+     nenhum aperto literal sobrevive nos componentes. */
   --track-page: 0;
   --track-title: 0.005em;
   --track-heading: 0;
-  --track-label: 0;
-  --track-label-sm: 0;
 
   /* — medidas -----------------------------------------------------------
      A altura da navegação inferior mora aqui porque dois consumidores
@@ -322,8 +324,6 @@
   --tracking-page: var(--track-page);
   --tracking-title: var(--track-title);
   --tracking-heading: var(--track-heading);
-  --tracking-label: var(--track-label);
-  --tracking-label-sm: var(--track-label-sm);
 
   --leading-body: var(--lead-body);
   --leading-label: var(--lead-label);
@@ -359,8 +359,8 @@
 
      Ficam, e o motivo mudou de lugar: os dois números deixaram de descrever
      uma folha que não existe mais e passaram a ser as quebras do desenho —
-     todas as telas convertidas os consomem por `max-md:` e `max-lg:`, e o
-     `DESKTOP` de AppShell.tsx repete o 761 em matchMedia. Voltar aos padrões
+     todas as telas convertidas os consomem por `max-md:` e `max-lg:`, inclusive
+     a troca das abas pela barra inferior no AppShell. Voltar aos padrões
      moveria dezenas de quebras de layout de uma vez, sem que teste nenhum
      visse: o e2e mede 412px e 1280px, e as fronteiras estão em 760 e 1040.
      Isso é decisão de design, e não higiene de fim de migração. */
@@ -468,17 +468,21 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Foco visível, e caro de perder. O anel tem duas cores porque o app tem
-     fundo claro e painel escuro: tinta sozinha some sobre o painel de tinta,
-     e branco sozinho some sobre o papel. O box-shadow branco preenche a folga
-     de 2px entre o controle e o contorno de tinta, então um dos dois sempre
-     contrasta com o que está atrás, com 12,86:1 e 15,11:1, acima dos 3:1 da
-     WCAG 1.4.11. :focus-visible em vez de :focus para não punir quem clica
-     com o mouse. */
+  /* Foco visível, e caro de perder. O anel tem duas partes porque o app tem
+     fundo claro e painel de tinta: o contorno contrasta com o que está atrás
+     do controle, e o respiro de 2px o separa do próprio controle.
+
+     Uma cor fixa para as duas não serve. Tinta com respiro branco some no
+     botão branco dentro do painel de tinta: o respiro se funde ao botão e o
+     contorno se funde ao painel. Por isso as duas partes são variáveis, e a
+     classe `.on-ink` as troca dentro de superfície escura: contorno amarelo
+     (9,77:1 contra a tinta) e respiro de tinta. No claro, o contorno de tinta
+     mede 12,86:1 contra o papel. :focus-visible em vez de :focus para não
+     punir quem clica com o mouse. */
   :focus-visible {
-    outline: 3px solid var(--color-ring);
+    outline: 3px solid var(--ring);
     outline-offset: 2px;
-    box-shadow: 0 0 0 2px var(--color-surface);
+    box-shadow: 0 0 0 2px var(--ring-gap);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -497,6 +501,13 @@
    nada sem consumidor.
 --------------------------------------------------------------------------- */
 @layer components {
+  /* Superfície de tinta: troca o anel de foco para as cores que contrastam
+     com ela. Ver a regra de :focus-visible na camada base. */
+  .on-ink {
+    --ring: var(--highlight);
+    --ring-gap: var(--ink);
+  }
+
   /* O xadrez de transparência atrás da bandeira. Bandeira é SVG com fundo
      transparente, e sem o xadrez não se distingue o branco da bandeira do
      vazio do cartão — em Japão e Coreia do Sul isso é a diferença entre ver a
