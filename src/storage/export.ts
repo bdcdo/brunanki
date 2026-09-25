@@ -89,6 +89,16 @@ const serializedSkillStateSchema = z
         message: "Uma habilidade não vista não pode possuir cartão FSRS"
       });
     }
+    // Sem cartão, uma habilidade já vista nunca vence e, por não estar mais
+    // "unseen", também não volta como novidade: a bandeira ficaria presa
+    // fora da fila para sempre.
+    if (state.phase !== "unseen" && state.card === undefined) {
+      context.addIssue({
+        code: "custom",
+        path: ["card"],
+        message: "Uma habilidade já vista precisa de cartão FSRS"
+      });
+    }
   });
 
 const reviewAttemptSchema = z

@@ -14,14 +14,13 @@ import { FeedbackPanel, feedbackTone } from "@/components/ui/feedback-panel";
 import { InkBubble } from "@/components/ui/ink-bubble";
 import { OptionButton, type OptionState } from "@/components/ui/option-button";
 import {
-  SessionPips,
   amendedPipState,
   pipStateFor,
   type PipState
 } from "@/components/ui/pips";
 import { entities, entityById } from "@/data/runtime-catalog";
 import { getNameResolver } from "@/data/name-index";
-import { SUBREGION } from "@/types/geography";
+import { CONTINENT_OF_PT_BR, SUBREGION } from "@/types/geography";
 import { CURRICULUM, introductionOrder } from "@/data/curriculum";
 import { verdictExplanation } from "@/domain/feedback";
 import { newAttemptId } from "@/domain/ids";
@@ -29,7 +28,11 @@ import { awardedXpFor } from "@/domain/xp";
 import { buildChoiceRound } from "@/domain/distractors";
 import { describePalette } from "@/domain/palette";
 import { mulberry32 } from "@/domain/shuffle";
-import { buildDailyQueue, type DailyQueueItem } from "@/domain/daily-queue";
+import {
+  dueCount,
+  nextActivity,
+  type NextActivity
+} from "@/domain/next-activity";
 import {
   createSkillState,
   scheduleAttempt,
@@ -44,9 +47,7 @@ import type {
 
 type StudyStep = "teach" | "forwardChoice" | "forwardInput" | "reverseChoice";
 
-interface SessionItem extends DailyQueueItem {
-  immediate?: boolean;
-}
+type SessionItem = NextActivity;
 
 interface StudyFeedback {
   outcome: AttemptOutcome;
@@ -56,7 +57,6 @@ interface StudyFeedback {
   nextStep?: StudyStep;
 }
 
-const SESSION_LIMIT = 20;
 const CHOICE_COUNT = 4;
 
 function newAttempt(
@@ -73,14 +73,14 @@ function newAttempt(
     skill: item.skill,
     exercise,
     outcome,
-    // A repetição imediata que se segue a um erro fica registrada na própria
-    // tentativa, e não só no argumento do agendador: assim o histórico
-    // distingue uma recuperação genuína de uma segunda chance.
-    isImmediateCorrection: item.immediate ?? false,
+    // A correção que se segue a um erro fica registrada na própria tentativa,
+    // e não só no argumento do agendador: assim o histórico distingue uma
+    // recuperação genuína de uma segunda chance.
+    isImmediateCorrection: item.reason === "correction",
     mode: "scheduled",
     awardedXp: awardedXpFor({
       outcome,
-      isImmediateCorrection: item.immediate ?? false,
+      isImmediateCorrection: item.reason === "correction",
       followsTeaching
     }),
     responseMs,
@@ -133,7 +133,7 @@ function StudySessionReady({
   refresh: () => Promise<void>;
   priorityEntityId?: string;
 }) {
-  const { skills, attempts, settings } = snapshot;
+  const { skills, settings } = snapshot;
   // Novidade só do continente em estudo, na ordem do currículo; revisão
   // vencida de qualquer um, porque a fila tira as revisões dos estados
   // guardados, e não desta ordem.
@@ -141,8 +141,7 @@ function StudySessionReady({
     () => introductionOrder(settings.activeContinent, priorityEntityId),
     [settings.activeContinent, priorityEntityId]
   );
-  const [queue, setQueue] = useState<SessionItem[]>([]);
-  const [index, setIndex] = useState(0);
+  const [item, setItem] = useState<SessionItem>();
   const [step, setStep] = useState<StudyStep>("teach");
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState<StudyFeedback>();
@@ -152,15 +151,16 @@ function StudySessionReady({
   // num app de memória vale mais do que num quiz.
   const [selectedId, setSelectedId] = useState<string>();
   const [busy, setBusy] = useState(false);
-  const [initialized, setInitialized] = useState(false);
-  const [retryCounts, setRetryCounts] = useState<Record<string, number>>({});
-  // As bolinhas são indexadas pelo item, e não pela posição na fila. A fila
-  // cresce no meio da sessão — um erro reinsere o item quatro posições à
-  // frente —, e por posição isso faria nascer uma bolinha do nada. Como a
-  // repetição imediata tem o mesmo `skillStateId` do item que corrige, ela
-  // reescreve a bolinha existente: uma correção não é um item novo.
-  const [pipOrder, setPipOrder] = useState<string[]>([]);
-  const [pipOutcomes, setPipOutcomes] = useState<Record<string, PipState>>({});
+  const [started, setStarted] = useState(false);
+  // "exhausted" quando a fila esvaziou, "ended" quando a pessoa encerrou: o
+  // resumo é o mesmo, mas só o primeiro pode dizer que está tudo em dia.
+  const [finished, setFinished] = useState<"exhausted" | "ended">();
+  // O histórico da sessão, uma bolinha por resposta. A sessão não tem tamanho
+  // fixo, então não há "x de N" a mostrar durante ela; o histórico só aparece
+  // no resumo do fim.
+  const [history, setHistory] = useState<PipState[]>([]);
+  // Quantas questões já passaram, para variar a semente das alternativas.
+  const [presented, setPresented] = useState(0);
   const startedAt = useRef(0);
   // Semente sorteada uma vez por sessão. Combinada com a posição na fila, dá
   // alternativas estáveis enquanto a questão está na tela — nada de
@@ -172,43 +172,42 @@ function StudySessionReady({
     [skills]
   );
 
-  function beginSession() {
-    if (initialized) return;
-    const plan = buildDailyQueue({
-      entityOrder: newEntityOrderForSession,
-      states: skills,
-      recentAttempts: attempts,
-      baseNewLimit: 5
-    });
-    const items = plan.items.slice(0, SESSION_LIMIT);
-    setQueue(items);
-    // Fixado aqui, e nunca reescrito: é o conjunto de itens desta sessão, que
-    // não muda quando a fila ganha uma repetição.
-    setPipOrder(
-      items.map(({ entityId, skill }) => skillStateId(entityId, skill))
-    );
-    const first = items[0];
-    if (first) {
-      setStep(
-        initialStep(
-          first,
-          stateById.get(skillStateId(first.entityId, first.skill))
-        )
-      );
+  function present(next: SessionItem | undefined) {
+    setFeedback(undefined);
+    setSelectedId(undefined);
+    setAnswer("");
+    if (!next) {
+      setItem(undefined);
+      setFinished("exhausted");
+      return;
     }
-    setInitialized(true);
+    setItem(next);
+    setPresented((count) => count + 1);
+    setStep(
+      initialStep(next, stateById.get(skillStateId(next.entityId, next.skill)))
+    );
     startedAt.current = performance.now();
   }
 
-  const item = queue[index];
+  // A próxima atividade é recalculada a cada passo, a partir dos estados
+  // gravados até agora: é isso que deixa uma correção voltar antes da
+  // novidade seguinte e uma revisão que acabou de vencer entrar na frente.
+  function upNext(justAnswered?: SessionItem) {
+    return nextActivity({
+      states: skills,
+      entityOrder: newEntityOrderForSession,
+      now: new Date(),
+      ...(justAnswered ? { justAnswered } : {})
+    });
+  }
+
+  function beginSession() {
+    if (started) return;
+    setStarted(true);
+    present(upNext());
+  }
+
   const entity = item ? entityById.get(item.entityId) : undefined;
-  const pipStates = pipOrder.map((id) => pipOutcomes[id] ?? "pending");
-  // A posição também sai da identidade do item, e não de `index`: depois de
-  // uma repetição imediata os dois divergem, e é a bolinha do item corrigido
-  // que deve estar marcada.
-  const pipPosition = item
-    ? pipOrder.indexOf(skillStateId(item.entityId, item.skill))
-    : pipOrder.length;
   /**
    * Antes do veredito toda alternativa está em repouso. Depois, a certa é
    * marcada como correta — inclusive quando foi a escolhida —, a escolhida
@@ -228,27 +227,9 @@ function StudySessionReady({
       entity,
       entities,
       CHOICE_COUNT,
-      mulberry32(sessionSeed + index * 2654435761)
+      mulberry32(sessionSeed + presented * 2654435761)
     );
-  }, [entity, index, sessionSeed]);
-
-  function moveToNext() {
-    setFeedback(undefined);
-    setSelectedId(undefined);
-    setAnswer("");
-    const nextIndex = index + 1;
-    setIndex(nextIndex);
-    const next = queue[nextIndex];
-    if (next) {
-      setStep(
-        initialStep(
-          next,
-          stateById.get(skillStateId(next.entityId, next.skill))
-        )
-      );
-    }
-    startedAt.current = performance.now();
-  }
+  }, [entity, presented, sessionSeed]);
 
   function continueAfterFeedback() {
     if (feedback?.nextStep) {
@@ -259,7 +240,7 @@ function StudySessionReady({
       startedAt.current = performance.now();
       return;
     }
-    moveToNext();
+    present(upNext(item));
   }
 
   async function persistAttempt(
@@ -289,37 +270,17 @@ function StudySessionReady({
         ? scheduleAttempt(current, attempt, settings)
         : current;
       await storage.saveReview(nextState, attempt);
-      setPipOutcomes((current) => ({
-        ...current,
-        [nextState.id]: item.immediate
-          ? amendedPipState(outcome)
-          : pipStateFor(outcome)
-      }));
-
-      if (
-        schedule &&
-        outcome !== "correct" &&
-        (retryCounts[nextState.id] ?? 0) < 1
-      ) {
-        const retry: SessionItem = {
-          entityId: item.entityId,
-          skill: item.skill,
-          reason: "correction",
-          immediate: true
-        };
-        setQueue((currentQueue) => {
-          const insertion = Math.min(index + 4, currentQueue.length);
-          return [
-            ...currentQueue.slice(0, insertion),
-            retry,
-            ...currentQueue.slice(insertion)
-          ];
-        });
-        setRetryCounts((currentCounts) => ({
-          ...currentCounts,
-          [nextState.id]: (currentCounts[nextState.id] ?? 0) + 1
-        }));
+      // A escolha com o nome recém-mostrado não é recuperação, e contá-la
+      // poria no resumo "2 de 2 na primeira tentativa" para uma bandeira só.
+      if (schedule) {
+        setHistory((current) => [
+          ...current,
+          item.reason === "correction"
+            ? amendedPipState(outcome)
+            : pipStateFor(outcome)
+        ]);
       }
+      // A leitura nova é o que a próxima escolha de atividade consulta.
       await refresh();
     } finally {
       setBusy(false);
@@ -384,25 +345,45 @@ function StudySessionReady({
     });
   }
 
-  if (!initialized) {
-    const preview = buildDailyQueue({
-      entityOrder: newEntityOrderForSession,
-      states: skills,
-      recentAttempts: attempts,
-      baseNewLimit: 5
-    });
+  if (!started) {
+    const firstUp = upNext();
+    if (!firstUp) {
+      return (
+        <EmptyState
+          icon={<Check size={54} aria-hidden="true" />}
+          title="Tudo em dia por enquanto."
+          description="As próximas revisões aparecerão quando estiverem vencidas."
+          action={
+            <Link
+              href="/catalogo"
+              className={buttonVariants({ variant: "secondary" })}
+            >
+              Abrir o álbum
+            </Link>
+          }
+        />
+      );
+    }
+    // A frase diz o que vem primeiro, lido da própria atividade escolhida, e
+    // não a ordem da fila escrita em prosa, que mentiria quando uma correção
+    // passa na frente ou quando as novidades do continente acabaram.
+    const due = dueCount(skills);
+    const opening =
+      firstUp.reason === "due"
+        ? due === 1
+          ? "1 revisão vencida vem primeiro."
+          : `${due} revisões vencidas vêm primeiro.`
+        : firstUp.reason === "correction"
+          ? "Primeiro, a correção de um erro recente."
+          : `Primeiro, uma bandeira nova ${CONTINENT_OF_PT_BR[settings.activeContinent]}.`;
     return (
       <div className="mx-auto w-full max-w-narrow">
         <section className={sessionCard}>
-          <Eyebrow>Meta adaptativa</Eyebrow>
           <h1 className="m-0 font-title leading-page font-bold tracking-page">
             Sua sessão está pronta.
           </h1>
           <p className="text-ink-soft">
-            Hoje há {preview.dueCount} revisões vencidas,{" "}
-            {preview.correctionCount} correções e espaço para até{" "}
-            {preview.newLimit} novas associações. Esta rodada terá no máximo{" "}
-            {SESSION_LIMIT} itens.
+            {opening} Pare quando quiser: cada resposta já fica guardada.
           </p>
           <Button className="mt-[18px]" type="button" onClick={beginSession}>
             Começar sessão <ArrowRight size={18} aria-hidden="true" />
@@ -412,33 +393,17 @@ function StudySessionReady({
     );
   }
 
-  if (initialized && queue.length === 0) {
-    return (
-      <EmptyState
-        icon={<Check size={54} aria-hidden="true" />}
-        title="Tudo em dia por enquanto."
-        description="As próximas revisões aparecerão quando estiverem vencidas."
-        action={
-          <Link
-            href="/catalogo"
-            className={buttonVariants({ variant: "secondary" })}
-          >
-            Abrir o álbum
-          </Link>
-        }
-      />
-    );
-  }
-
-  if (initialized && (!item || !entity)) {
+  if (finished || !item || !entity) {
     const countOf = (state: PipState) =>
-      pipStates.filter((value) => value === state).length;
+      history.filter((value) => value === state).length;
     return (
       <SessionSummary
-        eyebrow="Sessão concluída"
+        eyebrow={
+          finished === "ended" ? "Sessão encerrada" : "Tudo em dia por enquanto"
+        }
         figure={countOf("correct")}
-        figureLabel={`de ${pipStates.length} na primeira tentativa`}
-        pips={pipStates}
+        figureLabel={`de ${history.length} na primeira tentativa`}
+        pips={history}
         tallies={[
           { label: "Parciais", value: countOf("partial") },
           { label: "Corrigidos", value: countOf("amended") },
@@ -446,7 +411,7 @@ function StudySessionReady({
         ]}
         action={
           <Link href="/" className={buttonVariants()}>
-            Voltar ao painel <ArrowRight size={18} aria-hidden="true" />
+            Voltar para Hoje <ArrowRight size={18} aria-hidden="true" />
           </Link>
         }
       />
@@ -462,15 +427,32 @@ function StudySessionReady({
             não cabem numa Pixel 7. */}
         <div className="flex items-center justify-between gap-5 max-md:flex-col max-md:items-start">
           <div className="min-w-0 flex-1">
-            <SessionPips
-              states={pipStates}
-              position={pipPosition}
-              label="Sessão de hoje"
-            />
+            <p className="m-0 text-ink-soft">
+              {history.length === 1
+                ? "1 respondida nesta sessão"
+                : `${history.length} respondidas nesta sessão`}
+              {", "}
+              {dueCount(skills) === 1
+                ? "1 revisão vencida agora"
+                : `${dueCount(skills)} revisões vencidas agora`}
+            </p>
           </div>
-          <Link href="/" className={buttonVariants({ variant: "secondary" })}>
-            <Pause size={17} aria-hidden="true" /> Encerrar
-          </Link>
+          {/* Com respostas, encerrar mostra o resumo, que só existe aqui:
+              a sessão não tem tamanho, e sair direto para a Hoje o perderia.
+              Sem respostas não há o que resumir. */}
+          {history.length > 0 ? (
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => setFinished("ended")}
+            >
+              <Pause size={17} aria-hidden="true" /> Encerrar
+            </Button>
+          ) : (
+            <Link href="/" className={buttonVariants({ variant: "secondary" })}>
+              <Pause size={17} aria-hidden="true" /> Encerrar
+            </Link>
+          )}
         </div>
 
         {/* Sem aria-live aqui. Ele desceu para o painel de veredito: com a

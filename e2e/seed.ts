@@ -18,7 +18,7 @@ type Skill = "flagToNameRecall" | "nameToFlagRecognition";
 
 /**
  * Uma habilidade agendada cujo cartão já venceu — portanto um item `due`, que
- * `buildDailyQueue` coloca no início da fila, antes dos itens novos.
+ * `nextActivity` põe na frente dos itens novos.
  */
 export interface DueSkillState {
   entityId: string;
@@ -30,7 +30,7 @@ export interface SeedOptions {
   dueStates?: readonly DueSkillState[];
 }
 
-/** Entidades na ordem do catálogo, que é a ordem em que `buildDailyQueue`
+/** Entidades na ordem do catálogo; a ordem em que a sessão
  *  escolhe os itens novos — o que torna a primeira questão previsível. */
 export const catalogEntities = runtimeCatalog.entities;
 
@@ -90,9 +90,6 @@ function buildBackup({ dueStates = [] }: SeedOptions) {
       lastOutcome: "correct",
       updatedAt: lastReview.toISOString()
     })),
-    // Vazio porque `recentAccuracy` (domain/daily-queue.ts) mede as tentativas
-    // recentes e reduz o limite de itens novos quando o acerto cai: seria uma
-    // segunda variável mexendo no tamanho da fila.
     attempts: [],
     pairStates: []
   };
