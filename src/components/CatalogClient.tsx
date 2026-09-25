@@ -50,11 +50,10 @@ export function CatalogClient() {
 
   return (
     <div className="mx-auto w-full max-w-page">
-      {album ? (
-        <AlbumHeader album={album} />
-      ) : (
-        <h1 className="sr-only">Álbum</h1>
-      )}
+      {album && <AlbumHeader album={album} />}
+      {/* Só no carregamento: com o armazenamento indisponível, a tela de erro
+          já traz o seu h1, e este seria o segundo. */}
+      {state.kind === "loading" && <h1 className="sr-only">Álbum</h1>}
       <label className="relative mb-6 grid gap-[7px]">
         <span className="sr-only">Buscar qualquer bandeira</span>
         {/* O ícone é irmão do campo, não filho: posicioná-lo por cima e
