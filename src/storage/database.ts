@@ -137,3 +137,26 @@ export async function saveReview(
     await db.attempts.add(attempt);
   });
 }
+
+/**
+ * Reescreve uma tentativa já gravada e o estado que ela produziu, como faz
+ * "Foi chute". A tentativa precisa existir: um `put` sem essa conferência
+ * gravaria como nova uma tentativa que nunca aconteceu, e o XP e o histórico
+ * a contariam duas vezes se o ID viesse trocado.
+ */
+export async function amendReview(
+  state: SkillState,
+  attempt: ReviewAttempt,
+  db: BrunankiDatabase = getDatabase()
+): Promise<void> {
+  if (state.entityId !== attempt.entityId || state.skill !== attempt.skill) {
+    throw new Error("Tentativa e estado de habilidade não correspondem");
+  }
+  await db.transaction("rw", db.skillStates, db.attempts, async () => {
+    if ((await db.attempts.get(attempt.id)) === undefined) {
+      throw new Error("Só uma tentativa já gravada pode ser reescrita");
+    }
+    await db.skillStates.put(state);
+    await db.attempts.put(attempt);
+  });
+}
