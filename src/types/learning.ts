@@ -28,9 +28,11 @@ export type ExerciseKind =
   "flagToNameChoice" | "nameToFlagChoice" | "flagToNameInput";
 
 /**
- * Agendada é a tentativa que a fila pediu e que move o FSRS. Livre é a
- * prática sem trabalho vencido: dá feedback e XP, mas não pode virar evidência
- * de domínio, e a marca na própria tentativa é o que impede o histórico de
+ * Agendada é a tentativa que a fila pediu. Quase todas movem o FSRS; a
+ * exceção é a escolha logo depois da apresentação de uma bandeira nova, que
+ * faz parte da sessão agendada mas não é recuperação. Livre é a prática sem
+ * trabalho vencido: dá feedback e XP, mas não pode virar evidência de
+ * domínio, e a marca na própria tentativa é o que impede o histórico de
  * guardar uma sem distinguir da outra.
  */
 export type AttemptMode = "scheduled" | "free";
@@ -65,8 +67,8 @@ export interface ReviewAttempt {
   /**
    * Milissegundos até a primeira tecla, na digitação, ou até o clique, na
    * escolha. Mede reconhecimento sem medir digitação: o tempo total pune nome
-   * longo e teclado de celular, e é por isso que a nota por velocidade lê
-   * este campo, e não `responseMs`.
+   * longo e teclado de celular, e por isso é este campo, e não `responseMs`,
+   * que a nota por velocidade vai ler. Na digitação ele ainda não é medido.
    */
   firstInputMs?: number;
   /** Marcada por quem respondeu, depois de um acerto em escolha. */

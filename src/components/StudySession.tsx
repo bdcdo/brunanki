@@ -63,7 +63,8 @@ function newAttempt(
   outcome: AttemptOutcome,
   responseMs: number,
   exercise: ReviewAttempt["exercise"],
-  answer?: string
+  answer: string | undefined,
+  followsTeaching: boolean
 ): ReviewAttempt {
   return {
     id: newAttemptId(),
@@ -78,7 +79,8 @@ function newAttempt(
     mode: "scheduled",
     awardedXp: awardedXpFor({
       outcome,
-      isImmediateCorrection: item.immediate ?? false
+      isImmediateCorrection: item.immediate ?? false,
+      followsTeaching
     }),
     responseMs,
     // Na escolha, o clique é a própria resposta. Na digitação, a primeira
@@ -265,7 +267,10 @@ function StudySessionReady({
         outcome,
         Math.max(0, Math.round(performance.now() - startedAt.current)),
         exercise,
-        typedAnswer
+        typedAnswer,
+        // Só a escolha que segue a apresentação deixa de agendar; ver
+        // `followsTeaching` em awardedXpFor.
+        !schedule
       );
       const nextState = schedule
         ? scheduleAttempt(current, attempt, settings)

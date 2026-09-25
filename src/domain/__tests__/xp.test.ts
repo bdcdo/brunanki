@@ -20,6 +20,16 @@ describe("awardedXpFor", () => {
     expect(awardedXpFor({ outcome, isImmediateCorrection: true })).toBe(0);
   });
 
+  it("a escolha logo depois da apresentação não pontua", () => {
+    expect(
+      awardedXpFor({
+        outcome: "correct",
+        isImmediateCorrection: false,
+        followsTeaching: true
+      })
+    ).toBe(0);
+  });
+
   it("acerto marcado como chute não pontua", () => {
     expect(
       awardedXpFor({
