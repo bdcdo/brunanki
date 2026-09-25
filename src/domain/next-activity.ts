@@ -15,15 +15,18 @@ export interface NextActivity {
 }
 
 /**
- * Até onde um erro reagendado conta como correção e passa na frente da
- * próxima novidade, mesmo antes de vencer. Dez minutos cobrem os passos de
- * aprendizagem do FSRS depois de um erro.
+ * Por quanto tempo depois de respondida uma habilidade conta como recente.
  *
- * Vale só para erro. Um acerto de bandeira nova também cai num passo de dez
- * minutos, e puxá-lo antes de vencer faria cada acerto trazer a mesma
- * bandeira de volta na tela seguinte, desperdiçando o espaçamento. O acerto
- * volta quando vence, e aí entra como revisão vencida, na frente das
- * novidades.
+ * Um erro recente é correção: passa na frente da próxima novidade e é gravado
+ * como correção imediata, qualquer que seja o vencimento do cartão. A regra
+ * olha o tempo desde a resposta, e não o vencimento, porque o FSRS reagenda
+ * um erro em cartão novo para daqui a um minuto: quem levasse mais do que
+ * isso para chegar à correção a veria como revisão vencida, e um acerto dela
+ * contaria dia de sucesso e XP como se fosse lembrança genuína.
+ *
+ * Um acerto recente não é puxado antes de vencer. Um acerto de bandeira nova
+ * também cai num passo de dez minutos, e puxá-lo cedo traria a mesma bandeira
+ * de volta na tela seguinte, desperdiçando o espaçamento.
  */
 export const SHORT_REVIEW_WINDOW_MS = 10 * 60 * 1000;
 
@@ -33,20 +36,39 @@ export interface NextActivityOptions {
   readonly entityOrder: readonly string[];
   readonly now?: Date;
   /**
-   * A atividade que acabou de ser respondida. Ela não volta como a próxima se
-   * houver outra revisão a intercalar: repetir a mesma bandeira na tela
-   * seguinte mede a memória de trabalho, e não a recuperação. Se a única
-   * outra coisa for uma novidade, a correção vem mesmo assim, porque ela
-   * passa na frente da novidade seguinte.
+   * A atividade que acabou de ser respondida. A mesma bandeira não volta na
+   * tela seguinte, em nenhuma das duas direções, se houver outra coisa a
+   * fazer: repeti-la mediria a memória de trabalho, e não a recuperação. A
+   * exceção é a correção do erro que acabou de acontecer, que vem antes da
+   * novidade seguinte, uma vez; se a própria correção errar de novo, a
+   * novidade passa, e a correção volta depois dela.
    */
-  readonly justAnswered?: {
-    readonly entityId: string;
-    readonly skill: SkillKind;
-  };
+  readonly justAnswered?: NextActivity;
 }
 
 function dueTime(state: SkillState): number {
   return new Date(state.card!.due).getTime();
+}
+
+/**
+ * `updatedAt` é gravado junto com cada resposta que move o estado, e só com
+ * ela; a escolha que não agenda grava o estado sem alterá-lo.
+ */
+function answeredWithin(state: SkillState, now: number): boolean {
+  return now - new Date(state.updatedAt).getTime() <= SHORT_REVIEW_WINDOW_MS;
+}
+
+function isRecentError(state: SkillState, now: number): boolean {
+  return (
+    state.card !== undefined &&
+    state.lastOutcome !== undefined &&
+    state.lastOutcome !== "correct" &&
+    answeredWithin(state, now)
+  );
+}
+
+function byDue(left: SkillState, right: SkillState): number {
+  return dueTime(left) - dueTime(right) || left.id.localeCompare(right.id);
 }
 
 /**
@@ -55,39 +77,21 @@ function dueTime(state: SkillState): number {
  * Não há teto de sessão, limite de novidades nem freio por acurácia: a
  * prioridade sozinha decide. Primeiro o que venceu, do mais antigo para o
  * mais novo; depois as correções; por último a próxima bandeira nova da
- * ordem. Revisões são de qualquer
- * continente, porque vêm dos estados guardados; novidades, só da ordem
- * recebida. Devolve `undefined` quando não há nada.
+ * ordem. Revisões são de qualquer continente, porque vêm dos estados
+ * guardados; novidades, só da ordem recebida. Devolve `undefined` quando não
+ * há nada.
  */
 export function nextActivity(
   options: NextActivityOptions
 ): NextActivity | undefined {
   const now = (options.now ?? new Date()).getTime();
-  const justAnsweredId = options.justAnswered
-    ? skillStateId(options.justAnswered.entityId, options.justAnswered.skill)
-    : undefined;
-
   const scheduled = options.states.filter((state) => state.card !== undefined);
-  const due = scheduled
-    .filter((state) => dueTime(state) <= now)
-    .sort(
-      (left, right) =>
-        dueTime(left) - dueTime(right) || left.id.localeCompare(right.id)
-    );
   const corrections = scheduled
-    .filter((state) => {
-      const time = dueTime(state);
-      return (
-        state.lastOutcome !== undefined &&
-        state.lastOutcome !== "correct" &&
-        time > now &&
-        time <= now + SHORT_REVIEW_WINDOW_MS
-      );
-    })
-    .sort(
-      (left, right) =>
-        dueTime(left) - dueTime(right) || left.id.localeCompare(right.id)
-    );
+    .filter((state) => isRecentError(state, now))
+    .sort(byDue);
+  const due = scheduled
+    .filter((state) => dueTime(state) <= now && !isRecentError(state, now))
+    .sort(byDue);
 
   const stateById = new Map(options.states.map((state) => [state.id, state]));
   let fresh: NextActivity | undefined;
@@ -101,6 +105,9 @@ export function nextActivity(
       break;
     }
     if (!recognition || recognition.phase === "unseen") {
+      // A outra direção de uma bandeira que acabou de ser respondida seria a
+      // mesma bandeira de novo; ela espera a janela passar, e a ordem segue.
+      if (answeredWithin(recall, now)) continue;
       fresh = { entityId, skill: "nameToFlagRecognition", reason: "new" };
       break;
     }
@@ -118,18 +125,35 @@ export function nextActivity(
       reason: "correction" as const
     }))
   ];
+  const last = options.justAnswered;
   const interleaved = reviews.find(
-    ({ entityId, skill }) => skillStateId(entityId, skill) !== justAnsweredId
+    ({ entityId }) => entityId !== last?.entityId
   );
-  return interleaved ?? reviews[0] ?? fresh;
+  if (interleaved) return interleaved;
+
+  // Sobrou só a bandeira que acabou de ser respondida.
+  const correctionOfLast =
+    last && last.reason !== "correction"
+      ? reviews.find(
+          ({ skill, reason }) => reason === "correction" && skill === last.skill
+        )
+      : undefined;
+  return correctionOfLast ?? fresh ?? reviews[0];
 }
 
-/** Quantas revisões estão vencidas agora, de qualquer continente. */
+/**
+ * Quantas revisões estão vencidas agora, de qualquer continente. Um erro
+ * recente que já venceu não entra: a fila o trata como correção.
+ */
 export function dueCount(
   states: readonly SkillState[],
   now: Date = new Date()
 ): number {
+  const time = now.getTime();
   return states.filter(
-    (state) => state.card !== undefined && dueTime(state) <= now.getTime()
+    (state) =>
+      state.card !== undefined &&
+      dueTime(state) <= time &&
+      !isRecentError(state, time)
   ).length;
 }
