@@ -109,6 +109,23 @@ describe("xpTotals", () => {
     });
   });
 
+  it("uma tentativa datada de amanhã não conta como hoje", () => {
+    // Relógio do aparelho adiantado, ou backup de outro fuso.
+    const amanha = attemptAt("2026-09-25T15:00:00.000Z", 1);
+    expect(xpTotals([amanha], "America/Sao_Paulo", now)).toEqual({
+      today: 0,
+      total: 1
+    });
+  });
+
+  it("sem instante informado, hoje é agora", () => {
+    const agora = attemptAt(new Date().toISOString(), 1);
+    expect(xpTotals([agora], "America/Sao_Paulo")).toEqual({
+      today: 1,
+      total: 1
+    });
+  });
+
   it("sem tentativas, zero nos dois", () => {
     expect(xpTotals([], "America/Sao_Paulo", now)).toEqual({
       today: 0,

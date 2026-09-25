@@ -167,6 +167,13 @@ function StudySessionReady({
   // reembaralhar a cada re-render — e diferentes a cada nova sessão.
   const [sessionSeed] = useState(() => Math.floor(Math.random() * 2 ** 32));
 
+  // Refeita a cada snapshot novo, que chega a cada resposta, e não a cada
+  // tecla do campo de digitação.
+  const xp = useMemo(
+    () => xpTotals(attempts, settings.timeZone),
+    [attempts, settings.timeZone]
+  );
+
   const stateById = useMemo(
     () => new Map(skills.map((state) => [state.id, state])),
     [skills]
@@ -421,8 +428,6 @@ function StudySessionReady({
   }
 
   if (!item || !entity) return null;
-
-  const xp = xpTotals(attempts, settings.timeZone);
 
   return (
     <div className="mx-auto w-full max-w-narrow">
